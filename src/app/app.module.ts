@@ -7,7 +7,6 @@ import { LoginComponent } from './components/login/login.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
 import { CreateComponent } from './components/centro_medico/create/create.component';
 import { ListComponent } from './components/centro_medico/list/list.component';
-import { EditComponent } from './components/centro_medico/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,6 @@ import { EditComponent } from './components/centro_medico/edit/edit.component';
     ActividadPersonaComponent,
     CreateComponent,
     ListComponent,
-    EditComponent
   ],
   imports: [
     BrowserModule,
