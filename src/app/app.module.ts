@@ -7,6 +7,9 @@ import { LoginComponent } from './components/login/login.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
 import { CreateComponent } from './components/centro_medico/create/create.component';
 import { ListComponent } from './components/centro_medico/list/list.component';
+import { FormsModule } from '@angular/forms';
+import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
+import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
 
 @NgModule({
   declarations: [
@@ -15,10 +18,13 @@ import { ListComponent } from './components/centro_medico/list/list.component';
     ActividadPersonaComponent,
     CreateComponent,
     ListComponent,
+    UpdateCentroMComponent,
+    DetalleCentroMComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
