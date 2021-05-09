@@ -6,6 +6,7 @@ import { CreateComponent } from './components/centro_medico/create/create.compon
 import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
 import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
 import { LoginComponent } from './components/login/login.component';
+import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component'
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'detalle-centromedico', component: DetalleCentroMComponent},
   { path: 'update-centromedico', component: UpdateCentroMComponent},
   { path: 'actividades', component: ActividadPersonaComponent },
+  { path: 'crear-actividad', component: CrearActividadComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];

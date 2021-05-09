@@ -70,7 +70,14 @@
         </div>
         <div class="card">
             <div class="card-header">
-                Actividades realizadas:
+            <form class="row g-3">
+                <div class="col-md-10">
+                <h5>Actividades realizadas:</h5>
+                </div>
+                <div class="col-md-2">
+                  <button type="submit " class="btn btn-primary mb-2 " (click)="gotoList()">Añadir actividad</button>
+                </div>
+            </form>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -83,19 +90,6 @@
                 </table>
 
             </div>
-        </div>
-        <div>
-            <br>
-        </div>
-        <div>
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                    ...
-                </thead>
-                <tbody>
-                    ...
-                </tbody>
-            </table>
         </div>
     </div>
 
