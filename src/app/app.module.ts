@@ -10,6 +10,8 @@ import { ListComponent } from './components/centro_medico/list/list.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
 import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
+import { LoginService } from './services/login.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,9 +26,10 @@ import { DetalleCentroMComponent } from './components/centro_medico/detalle-cent
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
