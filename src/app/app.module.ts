@@ -13,6 +13,7 @@ import { DetalleCentroMComponent } from './components/centro_medico/detalle-cent
 import { LoginService } from './services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
+import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CrearActividadComponent } from './components/actividad-persona/crear-ac
     UpdateCentroMComponent,
     DetalleCentroMComponent,
     CrearActividadComponent,
+    RegistroPersonaComponent,
   ],
   imports: [
     BrowserModule,
