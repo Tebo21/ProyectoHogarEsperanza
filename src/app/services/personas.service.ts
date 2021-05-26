@@ -11,6 +11,6 @@ export class PersonasService {
   constructor(private http:HttpClient) { }
 
   postPersona(persona:Personas):Observable<any>{
-    return this.http.post(`${this.URL}/creadPerosna`,persona);
+    return this.http.post(`${this.URL}/crearPersona`,persona);
   }
 }

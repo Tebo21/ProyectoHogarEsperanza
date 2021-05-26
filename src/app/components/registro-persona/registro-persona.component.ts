@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Personas } from '../../models/personas';
 import { PersonasService } from '../../services/personas.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,17 +16,20 @@ export class RegistroPersonaComponent implements OnInit {
   fecha =  new Date();
   fecha1 =  new Date();
   f1: Number;
-  constructor(private PersonasService:PersonasService) { }
+  constructor(private PersonasService:PersonasService, private router:Router) { }
 
   ngOnInit(): void {
   }
 
   addPersona(){
+    var cedulalocalstorage = this.Personas.cedula
+    localStorage.setItem("cedulalocalstorage",cedulalocalstorage)
     this.PersonasService.postPersona(this.Personas)
     .subscribe(data=>{
       console.log("persona registrada")
     },
-    error=>console.log(error));
+    error=>console.log("mensajito"+error));
+    this.router.navigate(['/registro-familiares'])
   }
 
   validar(){

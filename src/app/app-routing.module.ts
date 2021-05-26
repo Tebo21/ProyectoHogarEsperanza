@@ -8,6 +8,7 @@ import { UpdateCentroMComponent } from './components/centro_medico/update-centro
 import { LoginComponent } from './components/login/login.component';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component'
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
+import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'crear-actividad', component: CrearActividadComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro-persona', component: RegistroPersonaComponent},
+  { path: 'registro-familiares', component: RegistroFamiliaresComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
 
