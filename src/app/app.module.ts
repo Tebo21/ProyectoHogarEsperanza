@@ -17,6 +17,9 @@ import { RegistroPersonaComponent } from './components/registro-persona/registro
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +40,7 @@ import { RegistroProductoComponent } from './components/donacion-producto/regist
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule,
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]
