@@ -82,10 +82,16 @@
             <div class="card-body">
                 <table class="table table-bordered">
                     <thead class="table">
-                        ...
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Tipo de Actividad</th>
                     </thead>
                     <tbody>
-                        ...
+                        <tr *ngFor="let x of _actividadservice.actividades">
+                        <td>{{x.fechaActividad}}</td>
+                        <td>{{x.descripcionActividad}}</td>
+                        <td>{{x.tipoactividad}}</td>
+                      </tr>
                     </tbody>
                 </table>
 

@@ -1,15 +1,17 @@
+import { TipoActividad } from "./TipoActividad";
+
 export class Actividades {
-  private idActividadPersona: number;
-  private cedulaPersona: string;
-  private fechaActividad: string;
-  private descripcionActividad: string;
-  private tipoactividad: string;
+  public idActividadPersona: number;
+  public cedulaPersona: string;
+  public fechaActividad: Date;
+  public descripcionActividad: string;
+  public tipoactividad: Array<String>;
 
   constructor(idActividadPersona: number,
     cedulaPersona: string,
-    fechaActividad: string,
+    fechaActividad: Date,
     descripcionActividad: string,
-    tipoactividad: string) {
+    tipoactividad: Array<String>) {
     this.idActividadPersona = idActividadPersona,
     this.cedulaPersona = cedulaPersona,
     this.fechaActividad = fechaActividad,
