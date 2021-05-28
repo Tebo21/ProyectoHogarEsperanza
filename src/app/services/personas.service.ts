@@ -13,4 +13,8 @@ export class PersonasService {
   postPersona(persona:Personas):Observable<any>{
     return this.http.post(`${this.URL}/crearPersona`,persona);
   }
+
+  getPorCedula(cedula: any): Observable<Personas>{
+    return this.http.get<Personas>(this.URL+`/bycedula/${cedula}`);
+  }
 }
