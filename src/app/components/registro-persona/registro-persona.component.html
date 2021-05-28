@@ -29,12 +29,19 @@
         <input  [(ngModel)]="Personas.fechaNacimiento"  (change)="calcularedad($event)" name="fechaNacimiento" id="fechaNacimiento" style="margin-left: 5%;" type="date" class="form-control" placeholder="Fecha nacimiento">
         <p style="margin-left: 2%;"> </p>
         <input  [(ngModel)]="Personas.edad" name="edad" id="edad" style="margin-right: 5%;" type="number" class="form-control" placeholder="Edad">
-        <p style="margin-left: 2%;"> </p>
-        <input [(ngModel)]="Personas.genero" name="genero" id="genero"  style="margin-right: 5%;" type="text" class="form-control" placeholder="Genero">
+        <select [(ngModel)]="Personas.genero" name="genero" id="genero" style="margin-right: 5%;" type="text" class="form-control" placeholder="Genero">
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select>  
       </div>
       
       <div class="input-group mb-3">
-        <input [(ngModel)]="Personas.tipoPersona" name="tipoPersonas" id="tipoPersonas" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="tipo de persona">
+        <select [(ngModel)]="Personas.tipoPersona" name="tipoPersonas" id="tipoPersonas" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="tipo de persona">
+          <option value="Ayuda Social">Ayuda Social</option>
+          <option value="Administración">Administración</option>
+          <option value="Voluntarios">Voluntarios</option>
+          <option value="Administrador">Administrador</option>
+        </select>
       </div>
 
       <div class="input-group mb-3">

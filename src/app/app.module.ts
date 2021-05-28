@@ -14,6 +14,7 @@ import { LoginService } from './services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
+import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { RegistroPersonaComponent } from './components/registro-persona/registro
     DetalleCentroMComponent,
     CrearActividadComponent,
     RegistroPersonaComponent,
+    RegistroFamiliaresComponent,
   ],
   imports: [
     BrowserModule,

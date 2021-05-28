@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PersonasService {
-  private URL='http://localhost:8080/persona';
+  private URL='http://localhost:3000/persona';
   constructor(private http:HttpClient) { }
 
   postPersona(persona:Personas):Observable<any>{
-    return this.http.post(`${this.URL}/creadPerosna`,persona);
+    return this.http.post(`${this.URL}/crearPersona`,persona);
   }
 }
