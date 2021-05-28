@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Actividades } from 'src/app/models/Actividades';
 import { TipoActividad } from 'src/app/models/TipoActividad';
 import { ActividadesService } from 'src/app/services/actividades.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -16,11 +17,10 @@ export class CrearActividadComponent implements OnInit {
   public actividadCreate: Actividades = new Actividades(0,"",this.fecha,"",this.tipo);
   public id : number;
 
-  constructor(private router: Router, public _actividadservice: ActividadesService) { }
+  constructor(private router: Router, public _actividadservice: ActividadesService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
-
   addActividad(): void {
     var d = new Date();
     this.fecha.getUTCDate;

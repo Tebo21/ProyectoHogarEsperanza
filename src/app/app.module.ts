@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { RegistroFamiliaresComponent } from './components/registro-familiares/re
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgbModule,
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]
