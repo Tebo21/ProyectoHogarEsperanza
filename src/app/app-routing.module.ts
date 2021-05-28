@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component'
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
+import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro-persona', component: RegistroPersonaComponent},
   { path: 'registro-familiares', component: RegistroFamiliaresComponent},
+  { path: 'registro-producto', component: RegistroProductoComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
 
