@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actividades } from 'src/app/models/Actividades';
 import { TipoActividad } from 'src/app/models/TipoActividad';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -11,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./crear-actividad.component.css']
 })
 export class CrearActividadComponent implements OnInit {
-
+  @Input() modal: NgbModalWindow 
   public fecha: Date =  new Date();
   public tipo:Array<string> =  new Array();
   public actividadCreate: Actividades = new Actividades(0,"",this.fecha,"",this.tipo);

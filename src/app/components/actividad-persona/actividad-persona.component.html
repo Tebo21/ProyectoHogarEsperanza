@@ -24,33 +24,29 @@
                 <form class="row g-3 needs-validation " novalidate>
                     <div class="col-md-4 position-relative ">
                         <label for="validationTooltip01 " class="form-label ">Nombre</label>
-                        <input type="text " class="form-control " id="nombre ">
-                        <div class="valid-tooltip ">
-                            Looks good!
-                        </div>
+                        <input type="text " class="form-control " id="nombre " readonly>
+
                     </div>
                     <div class="col-md-4 position-relative ">
                         <label for="validationTooltip02 " class="form-label ">Apellido</label>
-                        <input type="text " class="form-control " id="apellido " value="Otto ">
-                        <div class="valid-tooltip ">
-                            Looks good!
-                        </div>
+                        <input type="text " class="form-control " id="apellido " readonly>
+
                     </div>
                     <div class="col-md-4 position-relative ">
                         <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
                         <div class="input-group has-validation ">
                             <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
-                            <input type="email " class="form-control " id="correo ">
+                            <input type="email " class="form-control " id="correo " readonly>
                         </div>
                     </div>
                     <div class="col-md-3 position-relative ">
                         <label for="validationTooltip03 " class="form-label ">Telefono</label>
-                        <input type="text " class="form-control " id="telefono ">
+                        <input type="text " class="form-control " id="telefono " readonly>
 
                     </div>
                     <div class="col-md-6 position-relative ">
                         <label for="validationTooltip04 " class="form-label ">Direccion</label>
-                        <input type="text " class="form-control " id="direccion ">
+                        <input type="text " class="form-control " id="direccion " readonly>
 
                     </div>
                 </form>
@@ -67,7 +63,7 @@
                 </form>
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
+                <table class="table ">
                     <thead class="table">
                         <th scope="col">Fecha</th>
                         <th scope="col">Descripcion</th>
@@ -90,16 +86,10 @@
     </div>
 </div>
 <ng-template #modalForm let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Registrar actividad</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
 
     <div class="modal-body">
-        <app-crear-actividad></app-crear-actividad>
+        <app-crear-actividad [modal]=modal></app-crear-actividad>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modalService.dismissAll">Cerrar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
-    </div>
+
+
 </ng-template>

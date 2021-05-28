@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { CrearActividadComponent } from './crear-actividad/crear-actividad.component';
@@ -11,7 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./actividad-persona.component.css']
 })
 export class ActividadPersonaComponent implements OnInit {
-
+  
   catalogoId: number = 0;
   constructor(private router: Router,public _actividadservice: ActividadesService,public modalService: NgbModal) { }
 

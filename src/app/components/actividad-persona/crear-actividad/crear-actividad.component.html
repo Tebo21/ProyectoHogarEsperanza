@@ -1,3 +1,6 @@
+<div class="modal-header  text-center">
+    <h5 class="text-center">Registro de actividades </h5>
+</div>
 <div class="modal-body">
 
     <div>
@@ -48,12 +51,14 @@
                 <label>Descripción :</label>
             </div>
             <div class=" col-sm-6 ">
-                <input type="text" id="descripciom">
-                <p style="margin-left: 2%;"> </p>
+                <textarea type="text" id="descripcion"></textarea>
+
 
             </div>
         </div>
     </div>
-
-
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modalForm" (click)="modal.dismiss('Cross click')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="addActividad()">Guardar</button>
 </div>
