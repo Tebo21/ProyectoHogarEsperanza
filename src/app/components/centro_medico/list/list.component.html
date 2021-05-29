@@ -6,13 +6,13 @@
     <div class="container-table100">
         <div class="wrap-table100">
 
-            <div>
+          <!--   <div>
                 <app-create></app-create>
             </div>
 
             <br>
             <br>
-            <div class="table">
+          <div class="table">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -22,18 +22,57 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let centro of centros | async">
-                        <td>{{centro.id_centro}}</td>
-                        <td>{{centro.nombre}}</td>
-                        <td>{{centro.direccion}}</td>
-                        <td>{{centro.telefono}}</td>
+                <div *ngFor="let c of centroM">
+                    <tr>
+                        <td>{{c.id_centro}}</td>
+                        <td>{{c.nombre}}</td>
+                        <td>{{c.direccion}}</td>
+                        <td>{{c.telefono}}</td>
                         <div class="cell" data-title="Acciones">
-                            <input (click)="centroEditar(centro.id_centro)" class="btn-update" type="image" src="../../../assets/img/pencil.svg" alt="Delete">
-                            <input (click)="deleteCentro(centro.id_centro)" class="btn-delete" type="image" src="../../../assets/img/delete.svg" alt="Delete">
-                            <button (click)="centroDetalle(centro.id_centro)" class="btn btn-info" style="margin-left: 10px">Details</button>
+                            <input (click)="centroEditar(c.id_centro)" class="btn-update" type="image" src="../../../assets/img/pencil.svg" alt="Delete">
+                            <input (click)="deleteCentro(c.id_centro)" class="btn-delete" type="image" src="../../../assets/img/delete.svg" alt="Delete">
+                            <button class="btn btn-info" style="margin-left: 10px">Details</button>
                         </div>
                     </tr>
+                </div>
                 </tbody>
+            </div>--> 
+
+
+
+        <div class="limiter">
+        <h2 class="title">Lista</h2>
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table">
+                    <div class="row header">
+                        <div class="cell">ID</div>
+                        <div class="cell">NOMBRE</div>
+                        <div class="cell">DIRECCION</div>
+                        <div class="cell">TELEFONO</div>
+                        <div class="cell">Acciones</div>
+                    </div>
+                    <div *ngFor="let u of centroM" class="row">
+                        <div class="cell" data-title="ID">
+                            {{ u.id_centro}}
+                        </div>
+                        <div class="cell" data-title="NOMBRE">
+                            {{ u.nombre }}
+                        </div>
+                        <div class="cell" data-title="DIRECCION">
+                            {{ u.direccion }}
+                        </div>
+                        <div class="cell" data-title="TELEFONO">
+                            {{ u.telefono }}
+                        </div>
+                        <div class="cell" data-title="Acciones">
+                            <input class="btn-update" type="image" src="../../../assets/img/pencil.svg" alt="Delete">
+                            <input class="btn-delete" type="image" src="../../../assets/img/delete.svg" alt="Delete">
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+</div>
         </div>
     </div>
