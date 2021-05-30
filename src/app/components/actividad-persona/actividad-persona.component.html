@@ -1,96 +1,118 @@
-<div class="container">
-  <div class="modal-body ">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="card-tittle">Registro de actividades </h5>
+<header class="header">
+      <div class="container logo-nav-container">
+        <img src="https://hogaresperanza.org/wp-content/uploads/2018/03/logo.png"
+          class="logo"/>
+
+        <nav class="navigation">
+          <ul> <a href="#">Actividades</a></ul>
+        </nav>
       </div>
-      <div class="card-body">
-        <form class="row g-3 ">
-          <div class="col-md-1 position-relative ">
-            <label for="staticEmail2 " class="visually-hidden ">Cedula</label>
-          </div>
-          <div class="col-md-3 position-relative">
-            <input type="text " class="form-control " id="cedula ">
-          </div>
-          <div class="col-md-4 position-relative ">
-            <button type="submit " class="btn btn-primary mb-3 ">Buscar</button>
-          </div>
-          <div class="col-md-4 position-relative">
-            <input type="date" id="start" name="trip-start" value="yyyy-MM-dd">
-          </div>
-        </form>
-        <br>
+</header>
 
-        <form class="row g-3 needs-validation " novalidate>
-          <div class="col-md-4 position-relative ">
-            <label for="validationTooltip01 " class="form-label ">Nombre</label>
-            <input type="text " class="form-control " id="nombre " readonly>
 
-          </div>
-          <div class="col-md-4 position-relative ">
-            <label for="validationTooltip02 " class="form-label ">Apellido</label>
-            <input type="text " class="form-control " id="apellido " readonly>
-
-          </div>
-          <div class="col-md-4 position-relative ">
-            <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
-            <div class="input-group has-validation ">
-              <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
-              <input type="email " class="form-control " id="correo " readonly>
+<body class="body" >
+  <div class="container">
+    <div class="modal-body ">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-tittle">Registro de actividades </h5>
+        </div>
+        <div class="card-body">
+          <form class="row g-3 ">
+            <div class="col-md-1 position-relative ">
+              <label for="staticEmail2 " class="visually-hidden ">Cedula</label>
             </div>
-          </div>
-          <div class="col-md-3 position-relative ">
-            <label for="validationTooltip03 " class="form-label ">Telefono</label>
-            <input type="text " class="form-control " id="telefono " readonly>
+            <div class="col-md-3 position-relative">
+              <input type="text " class="form-control " id="cedula ">
+            </div>
+            <div class="col-md-4 position-relative ">
+              <button type="submit " class="btn btn-primary mb-3 ">Buscar</button>
+            </div>
+            <div class="col-md-4 position-relative">
+              <input type="date" id="start" name="trip-start" value="yyyy-MM-dd">
+            </div>
+          </form>
+          <br>
 
-          </div>
-          <div class="col-md-6 position-relative ">
-            <label for="validationTooltip04 " class="form-label ">Direccion</label>
-            <input type="text " class="form-control " id="direccion " readonly>
+          <form class="row g-3 needs-validation " novalidate>
+            <div class="col-md-4 position-relative ">
+              <label for="validationTooltip01 " class="form-label ">Nombre</label>
+              <input type="text " class="form-control " id="nombre " readonly>
 
-          </div>
-        </form>
+            </div>
+            <div class="col-md-4 position-relative ">
+              <label for="validationTooltip02 " class="form-label ">Apellido</label>
+              <input type="text " class="form-control " id="apellido " readonly>
 
+            </div>
+            <div class="col-md-4 position-relative ">
+              <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
+              <div class="input-group has-validation ">
+                <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
+                <input type="email " class="form-control " id="correo " readonly>
+              </div>
+            </div>
+            <div class="col-md-3 position-relative ">
+              <label for="validationTooltip03 " class="form-label ">Telefono</label>
+              <input type="text " class="form-control " id="telefono " readonly>
+
+            </div>
+            <div class="col-md-6 position-relative ">
+              <label for="validationTooltip04 " class="form-label ">Direccion</label>
+              <input type="text " class="form-control " id="direccion " readonly>
+
+            </div>
+          </form>
+
+        </div>
+        <div class="card-header">
+          <form class="row g-3">
+            <div class="col-md-10">
+              <h5>Actividades realizadas:</h5>
+            </div>
+            <div class="col-md-2">
+              <button type="submit " class="btn btn-primary mb-2 " (click)="modalService.open(modalForm)">Añadir
+                actividad</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-body">
+          <table class="table ">
+            <thead class="table">
+              <th scope="col">Fecha</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Tipo de Actividad</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of _actividadservice.actividades">
+                <td>{{x.fechaActividad}}</td>
+                <td>{{x.descripcionActividad}}</td>
+                <td>{{x.tipoActividad.nombreActividad}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="card-header">
-        <form class="row g-3">
-          <div class="col-md-10">
-            <h5>Actividades realizadas:</h5>
-          </div>
-          <div class="col-md-2">
-            <button type="submit " class="btn btn-primary mb-2 " (click)="modalService.open(modalForm)">Añadir
-              actividad</button>
-          </div>
-        </form>
+      <div>
+        <br>
       </div>
-      <div class="card-body">
-        <table class="table ">
-          <thead class="table">
-            <th scope="col">Fecha</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Tipo de Actividad</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let x of _actividadservice.actividades">
-              <td>{{x.fechaActividad}}</td>
-              <td>{{x.descripcionActividad}}</td>
-              <td>{{x.tipoactividad}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
     </div>
-    <div>
-      <br>
+  </div>
+  <ng-template #modalForm let-modal>
+
+    <div class="modal-body">
+      <app-crear-actividad [modal]=modal></app-crear-actividad>
     </div>
 
+
+  </ng-template>
+
+</body>
+<footer class="footer">
+  <div class="container">
+    <div class="row px-3">
+      <p> &copy; Hogar Esperanza 2021.</p>
+    </div>
   </div>
-</div>
-<ng-template #modalForm let-modal>
-
-  <div class="modal-body">
-    <app-crear-actividad [modal]=modal></app-crear-actividad>
-  </div>
-
-
-</ng-template>
+</footer>
