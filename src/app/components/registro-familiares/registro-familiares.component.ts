@@ -79,7 +79,6 @@ export class RegistroFamiliaresComponent implements OnInit {
   addPerFami(){
     var cedula_persona=localStorage.getItem('cedulalocalstorage');
     var cantidad_hijos=this.hijosArray.length;
-    this.famipersona._id=2
     this.famipersona.cedulaPersona=cedula_persona;
     this.famipersona.numHijos=cantidad_hijos;
     this.famipersona.hijos=this.hijosArray
