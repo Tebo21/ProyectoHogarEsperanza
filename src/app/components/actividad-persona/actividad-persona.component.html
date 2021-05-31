@@ -20,13 +20,13 @@
         <div class="card-body">
           <form class="row g-3 ">
             <div class="col-md-1 position-relative ">
-              <label for="staticEmail2 " class="visually-hidden ">Cedula</label>
+              <label for="staticEmail2 " class="visually-hidden" >Cedula</label>
             </div>
             <div class="col-md-3 position-relative">
-              <input type="text " class="form-control " id="cedula ">
+              <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId">
             </div>
             <div class="col-md-4 position-relative ">
-              <button type="submit " class="btn btn-primary mb-3 ">Buscar</button>
+              <button type="submit " class="btn btn-primary mb-3" (click)="getPersonsById()">Buscar</button>
             </div>
             <div class="col-md-4 position-relative">
               <input type="date" id="start" name="trip-start" value="yyyy-MM-dd">
@@ -34,10 +34,10 @@
           </form>
           <br>
 
-          <form class="row g-3 needs-validation " novalidate>
+          <form class="row g-3 needs-validation "  novalidate>
             <div class="col-md-4 position-relative ">
               <label for="validationTooltip01 " class="form-label ">Nombre</label>
-              <input type="text " class="form-control " id="nombre " readonly>
+              <input type="text " class="form-control" readonly>
 
             </div>
             <div class="col-md-4 position-relative ">
