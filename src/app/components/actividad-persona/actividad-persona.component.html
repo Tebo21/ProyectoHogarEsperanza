@@ -28,7 +28,7 @@
                             <button type="submit " class="btn btn-primary mb-3" (click)="getPersonsById()">Buscar</button>
                         </div>
                         <div class="col-md-4 position-relative">
-                            <input type="date" id="start" name="trip-start" value="yyyy-MM-dd">
+                            <input type="date" id="start" name="trip-start" value="fecha1">
                         </div>
                     </form>
                     <br>
@@ -36,30 +36,29 @@
                     <form class="row g-3 needs-validation " novalidate>
                         <div class="col-md-4 position-relative ">
                             <label for="validationTooltip01 " class="form-label ">Nombre</label>
-                            <input type="text " class="form-control" readonly>
+                            <input type="text " class="form-control" value="{{Person.nombres}}" readonly>
 
                         </div>
                         <div class="col-md-4 position-relative ">
                             <label for="validationTooltip02 " class="form-label ">Apellido</label>
-                            <input type="text " class="form-control " id="apellido " readonly>
+                            <input type="text " class="form-control " id="apellido" value="{{Person.apellidos}}" readonly>
 
                         </div>
                         <div class="col-md-4 position-relative ">
                             <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
                             <div class="input-group has-validation ">
                                 <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
-                                <input type="email " class="form-control " id="correo " readonly>
+                                <input type="email " class="form-control " id="correo" value="{{Person.correo}}" readonly>
                             </div>
                         </div>
                         <div class="col-md-3 position-relative ">
                             <label for="validationTooltip03 " class="form-label ">Telefono</label>
-                            <input type="text " class="form-control " id="telefono " readonly>
+                            <input type="text " class="form-control " id="telefono" value="{{Person.celular}}" readonly>
 
                         </div>
                         <div class="col-md-6 position-relative ">
                             <label for="validationTooltip04 " class="form-label ">Direccion</label>
-                            <input type="text " class="form-control " id="direccion " readonly>
-
+                            <input type="text " class="form-control " id="direccion" value="{{Person.direccion}}" readonly>
                         </div>
                     </form>
 
@@ -70,7 +69,7 @@
                             <h5>Actividades realizadas:</h5>
                         </div>
                         <div class="col-md-2">
-                            <button type="submit " class="btn btn-primary mb-2 " (click)="modalService.open(modalForm)">Añadir       
+                            <button type="submit " class="btn btn-primary mb-2 " (click)="modalService.open(modalForm)">Añadir
                 actividad</button>
                         </div>
                     </form>

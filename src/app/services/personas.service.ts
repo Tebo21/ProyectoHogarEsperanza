@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PersonasService {
-  public PersonById: Personas[]=[];
   private URL='http://localhost:3000/persona';
   constructor(private http:HttpClient) { }
 
