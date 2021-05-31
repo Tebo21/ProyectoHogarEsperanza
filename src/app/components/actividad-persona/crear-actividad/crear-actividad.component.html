@@ -34,17 +34,26 @@
 
             </div>
         </div>
+        <div class="row">
+            <div class=" col-sm-6 ">
+            </div>
+            <div class=" col-sm-6 ">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Launch demo modal
+                  </button>
+                <p style="margin-left: 2%;"> </p>
+            </div>
+        </div>
         <div class="row ">
             <div class=" col-sm-6 ">
                 <label>Actividad:</label>
             </div>
             <div class=" col-sm-6 ">
                 <select class="form-select " ria-label="Default select example ">
-                                  <option   > Lista de Actividades</option>
-                              </select>
+                    <option> Lista de Actividades</option>
+                </select>
             </div>
             <p style="margin-left: 2%;"> </p>
-
         </div>
         <div class="row">
             <div class=" col-sm-6 ">
@@ -52,8 +61,6 @@
             </div>
             <div class=" col-sm-6 ">
                 <textarea type="text" id="descripcion"></textarea>
-
-
             </div>
         </div>
     </div>
@@ -61,4 +68,35 @@
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modalForm" (click)="modal.dismiss('Cross click')">Cerrar</button>
     <button type="button" class="btn btn-primary" (click)="addActividad()">Guardar</button>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="categotria" placeholder="categoria" maxlength="50">
+                    <label for="categoria">Actividad</label>
+                </div>
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Descripcion" id="descripcion" style="height: 100px" maxlength="300"></textarea>
+                    <label for="descripcion ">Descripción</label>
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button " class="btn btn-secondary " data-bs-dismiss="modal ">Close</button>
+                <button type="button " class="btn btn-primary ">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>

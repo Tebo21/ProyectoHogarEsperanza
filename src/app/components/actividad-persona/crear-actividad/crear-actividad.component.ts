@@ -5,6 +5,7 @@ import { TipoActividad } from 'src/app/models/TipoActividad';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -17,6 +18,7 @@ export class CrearActividadComponent implements OnInit {
   public tipo:Array<string> =  new Array();
   public actividadCreate: Actividades = new Actividades(0,"",this.fecha,"",this.tipo);
   public id : number;
+  form:FormGroup;
 
   constructor(private router: Router, public _actividadservice: ActividadesService,private modalService: NgbModal) { }
 
