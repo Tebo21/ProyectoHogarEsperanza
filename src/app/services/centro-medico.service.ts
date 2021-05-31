@@ -6,29 +6,35 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CentroMedicoService {
-  private conexion = 'http://localhost:9898/centroMedico';
+  private conexion = 'http://127.0.0.1:8080/centroMedico';
 
   constructor(private http: HttpClient){}
 
   // tslint:disable-next-line: ban-types
   createCentro( centro: Object): Observable<Object>{
-    return this.http.post(`${this.conexion} + '/guardarCentroMedico'`, centro);
+    return this.http.post(`${this.conexion} + '/guardar'`, centro);
   }
 
   getCentro( id: number): Observable<any>{
-    return this.http.get(`${this.conexion} +'/listadoCentroMedicoId'/${id}`);
+    return this.http.get(`${this.conexion} +'/listado'/${id}`);
+  }
+
+  //getCentroList(): Observable<any>{
+    //return this.http.get(`${this.conexion} +'/listado'`);
+  //}
+  
+  listCentro(): Observable<any>{
+    return this.http.get(`${this.conexion}/listado`)
   }
 
   // tslint:disable-next-line: ban-types
   updateCentro( id: number, value: any): Observable<Object>{
-    return this.http.put(`${this.conexion} +'/editarCentroMedico'/${id}`, value);
+    return this.http.put(`${this.conexion} +'/editar'/${id}`, value);
   }
 
-  getCentroList(): Observable<any>{
-    return this.http.get(`${this.conexion} +'/listadoCentroMedico'`);
-  }
+  
 
   deletCentro( id: number): Observable<any>{
-    return this.http.delete(`${this.conexion} +'/eliminarCentroMedico'/${id}`, { responseType: 'text' });
+    return this.http.delete(`${this.conexion} +'/eliminar'/${id}`, { responseType: 'text' });
   }
 }

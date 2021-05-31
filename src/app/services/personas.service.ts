@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PersonasService {
+  public PersonById: Personas[]=[];
   private URL='http://localhost:3000/persona';
   constructor(private http:HttpClient) { }
 
@@ -14,7 +15,7 @@ export class PersonasService {
     return this.http.post(`${this.URL}/crearPersona`,persona);
   }
 
-  getPorCedula(cedula: any): Observable<Personas>{
-    return this.http.get<Personas>(this.URL+`/bycedula/${cedula}`);
+  getPorCedula(cedula: any): Observable<any>{
+    return this.http.get<any>(this.URL+`/bycedula/${cedula}`);
   }
 }

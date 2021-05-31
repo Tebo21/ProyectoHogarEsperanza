@@ -13,6 +13,8 @@ export class ListComponent implements OnInit {
 
   centros: Observable<CentroMedico[]>;
 
+  centroM : CentroMedico[] = [];
+
   constructor( private centroMedicoService: CentroMedicoService,
                private router: Router) {}
 
@@ -21,8 +23,19 @@ export class ListComponent implements OnInit {
     this.reloadData();
   }
 
-  reloadData(){
-    this.centros = this.centroMedicoService.getCentroList();
+  reloadData(): void {
+    this.centros = this.centroMedicoService.listCentro();
+    console.log('CENTROS');
+    console.log(this.centros);
+    this.centroMedicoService.listCentro().subscribe(data => {
+        this.centroM = data.data;
+        console.log('DATA');
+        console.log(data);
+        console.log('CENTROM2');
+        console.log(this.centroM);
+    
+        
+    })
   }
 
   deleteCentro(id: number){
