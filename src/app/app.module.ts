@@ -18,6 +18,7 @@ import { RegistroFamiliaresComponent } from './components/registro-familiares/re
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RegistroPersonaComponent,
     RegistroFamiliaresComponent,
     RegistroProductoComponent,
+    FichaSocioeconomicaComponent,
   ],
   imports: [
     BrowserModule,

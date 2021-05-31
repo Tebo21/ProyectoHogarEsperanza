@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Personas } from 'src/app/models/personas';
 import { RegistroFamiliaresService } from 'src/app/services/registro-familiares.service';
 import { RegistroFamiliares } from '../../models/registro-familiares';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro-familiares',
@@ -14,7 +15,7 @@ export class RegistroFamiliaresComponent implements OnInit {
   PersonasFami: Personas = new Personas();
   public hijosArray:any = [];
 
-  constructor(private famipersonaserve:RegistroFamiliaresService) { }
+  constructor(private famipersonaserve:RegistroFamiliaresService, private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -87,7 +88,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     (data=>{
       console.log("hijos registrados")
     });
-    confirm("familiares creados");
+    this.router.navigate(['/ficha-socioeconomica'])
   }
 
 }
