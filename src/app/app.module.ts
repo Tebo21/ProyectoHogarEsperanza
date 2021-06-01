@@ -22,8 +22,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ButtonModule} from 'primeng/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
-import { LayoutComponent } from './components/layout/layout.component';
+
+
 
 
 
@@ -40,8 +40,8 @@ import { LayoutComponent } from './components/layout/layout.component';
     RegistroPersonaComponent,
     RegistroFamiliaresComponent,
     RegistroProductoComponent,
-    FichaSocioeconomicaComponent,
-    LayoutComponent
+
+
   ],
   imports: [
     BrowserModule,

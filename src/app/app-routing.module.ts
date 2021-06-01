@@ -10,66 +10,23 @@ import { CrearActividadComponent } from './components/actividad-persona/crear-ac
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
-import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
-import { LayoutComponent } from './components/layout/layout.component';
+
+import { ListaProductosComponent } from './components/donacion-producto/lista-productos/lista-productos.component';
+
 
 const routes: Routes = [
-  {
-    path: 'Init',
-    component: LayoutComponent,
-    children: [
-      {
-        path: 'centromedico-listar',
-        component: ListComponent,
-      },
-      {
-        path: 'nuevo-centromedico',
-        component: CreateComponent,
-      },
-      {
-        path: 'detalle-centromedico',
-        component: DetalleCentroMComponent,
-      },
-      {
-        path: 'update-centromedico',
-        component: UpdateCentroMComponent,
-      },
-      {
-        path: 'actividades',
-        component: ActividadPersonaComponent,
-      },
-      {
-        path: 'crear-actividad',
-        component: CrearActividadComponent,
-      },
-      {
-        path: 'login',
-        component: LoginComponent,
-      },
-      {
-        path: 'registro-persona',
-        component: RegistroPersonaComponent,
-      },
-      {
-        path: 'registro-familiares',
-        component: RegistroFamiliaresComponent,
-      },
-      {
-        path: 'registro-producto',
-        component: RegistroProductoComponent,
-      },
-      {
-        path: 'ficha-socioeconomica',
-        component: FichaSocioeconomicaComponent,
-      },
-
-    ],
-  },
-  {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: 'Init/login',
-  },
+  { path: 'centromedico-listar', component: ListComponent },
+  { path: 'nuevo-centromedico', component: CreateComponent},
+  { path: 'detalle-centromedico', component: DetalleCentroMComponent},
+  { path: 'update-centromedico', component: UpdateCentroMComponent},
+  { path: 'actividades', component: ActividadPersonaComponent },
+  { path: 'crear-actividad', component: CrearActividadComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'registro-persona', component: RegistroPersonaComponent},
+  { path: 'registro-familiares', component: RegistroFamiliaresComponent},
+  { path: 'registro-producto', component: RegistroProductoComponent},
+  { path: 'lista-producto', component: ListaProductosComponent},
+  { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
 
 @NgModule({

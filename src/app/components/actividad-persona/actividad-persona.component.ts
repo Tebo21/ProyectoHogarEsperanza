@@ -59,7 +59,7 @@ export class ActividadPersonaComponent implements OnInit {
       (response) => {
         this.Person = response;
         console.log(response);
-        this._actividadservice.open.emit({data: this.Person});
+        //this._actividadservice.open.emit({data: this.Person});
       },
       (error) => {
         console.log(error);
