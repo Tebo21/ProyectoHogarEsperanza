@@ -1,0 +1,46 @@
+<h2 class="title">Gestión de Centros Medicos</h2>
+  <div class="form-group">
+    <label for="nombreCentroMedico">Nombre del Centro Médico:</label>
+    <input type="text" [(ngModel)]="selectedCentro.nombreCentroMedico" class="form-control" id="nombreCentroMedico" nombre="nombreCentroMedico" placeholder="Nombre">
+  </div>
+  <div class="form-group">
+    <label for="direccionCentroMedico">Dirección del Centro Médico</label>
+    <input type="text" [(ngModel)]="selectedCentro.direccionCentroMedico" class="form-control" id="direccionCentroMedico" nombre="direccionCentroMedico" placeholder="Dirección">
+  </div>
+  <div class="form-group">
+    <label for="telefonoCentroMedico">Telefono del Centro Médico</label>
+    <input type="text" [(ngModel)]="selectedCentro.telefonoCentroMedico" class="form-control" id="telefonoCentroMedico" nombre="telefonoCentroMedico" placeholder="Telefono">
+  </div>
+    <button (click)="addOrEdit()" class="btn btn-primary">
+    Guardar
+    </button>
+<br>
+<br>
+<h2 class="title">Lista de Centros Medicos</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NOMBRE</th>
+      <th scope="col">DIRECCION</th>
+      <th scope="col">TELEFONO</th>
+      <th scope="col">ACCIONES</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of centro" class = "list-group-item-action">
+      <td>{{c.idCentroMedico}}</td>
+      <td>{{c.nombreCentroMedico}}</td>
+      <td>{{c.direccionCentroMedico}}</td>
+      <td>{{c.telefonoCentroMedico}}</td>
+      <td>
+        <div class="cell" data-title="Acciones">
+            <input class="btn-update" (click)="openForEdit(c)" type="image" src="../../../assets/img/pencil.svg" alt="Delete">
+            <input class="btn-delete" (click)="deleteCentro(c)" type="image" src="../../../assets/img/delete.svg" alt="Delete">
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+

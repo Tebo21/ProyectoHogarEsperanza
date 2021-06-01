@@ -5,11 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
-import { CreateComponent } from './components/centro_medico/create/create.component';
-import { ListComponent } from './components/centro_medico/list/list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
-import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
 import { LoginService } from './services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
@@ -28,6 +24,10 @@ import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crea
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
+import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 
 @NgModule({
   declarations: [
@@ -35,10 +35,6 @@ import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/d
     LayoutComponent,
     LoginComponent,
     ActividadPersonaComponent,
-    CreateComponent,
-    ListComponent,
-    UpdateCentroMComponent,
-    DetalleCentroMComponent,
     CrearActividadComponent,
     RegistroPersonaComponent,
     RegistroFamiliaresComponent,
@@ -48,6 +44,8 @@ import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/d
     CrearCitamComponent,
     ListarCitamComponent,
     DasboardvoluntariosComponent,
+    VoluntarioCalendarioComponent,
+    ListCentroComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +59,7 @@ import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/d
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [],
   bootstrap: [AppComponent],
