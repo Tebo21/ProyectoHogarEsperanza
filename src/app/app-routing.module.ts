@@ -6,11 +6,11 @@ import { CreateComponent } from './components/centro_medico/create/create.compon
 import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
 import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
 import { LoginComponent } from './components/login/login.component';
-import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component'
+import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
-import { EntregaDonacionesComponent } from './components/donacion-producto/entrega-donaciones/entrega-donaciones.component';
+
 import { ListaProductosComponent } from './components/donacion-producto/lista-productos/lista-productos.component';
 
 
@@ -31,6 +31,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

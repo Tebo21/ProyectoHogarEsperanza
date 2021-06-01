@@ -18,7 +18,7 @@ import { RegistroFamiliaresComponent } from './components/registro-familiares/re
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { EntregaDonacionesComponent } from './components/donacion-producto/entrega-donaciones/entrega-donaciones.component';
+
 
 
 

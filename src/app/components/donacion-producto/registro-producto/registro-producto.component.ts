@@ -20,11 +20,12 @@ export class RegistroProductoComponent implements OnInit {
   telefonoDonador: string = '';
 
   donacionProd: Donaciones = new Donaciones;
-  // formDonador: FormGroup = new FormGroup({
-  //   cedula: new FormControl(''),
-  //   nombre: new FormControl(''),
+  
+   /*formDonador: FormGroup = new FormGroup({
+    cedula: new FormControl(''),
+     nombre: new FormControl(''),
 
-  // });
+   });*/
 
   formProducto: FormGroup = new FormGroup({
     nombre: new FormControl(''),
