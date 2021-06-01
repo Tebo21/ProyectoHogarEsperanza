@@ -62,12 +62,13 @@ const routes: Routes = [
         path: 'ficha-socioeconomica',
         component: FichaSocioeconomicaComponent,
       },
-      {
-        path: '**',
-        pathMatch: 'full',
-        redirectTo: 'login',
-      },
+
     ],
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'Init/login',
   },
 ];
 
