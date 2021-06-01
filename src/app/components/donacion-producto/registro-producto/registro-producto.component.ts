@@ -4,6 +4,7 @@ import { Donaciones } from 'src/app/models/Donaciones';
 import { Personas } from 'src/app/models/personas';
 import { DonaProductoService } from 'src/app/services/dona-producto.service';
 import { PersonasService } from 'src/app/services/personas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro-producto',
@@ -20,7 +21,7 @@ export class RegistroProductoComponent implements OnInit {
   telefonoDonador: string = '';
 
   donacionProd: Donaciones = new Donaciones;
-  
+
    /*formDonador: FormGroup = new FormGroup({
     cedula: new FormControl(''),
      nombre: new FormControl(''),
@@ -35,7 +36,8 @@ export class RegistroProductoComponent implements OnInit {
     fecha: new FormControl(new Date())
   });
 
-  constructor(private personaService: PersonasService, private donaProductoService: DonaProductoService) { }
+  constructor(private personaService: PersonasService, private donaProductoService: DonaProductoService
+    ,private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -97,4 +99,9 @@ export class RegistroProductoComponent implements OnInit {
       fecha: new Date(),
     })
   }
+  
+  navegarlista(){
+    this.router.navigateByUrl('/lista-producto');
+  }
+
 }
