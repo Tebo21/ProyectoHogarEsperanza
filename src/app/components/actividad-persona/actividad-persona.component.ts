@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbCalendarGregorian, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,8 +12,11 @@ import { Personas } from 'src/app/models/personas';
 })
 export class ActividadPersonaComponent implements OnInit {
   catalogoId: number = 0;
-  Person: Personas = new Personas();
+
+  @Input()Person: Personas = new Personas();
+
   PersonAsId: Personas[]=[];
+
   PersonId: string;
 
    dia = new NgbCalendarGregorian().getToday().day;
@@ -28,17 +31,21 @@ export class ActividadPersonaComponent implements OnInit {
     public modalService: NgbModal,
     public personaService: PersonasService
   ) {}
-
   ngOnInit(): void {
     this.mostrarActividades();
+    this.PersonId;
   }
 
   mostrarActividades(): void {
     this._actividadservice.getAll().subscribe(
       (response) => {
-        this._actividadservice.actividades = response;
+        if (response== null || response as undefined || response.length==0) {
+          console.log("Sin actidades");
+        }else{
+          this._actividadservice.actividades = response;
 
-        console.log(response);
+          console.log(response);
+        }
       },
       (error) => {
         console.log(error);
@@ -52,11 +59,13 @@ export class ActividadPersonaComponent implements OnInit {
       (response) => {
         this.Person = response;
         console.log(response);
+        //this._actividadservice.open.emit({data: this.Person});
       },
       (error) => {
         console.log(error);
       }
     );
+
   }
 
   gotoList() {

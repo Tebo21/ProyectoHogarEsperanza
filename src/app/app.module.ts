@@ -16,11 +16,17 @@ import { CrearActividadComponent } from './components/actividad-persona/crear-ac
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
-
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { AccordionModule } from 'primeng/accordion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ButtonModule} from 'primeng/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
+
 
 
 @NgModule({
@@ -47,6 +53,11 @@ import { ListarCitamComponent } from './components/citas_medicas/listar-citam/li
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    DialogModule,
+    DropdownModule,
+    AccordionModule,
+    BrowserAnimationsModule,
+    ButtonModule
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]

@@ -6,13 +6,18 @@ import { CreateComponent } from './components/centro_medico/create/create.compon
 import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
 import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
 import { LoginComponent } from './components/login/login.component';
-import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component'
+import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
+
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
+
+
+import { ListaProductosComponent } from './components/donacion-producto/lista-productos/lista-productos.component';
+
 
 
 const routes: Routes = [
@@ -28,12 +33,12 @@ const routes: Routes = [
   { path: 'registro-persona', component: RegistroPersonaComponent},
   { path: 'registro-familiares', component: RegistroFamiliaresComponent},
   { path: 'registro-producto', component: RegistroProductoComponent},
-  { path: 'ficha-socioeconomica', component: FichaSocioeconomicaComponent},
+  { path: 'lista-producto', component: ListaProductosComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

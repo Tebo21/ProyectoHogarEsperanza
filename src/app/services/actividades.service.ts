@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Actividades } from '../models/Actividades';
 import { TipoActividad } from '../models/TipoActividad';
@@ -8,6 +8,9 @@ import { TipoActividad } from '../models/TipoActividad';
   providedIn: 'root'
 })
 export class ActividadesService {
+
+  @Output() open: EventEmitter<any>= new EventEmitter();
+  
   public actividades: Actividades[] = [];
   private _http = 'http://localhost:3000/actividadPersona';
   private _httpTipo = 'http://localhost:3000/tipoactividad';
