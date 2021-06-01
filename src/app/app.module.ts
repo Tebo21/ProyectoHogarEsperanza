@@ -27,6 +27,9 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,7 @@ import { LayoutComponent } from './components/layout/layout.component';
     FichaSocioeconomicaComponent,
     CrearCitamComponent,
     ListarCitamComponent,
+    VoluntarioCalendarioComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +62,7 @@ import { LayoutComponent } from './components/layout/layout.component';
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [],
   bootstrap: [AppComponent],
