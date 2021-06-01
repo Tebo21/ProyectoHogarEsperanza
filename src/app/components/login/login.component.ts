@@ -10,7 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  user: any = {  
+  user: any = {
     nombreUsuario: '',
     contrasenia: ''
   };
@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
       } else {
         alert('Usuario o contraseña incorrectos')
       }
+      
     });
   }
 }

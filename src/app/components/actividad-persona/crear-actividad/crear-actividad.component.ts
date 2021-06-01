@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
 import { FormGroup } from '@angular/forms';
 import { TipoActividad } from 'src/app/models/TipoActividad';
+import { Personas } from '../../../models/personas';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -13,19 +14,12 @@ import { TipoActividad } from 'src/app/models/TipoActividad';
   styleUrls: ['./crear-actividad.component.css'],
 })
 export class CrearActividadComponent implements OnInit {
-  @Input() modal: NgbModalWindow;
-  public fecha: Date = new Date();
+  @Input() public modal: NgbModalWindow;
+  @Input() Person: Personas = new Personas();
+   public fecha: Date = new Date();
   public tipo: Array<string> = new Array();
   _tipoactividad: TipoActividad[] = [];
-  public actividadCreate: Actividades = new Actividades(
-    0,
-    '',
-    this.fecha,
-    this.fecha,
-    this.fecha,
-    '',
-    this.tipo
-  );
+  public actividadCreate: Actividades = new Actividades();
   public id: number;
 
   constructor(
@@ -35,9 +29,11 @@ export class CrearActividadComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.mostrarTipoActividades();
-  }
+
+    }
+
   addActividad(): void {
-    var d = new Date();        
+    var d = new Date();
     this.fecha.getUTCDate;
     this.actividadCreate.idActividadPersona = this.id;
     console.log(this.actividadCreate);
@@ -54,12 +50,16 @@ export class CrearActividadComponent implements OnInit {
   gotoList() {
     this.router.navigate(['/actividades']);
   }
-
+  
   mostrarTipoActividades(): void {
     this._actividadservice.getAllTipos().subscribe(
       response => {
        this._tipoactividad=response;
         console.log(response);
+        this._actividadservice.open.subscribe(
+          data =>{
+            console.log("Datos cargado");
+          }, error => console.log("No se cargaron los daros"));
       },
       error => {
         console.log(error);
