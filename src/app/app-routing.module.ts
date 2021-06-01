@@ -11,6 +11,8 @@ import { RegistroPersonaComponent } from './components/registro-persona/registro
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
+import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
+import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 
 
 const routes: Routes = [
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'nuevo-centromedico', component: CreateComponent},
   { path: 'detalle-centromedico', component: DetalleCentroMComponent},
   { path: 'update-centromedico', component: UpdateCentroMComponent},
+  { path: 'listar-citasmedicas', component: ListarCitamComponent},
+  { path: 'crear-citasmedicas', component: CrearCitamComponent},
   { path: 'actividades', component: ActividadPersonaComponent },
   { path: 'crear-actividad', component: CrearActividadComponent },
   { path: 'login', component: LoginComponent },
