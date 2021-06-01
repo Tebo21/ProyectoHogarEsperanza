@@ -8,7 +8,7 @@
         <label> Fecha registro: </label>
       </div>
       <div class=" col-sm-6 ">
-        <label>{{fecha| date :'MMM dd, yyyy HH:mm'}}</label>
+        <input name="fechaActividad" #fechaActividad="ngModel" [(ngModel)]="actividadCreate.fechaActividad">
         <p style="margin-left: 2%;"> </p>
       </div>
     </div>
@@ -17,7 +17,7 @@
         <label>Hora de inicio :</label>
       </div>
       <div class=" col-sm-6 ">
-        <input type="time" step="3600:3600" id="start" name="trip-start" >
+        <input type="time" step="3600:3600" id="start" name="horaInicio" #horaInicio="ngModel" [(ngModel)]="actividadCreate.horaInicio">
         <p style="margin-left: 2%;">
         </p>
       </div>
@@ -27,21 +27,18 @@
         <label>Hora de finalización:</label>
       </div>
       <div class=" col-sm-6 ">
-        <input type="time" step="3600" id="start" name="trip-start" value="HH : mm ">
+        <input type="time" step="3600" id="start" name="horaFin" #horaFin="ngModel" [(ngModel)]="actividadCreate.horaFin">
         <p style="margin-left: 2%;"> </p>
-
       </div>
     </div>
-
     <div class="row ">
       <div class=" col-sm-6 ">
         <label>Tipo de Actividad:</label>
       </div>
       <div class=" col-sm-3">
-        <select class="form-select " ria-label="Default select example ">
-          <option *ngFor="let x of _tipoactividad" >{{x.nombreActividad}}</option>
+        <select class="form-select" name="tipo" #tipo="ngModel" [(ngModel)]="_tipoactividad1">
+          <option [ngValue]="x" *ngFor="let x of _tipoactividad">{{x.nombreActividad}}</option>
         </select>
-
       </div>
       <div class=" col-sm-2">
         <button type="button" class="btn btn-primary" (click)="modalService.open(modalForm)">
@@ -60,7 +57,7 @@
         <label>Descripción :</label>
       </div>
       <div class=" col-sm-6 ">
-        <textarea type="text" id="descripcion"></textarea>
+        <textarea type="text" id="descripcion" #descripcion="ngModel" [(ngModel)]="actividadCreate.descripcionActividad"></textarea>
       </div>
     </div>
   </div>
@@ -75,15 +72,11 @@
 
 
 <ng-template #modalForm let-modal>
-
-
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-
-
     <div class="form-floating mb-3">
       <input type="text" class="form-control" id="categotria" placeholder="categoria" maxlength="50">
       <label for="categoria">Actividad</label>

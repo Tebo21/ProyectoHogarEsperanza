@@ -65,11 +65,17 @@
         <div class="card-body">
           <table class="table ">
             <thead class="table">
+              <th scope="col">Hora de Inicio</th>
+              <th scope="col">Hora Fin</th>
+              <th scope="col">Actividad Realizada</th>
               <th scope="col">Fecha</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Tipo de Actividad</th>
+              <th scope="col">Persona</th>
+              <th scope="col">Observaciones</th>
             </thead>
             <tbody>
+              <tr *ngFor="let x of values">
+                <td *ngFor="let data of x">{{ data }}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -85,7 +91,7 @@
 
 <ng-template #modalForm let-modal>
 
-  <div class="modal-body">
-    <app-crear-actividad [modal]=modal></app-crear-actividad>
+  <div class="modal-body" >
+    <app-crear-actividad [modal]=modal [Person]="Person"></app-crear-actividad>
   </div>
 </ng-template>
