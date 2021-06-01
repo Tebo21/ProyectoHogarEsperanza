@@ -10,6 +10,8 @@ import { CrearActividadComponent } from './components/actividad-persona/crear-ac
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
+import { EntregaDonacionesComponent } from './components/donacion-producto/entrega-donaciones/entrega-donaciones.component';
+import { ListaProductosComponent } from './components/donacion-producto/lista-productos/lista-productos.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,7 @@ const routes: Routes = [
   { path: 'registro-persona', component: RegistroPersonaComponent},
   { path: 'registro-familiares', component: RegistroFamiliaresComponent},
   { path: 'registro-producto', component: RegistroProductoComponent},
+  { path: 'lista-producto', component: ListaProductosComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
 
