@@ -9,4 +9,20 @@ export class Actividades {
 	public horaFin : Date;
   public descripcionActividad: string;
   public tipoactividad: TipoActividad;
+
+  constructor(idActividadPersona: number,
+    cedulaPersona: Personas,
+    fechaActividad: Date,
+    horaInicio:Date,
+    horaFin : Date,
+    descripcionActividad: string,
+    tipoactividad: TipoActividad) {
+    this.idActividadPersona = idActividadPersona,
+    this.cedulaPersona = cedulaPersona,
+    this.fechaActividad = fechaActividad,
+    this.horaInicio = horaInicio,
+    this.horaFin= horaFin,
+    this.descripcionActividad = descripcionActividad
+    this.tipoactividad = tipoactividad
+  }
 }

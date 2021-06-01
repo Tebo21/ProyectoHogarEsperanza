@@ -4,6 +4,8 @@ import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbCalendarGregorian, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PersonasService } from 'src/app/services/personas.service';
 import { Personas } from 'src/app/models/personas';
+import { Actividades } from '../../models/Actividades';
+import { TipoActividad } from '../../models/TipoActividad';
 
 @Component({
   selector: 'app-actividad-persona',
@@ -18,12 +20,11 @@ export class ActividadPersonaComponent implements OnInit {
   PersonAsId: Personas[]=[];
 
   PersonId: string;
-
-   dia = new NgbCalendarGregorian().getToday().day;
-   mes = new NgbCalendarGregorian().getToday().month;
-   year = new NgbCalendarGregorian().getToday().year;
-  fecha : string = this.dia+"/"+this.mes+"/"+this.year;
-  fecha1 : string = this.fecha;
+   public fecha: Date = new Date();
+  public tipo: Array<string> = new Array();
+  _tipoactividadCreate: TipoActividad= new TipoActividad(0,"","");
+  _tipoactividad: TipoActividad[] = [];
+  public actividadCreate: Actividades = new Actividades(0,this.Person,this.fecha,this.fecha,this.fecha,"",this._tipoactividadCreate);
 
   constructor(
     private router: Router,
@@ -41,6 +42,8 @@ export class ActividadPersonaComponent implements OnInit {
       (response) => {
         if (response== null || response as undefined || response.length==0) {
           console.log("Sin actidades");
+          this.actividadCreate = response;
+          console.log(response);
         }else{
           this._actividadservice.actividades = response;
 
@@ -59,7 +62,7 @@ export class ActividadPersonaComponent implements OnInit {
       (response) => {
         this.Person = response;
         console.log(response);
-        //this._actividadservice.open.emit({data: this.Person});
+        this._actividadservice.open.emit();
       },
       (error) => {
         console.log(error);

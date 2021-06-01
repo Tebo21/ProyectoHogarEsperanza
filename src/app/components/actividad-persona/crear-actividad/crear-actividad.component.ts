@@ -18,8 +18,9 @@ export class CrearActividadComponent implements OnInit {
   @Input() Person: Personas = new Personas();
    public fecha: Date = new Date();
   public tipo: Array<string> = new Array();
+  _tipoactividadCreate: TipoActividad= new TipoActividad(0,"","");
   _tipoactividad: TipoActividad[] = [];
-  public actividadCreate: Actividades = new Actividades();
+  public actividadCreate: Actividades = new Actividades(0,this.Person,this.fecha,this.fecha,this.fecha,"",this._tipoactividadCreate);
   public id: number;
 
   constructor(
@@ -50,7 +51,7 @@ export class CrearActividadComponent implements OnInit {
   gotoList() {
     this.router.navigate(['/actividades']);
   }
-  
+
   mostrarTipoActividades(): void {
     this._actividadservice.getAllTipos().subscribe(
       response => {

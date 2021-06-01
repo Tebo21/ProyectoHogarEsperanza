@@ -20,18 +20,18 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
-
-
+import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LayoutComponent,
     LoginComponent,
     ActividadPersonaComponent,
     CreateComponent,
@@ -57,9 +57,9 @@ import { ListarCitamComponent } from './components/citas_medicas/listar-citam/li
     DropdownModule,
     AccordionModule,
     BrowserAnimationsModule,
-    ButtonModule
+    ButtonModule,
   ],
-  providers: [LoginService],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

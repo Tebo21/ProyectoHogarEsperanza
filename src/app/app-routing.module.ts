@@ -16,15 +16,16 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 
-const routes: Routes = [
+
+      //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
+      //NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
+ //ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
+
+  const routes: Routes = [
   {
-    //ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
     path: 'Init',
     component: LayoutComponent,
     children: [
-      //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
-      //NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
-      
       {
         path: 'centromedico-listar',
         component: ListComponent,
