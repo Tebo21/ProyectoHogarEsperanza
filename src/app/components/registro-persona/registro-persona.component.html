@@ -1,10 +1,26 @@
+<header class="header">
+  <div class="container logo-nav-container">
+      <img src="https://hogaresperanza.org/wp-content/uploads/2018/03/logo.png" class="logo" />
+
+      <nav class="navigation">
+          <ul> <a href="#">REGISTRO PERSONA</a></ul>
+      </nav>
+  </div>
+</header>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 <br><br><br><br>
 <form >
 
-<h1>REGISTRO PERSONA</h1>
-     
-<div style="margin-right: 5%;" class="input-group mb-3">
+<body class="body">
+  <div class="container">
+   <div class="modal-body ">  
+   <div class="card">
+         <div class="card-header mb-3">
+   
+          <h1>REGISTRO PERSONA</h1>
+          </div>
+  
+    <div style="margin-right: 5%;" class="input-group mb-3">
         <input [(ngModel)]="Personas.cedula" name="cedula" id="cedula" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Numero de cedula">
       </div>
     
@@ -36,20 +52,32 @@
       </div>
       
       <div class="input-group mb-3">
-        <select [(ngModel)]="Personas.tipoPersona" name="tipoPersonas" id="tipoPersonas" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="tipo de persona">
-          <option value="Ayuda Social">Ayuda Social</option>
-          <option value="Administración">Administración</option>
-          <option value="Voluntarios">Voluntarios</option>
-          <option value="Administrador">Administrador</option>
+        <select [(ngModel)]="Personas.nacionalidad" name="nacionalidad" id="nacionalidad" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="nacionalidad">
+          <option *ngFor="let nac of catalogoNacionalidad" value="{{nac}}">{{nac}}</option>
+        </select>
+        <select [(ngModel)]="Personas.discapacidad" name="discapacidad" id="discapacidad" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="discapacidad">
+          <option value="No">No</option>
+          <option value="Si">Si</option>
+        </select>
+        <select [(ngModel)]="Personas.estado_civil" name="estado_civil" id="estado_civil" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="estado_civil">
+          <option  *ngFor="let estc of catalogoEstadoCivil" value="{{estc}}">{{estc}}</option>
         </select>
       </div>
 
-      <div class="input-group mb-3">
-        <button (click)="addPersona()" style="margin-left: 30%;" type="submit">Guardar y Continuar</button>
+      <div class="btn_guardar mb-3">
+        <button class="guardar1" (click)="addPersona()" style="margin-left: 30%;" type="submit">Guardar y Continuar</button>
     </div>
 
-    <div class="input-group mb-3">
-        <button style="margin-left: 30%;" type="submit">cancelar</button>
-    </div>
+  </div>   
+</div>
+</div>
+</body>
 
 </form>
+<footer class="footer">
+  <div class="container">
+      <div class="row px-3">
+          <p> &copy; Hogar Esperanza 2021.</p>
+      </div>
+  </div>
+</footer>
