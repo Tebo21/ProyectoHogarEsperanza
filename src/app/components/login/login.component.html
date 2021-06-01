@@ -38,12 +38,12 @@
                     <div class="row px-3"> <label class="mb-1">
                             <h6 class="mb-0 text-sm">Nombre de Usuario</h6>
                         </label> <input class="mb-4" type="text" name="email"
-                            placeholder="Ingrese un Nombre de Usuario válido" [(ngModel)]="user.nombreUsuario">
+                            placeholder="Ingrese su número de cédula de indentidad" [(ngModel)]="user.usuarioCedula">
                     </div>
                     <div class="row px-3"> <label class="mb-1">
                             <h6 class="mb-0 text-sm">Contraseña</h6>
                         </label> <input type="password" name="password" placeholder="Ingrese su contraseña"
-                            [(ngModel)]="user.contrasenia"> 
+                            [(ngModel)]="user.usuarioContrasenia"> 
                     </div>
                     <div>
                         <h4>Selecciona un tipo de Tarjeta</h4>
@@ -56,33 +56,11 @@
                     <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center"
                             (click)='Logearse()'>Iniciar Sesión</button>
                     </div>
-                    <div class="row mb-4 px-3"> <small class="font-weight-bold">¿No tienes cuenta? <a
-                                class="text-danger " href="https://mail.google.com/mail/u/0/">Regístrate</a></small>
-                    </div>
                 </div>
             </div>
 
-            <div class="container">
-                <p-dialog header="Hoger Esperanza" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}"
-                    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-                    <p class="p-m-0">Bienvenido al Sistema de Administración Hogar Esperanza</p>
-                    <ng-template pTemplate="footer">
-                        <p-button icon="pi pi-check" (click)="display=false" label="Ok" styleClass="p-button-text">
-                        </p-button>
-                    </ng-template>
-                </p-dialog>
-            </div>
-            <div class="container">
-                <p-dialog header="Hoger Esperanza" [(visible)]="displayF" [modal]="true" [style]="{width: '50vw'}"
-                    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-                    <p class="p-m-0">{{alerta}}</p>
-                    <ng-template pTemplate="footer">
-                        <p-button icon="pi pi-check" (click)="displayF=false" label="Ok" styleClass="p-button-text">
-                        </p-button>
-                    </ng-template>
-                </p-dialog>
-            </div>
-
+              
+        
         </div>
         <div class="bg-blue py-4">
             <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2"> &copy; Hogar Esperanza 2021.</small>
@@ -96,3 +74,21 @@
         </div>
     </div>
 </div>
+
+<p-dialog header="Hoger Esperanza" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}"
+[baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p class="p-m-0">Bienvenido al Sistema de Administración Hogar Esperanza</p>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="display=false" label="Ok" styleClass="p-button-text">
+    </p-button>
+</ng-template>
+</p-dialog>
+    
+<p-dialog header="Hoger Esperanza" [(visible)]="displayF" [modal]="true" [style]="{width: '50vw'}"
+[baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p class="p-m-0">{{alerta}}</p>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayF=false" label="Ok" styleClass="p-button-text">
+    </p-button>
+</ng-template>
+</p-dialog>

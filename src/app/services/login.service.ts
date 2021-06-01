@@ -20,5 +20,5 @@ export class LoginService {
     const url = 'login';
     return this.getQueryLogin(url, usuarioCedula, usuarioContrasenia, usuarioTipo);
   }
-  
+
 }
