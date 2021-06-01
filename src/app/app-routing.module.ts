@@ -18,9 +18,13 @@ import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crea
 
 const routes: Routes = [
   {
+    //ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
     path: 'Init',
     component: LayoutComponent,
     children: [
+      //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
+      //NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
+      
       {
         path: 'centromedico-listar',
         component: ListComponent,
