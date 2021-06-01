@@ -62,7 +62,6 @@ const routes: Routes = [
         path: 'ficha-socioeconomica',
         component: FichaSocioeconomicaComponent,
       },
-
     ],
   },
   {
