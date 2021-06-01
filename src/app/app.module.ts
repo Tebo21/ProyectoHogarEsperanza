@@ -19,6 +19,7 @@ import { RegistroProductoComponent } from './components/donacion-producto/regist
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
+import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
     RegistroFamiliaresComponent,
     RegistroProductoComponent,
     FichaSocioeconomicaComponent,
+    ControlDonacionesComponent,
   ],
   imports: [
     BrowserModule,
