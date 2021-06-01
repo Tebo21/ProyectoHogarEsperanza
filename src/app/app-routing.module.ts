@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListComponent } from './components/centro_medico/list/list.component';
+import { LayoutComponent } from './components/layout/layout.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
 import { CreateComponent } from './components/centro_medico/create/create.component';
 import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
@@ -10,8 +11,10 @@ import { CrearActividadComponent } from './components/actividad-persona/crear-ac
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
+
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
-import { LayoutComponent } from './components/layout/layout.component';
+import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
+import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 
 const routes: Routes = [
   {
