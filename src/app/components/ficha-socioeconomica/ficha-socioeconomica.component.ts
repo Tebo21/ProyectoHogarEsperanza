@@ -18,6 +18,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
   }
 
 
+
   fecha_actual(){
     let mes = this.fechaActual.getMonth()+1
     let fechahoy = this.fechaActual.getFullYear()+"/"+mes+"/"+this.fechaActual.getDate();
@@ -27,7 +28,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
   }
 
   addFicha(){
-    var cedula_persona=localStorage.getItem('cedulalocalstorage'); 
+    var cedula_persona=localStorage.getItem('cedulalocalstorage');
     this.fichasocieconomicaModel.cedulaPersona=cedula_persona;
     this.fichasocioserve.postFichaSocio(this.fichasocieconomicaModel).subscribe(data=>{
       console.log("ficha 1 creada")

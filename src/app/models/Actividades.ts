@@ -1,21 +1,22 @@
+import { Personas } from "./personas";
 import { TipoActividad } from "./TipoActividad";
 
 export class Actividades {
   public idActividadPersona: number;
-  public cedulaPersona: string;
+  public cedulaPersona: Personas;
   public fechaActividad: Date;
   public horaInicio:Date;
 	public horaFin : Date;
   public descripcionActividad: string;
-  public tipoactividad: Array<String>;
+  public tipoactividad: TipoActividad;
 
   constructor(idActividadPersona: number,
-    cedulaPersona: string,
+    cedulaPersona: Personas,
     fechaActividad: Date,
     horaInicio:Date,
     horaFin : Date,
     descripcionActividad: string,
-    tipoactividad: Array<String>) {
+    tipoactividad: TipoActividad) {
     this.idActividadPersona = idActividadPersona,
     this.cedulaPersona = cedulaPersona,
     this.fechaActividad = fechaActividad,

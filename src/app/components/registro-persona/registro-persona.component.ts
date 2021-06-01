@@ -15,6 +15,15 @@ export class RegistroPersonaComponent implements OnInit {
   today= new Date();
   fecha =  new Date();
   fecha1 =  new Date();
+  catalogoNacionalidad = ["Afganistán","Alemania","Arabia Saudita", "Argentina", "Australia", "Bélgica", "Bolivia",
+   "Brasil", "Camboya", "Canadá", "Chile", "China", "Colombia", "Corea", "Costa Rica", "Cuba", "Dinamarca", "Ecuador",
+   "Egipto", "El Salvador", "Escocia", "España", "Estados Unidos", "Estonia", "Etiopia", "Filipinas", "Finlandia",
+   "Francia", "Gales", "Grecia", "Guatemala", "Haití", "Holanda", "Honduras", "Indonesia", "Inglaterra", "Irak",
+   "Irán", "Irlanda", "Israel", "Italia", "Japón", "Jordania", "Laos", "Letonia", "Lituania", "Malasia", "Marruecos",
+   "México", "Nicaragua", "Noruega", "Nueva Zelanda", "Panamá", "Paraguay", "Perú", "Polonia", "Portugal", "Puerto Rico",
+   "Puerto Rico", "Republica Dominicana", "Rumania", "Rusia", "Suecia", "Suiza", "Tailandia", "Taiwán", "Turquía",
+    "Ucrania", "Uruguay", "Venezuela", "Vietnam"];
+    catalogoEstadoCivil = ["Soltero/a","Casado/a", "Divorciado/a", "Viudo/a"];
   f1: Number;
   constructor(private PersonasService:PersonasService, private router:Router) { }
 

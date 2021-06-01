@@ -1,10 +1,10 @@
 export class TipoActividad{
   idTipoActividad: number
   nombreActividad: string
-  descripcionActividad: String
+  descripcionActividad: string
 
   constructor(idTipoActividad: number,nombreActividad: string,
-    descripcionActividad: String){
+    descripcionActividad: string){
       this.descripcionActividad=descripcionActividad;
       this.idTipoActividad= idTipoActividad;
       this.nombreActividad= nombreActividad;
