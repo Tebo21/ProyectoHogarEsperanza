@@ -26,11 +26,12 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
 import { LayoutComponent } from './components/layout/layout.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-   // ActividadPersonaComponent,
+    ActividadPersonaComponent,
     CreateComponent,
     ListComponent,
     UpdateCentroMComponent,
