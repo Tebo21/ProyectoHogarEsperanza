@@ -19,7 +19,7 @@ import { RegistroProductoComponent } from './components/donacion-producto/regist
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
-
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    DialogModule
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]
