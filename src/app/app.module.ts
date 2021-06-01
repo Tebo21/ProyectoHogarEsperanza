@@ -27,6 +27,7 @@ import { ControlDonacionesComponent } from './components/donacion-producto/contr
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { LayoutComponent } from './components/layout/layout.component';
     ControlDonacionesComponent,
     CrearCitamComponent,
     ListarCitamComponent,
+    DasboardvoluntariosComponent,
   ],
   imports: [
     BrowserModule,
