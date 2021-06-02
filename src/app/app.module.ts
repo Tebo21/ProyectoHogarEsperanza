@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginService } from './services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
@@ -21,14 +20,24 @@ import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
+import { UsuarioService } from './services/usuarios.service';
+import { PanelModule } from 'primeng/panel';
+import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import {KeyFilterModule} from 'primeng/keyfilter';
+import {InputSwitchModule} from 'primeng/inputswitch';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { CommonModule } from '@angular/common';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
+import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
+import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -47,6 +56,14 @@ import { ListarCitaComponent } from './components/citas_medicas/listar-cita/list
     ListCentroComponent,
     CrearCitaComponent,
     ListarCitaComponent,
+    CrearCitaComponent,
+    ListarCitaComponent,
+    RegistroUsuariosComponent,
+    DasboardvoluntariosComponent,
+    VoluntarioCalendarioComponent,
+    ListCentroComponent,
+    RegistroActividadCoordinadorComponent,
+    ListadoUsuariosComponent,
   ],
   imports: [
     CommonModule,
@@ -62,9 +79,14 @@ import { ListarCitaComponent } from './components/citas_medicas/listar-cita/list
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
+    PanelModule,
+    TableModule,
+    VirtualScrollerModule,
+    KeyFilterModule,
+    InputSwitchModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
-  providers: [],
+  providers: [UsuarioService,FichaSocioeconomicaService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

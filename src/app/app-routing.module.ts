@@ -9,19 +9,24 @@ import { RegistroFamiliaresComponent } from './components/registro-familiares/re
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
 
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
+import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
+
 import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
-
-
+import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
  // ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
 
 const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: 'Init',
     component: LayoutComponent,
@@ -37,10 +42,6 @@ const routes: Routes = [
       {
         path: 'crear-actividad',
         component: CrearActividadComponent,
-      },
-      {
-        path: 'login',
-        component: LoginComponent,
       },
       {
         path: 'registro-persona',
@@ -63,8 +64,16 @@ const routes: Routes = [
         component: FichaSocioeconomicaComponent,
       },
       {
+        path: 'registro-usuario',
+        component: RegistroUsuariosComponent,
+      },
+      {
         path: 'dashboard',
         component : DasboardvoluntariosComponent,
+      },
+      {
+        path: 'listado-usuarios',
+        component : ListadoUsuariosComponent,
       },
       {
         path: 'calendario',
@@ -77,6 +86,10 @@ const routes: Routes = [
       {
         path: 'listar-citaM',
         component: ListarCitaComponent
+      },
+      {
+        path: 'registro-coordinador',
+        component: RegistroActividadCoordinadorComponent
       }
 
     ],
@@ -84,7 +97,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'Init/login',
+    redirectTo: 'login',
   },
 ];
 
@@ -92,4 +105,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
