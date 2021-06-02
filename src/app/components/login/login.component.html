@@ -2,67 +2,74 @@
     integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+<header class="header">
+  <div class="container1 logo-nav-container">
+      <img src="https://hogaresperanza.org/wp-content/uploads/2018/03/logo.png" />
+  </div>
+</header>
 
-<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
-    <div class="card card0 border-0">
-        <div class="row d-flex">
-            <div class="col-lg-6">
-                <div class="card1 pb-5">
-                    <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
-                        <img src="https://hogaresperanza.org/wp-content/uploads/2020/11/79202613_10220100511359772_5632575654215024640_o.jpg"
-                            class="image" style="padding-left: 50px; padding-top: 20px;">
+<body>
+  <div class="container1">
+    <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+        <div class="card card0 border-0">
+            <div class="row d-flex">
+                <div class="col-lg-6">
+                    <div class="card1 pb-5">
+                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
+                            <img src="https://hogaresperanza.org/wp-content/uploads/2020/11/79202613_10220100511359772_5632575654215024640_o.jpg"
+                                class="image" style="padding-left: 50px; padding-top: 20px;">
+                        </div>
                     </div>
                 </div>
-            </div>
-        <br>
-            <div class="col-lg-6">
-                <div class="card2 card border-0 px-4 py-5">
-                    <div class="row px-3 mb-4">
-                        <div class="line"></div> <small class="or text-center">O</small>
-                        <div class="line"></div>
-                    </div>
-                    <div class="row px-3"> <label class="mb-1">
-                            <h6 class="mb-0 text-sm">Cédula de Identidad</h6>
-                        </label> <input class="mb-4" type="text" [(ngModel)]="user.usuarioCedula"
-                            name="user.usuarioCedula" placeholder="Número de cédula de identidad">
-                    </div>
-                    <div class="row px-3"> <label class="mb-1">
-                            <h6 class="mb-0 text-sm">Contraseña</h6>
-                        </label> <input type="password" [(ngModel)]="user.usuarioContrasenia"
-                            name="user.usuarioContrasenia" placeholder="Contraseña">
-                    </div>
-                    <div>
-                        <h4>Selecciona un tipo de usuario</h4>
-                        <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario"
-                            optionLabel="string" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
-                            (onChange)="onChange($event)">
-                        </p-dropdown>
-                    </div>
-                    <div class="row px-3 mb-4">
-                        <a href="https://www.facebook.com/" class="ml-auto mb-0 text-sm">¿Olvidaste tu contraseña?</a>
-                    </div>
-                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center"
-                            (click)='Validar()'>Iniciar Sesión</button>
+            <br>
+                <div class="col-lg-6">
+                    <div class="card2 card border-0 px-4 py-5">
+                        <div class="row px-3 mb-4">
+                            <div class="line"></div> <small class="or text-center">O</small>
+                            <div class="line"></div>
+                        </div>
+                        <div class="row px-3"> <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Cédula de Identidad</h6>
+                            </label> <input class="mb-4" type="text" [(ngModel)]="user.usuarioCedula"
+                                name="user.usuarioCedula" placeholder="Número de cédula de identidad">
+                        </div>
+                        <div class="row px-3"> <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Contraseña</h6>
+                            </label> <input type="password" [(ngModel)]="user.usuarioContrasenia"
+                                name="user.usuarioContrasenia" placeholder="Contraseña">
+                        </div>
+                        <div>
+                            <h4>Selecciona un tipo de usuario</h4>
+                            <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario"
+                                optionLabel="string" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
+                                (onChange)="onChange($event)">
+                            </p-dropdown>
+                        </div>
+                        <div class="row px-3 mb-4">
+                            <a href="https://www.facebook.com/" class="ml-auto mb-0 text-sm">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <div class="row mb-3 px-3"> <button type="submit" class="btn"
+                                (click)='Validar()'>Iniciar Sesión</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
-
-
-
-        </div>
-        <div class="bg-blue py-1">
-            <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2"> &copy; Hogar Esperanza 2021.</small>
-                <div class="social-contact ml-4 ml-sm-auto">
-                    <a href="https://www.facebook.com"><span class="fa fa-facebook mr-4 text-sm"></span></a>
-                    <a href="https://www.gmail.com"><span class="fa fa-google-plus mr-4 text-sm"></span></a>
-                    <a href="https://www.linkedin.com"><span class="fa fa-linkedin mr-4 text-sm"></span></a>
-                    <a href="https://www.twitter.com"><span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span></a>
+            <div class="bg-blue py-1">
+                <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2"> &copy; Hogar Esperanza 2021.</small>
+                    <div class="social-contact ml-4 ml-sm-auto">
+                        <a href="https://www.facebook.com"><span class="fa fa-facebook mr-4 text-sm"></span></a>
+                        <a href="https://www.gmail.com"><span class="fa fa-google-plus mr-4 text-sm"></span></a>
+                        <a href="https://www.linkedin.com"><span class="fa fa-linkedin mr-4 text-sm"></span></a>
+                        <a href="https://www.twitter.com"><span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span></a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
 
+</body>
 <p-dialog header="Hoger Esperanza" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
     <p class="p-m-0">{{alerta}}</p>
