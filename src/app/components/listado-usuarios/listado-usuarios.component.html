@@ -1,0 +1,22 @@
+<div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
+
+<p-table [value]="listaUsusarios">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Cédula</th>
+            <th>Nombre de Usuario</th>
+            <th>Tipo de Usuario</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td>{{user.usuarioCedula}}</td>
+            <td>{{user.usuarioNombre}}</td>
+            <td>{{tipoUsuario(user.usuarioTipo)}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+
+</div>

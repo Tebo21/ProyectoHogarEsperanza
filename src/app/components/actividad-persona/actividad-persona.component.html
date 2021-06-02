@@ -1,97 +1,97 @@
-  <div class="container">
+<div class="container">
     <div class="modal-body ">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-tittle">Registro de actividades </h5>
-        </div>
-        <div class="card-body">
-          <form class="row g-3 ">
-            <div class="col-md-1 position-relative ">
-              <label for="staticEmail2 " class="visually-hidden">Cedula</label>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-tittle">Registro de actividades </h5>
             </div>
-            <div class="col-md-3 position-relative">
-              <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId">
-            </div>
-            <div class="col-md-4 position-relative ">
-              <button type="submit " class="btn btn-primary mb-3" (click)="getPersonsById()">Buscar</button>
-            </div>
-            <div class="col-md-4 position-relative">
-              <input type="date" id="start" name="trip-start" value="fecha1">
-            </div>
-          </form>
-          <br>
+            <div class="card-body">
+                <form class="row g-3 ">
+                    <div class="col-md-1 position-relative ">
+                        <label for="staticEmail2 " class="visually-hidden">Cedula</label>
+                    </div>
+                    <div class="col-md-3 position-relative">
+                        <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId">
+                    </div>
+                    <div class="col-md-4 position-relative ">
+                        <button type="submit " class="btn btn-primary mb-3" (click)="getPersonsById()">Buscar</button>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <input type="date" id="start" name="trip-start" value="fecha1">
+                    </div>
+                </form>
+                <br>
 
-          <form class="row g-3 needs-validation " novalidate>
-            <div class="col-md-4 position-relative ">
-              <label for="validationTooltip01 " class="form-label ">Nombre</label>
-              <input type="text " class="form-control" value="{{Person.nombres}}" readonly>
+                <form class="row g-3 needs-validation " novalidate>
+                    <div class="col-md-4 position-relative ">
+                        <label for="validationTooltip01 " class="form-label ">Nombre</label>
+                        <input type="text " class="form-control" value="{{Person.nombres}}" readonly>
+
+                    </div>
+                    <div class="col-md-4 position-relative ">
+                        <label for="validationTooltip02 " class="form-label ">Apellido</label>
+                        <input type="text " class="form-control " id="apellido" value="{{Person.apellidos}}" readonly>
+
+                    </div>
+                    <div class="col-md-4 position-relative ">
+                        <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
+                        <div class="input-group has-validation ">
+                            <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
+                            <input type="email " class="form-control " id="correo" value="{{Person.correo}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-3 position-relative ">
+                        <label for="validationTooltip03 " class="form-label ">Telefono</label>
+                        <input type="text " class="form-control " id="telefono" value="{{Person.celular}}" readonly>
+
+                    </div>
+                    <div class="col-md-6 position-relative ">
+                        <label for="validationTooltip04 " class="form-label ">Direccion</label>
+                        <input type="text " class="form-control " id="direccion" value="{{Person.direccion}}" readonly>
+                    </div>
+                </form>
 
             </div>
-            <div class="col-md-4 position-relative ">
-              <label for="validationTooltip02 " class="form-label ">Apellido</label>
-              <input type="text " class="form-control " id="apellido" value="{{Person.apellidos}}" readonly>
-
-            </div>
-            <div class="col-md-4 position-relative ">
-              <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
-              <div class="input-group has-validation ">
-                <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
-                <input type="email " class="form-control " id="correo" value="{{Person.correo}}" readonly>
-              </div>
-            </div>
-            <div class="col-md-3 position-relative ">
-              <label for="validationTooltip03 " class="form-label ">Telefono</label>
-              <input type="text " class="form-control " id="telefono" value="{{Person.celular}}" readonly>
-
-            </div>
-            <div class="col-md-6 position-relative ">
-              <label for="validationTooltip04 " class="form-label ">Direccion</label>
-              <input type="text " class="form-control " id="direccion" value="{{Person.direccion}}" readonly>
-            </div>
-          </form>
-
-        </div>
-        <div class="card-header">
-          <form class="row g-3">
-            <div class="col-md-10">
-              <h5>Actividades realizadas:</h5>
-            </div>
-            <div class="col-md-2">
-              <button type="submit " class="btn btn-primary mb-2 " (click)="modalService.open(modalForm)">Añadir
+            <div class="card-header">
+                <form class="row g-3">
+                    <div class="col-md-10">
+                        <h5>Actividades realizadas:</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit " class="btn btn-primary mb-2 " (click)="modalService.open(modalForm)">Añadir
                 actividad</button>
+                    </div>
+                </form>
             </div>
-          </form>
+            <div class="card-body">
+                <table class="table ">
+                    <thead class="table">
+                        <th scope="col">Hora de Inicio</th>
+                        <th scope="col">Hora Fin</th>
+                        <th scope="col">Actividad Realizada</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Persona</th>
+                        <th scope="col">Observaciones</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of values">
+                            <td *ngFor="let data of x">{{ data }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="card-body">
-          <table class="table ">
-            <thead class="table">
-              <th scope="col">Hora de Inicio</th>
-              <th scope="col">Hora Fin</th>
-              <th scope="col">Actividad Realizada</th>
-              <th scope="col">Fecha</th>
-              <th scope="col">Persona</th>
-              <th scope="col">Observaciones</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let x of values">
-                <td *ngFor="let data of x">{{ data }}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div>
+            <br>
         </div>
-      </div>
-      <div>
-        <br>
-      </div>
     </div>
-  </div>
+</div>
 
 
 
 
 <ng-template #modalForm let-modal>
 
-  <div class="modal-body" >
-    <app-crear-actividad [modal]=modal [Person]="Person"></app-crear-actividad>
-  </div>
+    <div class="modal-body">
+        <app-crear-actividad [modal]=modal [Person]="Person"></app-crear-actividad>
+    </div>
 </ng-template>

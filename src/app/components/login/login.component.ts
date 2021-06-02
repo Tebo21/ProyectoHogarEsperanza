@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuarios } from 'src/app/models/usuarios';
-import { LoginService } from 'src/app/services/login.service';
+import { UsuarioService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-login',
@@ -11,30 +11,31 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent implements OnInit {
 
   //Comprobacion de Logeo
-  user: Usuarios = {  
+  user: Usuarios = {
     usuarioCedula: '',
     usuarioContrasenia: '',
     usuarioTipo: 0
   };
-  userRecibido: Usuarios={}
+  userRecibido: Usuarios = {}
   //Modals
   display: boolean;
   displayF: boolean;
-  alerta:string;
+  alerta: string;
   //DropDown
   tipos: any[];
   tipo: any;
   valido: boolean = false;
 
-  constructor(private loginservce:LoginService, private router: Router) { }
+  constructor(private loginservce: UsuarioService, private router: Router) { }
 
   ngOnInit(): void {
+    localStorage.clear();
     this.display = false;
-    this.displayF = false;
     this.tipos = [
       { string: 'SuperAdministrador' },
       { string: 'Administrador' },
-      { string: 'Voluntario' }
+      { string: 'Voluntario Interno' },
+      { string: 'Voluntario Externo' }
     ];
   }
 
@@ -47,27 +48,75 @@ export class LoginComponent implements OnInit {
         this.user.usuarioTipo = 1;
       } else if (this.tipo.string == 'Administrador') {
         this.user.usuarioTipo = 2;
-      } else if (this.tipo.string == 'Voluntario') {
+      } else if (this.tipo.string == 'Voluntario Interno') {
         this.user.usuarioTipo = 3;
-      } 
+      } else if (this.tipo.string == 'Voluntario Externo') {
+        this.user.usuarioTipo = 4;
+      }
     }
   }
 
-  Logearse() {
-    if(this.user.usuarioCedula != '' || this.user.usuarioContrasenia != '' ||  this.valido == false ){
-      this.loginservce.getLogin(this.user.usuarioCedula, this.user.usuarioContrasenia, this.user.usuarioTipo).subscribe(data => {
-        this.userRecibido = data;
-        if(this.userRecibido != null){
-          this.display = true;
-          this.router.navigateByUrl['actividades']
-        } else {
-          this.alerta = 'Datos errnóneos'
-          this.displayF = true;
-        }
-      });
+  Validar() {
+    if (this.user.usuarioCedula != '' || this.user.usuarioContrasenia != '' ||
+      this.user.usuarioCedula != undefined || this.user.usuarioContrasenia != undefined || this.valido == false) {
+      this.Logearse();
     } else {
       this.alerta = 'Rellene todos los campos y seleccione un tipo de usuario por favor'
-      this.displayF = true;
+      this.display = true;
     }
+  }
+
+
+
+  Logearse() {
+    this.loginservce.getLogin(this.user.usuarioCedula, this.user.usuarioContrasenia, this.user.usuarioTipo).subscribe(data => {
+      this.userRecibido = data;
+      if (this.userRecibido.usuarioCedula != null) {
+        this.alerta = 'Bienvendo ' + this.userRecibido.usuarioNombre
+        localStorage.setItem('usuarioA', this.userRecibido.usuarioNombre);
+        this.display = true;
+        this.redireccion();
+      } else {
+        this.alerta = 'Datos errnóneos'
+        this.display = true;
+      }
+    });
+  }
+
+  redireccion() {
+    if (this.tipo.string == 'SuperAdministrador') {
+      function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      (async () => {
+        await delay(2000);
+        this.router.navigateByUrl('Init/registro-usuario');
+      })();
+    } else if (this.tipo.string == 'Administrador') {
+      function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      (async () => {
+        await delay(2000);
+        this.router.navigateByUrl('Init/dashboard');
+      })();
+    } else if (this.tipo.string == 'Voluntario Interno') {
+      function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      (async () => {
+        await delay(2000);
+        this.router.navigateByUrl('Init/actividades');
+      })();
+    } else if (this.tipo.string == 'Voluntario Externo') {
+      function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      (async () => {
+        await delay(2000);
+        this.router.navigateByUrl('Init/actividades');
+      })();
+    }
+
   }
 }

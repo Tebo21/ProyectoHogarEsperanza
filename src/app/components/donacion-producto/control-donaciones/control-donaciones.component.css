@@ -1,0 +1,20 @@
+.container-fluid{
+    font-size:10px;
+    border:0px;
+    width:300px;
+    height:19px;
+    display: inline-block;
+   }
+.Inicio{
+    border: 2px solid rgb(0, 140, 255);
+    padding: 50px;
+    border-bottom-left-radius: 50px 20px;
+}
+/*.titulo{
+    text-align:center
+}*/
+
+.Buton{
+    float: right;
+    background-color: aqua;
+}

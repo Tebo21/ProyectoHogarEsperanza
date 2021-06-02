@@ -1,17 +1,17 @@
 export class FichaSocioeconomica {
-    _id: number;
-    idFichaSocioeconomica: number;
-    cedulaPersona: String;
-    situacionEconomica: String;
-    tipoVivienda:String;
-    descripcionVivienda: String;
-    seguro:String;
-    discapacidad:boolean;
-    discapacidadDescipcion: String;
-    nacionalidad:String;
-    estadoCivil:String;
-    salario: DoubleRange;
-    fechaRegistro:String;
-    adultoMayor:boolean;
-    viveConOtros:boolean;
+
+    idFichaSocioeconomica?: Number;
+    cedulaPersona?: string;
+    situacionEconomica?: string;
+    tipoVivienda?:string;
+    descripcionVivienda?: string;
+    seguro?:string;
+    discapacidad?:string;
+    discapacidadDescipcion?: string;
+    nacionalidad?:string;
+    estadoCivil?:string;
+    salario?: DoubleRange;
+    fechaRegistro?:string;
+    adultoMayor?:boolean;
+    viveConOtros?:boolean;
 }

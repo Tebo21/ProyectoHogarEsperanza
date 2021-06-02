@@ -1,15 +1,19 @@
-import { Personas } from './personas';
 export class CitasMedicas {
+    idCitasMedicas!: number;
+    descripcionCitaMedica!: string;
+    fechaRegistro!: Date;
+    fechaCitaMedica!: Date;
     // tslint:disable-next-line: variable-name
-    id_citas: number;
-    descripcion: string;
-    fechaRegistro: Date;
-    fehaCita: Date;
-    paciente: Personas;
-    acompañante: Personas;
-    mensaje: string;
-    trabajador: Personas;
-    especialidad: string;
-    nota: string;
-    idCentroMedico: number;
+    // tslint:disable-next-line: variable-name
+    id_paciente!: string;
+    // tslint:disable-next-line: variable-name
+    // tslint:disable-next-line: variable-name
+    id_acompaniante!: string;
+    mensaje!: string;
+    // tslint:disable-next-line: variable-name
+    // tslint:disable-next-line: variable-name
+    id_trabajadorFundacion!: string;
+    especialidad!: number;
+    nota!: string;
+    idCentroMedico!: number;
 }
