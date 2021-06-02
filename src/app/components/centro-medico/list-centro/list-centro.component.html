@@ -14,8 +14,10 @@
     <button (click)="addOrEdit()" class="btn btn-primary">
     Guardar
     </button>
+
 <br>
 <br>
+
 <h2 class="title">Lista de Centros Medicos</h2>
 <table class="table">
   <thead>
@@ -28,7 +30,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let c of centro" class = "list-group-item-action">
+    <div *ngFor="let c of centro">
+    <tr>
       <td>{{c.idCentroMedico}}</td>
       <td>{{c.nombreCentroMedico}}</td>
       <td>{{c.direccionCentroMedico}}</td>
@@ -40,6 +43,7 @@
         </div>
       </td>
     </tr>
+    </div>
   </tbody>
 </table>
 

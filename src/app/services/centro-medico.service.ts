@@ -12,7 +12,7 @@ export class CentroMedicoService {
   constructor(private http: HttpClient){}
 
   // tslint:disable-next-line: ban-types
-  createCentro( centro: CentroMedico): Observable<any>{
+  createCentro(centro: CentroMedico): Observable<any>{
     return this.http.post(`${this.conexion}/guardar`, centro);
   }
 
@@ -21,11 +21,11 @@ export class CentroMedicoService {
   }
 
   // tslint:disable-next-line: ban-types
-  updateCentro( id: number, centro: CentroMedico): Observable<any>{
+  updateCentro(id: number, centro: CentroMedico): Observable<any>{
     return this.http.put(`${this.conexion}/editar/${id}`, centro);
   }
 
-  deletCentro( id: number): Observable<any>{
+  deletCentro(id: number): Observable<any>{
     return this.http.delete(`${this.conexion}/eliminar/${id}`, { responseType: 'text' });
   }
 }
