@@ -15,6 +15,7 @@ import { ControlDonacionesComponent } from './components/donacion-producto/contr
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
+import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 
 
       //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
@@ -69,6 +70,11 @@ import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/d
       {
         path: 'calendario',
         component: VoluntarioCalendarioComponent
+      },
+      {
+        path: 'registro-coordinador',
+        component: RegistroActividadCoordinadorComponent
+
       }
 
     ],
