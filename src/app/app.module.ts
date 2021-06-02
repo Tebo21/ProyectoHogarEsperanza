@@ -58,7 +58,7 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     NgbModule,
     DialogModule,
-    DropdownModule,
+    DropdownModule, 
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
