@@ -12,7 +12,7 @@ export class LoginService {
 
   //Logear Usuario
   getQueryLogin(query: string, nombreUsuario: string, contrasenia: string): Observable<Usuarios> {
-    const url = `http://localhost:3000/usuario/${query}?nombreUsuario=${nombreUsuario}&contrasenia=${contrasenia}`;
+    const url = `http://localhost:8080/usuario/${query}?nombreUsuario=${nombreUsuario}&contrasenia=${contrasenia}`;
     return this.http.get<Usuarios>(url);
   }
 
