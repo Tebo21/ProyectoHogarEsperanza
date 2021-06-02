@@ -11,7 +11,7 @@
                     <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img
                             src="https://hogaresperanza.org/wp-content/uploads/2020/11/79202613_10220100511359772_5632575654215024640_o.jpg"
                             class="image"> </div>
-                          
+
                 </div>
             </div>
 
@@ -38,28 +38,35 @@
                     </div>
                     <div class="row px-3"> <label class="mb-1">
                             <h6 class="mb-0 text-sm">Nombre de Usuario</h6>
-                        </label> <input class="mb-4" type="text" name="email" placeholder="Ingrese un Nombre de Usuario válido" 
-                        [(ngModel)]="user.nombreUsuario">
+                        </label> <input class="mb-4" type="text" name="email"
+                            placeholder="Ingrese su número de cédula de indentidad" [(ngModel)]="user.usuarioCedula">
                     </div>
                     <div class="row px-3"> <label class="mb-1">
                             <h6 class="mb-0 text-sm">Contraseña</h6>
                         </label> <input type="password" name="password" placeholder="Ingrese su contraseña"
-                        [(ngModel)]="user.contrasenia"> </div>
+                            [(ngModel)]="user.usuarioContrasenia"> 
+                    </div>
+                    <div>
+                        <h4>Selecciona un tipo de Tarjeta</h4>
+                        <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario" optionLabel="string" [style]="{'width': '100%'}" [filter]="true" [showClear]="true" (onChange)="onChange($event)">
+                        </p-dropdown>
+                    </div>
                     <div class="row px-3 mb-4">
-                                <a href="https://www.facebook.com/"
-                            class="ml-auto mb-0 text-sm">¿Olvidaste tu contraseña?</a>
+                        <a href="https://www.facebook.com/" class="ml-auto mb-0 text-sm">¿Olvidaste tu contraseña?</a>
                     </div>
-                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center" (click)='Logearse()'>Iniciar Sesión</button>
+                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center"
+                            (click)='Logearse()'>Iniciar Sesión</button>
                     </div>
-                    <div class="row mb-4 px-3"> <small class="font-weight-bold">¿No tienes cuenta? <a
-                                class="text-danger " href="https://mail.google.com/mail/u/0/">Regístrate</a></small> </div>
                 </div>
             </div>
+
+              
+        
         </div>
         <div class="bg-blue py-4">
             <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2"> &copy; Hogar Esperanza 2021.</small>
-                <div class="social-contact ml-4 ml-sm-auto"> 
-                    <a href="https://www.facebook.com"><span class="fa fa-facebook mr-4 text-sm"></span></a>                
+                <div class="social-contact ml-4 ml-sm-auto">
+                    <a href="https://www.facebook.com"><span class="fa fa-facebook mr-4 text-sm"></span></a>
                     <a href="https://www.gmail.com"><span class="fa fa-google-plus mr-4 text-sm"></span></a>
                     <a href="https://www.linkedin.com"><span class="fa fa-linkedin mr-4 text-sm"></span></a>
                     <a href="https://www.twitter.com"><span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span></a>
@@ -68,3 +75,21 @@
         </div>
     </div>
 </div>
+
+<p-dialog header="Hoger Esperanza" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}"
+[baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p class="p-m-0">Bienvenido al Sistema de Administración Hogar Esperanza</p>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="display=false" label="Ok" styleClass="p-button-text">
+    </p-button>
+</ng-template>
+</p-dialog>
+    
+<p-dialog header="Hoger Esperanza" [(visible)]="displayF" [modal]="true" [style]="{width: '50vw'}"
+[baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<p class="p-m-0">{{alerta}}</p>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="displayF=false" label="Ok" styleClass="p-button-text">
+    </p-button>
+</ng-template>
+</p-dialog>

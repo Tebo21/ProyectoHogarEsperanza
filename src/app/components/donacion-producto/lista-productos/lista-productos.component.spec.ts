@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpdateCentroMComponent } from './update-centro-m.component';
+import { ListaProductosComponent } from './lista-productos.component';
 
-describe('UpdateCentroMComponent', () => {
-  let component: UpdateCentroMComponent;
-  let fixture: ComponentFixture<UpdateCentroMComponent>;
+describe('ListaProductosComponent', () => {
+  let component: ListaProductosComponent;
+  let fixture: ComponentFixture<ListaProductosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateCentroMComponent ]
+      declarations: [ ListaProductosComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UpdateCentroMComponent);
+    fixture = TestBed.createComponent(ListaProductosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

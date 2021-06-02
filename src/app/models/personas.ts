@@ -8,5 +8,7 @@ export class Personas {
     genero: string;
     fechaNacimiento: string;
     edad: Number;
-    tipoPersona: string;
+    nacionalidad: string;
+    discapacidad: string;
+    estado_civil: string;
 }

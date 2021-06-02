@@ -4,6 +4,7 @@ import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbCalendarGregorian, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PersonasService } from 'src/app/services/personas.service';
 import { Personas } from 'src/app/models/personas';
+import { Actividades } from 'src/app/models/Actividades';
 
 @Component({
   selector: 'app-actividad-persona',
@@ -11,13 +12,12 @@ import { Personas } from 'src/app/models/personas';
   styleUrls: ['./actividad-persona.component.css'],
 })
 export class ActividadPersonaComponent implements OnInit {
-  catalogoId: number = 0;
 
-  @Input()Person: Personas = new Personas();
-
+  Person: Personas = new Personas();
   PersonAsId: Personas[]=[];
-
   PersonId: string;
+  Actividadview: Actividades[] = [];
+  values: any[] = [];
 
    dia = new NgbCalendarGregorian().getToday().day;
    mes = new NgbCalendarGregorian().getToday().month;
@@ -39,18 +39,29 @@ export class ActividadPersonaComponent implements OnInit {
   mostrarActividades(): void {
     this._actividadservice.getAll().subscribe(
       (response) => {
-        if (response== null || response as undefined || response.length==0) {
-          console.log("Sin actidades");
-        }else{
-          this._actividadservice.actividades = response;
-
-          console.log(response);
-        }
+        this.Actividadview=response;
+        this.values=this.nuevosData();
+        console.log(this.values)
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+  private nuevosData(): any[] {
+
+    const values:any[] = [];
+    this.Actividadview.forEach((act) => {
+      values.push([
+        act.horaInicio,
+        act.horaFin,
+        act.tipoActividad.nombreActividad,
+        act.fechaActividad,
+        act.cedulaPersona.nombres,
+        act.descripcionActividad
+      ]);
+    });
+    return values;
   }
 
   getPersonsById(): void {
@@ -59,7 +70,7 @@ export class ActividadPersonaComponent implements OnInit {
       (response) => {
         this.Person = response;
         console.log(response);
-        this._actividadservice.open.emit({data: this.Person});
+        this._actividadservice.open.emit();
       },
       (error) => {
         console.log(error);
