@@ -76,7 +76,8 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 	margin: 0;
-  padding-top: 5rem;
+  padding-top: 7rem;
+  padding-bottom: 5rem;
 }
 
 

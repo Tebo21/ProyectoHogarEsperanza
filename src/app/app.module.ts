@@ -17,7 +17,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
@@ -27,6 +27,7 @@ import { VoluntarioCalendarioComponent } from './components/voluntario-calendari
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,8 @@ import { ListCentroComponent } from './components/centro-medico/list-centro/list
     ListCentroComponent,
   ],
   imports: [
+    CommonModule,
+    NgbModalModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
