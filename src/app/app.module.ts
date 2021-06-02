@@ -17,13 +17,18 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
+import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -39,9 +44,13 @@ import { ListCentroComponent } from './components/centro-medico/list-centro/list
     ControlDonacionesComponent,
     CrearCitamComponent,
     ListarCitamComponent,
+    DasboardvoluntariosComponent,
+    VoluntarioCalendarioComponent,
     ListCentroComponent,
   ],
   imports: [
+    CommonModule,
+    NgbModalModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -53,6 +62,7 @@ import { ListCentroComponent } from './components/centro-medico/list-centro/list
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -12,6 +12,8 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
+import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
+import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 
 
       //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
@@ -55,6 +57,15 @@ import { ListCentroComponent } from './components/centro-medico/list-centro/list
         path: 'ficha-socioeconomica',
         component: FichaSocioeconomicaComponent,
       },
+      {
+        path: 'dashboard',
+        component : DasboardvoluntariosComponent,
+      },
+      {
+        path: 'calendario',
+        component: VoluntarioCalendarioComponent
+      }
+
     ],
   },
   {
