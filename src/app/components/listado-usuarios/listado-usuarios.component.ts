@@ -15,14 +15,22 @@ export class ListadoUsuariosComponent implements OnInit {
     this.listarUsuarios();
   }
 
-
-  
-
   listarUsuarios(){
     this.usuarioService.getAll().subscribe( data => {
       this.listaUsusarios= data;
     })
+  }
 
+  tipoUsuario(usuarioTipo: number): string{
+    if(usuarioTipo == 1){
+      return 'SuperAdministrador'
+    } else if (usuarioTipo == 2) {
+      return 'Administrador'
+    } else if (usuarioTipo == 3) {
+      return 'Voluntario Interno'
+    } else if (usuarioTipo == 4) {
+      return 'Voluntario Externo'
+    }
   }
  
 }
