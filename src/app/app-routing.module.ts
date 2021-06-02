@@ -18,6 +18,7 @@ import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/d
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
+import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
  // ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO

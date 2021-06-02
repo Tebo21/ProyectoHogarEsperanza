@@ -13,55 +13,56 @@ import { UsuarioService } from 'src/app/services/usuarios.service';
   styleUrls: ['./registro-usuarios.component.css']
 })
 export class RegistroUsuariosComponent implements OnInit {
-  blockSpecial: RegExp = /^[^< >*!]+$/ 
+  blockSpecial: RegExp = /^[^< >*!]+$/
   //Comprobacion
   nombredeUsuario: any;
   //Modelos
-  persona : Personas = { };
-  usuario : Usuarios = { };
-  ficha : FichaSocioeconomica = { };
-  personaCreada: Personas = { };
-  usuarioCreado: Usuarios = { };
+  persona: Personas = {};
+  usuario: Usuarios = {};
+  ficha: FichaSocioeconomica = {};
+  personaCreada: Personas = {};
+  usuarioCreado: Usuarios = {};
   listadoTipo: any[];
-  tipo:any;
-  nacionalidades: any[];  
-  nacio:any;
+  tipo: any;
+  nacionalidades: any[];
+  nacio: any;
   estadocivil: any[];
-  estado:any;
+  estado: any;
   generos: any[];
-  genero:any;
+  genero: any;
   usuarios: any[];
-  usv:any;
+  usv: any;
   tipoVivienda: any[];
-  tipoVi:any;
+  tipoVi: any;
   situacionEco: any[];
-  sitEco:any;
+  sitEco: any;
   fechaNacimiento: Date;
   fechaRegistro: Date;
   //Modal
-  valido:boolean;
+  valido: boolean;
   //ModalBeneficiario
   displayV: boolean;
-  tipoUsuario:number;
+  tipoUsuario: number;
   //ModalUsuario
-  displayU:boolean;
+  displayU: boolean;
   //ModalBeneficiario
-  displayB:boolean;
+  displayB: boolean;
   adultoMayor: boolean;
   viveOtros: boolean;
-  discap= false;
-  estadoDiscapacidad:boolean;
+  discap = false;
+  estadoDiscapacidad: boolean;
 
-  constructor(private router: Router, private personaservice: PersonasService, private usuarioservice: UsuarioService,private fichaServicio: FichaSocioeconomicaService) { 
+  constructor(private router: Router, private personaservice: PersonasService, private usuarioservice: UsuarioService, private fichaServicio: FichaSocioeconomicaService) {
 
     this.listadoTipo = [
       { top: 'Beneficiario' },
-      { top: 'Voluntario' }
+      { top: 'Voluntario Interno' },
+      { top: 'Voluntario Externo' }
     ]
     this.nacionalidades = [
       { nop: 'Ecuatoriano' },
       { nop: 'Afganistán' },
-      { nop: 'Alemania' }, 
+      { nop: 'Alemania' },
       { nop: 'Canadá' },
       { nop: 'China' },
       { nop: 'Perú' },
@@ -98,7 +99,7 @@ export class RegistroUsuariosComponent implements OnInit {
       { eco: 'Baja' },
       { eco: 'Crítica' }
     ]
-    ;
+      ;
   }
 
   ngOnInit(): void {
@@ -107,28 +108,30 @@ export class RegistroUsuariosComponent implements OnInit {
     this.displayB = false;
   }
 
-  onChange(event:any){
-    if(event.value == null){
+  onChange(event: any) {
+    if (event.value == null) {
       this.valido = false;
     } else {
       this.valido = true;
-      if(this.tipo.top == 'Voluntario'){
-         this.displayV = true;  
-      }if(this.tipo.top == 'Beneficiario'){
-        this.displayB = true; 
+      if (this.tipo.top == 'Voluntario Interno') {
+        this.displayV = true;
+      } if (this.tipo.top == 'Voluntario Externo') {
+        this.displayV = true;
+      } if (this.tipo.top == 'Beneficiario') {
+        this.displayB = true;
       }
     }
   }
 
-  onChangeV(event:any){
-    if(event.value == null){
+  onChangeV(event: any) {
+    if (event.value == null) {
       this.valido = false;
     } else {
       this.valido = true;
-      if(this.usv.uop == 'Interno'){
+      if (this.usv.uop == 'Voluntario Interno') {
         this.tipoUsuario = 3;
-      } else if (this.usv.uop == 'Externo'){
-        this.tipoUsuario = 3;
+      } else if (this.usv.uop == 'Voluntario Externo') {
+        this.tipoUsuario = 4;
       }
     }
   }
@@ -136,7 +139,7 @@ export class RegistroUsuariosComponent implements OnInit {
 
 
   comprobarLogin() {
-    this.nombredeUsuario = localStorage.getItem('usuario');
+    this.nombredeUsuario = localStorage.getItem('usuarioA');
     if (this.nombredeUsuario == null) {
       this.router.navigateByUrl('/login');
     } else {
@@ -145,13 +148,13 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   Validacion() {
-    if(this.persona.cedula == ""){
+    if (this.persona.cedula == "") {
 
     }
   }
 
   GurdarPersona() {
-    const nuevaPersona : Personas = {
+    const nuevaPersona: Personas = {
       apellidos: this.persona.apellidos,
       cedula: this.persona.cedula,
       celular: this.persona.celular,
@@ -165,49 +168,49 @@ export class RegistroUsuariosComponent implements OnInit {
       nombres: this.persona.nombres
     }
     console.log(nuevaPersona)
-    this.personaservice.postPersona(nuevaPersona).subscribe( data2 => {
+    this.personaservice.postPersona(nuevaPersona).subscribe(data2 => {
       this.personaCreada = data2;
     });
   }
 
-  GuardarUsuario(){
-    const nuevoUsuario : Usuarios = {
+  GuardarUsuario() {
+    const nuevoUsuario: Usuarios = {
       usuarioCedula: this.persona.cedula,
       usuarioContrasenia: this.usuario.usuarioContrasenia,
       usuarioNombre: this.usuario.usuarioNombre,
       usuarioTipo: this.tipoUsuario
     }
-    this.usuarioservice.addUser(nuevoUsuario).subscribe( data => {
+    this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
       this.usuarioCreado = data;
       this.GurdarPersona();
-      alert("Se ha registrado a :"+this.usuario.usuarioNombre)
+      alert("Se ha registrado a :" + this.usuario.usuarioNombre)
       function delay(ms: number) {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
         await delay(2000);
         window.location.reload();
-      });   
+      });
     });
   }
   GuardarBeneficiario() {
-    const nuevoBeneficiario:FichaSocioeconomica = {
-      cedulaPersona:this.persona.cedula,
-      situacionEconomica:this.sitEco.eco,
-      tipoVivienda:this.tipoVi.viv,
-      descripcionVivienda:this.ficha.descripcionVivienda,
-      seguro:this.ficha.seguro,
-      discapacidad:this.ficha.discapacidad,
-      discapacidadDescipcion:this.ficha.discapacidadDescipcion,
-      nacionalidad:this.nacio.nop,
-      estadoCivil:this.estado.eop,
-      salario:this.ficha.salario,
-      fechaRegistro:this.ficha.fechaRegistro,
-      adultoMayor:this.adultoMayor,
-      viveConOtros:this.viveOtros
+    const nuevoBeneficiario: FichaSocioeconomica = {
+      cedulaPersona: this.persona.cedula,
+      situacionEconomica: this.sitEco.eco,
+      tipoVivienda: this.tipoVi.viv,
+      descripcionVivienda: this.ficha.descripcionVivienda,
+      seguro: this.ficha.seguro,
+      discapacidad: this.ficha.discapacidad,
+      discapacidadDescipcion: this.ficha.discapacidadDescipcion,
+      nacionalidad: this.nacio.nop,
+      estadoCivil: this.estado.eop,
+      salario: this.ficha.salario,
+      fechaRegistro: this.ficha.fechaRegistro,
+      adultoMayor: this.adultoMayor,
+      viveConOtros: this.viveOtros
     }
     console.log(nuevoBeneficiario);
-    this.fichaServicio.postFichaSocio(nuevoBeneficiario).subscribe( data3 => {
+    this.fichaServicio.postFichaSocio(nuevoBeneficiario).subscribe(data3 => {
       this.GurdarPersona();
       alert("Beneficiario Guardado!");
       function delay(ms: number) {
@@ -216,7 +219,7 @@ export class RegistroUsuariosComponent implements OnInit {
       (async () => {
         await delay(2000);
         window.location.reload();
-      });  
+      });
     });
 
   }

@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
     this.tipos = [
       { string: 'SuperAdministrador' },
       { string: 'Administrador' },
-      { string: 'Voluntario' }
+      { string: 'Voluntario Interno' },
+      { string: 'Voluntario Externo' }
     ];
   }
 
@@ -47,8 +48,10 @@ export class LoginComponent implements OnInit {
         this.user.usuarioTipo = 1;
       } else if (this.tipo.string == 'Administrador') {
         this.user.usuarioTipo = 2;
-      } else if (this.tipo.string == 'Voluntario') {
+      } else if (this.tipo.string == 'Voluntario Interno') {
         this.user.usuarioTipo = 3;
+      } else if (this.tipo.string == 'Voluntario Externo') {
+        this.user.usuarioTipo = 4;
       }
     }
   }
@@ -70,7 +73,7 @@ export class LoginComponent implements OnInit {
       this.userRecibido = data;
       if (this.userRecibido.usuarioCedula != null) {
         this.alerta = 'Bienvendo ' + this.userRecibido.usuarioNombre
-        localStorage.setItem('usuario', this.userRecibido.usuarioNombre);
+        localStorage.setItem('usuarioA', this.userRecibido.usuarioNombre);
         this.display = true;
         function delay(ms: number) {
           return new Promise(resolve => setTimeout(resolve, ms));
