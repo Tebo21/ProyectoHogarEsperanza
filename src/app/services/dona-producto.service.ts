@@ -12,7 +12,15 @@ export class DonaProductoService {
 
   constructor(private http: HttpClient) { }
 
+  getDonaciones(): Observable<Donaciones[]>{
+    return this.http.get<Donaciones[]>(this.URL+'listadoDonaciones');
+  }
+
   postDonacionProd(donacion: Donaciones): Observable<Donaciones>{
     return this.http.post<Donaciones>(this.URL + '?', donacion);
+  }
+
+  deleteDonacionProd(idDonacion: any){
+    return this.http.delete(this.URL+`delete/${idDonacion}`);
   }
 }

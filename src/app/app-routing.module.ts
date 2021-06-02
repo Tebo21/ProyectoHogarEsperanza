@@ -15,6 +15,7 @@ import { RegistroProductoComponent } from './components/donacion-producto/regist
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
+import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 
 
       //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
@@ -65,6 +66,10 @@ import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crea
       {
         path: 'registro-producto',
         component: RegistroProductoComponent,
+      },
+      {
+        path: 'control-donacion',
+        component: ControlDonacionesComponent,
       },
       {
         path: 'ficha-socioeconomica',
