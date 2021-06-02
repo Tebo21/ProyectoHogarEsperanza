@@ -8,23 +8,23 @@
                     id="usuarioCedula" placeholder="Cédula" [(ngModel)]="persona.cedula" name="cedula" required
                     disabled>
             </div>
-            <div class="form-floating mb-3">
-                <label for="floatingInput">Tipo de usuario</label>
-                <p-dropdown [options]="usuarios" [(ngModel)]="usv" placeholder="Seleccione el tipo de usuario"
+            <div class="form-floating mb-3" *ngIf="adminActivar">
+                <label for="floatingInput">Tipo de voluntario</label>
+                <p-dropdown [options]="usuarios" [(ngModel)]="usv" placeholder="Seleccione el tipo de voluntario"
                     optionLabel="uop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
                     (onChange)="onChangeV($event)">
                 </p-dropdown>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Nombre de Usuario</label>
-                <input class="form-control" type="text" pKeyFilter="alpha" maxlength="30" minlength="3"
+                <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
                     id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuario.usuarioNombre"
                     name="usuarioNombre" required>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Contraseña</label>
-                <input class="form-control" type="password" maxlength="16" minlength="5" id="usuarioContrasenia"
-                    placeholder="Contraseña" [(ngModel)]="usuario.usuarioContrasenia" name="usuarioContrasenia"
+                <input class="form-control" type="password" maxlength="16" minlength="5" id="usuario.usuarioContrasenia"
+                    placeholder="Contraseña del Usuario" [(ngModel)]="usuario.usuarioContrasenia" name="usuario.usuarioContrasenia"
                     required>
             </div>
         </p-panel>

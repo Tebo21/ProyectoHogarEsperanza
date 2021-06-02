@@ -19,6 +19,7 @@ export class RegistroUsuariosComponent implements OnInit {
   //Modelos
   persona: Personas = {};
   usuario: Usuarios = {};
+  //Variables
   ficha: FichaSocioeconomica = {};
   personaCreada: Personas = {};
   usuarioCreado: Usuarios = {};
@@ -40,24 +41,23 @@ export class RegistroUsuariosComponent implements OnInit {
   fechaRegistro: Date;
   //Modal
   valido: boolean;
-  //ModalBeneficiario
+  //ModalVoluntario
   displayV: boolean;
   tipoUsuario: number;
-  //ModalUsuario
-  displayU: boolean;
   //ModalBeneficiario
   displayB: boolean;
   adultoMayor: boolean;
   viveOtros: boolean;
   discap = false;
   estadoDiscapacidad: boolean;
+  adminActivar: boolean;
 
   constructor(private router: Router, private personaservice: PersonasService, private usuarioservice: UsuarioService, private fichaServicio: FichaSocioeconomicaService) {
 
     this.listadoTipo = [
+      { top: 'Administrador' },
       { top: 'Beneficiario' },
-      { top: 'Voluntario Interno' },
-      { top: 'Voluntario Externo' }
+      { top: 'Voluntario' }
     ]
     this.nacionalidades = [
       { nop: 'Ecuatoriano' },
@@ -104,8 +104,9 @@ export class RegistroUsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.comprobarLogin();
-    this.displayU = false;
+    this.displayV = false;
     this.displayB = false;
+    this.adminActivar = true;
   }
 
   onChange(event: any) {
@@ -113,12 +114,15 @@ export class RegistroUsuariosComponent implements OnInit {
       this.valido = false;
     } else {
       this.valido = true;
-      if (this.tipo.top == 'Voluntario Interno') {
+      if (this.tipo.top == 'Voluntario') {
+        this.adminActivar = true;
         this.displayV = true;
-      } if (this.tipo.top == 'Voluntario Externo') {
-        this.displayV = true;
-      } if (this.tipo.top == 'Beneficiario') {
+      } else if (this.tipo.top == 'Beneficiario') {
         this.displayB = true;
+      } else if (this.tipo.top == 'Administrador') {
+        this.adminActivar = false;
+        this.displayV = true;
+        this.tipoUsuario = 2;
       }
     }
   }
@@ -128,15 +132,13 @@ export class RegistroUsuariosComponent implements OnInit {
       this.valido = false;
     } else {
       this.valido = true;
-      if (this.usv.uop == 'Voluntario Interno') {
+      if (this.usv.uop == 'Interno') {
         this.tipoUsuario = 3;
-      } else if (this.usv.uop == 'Voluntario Externo') {
+      } else if (this.usv.uop == 'Externo') {
         this.tipoUsuario = 4;
       }
     }
   }
-
-
 
   comprobarLogin() {
     this.nombredeUsuario = localStorage.getItem('usuarioA');
@@ -193,6 +195,7 @@ export class RegistroUsuariosComponent implements OnInit {
       });
     });
   }
+
   GuardarBeneficiario() {
     const nuevoBeneficiario: FichaSocioeconomica = {
       cedulaPersona: this.persona.cedula,
@@ -221,7 +224,6 @@ export class RegistroUsuariosComponent implements OnInit {
         window.location.reload();
       });
     });
-
   }
 
 }
