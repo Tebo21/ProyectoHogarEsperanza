@@ -71,7 +71,7 @@
                 <div class="form-floating mb-3" *ngIf="discap">
                     <label for="floatingInput">Discapacidad</label>
                     <input class="form-control" type="text" pKeyFilter="alpha" maxlength="30" minlength="3"
-                        id="Discapacidad" placeholder="Discapacidad" [(ngModel)]="ficha.discapacidad"
+                        id="Discapacidad" placeholder="Nombre Discapacidad" [(ngModel)]="ficha.discapacidad"
                         name="discapacidad" required>
                 </div>
                 <div class="form-floating mb-3" *ngIf="discap">
@@ -85,7 +85,7 @@
             <div style="width: 42%; float:right">
                 <div class="form-floating mb-3">
                     <label for="floatingInput">Seguro</label>
-                    <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
+                    <input class="form-control" type="text" pKeyFilter="int"  maxlength="10" minlength="10"
                         id="seguro" placeholder="Seguro" [(ngModel)]="ficha.seguro" name="seguro" required>
                 </div>
                 <div class="form-floating mb-3">
