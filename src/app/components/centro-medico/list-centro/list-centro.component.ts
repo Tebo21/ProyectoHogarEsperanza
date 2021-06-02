@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CentroMedicoService } from '../../../services/centro-medico.service';
 import { CentroMedico } from '../../../models/centro-medico';
 
@@ -13,7 +13,7 @@ export class ListCentroComponent implements OnInit {
   centro: CentroMedico[] = [];
   selectedCentro: CentroMedico = new CentroMedico();
 
-  constructor(private router: ActivatedRoute, private service: CentroMedicoService) { }
+  constructor(private router: RouterModule, private service: CentroMedicoService) { }
 
   ngOnInit(): void {
     this.listCentro();

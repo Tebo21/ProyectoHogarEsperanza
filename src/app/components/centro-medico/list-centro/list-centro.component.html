@@ -14,6 +14,11 @@
     <button (click)="addOrEdit()" class="btn btn-primary">
     Guardar
     </button>
+    <br>
+    <br>
+    <button class="btn btn-primary" type="submit" routerLink="/Init/especialidad">
+    Agregar Especialidad
+    </button>
 
 <br>
 <br>
@@ -30,8 +35,8 @@
     </tr>
   </thead>
   <tbody>
-    <div *ngFor="let c of centro">
-    <tr>
+
+    <tr *ngFor="let c of centro" class = "list-group-item-action">
       <td>{{c.idCentroMedico}}</td>
       <td>{{c.nombreCentroMedico}}</td>
       <td>{{c.direccionCentroMedico}}</td>
@@ -43,7 +48,7 @@
         </div>
       </td>
     </tr>
-    </div>
+
   </tbody>
 </table>
 

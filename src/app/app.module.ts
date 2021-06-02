@@ -29,6 +29,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { CommonModule } from '@angular/common';
+import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CommonModule } from '@angular/common';
     DasboardvoluntariosComponent,
     VoluntarioCalendarioComponent,
     ListCentroComponent,
+    EspecialidadComponent,
   ],
   imports: [
     CommonModule,

@@ -14,6 +14,7 @@ import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crea
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
+import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
 
 
       //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
@@ -28,6 +29,10 @@ import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/d
       {
         path: 'centromedico-listar',
         component: ListCentroComponent,
+      },
+      {
+        path: 'especialidad',
+        component: EspecialidadComponent,
       },
       {
         path: 'actividades',
