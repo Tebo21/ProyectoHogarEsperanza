@@ -32,6 +32,10 @@ export class UsuarioService {
     return this.QueryAddUser(url, usuario);
   }
 
+  getAll(): Observable<any> {
+    const url = `http://localhost:8080/getAll-usuario`;
+    return this.http.get<Usuarios>(url);
+  }
 
 
 

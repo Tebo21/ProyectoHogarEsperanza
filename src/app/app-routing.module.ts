@@ -17,6 +17,7 @@ import { ListCentroComponent } from './components/centro-medico/list-centro/list
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
+import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 
 
 //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
@@ -71,6 +72,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component : DasboardvoluntariosComponent,
+      },
+      {
+        path: 'listado-usuarios',
+        component : ListadoUsuariosComponent,
       },
       {
         path: 'calendario',
