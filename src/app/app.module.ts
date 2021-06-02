@@ -35,6 +35,8 @@ import { CommonModule } from '@angular/common';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
+import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.serv
     DasboardvoluntariosComponent,
     VoluntarioCalendarioComponent,
     ListCentroComponent,
+    ListadoUsuariosComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +73,7 @@ import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.serv
     BrowserAnimationsModule,
     ButtonModule,
     PanelModule,
+    TableModule,
     VirtualScrollerModule,
     KeyFilterModule,
     InputSwitchModule,
