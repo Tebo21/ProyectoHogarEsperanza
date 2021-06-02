@@ -15,9 +15,7 @@ import { ControlDonacionesComponent } from './components/donacion-producto/contr
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
-<<<<<<< HEAD
 import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
-=======
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
@@ -25,7 +23,6 @@ import { RegistroActividadCoordinadorComponent } from './components/registro-act
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
  // ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
->>>>>>> 9e81e4a4591eb48808178daedaf56631bc864113
 
 const routes: Routes = [
   {
