@@ -14,7 +14,7 @@ export class RegistroFamiliaresComponent implements OnInit {
   famipersona:RegistroFamiliares=new RegistroFamiliares();
   PersonasFami: Personas = new Personas();
   public hijosArray:any = [];
-
+  parentesco_familiar:string;
   constructor(private famipersonaserve:RegistroFamiliaresService, private router:Router) { }
 
   ngOnInit(): void {
@@ -29,11 +29,12 @@ export class RegistroFamiliaresComponent implements OnInit {
     var fecha_nacimiento_hijo = this.PersonasFami.fechaNacimiento;
     var edad_hijo = this.PersonasFami.edad;
     var genero_hijo= this.PersonasFami.genero;
+    var parentesco = this.parentesco_familiar;
     if(cedula_hijo==null || nombre_hijo==null || fecha_nacimiento_hijo==null || edad_hijo==null || genero_hijo==null ){
        confirm("Complete los campos vacios para poder continuar")
     }else{
      this.hijosArray.push([cedula_hijo,nombre_hijo,apellido_hijo,celular_hijo,
-       correo_hijo,fecha_nacimiento_hijo,edad_hijo,genero_hijo]);
+       correo_hijo,fecha_nacimiento_hijo,edad_hijo,genero_hijo,parentesco]);
        this.nuevo()
     }
    }
@@ -46,7 +47,8 @@ export class RegistroFamiliaresComponent implements OnInit {
     this.PersonasFami.correo=null;
     this.PersonasFami.fechaNacimiento=null;
     this.PersonasFami.edad=null;
-    this.PersonasFami.genero=null; 
+    this.PersonasFami.genero=null;
+    this.parentesco_familiar=null; 
   }
 
   actualiza(i){
@@ -59,6 +61,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     this.PersonasFami.fechaNacimiento=arrayactualizacion[5];
     this.PersonasFami.edad=arrayactualizacion[6];
     this.PersonasFami.genero=arrayactualizacion[7];
+    this.parentesco_familiar=arrayactualizacion[8];
     this.hijosArray.pop(i)
     arrayactualizacion.pop(i)
   }
@@ -88,10 +91,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     (data=>{
       console.log("hijos registrados")
     });
-    this.router.navigate(['/ficha-socioeconomica'])
+    this.router.navigate(['/Init/ficha-socioeconomica'])
   }
 
 }
-
-
-  
