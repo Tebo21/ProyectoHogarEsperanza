@@ -19,14 +19,12 @@ export class ListCentroComponent implements OnInit {
     this.listCentro();
   }
 
-  listCentro(): void {
+  listCentro(){
     this.service.listCentro().subscribe(data => {
-      if(data){
         this.centro = data;
         console.log(data);
         console.log("CENTRO");
         console.log(this.centro);
-      }
     })
   }
 
@@ -58,13 +56,16 @@ export class ListCentroComponent implements OnInit {
         }
       );
     }else {
+      console.log("REGISTRAR");
       this.service.createCentro(this.selectedCentro).subscribe(
         (data) => {
+          console.log("GUARDAR1");
           if (data){
           this.listCentro();
           alert("Centro medico agregado");
-          
+          console.log("GUARDAR 2");
           this.selectedCentro = new CentroMedico();
+          this.listCentro();
           }
       });
     }

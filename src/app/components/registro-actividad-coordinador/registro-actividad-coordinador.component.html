@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="modal-body ">
+        <div class="card" style="width: 50rem;">
+            <div class="card-header">
+                <h5 class="card-tittle">Registro de actividades </h5>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="row">
+                        <div class=" col-sm-6 ">
+                            <label> Fecha de la actividad: </label>
+                        </div>
+                        <div class=" col-sm-6 ">
+                            <input type="date">
+                            <p style="margin-left: 2%;"> </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-sm-6 ">
+                            <label>Hora de la actividad :</label>
+                        </div>
+                        <div class=" col-sm-6 ">
+                            <input type="time" step="3600:3600" id="start" name="hora">
+                            <p style="margin-left: 2%;">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-sm-6 ">
+                            <label>Tipo de  actividad</label>
+                        </div>
+                        <div class=" col-sm-3">
+                            <select class="form-select" name="tipoactividad">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class=" col-sm-6 ">
+                            <label>Detalle</label>
+                        </div>
+                        <div class=" col-sm-6 ">
+                            <textarea></textarea>
+                            <p style="margin-left: 2%; "> </p>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class=" col-sm-6 ">
+                            <label>Nombre del encargado</label>
+                        </div>
+                        <div class=" col-sm-3 ">
+                            <input type="text">
+                            <p style="margin-left: 2%; "> </p>
+                        </div>
+                        <div class=" col-sm-3 ">
+                            <button type="button" class="btn btn-primary" (click)="modalService.open(modalForm)">
+                                Buscar
+                              </button>
+                            <p style="margin-left: 2%; "> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type=" button " id="btnguardar" class="btn btn-primary ">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<ng-template #modalForm let-modal>
+    <div class="modal-header ">
+        <h5 class="modal-title " id="exampleModalLabel ">Voluntarios</h5>
+    </div>
+    <div class="modal-body ">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th scope="col ">Cedula</th>
+                    <th scope="col ">Nombres</th>
+                    <th scope="col "></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+
+                    <td>
+                        <button type="submit " class="btn btn-outline-primary ">
+                   Asignar
+                  </button>
+                    </td>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal-footer ">
+        <button type="button " class="btn btn-secondary " data-bs-dismiss="modal " (click)="modal.dismiss( 'Cross click') ">Close</button>
+
+    </div>
+
+</ng-template>

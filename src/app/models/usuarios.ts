@@ -4,7 +4,6 @@ export class Usuarios{
     usuarioCedula?: string;
     usuarioNombre?: string;
     usuarioContrasenia?: string;
-    usuarioEmail?: string;
     usuarioTipo?: number;
 
 }

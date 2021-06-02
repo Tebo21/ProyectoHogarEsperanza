@@ -11,8 +11,8 @@ export class ActividadesService {
   @Output() open: EventEmitter<any> = new EventEmitter();
 
   public actividades: Actividades[] = [];
-  private _http = 'http://localhost:3000/actividadPersona';
-  private _httpTipo = 'http://localhost:3000/tipoactividad';
+  private _http = 'http://localhost:8080/actividadPersona';
+  private _httpTipo = 'http://localhost:8080/tipoactividad';
 
   constructor(private http: HttpClient) {}
 

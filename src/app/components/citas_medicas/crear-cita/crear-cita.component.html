@@ -1,0 +1,51 @@
+<h3>Nueva Cita</h3>
+<div [hidden]="submitted">
+    <div style="margin-right: 5%;" class="input-group mb-3">
+        <form (ngSubmit)="onSubmit ()">
+            <div class="form-group">
+                <label for="name">Descripcion de la cita</label>
+                <input type="text" class="form-control" id="firstName" required [(ngModel)]="cita.descripcionCitaMedica" name="firstName">
+            </div>
+
+            <div class="input-group mb-3">
+                <label for="name">Fecha Registro</label>
+                <input [(ngModel)]="cita.fechaRegistro" name="fechaRegistro" id="fehaRegistro" style="margin-left: 5%;" type="date" class="form-control" placeholder="Fecha de registro">
+                <p style="margin-left: 2%;"> </p>
+                <label for="name">Fecha de la cita medica</label>
+                <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="fechaCitaMedica" style="margin-left: 5%;" type="date" class="form-control" placeholder="Fecha de la cita medica">
+            </div>
+
+            <div class="input-group mb-3">
+                <label for="name"> Ingrese numero de cedula del Paciente</label>
+                <input type="text" class="form-control" id="paciente" required [(ngModel)]="cita.id_paciente" name="paciente">
+                <p style="margin-left: 2%;"> </p>
+                <label for="name"> Ingrese numero de cedula del Acompanante</label>
+                <input type="text" class="form-control" id="acompanante" required [(ngModel)]="cita.id_acompaniante" name="acompanante">
+            </div>
+
+            <div class="input-group mb-3">
+                <label for="name">Mensaje</label>
+                <input type="text" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje">
+                <p style="margin-left: 2%;"> </p>
+                <label for="name"> Ingrese numero de cedula del Trabajador de la fundacion</label>
+                <input type="text" class="form-control" id="trabajador" required [(ngModel)]="cita.id_trabajadorFundacion" name="trabajador">
+            </div>
+
+            <div class="input-group mb-3">
+                <label for="name">Especialidad</label>
+                <input type="text" class="form-control" id="especialidad" required [(ngModel)]="cita.especialidad" name="especialidad">
+                <p style="margin-left: 2%;"> </p>
+                <label for="name">Centro Medico</label>
+                <input type="text" class="form-control" id="centro" required [(ngModel)]="cita.idCentroMedico" name="centro">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Nota</label>
+                <input type="text" class="form-control" id="nota" required [(ngModel)]="cita.nota" name="nota">
+            </div>
+
+            <button type="submit" style="margin-left: 50%;" class="btn btn-success">Guardar</button>
+
+        </form>
+    </div>
+</div>
