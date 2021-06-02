@@ -6,6 +6,8 @@ export class Donaciones{
     fechaDonacion!: Date;
     descripcionDonacion!: string;
 
+    //picByte?: FormData;
+
     //Relacion
     cedulaPersona!: string;
 }

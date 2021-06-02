@@ -5,6 +5,7 @@ import { Personas } from 'src/app/models/personas';
 import { DonaProductoService } from 'src/app/services/dona-producto.service';
 import { PersonasService } from 'src/app/services/personas.service';
 import { Router } from '@angular/router';
+import {DividerModule} from 'primeng/divider';
 
 @Component({
   selector: 'app-registro-producto',
@@ -15,8 +16,9 @@ export class RegistroProductoComponent implements OnInit {
 
   mostrar = false;
 
-  fecha: Date;
-  today: string = '2021-10-12';
+  //today: string;
+
+  fechaActual: Date = new Date();;
   
   cedulaDonador: string = '';
   nombreDonador: string = '';
@@ -35,44 +37,53 @@ export class RegistroProductoComponent implements OnInit {
     nombre: new FormControl('', Validators.required),
     categoria: new FormControl('', Validators.required),
     descripcion: new FormControl('', Validators.required),
-    unidades: new FormControl('', Validators.required),
-    fecha: new FormControl(new Date())
-  });
+    unidades: new FormControl('', Validators.required)
+  });;
 
-  constructor(private personaService: PersonasService, private donaProductoService: DonaProductoService
-    ,private router:Router) { }
+  //Imagen
+  selectedFile: File;
+  imgURL: any;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  message: string;
+  imageName: any;
+
+
+  constructor(private personaService: PersonasService, private donaProductoService: DonaProductoService, private router:Router) { }
 
   ngOnInit(): void {
-    this.currentDate();
   }
 
-  currentDate(){
-    this.fecha = new Date();
-    let mes = (this.fecha.getMonth()+1);
-    let day = (this.fecha.getDate());
+  onFileChanged(event) {
+    //Select File
+    this.selectedFile = event.target.files[0];
+  }
+
+  /*currentDate(): string{
+    
+    let fecha = new Date();
+    let mes = (fecha.getMonth()+1);
+    let day = (fecha.getDate());
 
     if (mes < 10 && day < 10){
-      this.today =  '0'+day + '-' + '0'+mes + '-' + this.fecha.getFullYear();
+      this.today =  '0'+day + '-' + '0'+mes + '-' + fecha.getFullYear();
     }
 
     if (mes < 10 && day > 10){
-      this.today = day + '-' + '0'+mes + '-' + this.fecha.getFullYear();
+      this.today = day + '-' + '0'+mes + '-' + fecha.getFullYear();
     }
 
     if (mes > 10 && day < 10){
-      this.today = '0'+day + '-' + mes + '-' + this.fecha.getFullYear();
+      this.today = '0'+day + '-' + mes + '-' + fecha.getFullYear();
     }
 
     if (mes > 10 && day > 10){
-      this.today = day + '-' + mes + '-' + this.fecha.getFullYear();
+      this.today = day + '-' + mes + '-' + fecha.getFullYear();
     }
 
-    console.log('FECHA: '+this.today)
-
-    this.formProducto.setValue({
-      fecha: this.fecha
-    });
-  }
+    return this.today; 
+  }*/
 
   seleccionOpcion(event: any){
   
@@ -104,13 +115,19 @@ export class RegistroProductoComponent implements OnInit {
   registrarProducto(){
 
     if( this.cedulaDonador != '' && this.formProducto.valid){
-      const {nombre, categoria, descripcion, unidades, fecha} = this.formProducto.value;
+
+      /*console.log(this.selectedFile);
+      const uploadImageData = new FormData();
+      uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);*/
+      this.fechaActual = new Date();
+
+      const {nombre, categoria, descripcion, unidades} = this.formProducto.value;
 
       this.donacionProd.nombreDonacion = nombre;
       this.donacionProd.categoria = categoria;
       this.donacionProd.descripcionDonacion = descripcion;
       this.donacionProd.cantidad = unidades;
-      this.donacionProd.fechaDonacion = fecha;
+      this.donacionProd.fechaDonacion = this.fechaActual;
 
       this.donacionProd.cedulaPersona = this.cedulaDonador;
 
@@ -131,8 +148,7 @@ export class RegistroProductoComponent implements OnInit {
       nombre: '',
       categoria: '',
       descripcion: '',
-      unidades: '',
-      fecha: new Date(),
+      unidades: ''
     })
   }
   

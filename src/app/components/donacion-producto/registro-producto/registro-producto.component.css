@@ -15,16 +15,24 @@ body{
     margin-left: 2%;
     margin-right: 2%;
 }
-
-.contenedor{
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-bottom: 5%;
-    margin-top:  5%;
+.botones{
+    text-align: center;
 }
 
-.botones{
-    margin-bottom: 20%;
-    margin-left: auto;
-    margin-right: auto;
+.btnfooter{
+    width: 80%;
+}
+
+.form-select{
+    height: 35px;
+    width: 350px;
+}
+
+.form-control{
+    min-height: 35px;
+    min-width: 350px;
+}
+
+.btncedula{
+    min-width: 150px;
 }

@@ -8,7 +8,7 @@ import { Donaciones } from '../models/Donaciones';
 })
 export class DonaProductoService {
 
-  private URL = "http://localhost:3000/donaciones/";
+  private URL = "http://localhost:8080/donaciones/";
 
   constructor(private http: HttpClient) { }
 
@@ -23,4 +23,9 @@ export class DonaProductoService {
   deleteDonacionProd(idDonacion: any){
     return this.http.delete(this.URL+`delete/${idDonacion}`);
   }
+
+  getDonacionesPorCateg(categoria: any){
+    return this.http.get<Donaciones[]>(this.URL+`byCategoria/${categoria}`);
+  }
+
 }

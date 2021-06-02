@@ -18,6 +18,18 @@ export class ControlDonacionesComponent implements OnInit {
     this.obtenerDonaciones();
   }
 
+  seleccionOpcion(event: any){
+    let categoria = event.target.value;
+    this.listaDonaciones = [];
+    if (categoria === "ALL"){
+      this.obtenerDonaciones();
+    }else{
+      this.obtenerPorCategoria(categoria);
+    }
+  }
+
+
+
   obtenerDonaciones(){
     this.donacionService.getDonaciones().subscribe(
       data => {
@@ -39,6 +51,28 @@ export class ControlDonacionesComponent implements OnInit {
       }
     )
   }  
+
+  obtenerPorCategoria(categoria: any){
+    this.donacionService.getDonacionesPorCateg(categoria).subscribe(
+      data => {
+        this.listaDonaciones = data.map(
+          result => {
+            let donacion = new Donaciones;
+
+            donacion.idDonacion = result.idDonacion;
+            donacion.cantidad =  result.cantidad;
+            donacion.categoria = result.categoria;
+            donacion.cedulaPersona = result.cedulaPersona;
+            donacion.descripcionDonacion = result.descripcionDonacion;
+            donacion.fechaDonacion = result.fechaDonacion;
+            donacion.nombreDonacion = result.nombreDonacion;
+            
+            return donacion;
+          }
+        )
+      }
+    )
+  }
 
   navegar(){
     this.router.navigate(['/Init/registro-producto'])
