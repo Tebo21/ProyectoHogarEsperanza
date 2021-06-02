@@ -15,13 +15,18 @@ import { RegistroProductoComponent } from './components/donacion-producto/regist
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
+import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
 
 
-      //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
-      //NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
- //ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
+//AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
+//NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
+//ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
 
-  const routes: Routes = [
+const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: 'Init',
     component: LayoutComponent,
@@ -51,10 +56,6 @@ import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crea
         component: CrearActividadComponent,
       },
       {
-        path: 'login',
-        component: LoginComponent,
-      },
-      {
         path: 'registro-persona',
         component: RegistroPersonaComponent,
       },
@@ -70,12 +71,16 @@ import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crea
         path: 'ficha-socioeconomica',
         component: FichaSocioeconomicaComponent,
       },
+      {
+        path: 'registro-usuario',
+        component: RegistroUsuariosComponent,
+      },
     ],
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'Init/login',
+    redirectTo: 'login',
   },
 ];
 
@@ -83,4 +88,4 @@ import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crea
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -10,7 +10,6 @@ import { ListComponent } from './components/centro_medico/list/list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
 import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
-import { LoginService } from './services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
@@ -27,6 +26,14 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
+import { UsuarioService } from './services/usuarios.service';
+import { CalendarModule } from 'primeng/calendar';
+import { PanelModule } from 'primeng/panel';
+import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import {KeyFilterModule} from 'primeng/keyfilter';
+import {InputSwitchModule} from 'primeng/inputswitch';
+
 
 @NgModule({
   declarations: [
@@ -45,6 +52,7 @@ import { LayoutComponent } from './components/layout/layout.component';
     FichaSocioeconomicaComponent,
     CrearCitamComponent,
     ListarCitamComponent,
+    RegistroUsuariosComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,8 +66,13 @@ import { LayoutComponent } from './components/layout/layout.component';
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
+    CalendarModule,
+    PanelModule,
+    VirtualScrollerModule,
+    KeyFilterModule,
+    InputSwitchModule
   ],
-  providers: [],
+  providers: [UsuarioService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
