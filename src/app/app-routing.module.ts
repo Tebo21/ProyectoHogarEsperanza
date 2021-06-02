@@ -12,9 +12,10 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
+import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
+import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
-import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 
 
 //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
@@ -53,6 +54,10 @@ const routes: Routes = [
       {
         path: 'registro-producto',
         component: RegistroProductoComponent,
+      },
+      {
+        path: 'control-donacion',
+        component: ControlDonacionesComponent,
       },
       {
         path: 'ficha-socioeconomica',
