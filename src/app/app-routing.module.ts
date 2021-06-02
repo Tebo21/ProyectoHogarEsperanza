@@ -9,19 +9,19 @@ import { RegistroFamiliaresComponent } from './components/registro-familiares/re
 import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
 
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
-import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
-import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
+import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
+import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 
 
-      //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
-      //NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
- //ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
+      // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
+      // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
+ // ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
 
-  const routes: Routes = [
+const routes: Routes = [
   {
     path: 'Init',
     component: LayoutComponent,
@@ -68,7 +68,15 @@ import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/d
       },
       {
         path: 'calendario',
-        component: VoluntarioCalendarioComponent
+        component: VoluntarioCalendarioComponent,
+      },
+      {
+        path: 'crear-citaM',
+        component: CrearCitaComponent,
+      },
+      {
+        path: 'listar-citaM',
+        component: ListarCitaComponent
       }
 
     ],
