@@ -12,7 +12,6 @@ import { Actividades } from 'src/app/models/Actividades';
   styleUrls: ['./actividad-persona.component.css'],
 })
 export class ActividadPersonaComponent implements OnInit {
-  catalogoId: number = 0;
 
   Person: Personas = new Personas();
   PersonAsId: Personas[]=[];

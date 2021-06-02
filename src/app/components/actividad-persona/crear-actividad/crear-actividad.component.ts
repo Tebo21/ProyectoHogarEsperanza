@@ -4,7 +4,6 @@ import { Actividades } from 'src/app/models/Actividades';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
-import { FormGroup } from '@angular/forms';
 import { TipoActividad } from 'src/app/models/TipoActividad';
 import { Personas } from '../../../models/personas';
 
