@@ -11,6 +11,7 @@ import { RegistroProductoComponent } from './components/donacion-producto/regist
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
+import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
 import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
@@ -18,11 +19,15 @@ import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/d
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 
 
-      //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
-      //NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
- //ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
+//AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
+//NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
+//ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
 
-  const routes: Routes = [
+const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: 'Init',
     component: LayoutComponent,
@@ -38,10 +43,6 @@ import { RegistroActividadCoordinadorComponent } from './components/registro-act
       {
         path: 'crear-actividad',
         component: CrearActividadComponent,
-      },
-      {
-        path: 'login',
-        component: LoginComponent,
       },
       {
         path: 'registro-persona',
@@ -64,6 +65,10 @@ import { RegistroActividadCoordinadorComponent } from './components/registro-act
         component: FichaSocioeconomicaComponent,
       },
       {
+        path: 'registro-usuario',
+        component: RegistroUsuariosComponent,
+      },
+      {
         path: 'dashboard',
         component : DasboardvoluntariosComponent,
       },
@@ -82,7 +87,7 @@ import { RegistroActividadCoordinadorComponent } from './components/registro-act
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'Init/login',
+    redirectTo: 'login',
   },
 ];
 
@@ -90,4 +95,4 @@ import { RegistroActividadCoordinadorComponent } from './components/registro-act
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

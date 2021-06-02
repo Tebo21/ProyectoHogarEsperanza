@@ -1,49 +1,60 @@
-<br>
-<div class="titulo">
-    <h2>Listado Productos</h2>
-</div>
-<div class=" container">
-    <div class="container">
-        <div class="container-fluid">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder=" num. cedula" autocomplete=»of» aria-label="Search" >
-                <button class="btn btn-outline-success" type="submit" >Buscar</button>
-            </form>
-        </div>
-        <div class="Buton">
-            <button type="button" class="btn btn-primary" (click)="navegar()">Registrar Producto</button>
-        </div>
-    </div>
-    <br>
-    <br>
+<div class="container">
+    <div class="modal-body ">
+        <div class="card">
+            <br>
+            <div class="card-header">
+                <h5 class="card-tittle">Listado Productos</h5>
+            </div>
+            <br>
+            <div class=" container">
+                <div class="container">
+                    <div class="container-fluid">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder=" num. cedula" autocomplete=»of»
+                                aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Buscar</button>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="Buton">
+                        <button type="button" class="btn btn-primary" (click)="navegar()">Registrar Producto</button>
+                    </div>
+                </div>
+                <br>
+                <br>
 
-    <div class="panel panel-primary">
-        <div class="panel-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Cedula</th>
-                        <th>Fecha</th>
-                        <th>Cantidad</th>
-                        <th>Producto</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor = "let donacion of listaDonaciones">
-                        <td>{{donacion.cedulaPersona}}</td>
-                        <td>{{donacion.fechaDonacion}}</td>
-                        <td>{{donacion.cantidad}}</td>
-                        <td>{{donacion.nombreDonacion}}</td>
-                        <td>
-                            <button class="btn btn-info" style="margin-left: 10px" (click)="eliminar(donacion)">Eliminar</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <br>
-            <br>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Cedula</th>
+                                    <th>Fecha</th>
+                                    <th>Cantidad</th>
+                                    <th>Producto</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let donacion of listaDonaciones">
+                                    <td>{{donacion.cedulaPersona}}</td>
+                                    <td>{{donacion.fechaDonacion}}</td>
+                                    <td>{{donacion.cantidad}}</td>
+                                    <td>{{donacion.nombreDonacion}}</td>
+                                    <td>
+                                        <button class="btn btn-info" style="margin-left: 10px"
+                                            (click)="eliminar(donacion)">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
