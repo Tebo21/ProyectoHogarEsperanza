@@ -64,19 +64,19 @@
                 </div>
                 <div class="form-floating mb-3">
                     <label for="floatingInput">Descripcion de Vivienda</label>
-                    <input class="form-control" type="text" pKeyFilter="alpha" maxlength="50" minlength="3"
+                    <input class="form-control" type="text" maxlength="50" minlength="3"
                         id="descripcionVivienda" placeholder="Descripcion de Vivienda"
                         [(ngModel)]="ficha.descripcionVivienda" name="descripcionVivienda" required>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3" *ngIf="discap">
                     <label for="floatingInput">Discapacidad</label>
                     <input class="form-control" type="text" pKeyFilter="alpha" maxlength="30" minlength="3"
-                        id="Discapacidad" placeholder="Discapacidad" [(ngModel)]="persona.discapacidad"
-                        name="discapacidad" required disabled>
+                        id="Discapacidad" placeholder="Discapacidad" [(ngModel)]="ficha.discapacidad"
+                        name="discapacidad" required>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3" *ngIf="discap">
                     <label for="floatingInput">Descripción Discapacidad</label>
-                    <input class="form-control" type="text" pKeyFilter="alpha" maxlength="50" minlength="3"
+                    <input class="form-control" type="text" maxlength="50" minlength="3"
                         id="discapacidadDescipcion" placeholder="Descripción Discapacidad"
                         [(ngModel)]="ficha.discapacidadDescipcion" name="discapacidadDescipcion" required>
                 </div>
@@ -87,20 +87,6 @@
                     <label for="floatingInput">Seguro</label>
                     <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
                         id="seguro" placeholder="Seguro" [(ngModel)]="ficha.seguro" name="seguro" required>
-                </div>
-                <div class="form-floating mb-3">
-                    <label for="floatingInput">Nacionalidad</label>
-                    <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="Seleccione su nacionalidad"
-                        optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
-                        [disabled]="true">
-                    </p-dropdown>
-                </div>
-                <div class="form-floating mb-3">
-                    <label for="floatingInput">Estado Civil</label>
-                    <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
-                        optionLabel="eop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
-                        [disabled]="true">
-                    </p-dropdown>
                 </div>
                 <div class="form-floating mb-3">
                     <label for="floatingInput">Salario</label>
@@ -128,7 +114,7 @@
         <ng-template pTemplate="footer">
             <button pButton pRipple type="button" label="Aceptar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                 style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
-                (click)="GuardarUsuario()"></button>
+                (click)="GuardarBeneficiario()"></button>
             <button pButton pRipple type="button" label="Cancelar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                 style="color: #b10000;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-times"
                 (click)="displayB=false"></button>
@@ -193,9 +179,8 @@
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Discapacidad</label>
-                <input class="form-control" type="text" pKeyFilter="alpha" maxlength="30" minlength="3"
-                    id="Discapacidad" placeholder="Discapacidad" [(ngModel)]="persona.discapacidad" name="discapacidad"
-                    required>
+                <br>
+                <p-inputSwitch [(ngModel)]="discap"></p-inputSwitch>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Estado Civil</label>

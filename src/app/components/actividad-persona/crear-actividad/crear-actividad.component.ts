@@ -4,7 +4,6 @@ import { Actividades } from 'src/app/models/Actividades';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
-import { FormGroup } from '@angular/forms';
 import { TipoActividad } from 'src/app/models/TipoActividad';
 import { Personas } from '../../../models/personas';
 
@@ -16,11 +15,21 @@ import { Personas } from '../../../models/personas';
 export class CrearActividadComponent implements OnInit {
   @Input() public modal: NgbModalWindow;
   @Input() Person: Personas = new Personas();
-   public fecha: Date = new Date();
-  public tipo: Array<string> = new Array();
-  _tipoactividadCreate: TipoActividad= new TipoActividad(0,"","");
+  public fecha: Date = new Date();
+  public fecha1: Date = new Date();
+  public tipo: string;
+  _tipoactividadCreate: TipoActividad = new TipoActividad(0, '', '');
   _tipoactividad: TipoActividad[] = [];
-  public actividadCreate: Actividades = new Actividades(0,this.Person,this.fecha,this.fecha,this.fecha,"",this._tipoactividadCreate);
+  _tipoactividad1: TipoActividad = new TipoActividad(0, '', '');
+  public actividadCreate: Actividades = new Actividades(
+    0,
+    this.Person,
+    this.fecha,
+    this.fecha,
+    this.fecha1,
+    '',
+    this._tipoactividadCreate
+  );
   public id: number;
 
   constructor(
@@ -30,23 +39,33 @@ export class CrearActividadComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.mostrarTipoActividades();
+    console.log(this._actividadservice.actividades);
+    console.log(this.Person);
+    //this.getOneTipoAct();
+    console.log(this.tipo);
 
-    }
+  }
+
+  getOneTipoAct(): void {
+    this._actividadservice.getOneByNameTipo('Limpiar').subscribe((response) => {
+      this._tipoactividad1 = response;
+      console.log('esta es la actividad' + response);
+    });
+  }
 
   addActividad(): void {
     var d = new Date();
     this.fecha.getUTCDate;
-    this.actividadCreate.idActividadPersona = this.id;
+    this.actividadCreate.cedulaPersona = this.Person;
+    this.actividadCreate.tipoActividad= this._tipoactividad1;
+    console.log(this._tipoactividadCreate);
     console.log(this.actividadCreate);
-    this._actividadservice.createActividad(this.actividadCreate).subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-    this.gotoList();
+    console.log(this._tipoactividad1);
+
+    this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
+      console.log("Guardado satisfactoriamente")
+    }
+    )
   }
   gotoList() {
     this.router.navigate(['/actividades']);
@@ -54,17 +73,19 @@ export class CrearActividadComponent implements OnInit {
 
   mostrarTipoActividades(): void {
     this._actividadservice.getAllTipos().subscribe(
-      response => {
-       this._tipoactividad=response;
+      (response) => {
+        this._tipoactividad = response;
         console.log(response);
         this._actividadservice.open.subscribe(
-          data =>{
-            console.log("Datos cargado");
-          }, error => console.log("No se cargaron los daros"));
+          (data) => {
+            console.log('Datos cargado');
+          },
+          (error) => console.log('No se cargaron los daros')
+        );
       },
-      error => {
+      (error) => {
         console.log(error);
       }
-    )
+    );
   }
 }

@@ -9,6 +9,6 @@ export class Personas {
     fechaNacimiento?: string;
     edad?: Number;
     nacionalidad?: string;
-    discapacidad?: string;
+    discapacidad?: boolean;
     estado_civil?: string;
 }

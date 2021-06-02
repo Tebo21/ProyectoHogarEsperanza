@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListComponent } from './components/centro_medico/list/list.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
-import { CreateComponent } from './components/centro_medico/create/create.component';
-import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
-import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
 import { LoginComponent } from './components/login/login.component';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
@@ -16,6 +12,9 @@ import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
+import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
+import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
+import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 
 
 //AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
@@ -33,19 +32,7 @@ const routes: Routes = [
     children: [
       {
         path: 'centromedico-listar',
-        component: ListComponent,
-      },
-      {
-        path: 'nuevo-centromedico',
-        component: CreateComponent,
-      },
-      {
-        path: 'detalle-centromedico',
-        component: DetalleCentroMComponent,
-      },
-      {
-        path: 'update-centromedico',
-        component: UpdateCentroMComponent,
+        component: ListCentroComponent,
       },
       {
         path: 'actividades',
@@ -75,6 +62,15 @@ const routes: Routes = [
         path: 'registro-usuario',
         component: RegistroUsuariosComponent,
       },
+      {
+        path: 'dashboard',
+        component : DasboardvoluntariosComponent,
+      },
+      {
+        path: 'calendario',
+        component: VoluntarioCalendarioComponent
+      }
+
     ],
   },
   {

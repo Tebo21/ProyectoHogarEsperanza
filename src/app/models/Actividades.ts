@@ -8,7 +8,7 @@ export class Actividades {
   public horaInicio:Date;
 	public horaFin : Date;
   public descripcionActividad: string;
-  public tipoactividad: TipoActividad;
+  public tipoActividad: TipoActividad;
 
   constructor(idActividadPersona: number,
     cedulaPersona: Personas,
@@ -23,6 +23,6 @@ export class Actividades {
     this.horaInicio = horaInicio,
     this.horaFin= horaFin,
     this.descripcionActividad = descripcionActividad
-    this.tipoactividad = tipoactividad
+    this.tipoActividad = tipoactividad
   }
 }

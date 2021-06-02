@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./registro-persona.component.css']
 })
 export class RegistroPersonaComponent implements OnInit {
-  Personas: Personas=new Personas(); 
+  Personas: Personas=new Personas();
   mensaje:boolean
   today= new Date();
   fecha =  new Date();
@@ -43,14 +43,14 @@ export class RegistroPersonaComponent implements OnInit {
 
   validar(){
     if(this.Personas.cedula.length==10){
-             this.mensaje=true;      
+             this.mensaje=true;
     }else{
       var cedul = document.getElementById("cedula")
       cedul.style.backgroundColor="#FF5733"
-          this.mensaje=false    
-          console.log("cedula")    
+          this.mensaje=false
+          console.log("cedula")
     }
-     if(this.Personas.nombres.length==0){             
+     if(this.Personas.nombres.length==0){
       var nom = document.getElementById("nombres")
       nom.style.backgroundColor="#FF5733"
       this.mensaje=false
@@ -59,7 +59,7 @@ export class RegistroPersonaComponent implements OnInit {
       this.mensaje=true;
       console.log("asd")
     }
-    
+
     if(this.Personas.apellidos.length<=0){
             this.mensaje=true;
     }else{

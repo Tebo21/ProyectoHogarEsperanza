@@ -5,11 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
-import { CreateComponent } from './components/centro_medico/create/create.component';
-import { ListComponent } from './components/centro_medico/list/list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UpdateCentroMComponent } from './components/centro_medico/update-centro-m/update-centro-m.component';
-import { DetalleCentroMComponent } from './components/centro_medico/detalle-centro-m/detalle-centro-m.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
@@ -20,20 +16,25 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
+import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
 import { UsuarioService } from './services/usuarios.service';
-import { CalendarModule } from 'primeng/calendar';
 import { PanelModule } from 'primeng/panel';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {InputSwitchModule} from 'primeng/inputswitch';
-
+import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
+import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
+import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
+import { CommonModule } from '@angular/common';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 
 @NgModule({
   declarations: [
@@ -41,20 +42,22 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     LayoutComponent,
     LoginComponent,
     ActividadPersonaComponent,
-    CreateComponent,
-    ListComponent,
-    UpdateCentroMComponent,
-    DetalleCentroMComponent,
     CrearActividadComponent,
     RegistroPersonaComponent,
     RegistroFamiliaresComponent,
     RegistroProductoComponent,
     FichaSocioeconomicaComponent,
+    ControlDonacionesComponent,
     CrearCitamComponent,
     ListarCitamComponent,
     RegistroUsuariosComponent,
+    DasboardvoluntariosComponent,
+    VoluntarioCalendarioComponent,
+    ListCentroComponent,
   ],
   imports: [
+    CommonModule,
+    NgbModalModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -66,13 +69,13 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
-    CalendarModule,
     PanelModule,
     VirtualScrollerModule,
     KeyFilterModule,
-    InputSwitchModule
+    InputSwitchModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
-  providers: [UsuarioService],
+  providers: [UsuarioService,FichaSocioeconomicaService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

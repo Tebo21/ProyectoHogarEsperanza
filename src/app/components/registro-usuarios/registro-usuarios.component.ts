@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FichaSocioeconomica } from 'src/app/models/ficha-socioeconomica';
 import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
+import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomica.service';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
 
@@ -12,6 +13,7 @@ import { UsuarioService } from 'src/app/services/usuarios.service';
   styleUrls: ['./registro-usuarios.component.css']
 })
 export class RegistroUsuariosComponent implements OnInit {
+  blockSpecial: RegExp = /^[^< >*!]+$/ 
   //Comprobacion
   nombredeUsuario: any;
   //Modelos
@@ -47,8 +49,10 @@ export class RegistroUsuariosComponent implements OnInit {
   displayB:boolean;
   adultoMayor: boolean;
   viveOtros: boolean;
+  discap= false;
+  estadoDiscapacidad:boolean;
 
-  constructor(private router: Router, private personaservice: PersonasService, private usuarioservice: UsuarioService) { 
+  constructor(private router: Router, private personaservice: PersonasService, private usuarioservice: UsuarioService,private fichaServicio: FichaSocioeconomicaService) { 
 
     this.listadoTipo = [
       { top: 'Beneficiario' },
@@ -115,7 +119,7 @@ export class RegistroUsuariosComponent implements OnInit {
       }
     }
   }
-  
+
   onChangeV(event:any){
     if(event.value == null){
       this.valido = false;
@@ -153,7 +157,7 @@ export class RegistroUsuariosComponent implements OnInit {
       celular: this.persona.celular,
       correo: this.persona.correo,
       direccion: this.persona.direccion,
-      discapacidad: this.persona.discapacidad,
+      discapacidad: this.discap,
       estado_civil: this.estado.eop,
       fechaNacimiento: this.persona.fechaNacimiento,
       genero: this.genero.gop,
@@ -173,7 +177,6 @@ export class RegistroUsuariosComponent implements OnInit {
       usuarioNombre: this.usuario.usuarioNombre,
       usuarioTipo: this.tipoUsuario
     }
-    console.log(nuevoUsuario)
     this.usuarioservice.addUser(nuevoUsuario).subscribe( data => {
       this.usuarioCreado = data;
       this.GurdarPersona();
@@ -184,11 +187,37 @@ export class RegistroUsuariosComponent implements OnInit {
       (async () => {
         await delay(2000);
         window.location.reload();
-      })();   
+      });   
     });
   }
-
   GuardarBeneficiario() {
+    const nuevoBeneficiario:FichaSocioeconomica = {
+      cedulaPersona:this.persona.cedula,
+      situacionEconomica:this.sitEco.eco,
+      tipoVivienda:this.tipoVi.viv,
+      descripcionVivienda:this.ficha.descripcionVivienda,
+      seguro:this.ficha.seguro,
+      discapacidad:this.ficha.discapacidad,
+      discapacidadDescipcion:this.ficha.discapacidadDescipcion,
+      nacionalidad:this.nacio.nop,
+      estadoCivil:this.estado.eop,
+      salario:this.ficha.salario,
+      fechaRegistro:this.ficha.fechaRegistro,
+      adultoMayor:this.adultoMayor,
+      viveConOtros:this.viveOtros
+    }
+    console.log(nuevoBeneficiario);
+    this.fichaServicio.postFichaSocio(nuevoBeneficiario).subscribe( data3 => {
+      this.GurdarPersona();
+      alert("Beneficiario Guardado!");
+      function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      (async () => {
+        await delay(2000);
+        window.location.reload();
+      });  
+    });
 
   }
 
