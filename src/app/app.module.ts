@@ -23,6 +23,7 @@ import { ControlDonacionesComponent } from './components/donacion-producto/contr
 import { CrearCitamComponent } from './components/citas_medicas/crear-citam/crear-citam.component';
 import { ListarCitamComponent } from './components/citas_medicas/listar-citam/listar-citam.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -43,6 +44,7 @@ import { CommonModule } from '@angular/common';
     ControlDonacionesComponent,
     CrearCitamComponent,
     ListarCitamComponent,
+    DasboardvoluntariosComponent,
     VoluntarioCalendarioComponent,
     ListCentroComponent,
   ],
