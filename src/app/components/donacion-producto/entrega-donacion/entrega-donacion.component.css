@@ -1,17 +1,3 @@
-
-body{
-    margin-left: 2%;
-    margin-right: 2%;
-}
-
-
-
-.form-control{
-    min-height: 35px;
-    min-width: 325px;
-    max-width: 325px;
-}
-
 .btncedula{
-    min-width: 200px;
+    min-width: 800%;
 }
