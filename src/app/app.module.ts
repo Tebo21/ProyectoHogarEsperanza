@@ -42,6 +42,7 @@ import {TableModule} from 'primeng/table';
 import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
+import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar
     NavbarSuperAdminComponent,
     NavbarAdminComponent,
     NavbarVoluntarioComponent,
+    VistaFichaComponent,
   ],
   imports: [
     CommonModule,
