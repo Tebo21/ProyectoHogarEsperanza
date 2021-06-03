@@ -39,6 +39,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
+import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {TableModule} from 'primeng/table';
     ListCentroComponent,
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
+    VistaFichaComponent,
   ],
   imports: [
     CommonModule,
