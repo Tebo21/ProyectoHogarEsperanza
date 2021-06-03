@@ -1,0 +1,94 @@
+h4{
+    align-items: center;
+}
+
+.hoja{
+    background-color: floralwhite;
+    margin-right: 40px;
+    height: 30cm;
+    width: 30cm;
+}
+
+.fechalabel{
+    margin-right: 4%;
+    margin-left: 1%;
+}
+
+
+.labelNombre{
+    margin-left: 1%;
+}
+.Nombres{
+    margin-left: 2%;
+    width: 18cm;
+}
+
+.labelDireccion{
+ margin-left: 1%;  
+ margin-right: 1%; 
+}
+
+
+.labelTelefono{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.labelNacionalidad{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.labelDiscapacidad{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.labelAdultosM{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.labelEstadoC{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.labelViveFami{
+    margin-left: 1%;
+}
+
+.ViveFami{
+    margin-left: 1%;
+}
+
+.labelSituEcono{
+    margin-left: 1%;
+}
+
+.SituEcono{
+    margin-left: 1%;
+}
+
+.labelViviPro{
+    margin-left: 1%;
+}
+
+.ViviPro{
+    margin-left: 1%;
+}
+
+.labelNotas{
+    margin-left: 1%;
+}
+
+.Notas1{
+    margin-left: 1%;
+}
+
+.Notas2{
+    margin-left: 1%;
+}
+
+.lblACP{
+    margin-left: 1%;
+}

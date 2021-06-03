@@ -150,6 +150,9 @@ export class RegistroProductoComponent implements OnInit {
       unidades: ''
     })
   }
+  redigirCrear(){
+    this.router.navigate(['/Init/registro-usuario']);
+  }
   
   navegarlista(){
     this.router.navigate(['/Init/control-donacion']);

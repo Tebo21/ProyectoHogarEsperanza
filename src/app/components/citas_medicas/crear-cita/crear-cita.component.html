@@ -1,53 +1,58 @@
 <h3>Nueva Cita</h3>
-<div style="margin-right: 20%;" class="input-group mb-3">
-    <form>
-        <div class="form-group">
-            <label for="name">Descripcion de la cita</label>
-            <input type="text" class="form-control" id="firstName" required [(ngModel)]="cita.descripcionCitaMedica" name="firstName">
-        </div>
+<div style="margin-right: 5%;" class="input-group mb-3">
+    <div class="form-group">
+        <label for="name">Descripcion de la cita</label>
+        <input type="text" class="form-control" id="firstName" required [(ngModel)]="cita.descripcionCitaMedica" name="firstName">
+    </div>
 
-        <div class="input-group mb-3">
-            <label for="name">Fecha Registro</label>
-            <input [(ngModel)]="cita.fechaRegistro" name="fechaRegistro" id="fehaRegistro" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de registro">
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">Fecha de la cita medica</label>
-            <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="fechaCitaMedica" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
-        </div>
+    <div class="input-group mb-3">
+        <label for="name">Fecha Registro</label>
+        <input [(ngModel)]="cita.fechaRegistro" name="fechaRegistro" id="fehaRegistro" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de registro">
+        <p style="margin-left: 2%;"> </p>
+        <label for="name">Fecha de la cita medica</label>
+        <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="fechaCitaMedica" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
+    </div>
 
-        <div class="input-group mb-3">
-            <label for="name"> Ingrese numero de cedula del Paciente</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="paciente" required [(ngModel)]="cita.id_paciente" name="paciente">
-        </div>
-        <div class="input-group mb-3">
-            <label for="name"> Ingrese numero de cedula del Acompanante</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="acompanante" required [(ngModel)]="cita.id_acompaniante" name="acompanante">
-        </div>
+    <div class="input-group mb-3">
+        <label for="name">Fecha Registro</label>
+        <input [(ngModel)]="cita.fechaRegistro" name="fechaRegistro" id="fehaRegistro" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de registro">
+    </div>
+    <div class="input-group mb-3">
+        <label for="name">Fecha de la cita medica</label>
+        <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="fechaCitaMedica" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
+    </div>
 
-        <div class="input-group mb-3">
-            <label for="name">Ingrese el correo al que se enviara el recordatorio</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje">
-        </div>
-        <div class="input-group mb-3">
-            <label for="name"> Ingrese numero de cedula del Trabajador de la fundacion</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="trabajador" required [(ngModel)]="cita.id_trabajadorFundacion" name="trabajador">
-        </div>
-        <div class="input-group mb-3">
-            <label for="centroMedico">Seleccione el Centro Médico</label>
-            <div class="dropdown show">
-                <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
+    <div class="input-group mb-3">
+        <label for="name"> Ingrese numero de cedula del Paciente</label>
+        <input type="text" style="margin-left: 5%;" class="form-control" id="paciente" required [(ngModel)]="cita.id_paciente" name="paciente">
+    </div>
+    <div class="input-group mb-3">
+        <label for="name"> Ingrese numero de cedula del Acompanante</label>
+        <input type="text" style="margin-left: 5%;" class="form-control" id="acompanante" required [(ngModel)]="cita.id_acompaniante" name="acompanante">
+    </div>
+
+    <div class="input-group mb-3">
+        <label for="name">Ingrese el correo al que se enviara el recordatorio</label>
+        <input type="text" style="margin-left: 5%;" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje">
+    </div>
+    <div class="input-group mb-3">
+        <label for="name"> Ingrese numero de cedula del Trabajador de la fundacion</label>
+        <input type="text" style="margin-left: 5%;" class="form-control" id="trabajador" required [(ngModel)]="cita.id_trabajadorFundacion" name="trabajador">
+    </div>
+    <div class="input-group mb-3">
+        <label for="centroMedico">Seleccione el Centro Médico</label>
+        <div class="dropdown show">
+            <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
                               <option *ngFor="let c of centro" class="dropdown-item">
                                  {{c.nombreCentroMedico}}
                              </option>
                             </select>
-            </div>
         </div>
-        <div class="form-group">
-            <label for="name">Observaciones a tener en cuenta</label>
-            <input type="text" class="form-control" id="nota" required [(ngModel)]="cita.nota" name="nota">
-        </div>
+    </div>
+    <div class="form-group">
+        <label for="name">Observaciones a tener en cuenta</label>
+        <input type="text" class="form-control" id="nota" required [(ngModel)]="cita.nota" name="nota">
+    </div>
 
-        <button type="submit" style="margin-left: 50%;" class="btn btn-success" (click)="save()">Guardar</button>
-
-    </form>
+    <button type="submit" style="margin-left: 50%;" class="btn btn-success" (click)="save()">Guardar</button>
 </div>

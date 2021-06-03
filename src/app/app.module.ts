@@ -39,6 +39,7 @@ import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-
 import {TableModule} from 'primeng/table';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
+import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-
     ListCentroComponent,
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
+    VistaFichaComponent,
   ],
   imports: [
     CommonModule,

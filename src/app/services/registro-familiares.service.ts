@@ -13,5 +13,7 @@ export class RegistroFamiliaresService {
   postRegistFami(familiaresPersona:RegistroFamiliares):Observable<any>{
     return this.http.post(`${this.URL}/addfamiliares`,familiaresPersona);
   }
-
+  getfamicedula(cedula: any): Observable<any>{
+    return this.http.get<any>(this.URL+`/bycedula/${cedula}`);
+  }
 }

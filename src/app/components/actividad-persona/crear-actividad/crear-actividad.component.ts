@@ -63,9 +63,10 @@ export class CrearActividadComponent implements OnInit {
     console.log(this._tipoactividad1);
 
     this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
-      console.log("Guardado satisfactoriamente")
-    }
-    )
+      window.location.reload();
+      alert("Guardado satisfactoriamente");
+      this.modalService.dismissAll();
+    });
   }
   gotoList() {
     this.router.navigate(['/actividades']);

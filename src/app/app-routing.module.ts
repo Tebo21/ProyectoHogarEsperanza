@@ -20,6 +20,7 @@ import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
+import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
  // ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
@@ -92,6 +93,10 @@ const routes: Routes = [
       {
         path: 'listar-citaM',
         component: ListarCitaComponent
+      },
+      {
+        path: 'vista-ficha',
+        component: VistaFichaComponent
       },
       {
         path: 'registro-coordinador',
