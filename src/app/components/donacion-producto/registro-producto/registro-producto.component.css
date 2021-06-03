@@ -25,12 +25,14 @@ body{
 
 .form-select{
     height: 35px;
-    width: 350px;
+    min-width: 325px;
+    max-width: 325px;
 }
 
 .form-control{
     min-height: 35px;
-    min-width: 350px;
+    min-width: 325px;
+    max-width: 325px;
 }
 
 .btncedula{

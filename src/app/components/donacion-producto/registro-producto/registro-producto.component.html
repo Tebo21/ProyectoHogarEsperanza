@@ -10,13 +10,13 @@
                         <br />
                         <h3 style="text-align: center;"><b>Donaciones</b></h3>
                         <br />
-                        <div class="row g-3">
+                        <div class="row">
                             <!-- <form action="" [formGroup] = "formDonador"> -->
                             <div class="col">
                                 <!--Info Donador-->
                                 <label for="exampleIdDonator" class="form-label"><b>Donador:</b></label>
                                 <div class="mb-3">
-                                    <select class="form-select" aria-label="Default select example" name="id_tipo" id="id_tipo" (change)="seleccionOpcion($event)">
+                                    <select class="form-select" aria-label="Default select example" name="id_tipo" id="id_tipo" (click)="seleccionOpcion($event)">
                                         <option selected hidden>Seleccione:</option>
                                         <option value="1">Cédula</option>
                                         <option value="2">Anónimo</option>
