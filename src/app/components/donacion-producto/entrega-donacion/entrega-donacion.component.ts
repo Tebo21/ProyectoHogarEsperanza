@@ -38,8 +38,7 @@ export class EntregaDonacionComponent implements OnInit {
     }  
 
   }*/
-  buscarPersona(){   
-   
+  buscarPersona(){      
       this.personaService.getPorCedula(this.cedulaPersona).subscribe(
         data => {
           this.nombreBeneficiado = data.nombres + ' ' + data.apellidos;

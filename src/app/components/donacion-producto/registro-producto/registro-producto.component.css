@@ -1,40 +1,15 @@
-.buton{
-    float: right;
-    /*background-color: aqua;*/
-
-}
-.buton2{
-    float: left;
-    /*background-color: aqua;*/
-}
-.lista{
-    float: inherit;
-}
-
-body{
-    margin-left: 2%;
-    margin-right: 2%;
-}
-.botones{
-    text-align: center;
-}
-
-.btnfooter{
-    width: 80%;
-}
-
 .form-select{
-    height: 35px;
-    min-width: 325px;
-    max-width: 325px;
+    min-width: 380px;
 }
 
 .form-control{
-    min-height: 35px;
-    min-width: 325px;
-    max-width: 325px;
+    min-width: 380px;
 }
 
-.btncedula{
-    min-width: 150px;
+.inputCedula{
+    min-width: 200px;
+} 
+
+.titulo{
+    text-align: center;
 }

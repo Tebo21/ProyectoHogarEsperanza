@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         this.display = true;
         this.redireccion();
       } else {
-        this.alerta = 'Datos errnóneos'
+        this.alerta = 'Datos erróneos'
         this.display = true;
       }
     });
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
       }
       (async () => {
         await delay(2000);
-        this.router.navigateByUrl('Init/registro-usuario');
+        this.router.navigateByUrl('registro-usuario');
       })();
     } else if (this.tipo.string == 'Administrador') {
       function delay(ms: number) {
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
       }
       (async () => {
         await delay(2000);
-        this.router.navigateByUrl('Init/dashboard');
+        this.router.navigateByUrl('dashboard');
       })();
     } else if (this.tipo.string == 'Voluntario Interno') {
       function delay(ms: number) {
@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
       }
       (async () => {
         await delay(2000);
-        this.router.navigateByUrl('Init/actividades');
+        this.router.navigateByUrl('actividades');
       })();
     } else if (this.tipo.string == 'Voluntario Externo') {
       function delay(ms: number) {
@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit {
       }
       (async () => {
         await delay(2000);
-        this.router.navigateByUrl('Init/actividades');
+        this.router.navigateByUrl('actividades');
       })();
     }
 

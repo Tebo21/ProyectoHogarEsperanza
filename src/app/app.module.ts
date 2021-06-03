@@ -38,11 +38,15 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
+import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
+import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
+import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 @NgModule({
   declarations: [
@@ -68,6 +72,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ListCentroComponent,
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
+    NavbarSuperAdminComponent,
+    NavbarAdminComponent,
+    NavbarVoluntarioComponent,
     VistaFichaComponent,
     EntregaDonacionComponent,
   ],
@@ -88,6 +95,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     PanelModule,
     TableModule,
     VirtualScrollerModule,
+    ConfirmDialogModule,
     KeyFilterModule,
     InputSwitchModule,
     ConfirmDialogModule,

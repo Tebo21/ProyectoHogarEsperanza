@@ -11,43 +11,24 @@ import { ConfirmationService } from 'primeng/api';
 export class ListadoUsuariosComponent implements OnInit {
   listaUsusarios: Usuarios[];
   usuario: Usuarios = {};
+  usuarioA: Usuarios = {};
+  nuevoUser: Usuarios = {};
+
   displayEditar: boolean = false;
-  usuarioEdit: Usuarios={};
+  usuarioEdit: Usuarios = {};
   listadoTipo: any[];
   tipo: any;
+  valido: boolean;
+  usuarioT: number;
 
   constructor(private usuarioService: UsuarioService,
     private confirmationService: ConfirmationService,) {
-
     this.listadoTipo = [
       { tip: 'SuperAdministrador' },
       { tip: 'Administrador' },
       { tip: 'Voluntario Interno' },
       { tip: 'Voluntario Externo' }
     ]
-
-
-  }
-
-  //Editar
-  showDialogEditar(usu: Usuarios) {
-    console.log(usu);
-    
-     this.usuarioService.updateUser(usu).subscribe(data => {
-       this.usuarioEdit=data;
-       console.log(this.usuarioEdit);
-       this.displayEditar = true;
-     });
-   }
-
-  ngOnInit(): void {
-    this.listarUsuarios();
-  }
-
-  listarUsuarios() {
-    this.usuarioService.getAll().subscribe(data => {
-      this.listaUsusarios = data;
-    })
   }
 
   tipoUsuario(usuarioTipo: number): string {
@@ -61,9 +42,56 @@ export class ListadoUsuariosComponent implements OnInit {
       return 'Voluntario Externo'
     }
   }
-  actualizarUsuario() {
 
+  //Selector de id automatico
+  onChange(event: any) {
+    if (event.value == null) {
+      this.valido = false;
+    } else {
+      this.valido = true;
+      if (this.tipo.tip == 'SuperAdministrador') {
+        this.usuarioT = 1;
+      } else if (this.tipo.tip == 'Administrador') {
+        this.usuarioT = 2;
+      } else if (this.tipo.tip == 'Voluntario Interno') {
+        this.usuarioT = 3;
+      } else if (this.tipo.tip == 'Voluntario Externo') {
+        this.usuarioT = 4;
+      }
+    }
   }
+
+  ngOnInit(): void {
+    this.listarUsuarios();
+  }
+
+  listarUsuarios() {
+    this.usuarioService.getAll().subscribe(data => {
+      this.listaUsusarios = data;
+    })
+  }
+
+  //Editar
+  showDialogEditar(usu: Usuarios) {
+    this.displayEditar = true;
+    this.usuarioA = usu;
+  }
+
+  actualizarUsuario() {
+    const nu : Usuarios = {
+      idUsuario: this.usuarioA.idUsuario,
+      usuarioCedula: this.usuarioA.usuarioCedula,
+      usuarioContrasenia: this.usuarioA.usuarioContrasenia,
+      usuarioNombre: this.usuarioA.usuarioNombre,
+      usuarioTipo: this.usuarioT
+    }
+    this.usuarioService.updateUser(nu).subscribe(data => {
+      this.usuarioEdit = data;
+      alert('Se ha actualizado exitosamente')
+      window.location.reload();
+    });
+  }
+
 
   eliminarUsuario(id: number) {
     this.confirmationService.confirm({
@@ -72,9 +100,9 @@ export class ListadoUsuariosComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.usuarioService.deleteUser(id).subscribe(data => {
-          this.usuario=data;
+          this.usuario = data;
           console.log(this.usuario);
-          
+
           window.location.reload();
         });
       },

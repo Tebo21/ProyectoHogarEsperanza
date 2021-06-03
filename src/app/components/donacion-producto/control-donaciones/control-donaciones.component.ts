@@ -75,7 +75,7 @@ export class ControlDonacionesComponent implements OnInit {
   }
 
   navegar(){
-    this.router.navigate(['/Init/registro-producto'])
+    this.router.navigate(['registro-producto'])
   }
   
   navegarEntrega(){
