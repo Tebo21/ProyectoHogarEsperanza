@@ -79,7 +79,7 @@ export class ControlDonacionesComponent implements OnInit {
   }
   
   navegarEntrega(){
-    this.router.navigate(['/Init//entrega-donacion'])
+    this.router.navigate(['entrega-donacion'])
   }
 
 

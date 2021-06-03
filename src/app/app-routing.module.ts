@@ -33,10 +33,6 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'Init',
-    component: LayoutComponent,
-    children: [
-      {
         path: 'centromedico-listar',
         component: ListCentroComponent,
       },
@@ -107,10 +103,7 @@ const routes: Routes = [
       {
         path: 'entrega-donacion',
         component: EntregaDonacionComponent
-      }
-
-    ],
-  },
+      },
   {
     path: '**',
     pathMatch: 'full',
