@@ -7,9 +7,8 @@
                     <h3 style="text-align: center;"><b>Entrega Donaciones</b></h3>
                     <br />
                     <div class="row">
-
                         <div class="col">
-                            <label for="exampleIdDonator" class="form-label"><b>Buscar Beneficiario:</b></label>
+                           <!--  <label for="exampleIdDonator" class="form-label"><b>Buscar Beneficiario:</b></label>-->
                             <br>
                             <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
                             <div class="row">
@@ -34,37 +33,83 @@
                                     <button class="btn btn-primary" type="button">Registrar Beneficiario<i
                                             class="pi pi-user-plus"></i></button>
                                 </div>
-                            </div>
+                            </div>-
                         </div>
                         <div class="col">
                             <div class="mb-3">
                                 <label for="examplename" class="form-label"><b>Nombre Beneficiario</b></label>
-                                <input type="text" class="form-control" [(ngModel)]="nombreBeneficiado" disabled>
+                                <input type="text" class="form-control" [(ngModel)]="nombreBeneficiario" disabled>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label"><b>Correo Beneficiario</b></label>
+                                <label for="exampleInputEmail1" class="form-label"><b>Edad Beneficiario</b></label>
                                 <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" [(ngModel)]="correoBeneficiado" disabled>
+                                    aria-describedby="emailHelp" [(ngModel)]="edadBeneficiario" disabled>
                             </div>
                             <div class="mb-3">
-                                <label for="examplePhone" class="form-label"><b>Teléfono Beneficiario</b></label>
-                                <input type="text" class="form-control" [(ngModel)]="telefonoBeneficiado" disabled>
+                                <label for="examplePhone" class="form-label"><b>Dirección del Beneficiario</b></label>
+                                <input type="text" class="form-control" [(ngModel)]="direccionBeneficiario" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="examplePhone" class="form-label"><b>Estado civil del
+                                        Beneficiario</b></label>
+                                <input type="text" class="form-control" [(ngModel)]="estadoCivil" disabled>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!--ENTREGA AYUDA-->
-                <div class="card-body">                                 
+                <div class="card-body">
                     <div class="contenedor">
-                        
+                        <h3 style="text-align: center;">
+                            Productos Disponibles
+                        </h3>
 
-
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Categoria</th>
+                                            <th>Nombre Producto</th>
+                                            <th>Descripción</th>
+                                            <th>Cantidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let donacion of listaDonaciones">
+                                            <td>{{donacion.categoria}}</td>
+                                            <td>{{donacion.nombreDonacion}}</td>
+                                            <td>{{donacion.descripcionDonacion}}</td>
+                                            <td>{{donacion.cantidad}}</td>
+                                            <td>
+                                                <button class="btn btn-info" style="margin-left: 10px"
+                                                    (click)="donar()">Donar</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
                     </div>
-                </div>  
-
-
+                </div>
             </div>
         </div>
     </div>
 </body>
+
+<p-dialog header="Donación" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+    <p class="p-m-0">{{alerta}}</p>
+    <input id="id_input" type="number" class="form-control">
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="display=false" label="Aceptar" styleClass="p-button-text">
+        </p-button>
+        <p-button icon="pi pi-check" (click)="display=false" label="Cancelar" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>
