@@ -40,6 +40,7 @@ import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.serv
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ListCentroComponent,
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
+    VistaFichaComponent,
   ],
   imports: [
     CommonModule,
