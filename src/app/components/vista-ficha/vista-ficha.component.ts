@@ -16,6 +16,10 @@ export class VistaFichaComponent implements OnInit {
   familiares: RegistroFamiliares = new RegistroFamiliares();
   nombreCompleto:String;
   fichaS: FichaSocioeconomica = new FichaSocioeconomica();
+  pareja:string;
+  discapacidad:string;
+  adultoMayor:String;
+  viveConOtros:String;
   public listaFamiliares:any = [];
   constructor(private personService:PersonasService, private famiservice:RegistroFamiliaresService, private fichaservice:FichaSocioeconomicaService){}
   nota1:string="Al momento de llenar este registro Fundación Hogar de Esperanza no garantiza"+
@@ -36,15 +40,20 @@ export class VistaFichaComponent implements OnInit {
   cargarDatos(){
     //datos persona
     var cedula_persona=localStorage.getItem('cedulalocalstorage');
-    this.personService.getPorCedula("0104907943").subscribe(data =>{
+    this.personService.getPorCedula(cedula_persona).subscribe(data =>{
       this.persona=data
       this.nombreCompleto = this.persona.nombres+" "+this.persona.apellidos
-      console.log(data)
+      if(this.persona.discapacidad==true){
+        this.discapacidad="Si"
+      }else{
+        this.discapacidad="No"
+      }
     })
   }
 
   cargarFamilia(){
-    this.famiservice.getfamicedula("01010101").subscribe(data =>{
+    var cedula_persona=localStorage.getItem('cedulalocalstorage');
+    this.famiservice.getfamicedula(cedula_persona).subscribe(data =>{
       this.familiares=data
       console.log(data)
       this.listaFamiliares=this.familiares.hijos;
@@ -52,8 +61,20 @@ export class VistaFichaComponent implements OnInit {
   }
 
   cargarFicha(){
-    this.fichaservice.getfichacedula("01010101").subscribe(data=>{
+    var cedula_persona=localStorage.getItem('cedulalocalstorage');
+    this.fichaservice.getfichacedula(cedula_persona).subscribe(data=>{
       this.fichaS=data;
+      this.fichaS.fechaRegistro
+      if(this.fichaS.adultoMayor==true){
+          this.adultoMayor="Si"
+      }else{
+        this.adultoMayor="No"
+      }
+      if(this.fichaS.viveConOtros==true){
+        this.viveConOtros="Si"
+    }else{
+      this.viveConOtros="No"
+    }
       console.log(data);
     })
   }

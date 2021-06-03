@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FichaSocioeconomica } from 'src/app/models/ficha-socioeconomica';
 import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomica.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ficha-socioeconomica',
@@ -11,7 +12,7 @@ import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomic
 export class FichaSocioeconomicaComponent implements OnInit {
   fichasocieconomicaModel: FichaSocioeconomica = new FichaSocioeconomica();
   fechaActual = new Date();
-  constructor(private fichasocioserve:FichaSocioeconomicaService) { }
+  constructor(private fichasocioserve:FichaSocioeconomicaService, private root:Router) { }
 
   ngOnInit(): void {
     this.fecha_actual()
@@ -33,8 +34,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     this.fichasocioserve.postFichaSocio(this.fichasocieconomicaModel).subscribe(data=>{
       console.log("ficha 1 creada")
     });
-    console.log("ficha 2 creada")
-    confirm("ficha creada")
+    this.root.navigate(['vista-ficha'])
   }
 
 }

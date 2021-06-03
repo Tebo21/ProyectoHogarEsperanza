@@ -21,6 +21,8 @@ import { ListarCitaComponent } from './components/citas_medicas/listar-cita/list
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
+import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
  // ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
@@ -31,10 +33,6 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'Init',
-    component: LayoutComponent,
-    children: [
-      {
         path: 'centromedico-listar',
         component: ListCentroComponent,
       },
@@ -101,10 +99,11 @@ const routes: Routes = [
       {
         path: 'registro-coordinador',
         component: RegistroActividadCoordinadorComponent
-      }
-
-    ],
-  },
+      },
+      {
+        path: 'entrega-donacion',
+        component: EntregaDonacionComponent
+      },
   {
     path: '**',
     pathMatch: 'full',

@@ -26,6 +26,7 @@ import { PanelModule } from 'primeng/panel';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {InputSwitchModule} from 'primeng/inputswitch';
+
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
@@ -37,9 +38,15 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
+import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
+import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
+import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
+import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+
 
 @NgModule({
   declarations: [
@@ -65,7 +72,11 @@ import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.compon
     ListCentroComponent,
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
+    NavbarSuperAdminComponent,
+    NavbarAdminComponent,
+    NavbarVoluntarioComponent,
     VistaFichaComponent,
+    EntregaDonacionComponent,
   ],
   imports: [
     CommonModule,
@@ -84,8 +95,10 @@ import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.compon
     PanelModule,
     TableModule,
     VirtualScrollerModule,
+    ConfirmDialogModule,
     KeyFilterModule,
     InputSwitchModule,
+    ConfirmDialogModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService],

@@ -1,3 +1,7 @@
+<app-navbar-super-admin></app-navbar-super-admin>
+
+<br>
+
 <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
 
     <p-table [value]="listaUsusarios" styleClass="p-datatable-striped-responsive-demo" [scrollable]="true" scrollHeight="450px">
@@ -22,13 +26,6 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="footer" let-user>
-            <tr>
-                <td colspan="3" class="p-text-right">Totals</td>
-                <td>{{user.usuarioCedula }}</td>
-                <td>{{user.usuarioCedula }}</td>
-            </tr>
-        </ng-template>-->
     </p-table>
 
 </div>
@@ -37,22 +34,23 @@
 <p-dialog header="Editar Usuario" [(visible)]="displayEditar" [style]="{width: '50vw'}" [baseZIndex]="10000">
     <div class="card">
         <label for="float-input">Cedula</label>
-        <input id="float-input" type="text" pInputText [(ngModel)]="usuarioEdit.usuarioCedula">
-        <br>
-        <label for="float-input">Nombre Usuario</label>
-        <input id="float-input" type="text" pInputText [(ngModel)]="usuarioEdit.usuarioNombre">
-        <br>
-        <label for="float-input">Contraseña</label>
-        <input id="float-input" type="text" pInputText [(ngModel)]="usuarioEdit.usuarioContrasenia">
+        <input id="float-input" type="text" pInputText [(ngModel)]="usuarioA.usuarioCedula" disabled>
         <br>
         <div class="form-floating mb-3">
             <label for="floatingInput">Tipo de Usuario</label>
-            <p-dropdown [options]="listaUsusarios" [(ngModel)]="tipo" placeholder="Seleccione un tipo" optionLabel="tip" [style]="{'width': '100%'}" [filter]="true" [showClear]="true">
+            <p-dropdown [options]="listadoTipo" [(ngModel)]="tipo" placeholder="Seleccione un tipo"
+                optionLabel="tip" [style]="{'width': '100%'}" [filter]="true" [showClear]="true" (onChange)="onChange($event)">
             </p-dropdown>
         </div>
-
+        <br>
+        <label for="float-input">Nombre Usuario</label>
+        <input id="float-input" type="text" pInputText [(ngModel)]="usuarioA.usuarioNombre">
+        <br>
+        <label for="float-input">Contraseña</label>
+        <input id="float-input" type="text" pInputText [(ngModel)]="usuarioA.usuarioContrasenia">
+        <br>
         <div class="p-fluid">
-            <p-button label="Guardar Cambios"></p-button>
+            <p-button label="Guardar Cambios" (click)="actualizarUsuario()"></p-button>
         </div>
     </div>
 </p-dialog>

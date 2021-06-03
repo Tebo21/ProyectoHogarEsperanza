@@ -51,12 +51,13 @@ export class RegistroUsuariosComponent implements OnInit {
   discap = false;
   estadoDiscapacidad: boolean;
   adminActivar: boolean;
+  //Validacion de Logeo
+  tipoUser: any;
 
   constructor(private router: Router, private personaservice: PersonasService, private usuarioservice: UsuarioService, private fichaServicio: FichaSocioeconomicaService) {
 
     this.listadoTipo = [
       { top: 'Administrador' },
-      { top: 'Beneficiario' },
       { top: 'Voluntario' }
     ]
     this.nacionalidades = [
@@ -103,7 +104,7 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.comprobarLogin();
+    this.ComprobarLogin();
     this.displayV = false;
     this.displayB = false;
     this.adminActivar = true;
@@ -117,8 +118,6 @@ export class RegistroUsuariosComponent implements OnInit {
       if (this.tipo.top == 'Voluntario') {
         this.adminActivar = true;
         this.displayV = true;
-      } else if (this.tipo.top == 'Beneficiario') {
-        this.displayB = true;
       } else if (this.tipo.top == 'Administrador') {
         this.adminActivar = false;
         this.displayV = true;
@@ -140,12 +139,12 @@ export class RegistroUsuariosComponent implements OnInit {
     }
   }
 
-  comprobarLogin() {
-    this.nombredeUsuario = localStorage.getItem('usuarioA');
-    if (this.nombredeUsuario == null) {
-      this.router.navigateByUrl('/login');
-    } else {
-
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == '1') {
+    } else if (this.tipoUser == '3' || this.tipoUser == '4' || this.tipoUser == 2) {
+      alert('No tiene permisos para registrar beneficiarios')
+      this.router.navigateByUrl('inicio-super-admin');
     }
   }
 
@@ -186,36 +185,6 @@ export class RegistroUsuariosComponent implements OnInit {
       this.usuarioCreado = data;
       this.GurdarPersona();
       alert("Se ha registrado a :" + this.usuario.usuarioNombre)
-      function delay(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
-      (async () => {
-        await delay(2000);
-        window.location.reload();
-      });
-    });
-  }
-
-  GuardarBeneficiario() {
-    const nuevoBeneficiario: FichaSocioeconomica = {
-      cedulaPersona: this.persona.cedula,
-      situacionEconomica: this.sitEco.eco,
-      tipoVivienda: this.tipoVi.viv,
-      descripcionVivienda: this.ficha.descripcionVivienda,
-      seguro: this.ficha.seguro,
-      discapacidad: this.ficha.discapacidad,
-      discapacidadDescipcion: this.ficha.discapacidadDescipcion,
-      nacionalidad: this.nacio.nop,
-      estadoCivil: this.estado.eop,
-      salario: this.ficha.salario,
-      fechaRegistro: this.ficha.fechaRegistro,
-      adultoMayor: this.adultoMayor,
-      viveConOtros: this.viveOtros
-    }
-    console.log(nuevoBeneficiario);
-    this.fichaServicio.postFichaSocio(nuevoBeneficiario).subscribe(data3 => {
-      this.GurdarPersona();
-      alert("Beneficiario Guardado!");
       function delay(ms: number) {
         return new Promise(resolve => setTimeout(resolve, ms));
       }

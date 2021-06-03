@@ -54,7 +54,7 @@ export class UsuarioService {
   }
   updateUser(usuario: Usuarios): Observable<any> {
     const url = 'update-usuario';
-    return this.QueryAddUser(url, usuario);
+    return this.QueryUpdateUser(url, usuario);
   }
 
 
