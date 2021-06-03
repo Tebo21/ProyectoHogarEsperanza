@@ -93,6 +93,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     PanelModule,
     TableModule,
     VirtualScrollerModule,
+    ConfirmDialogModule,
     KeyFilterModule,
     InputSwitchModule,
     ConfirmDialogModule,
