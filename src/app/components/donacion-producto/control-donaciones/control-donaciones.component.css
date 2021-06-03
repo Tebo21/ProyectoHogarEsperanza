@@ -23,6 +23,9 @@
     width: 100%;
 }
 
+.btn{
+    min-width: 100%;
+}
 
 /* .container{
     width: 200%;

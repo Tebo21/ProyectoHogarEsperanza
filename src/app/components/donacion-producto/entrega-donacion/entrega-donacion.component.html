@@ -1,58 +1,54 @@
-<body>
-    <div class="container">
-        <div class="modal-body">
-            <div class="card">
-                <div class="card-header">
-                    <br />
-                    <h3 style="text-align: center;"><b>Entrega Donaciones</b></h3>
-                    <br />
-                    <div class="row">
-                        <div class="col">
-                           <!--  <label for="exampleIdDonator" class="form-label"><b>Buscar Beneficiario:</b></label>-->
-                            <br>
-                            <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="col-md-3 position-relative">
-                                        <input id="id_input" type="text" class="form-control btncedula"
-                                            [(ngModel)]="cedulaPersona">
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-header">
+                        <br />
+                        <h3 style="text-align: center;"><b>Entrega Donaciones</b></h3>
+                        <br />
+                        <div class="row">
+                            <div class="col-6">
+                               <!--  <label for="exampleIdDonator" class="form-label"><b>Buscar Beneficiario:</b></label>-->    
+                                <div class="mb-3">
+                                    <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input id="id_input" type="text" class="form-control btncedula" [(ngModel)]="cedulaPersona">
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-outline-primary" (click)="buscarPersona()"><i class="pi pi-search"></i></button>
+                                        </div>
+                                    </div>                                            
+                                </div>                               
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="examplename" class="form-label"><b>Nombre Beneficiario</b></label>
+                                    <input type="text" class="form-control" [(ngModel)]="nombreBeneficiario" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label"><b>Edad Beneficiario</b></label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" [(ngModel)]="edadBeneficiario" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="examplePhone" class="form-label"><b>Dirección del Beneficiario</b></label>
+                                    <input type="text" class="form-control" [(ngModel)]="direccionBeneficiario" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="examplePhone" class="form-label"><b>Estado civil del
+                                            Beneficiario</b></label>
+                                    <input type="text" class="form-control" [(ngModel)]="estadoCivil" disabled>
+                                </div>
+                                <div class="buton mb-3">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-primary" type="button">Registrar Beneficiario <i class="pi pi-user-plus"></i></button>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="col-md">
-                                        <button type="button" class="btn btn-primary" (click)="buscarPersona()"><i
-                                                class="pi pi-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                            <div class="buton mb-3">
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-primary" type="button">Registrar Beneficiario<i
-                                            class="pi pi-user-plus"></i></button>
-                                </div>
-                            </div>-
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="examplename" class="form-label"><b>Nombre Beneficiario</b></label>
-                                <input type="text" class="form-control" [(ngModel)]="nombreBeneficiario" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label"><b>Edad Beneficiario</b></label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" [(ngModel)]="edadBeneficiario" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label for="examplePhone" class="form-label"><b>Dirección del Beneficiario</b></label>
-                                <input type="text" class="form-control" [(ngModel)]="direccionBeneficiario" disabled>
-                            </div>
-                            <div class="mb-3">
-                                <label for="examplePhone" class="form-label"><b>Estado civil del
-                                        Beneficiario</b></label>
-                                <input type="text" class="form-control" [(ngModel)]="estadoCivil" disabled>
                             </div>
                         </div>
                     </div>
@@ -98,17 +94,17 @@
                 </div>
             </div>
         </div>
-    </div>
-</body>
-
-<p-dialog header="Donación" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
-    [draggable]="false" [resizable]="false">
-    <p class="p-m-0">{{alerta}}</p>
-    <input id="id_input" type="number" class="form-control">
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="display=false" label="Aceptar" styleClass="p-button-text">
-        </p-button>
-        <p-button icon="pi pi-check" (click)="display=false" label="Cancelar" styleClass="p-button-text">
-        </p-button>
-    </ng-template>
-</p-dialog>
+    </body>
+    
+    <p-dialog header="Donación" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false">
+        <p class="p-m-0">{{alerta}}</p>
+        <input id="id_input" type="number" class="form-control">
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="display=false" label="Aceptar" styleClass="p-button-text">
+            </p-button>
+            <p-button icon="pi pi-check" (click)="display=false" label="Cancelar" styleClass="p-button-text">
+            </p-button>
+        </ng-template>
+    </p-dialog>
+</html>

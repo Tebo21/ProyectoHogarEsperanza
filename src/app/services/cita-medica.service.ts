@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CitaMedicaService {
 
-  url = 'http://localhost:8080/citasMedicas';
+  url = 'http://localhost:3000/citasMedicas';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -17,7 +17,7 @@ export class CitaMedicaService {
   }
 
 
-  listCentro(): Observable<any>{
+  listCitas(): Observable<any>{
     return this.httpClient.get(`${this.url}/listar`);
   }
 
