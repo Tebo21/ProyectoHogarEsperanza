@@ -37,6 +37,26 @@ export class UsuarioService {
     return this.http.get<Usuarios>(url);
   }
 
+  QueryDeleteUser(query: String, idUsuario: number ) {
+    const url = `http://localhost:8080/${query}/${idUsuario}`;
+    return this.http.request<Usuarios>('delete',url);
+  }
+  deleteUser(idUsuario: number): Observable<any> {
+    const url = 'delete-usuario';
+    return this.QueryDeleteUser(url, idUsuario);
+  }
+
+  QueryUpdateUser(query: String, usuario: Usuarios ) {
+    const url = `http://localhost:8080/${query}`;
+    return this.http.request<Usuarios>('put',url, {
+      body: usuario
+  });
+  }
+  updateUser(usuario: Usuarios): Observable<any> {
+    const url = 'update-usuario';
+    return this.QueryUpdateUser(url, usuario);
+  }
+
 
 
  

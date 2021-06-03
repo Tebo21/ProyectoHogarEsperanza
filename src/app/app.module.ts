@@ -42,6 +42,7 @@ import {TableModule} from 'primeng/table';
 import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 
@@ -95,6 +96,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     TableModule,
     VirtualScrollerModule,
     KeyFilterModule,
+    ConfirmDialogModule,
     InputSwitchModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
