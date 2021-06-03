@@ -39,6 +39,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import {TableModule} from 'primeng/table';
     TableModule,
     VirtualScrollerModule,
     KeyFilterModule,
+    ConfirmDialogModule,
     InputSwitchModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
