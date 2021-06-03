@@ -91,7 +91,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     (data=>{
       console.log("hijos registrados")
     });
-    this.router.navigate(['/Init/ficha-socioeconomica'])
+    this.router.navigate(['ficha-socioeconomica'])
   }
 
 }

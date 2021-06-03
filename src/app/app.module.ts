@@ -43,6 +43,7 @@ import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navba
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
+import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.compon
     NavbarAdminComponent,
     NavbarVoluntarioComponent,
     VistaFichaComponent,
+    InicioSuperAdminComponent,
   ],
   imports: [
     CommonModule,

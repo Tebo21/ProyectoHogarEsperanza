@@ -152,7 +152,7 @@ export class RegistroProductoComponent implements OnInit {
   }
   
   navegarlista(){
-    this.router.navigate(['/Init/control-donacion']);
+    this.router.navigate(['control-donacion']);
   }
 
 }

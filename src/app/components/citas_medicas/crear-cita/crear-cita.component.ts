@@ -41,7 +41,7 @@ export class CrearCitaComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   gotoList() {
-    this.router.navigate(['/Init/listar-citaM']);
+    this.router.navigate(['listar-citaM']);
   }
 
 }
