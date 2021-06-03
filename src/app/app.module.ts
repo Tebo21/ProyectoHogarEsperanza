@@ -39,6 +39,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
+import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
+import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
+import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +69,9 @@ import {TableModule} from 'primeng/table';
     ListCentroComponent,
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
+    NavbarSuperAdminComponent,
+    NavbarAdminComponent,
+    NavbarVoluntarioComponent,
   ],
   imports: [
     CommonModule,

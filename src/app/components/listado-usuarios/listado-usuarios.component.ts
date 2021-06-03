@@ -8,7 +8,12 @@ import { UsuarioService } from 'src/app/services/usuarios.service';
   styleUrls: ['./listado-usuarios.component.css']
 })
 export class ListadoUsuariosComponent implements OnInit {
+  
+  // Listado de Usuario
   listaUsusarios:Usuarios[];
+  // 
+  totalUsuarios:any;
+
   constructor(private usuarioService : UsuarioService) { }
 
   ngOnInit(): void {
@@ -32,5 +37,14 @@ export class ListadoUsuariosComponent implements OnInit {
       return 'Voluntario Externo'
     }
   }
+
+  calcularUsuarios() {
+    let total = 0;
+    for(let user of this.listaUsusarios) {
+     //   total += user.;
+    }
+
+    //this.thisYearTotal = total;
+}
  
 }
