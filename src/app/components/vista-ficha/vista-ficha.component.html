@@ -9,7 +9,7 @@
   
       <div class="input-group mb-3">
         <label class="fechalabel" for="">Fecha:</label>
-        <input [(ngModel)]="fichaS.fechaRegistro" class="fecha" type="text">
+        <input [(ngModel)]="fichaS.fechaRegistro" class="fecha" type="text"  [ngModel]="this.fichaS.fechaRegistro | date:'yyyy-MM-dd'">
       </div>
       <div class="input-group mb-3">
         <label class="labelNombre" for="">Nombres:</label>
