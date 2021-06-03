@@ -37,8 +37,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
-import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
+import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 
 @NgModule({
   declarations: [

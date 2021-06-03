@@ -13,7 +13,7 @@ export class CitasMedicas {
     // tslint:disable-next-line: variable-name
     // tslint:disable-next-line: variable-name
     id_trabajadorFundacion!: string;
-    especialidad!: number;
+    especialidad!: string;
     nota!: string;
-    idCentroMedico!: number;
+    idCentroMedico!: string;
 }
