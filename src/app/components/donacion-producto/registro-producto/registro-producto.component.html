@@ -8,38 +8,38 @@
                 <div class="card">
                     <div class="card-header">
                         <br />
-                        <h3 style="text-align: center;"><b>Donaciones</b></h3>
+                        <h3 class="titulo"><b>Donaciones</b></h3>
                         <br />
                         <div class="row">
                             <!-- <form action="" [formGroup] = "formDonador"> -->
-                            <div class="col">
+                            <div class="col-6">
                                 <!--Info Donador-->
                                 <label for="exampleIdDonator" class="form-label"><b>Donador:</b></label>
                                 <div class="mb-3">
-                                    <select class="form-select" aria-label="Default select example" name="id_tipo" id="id_tipo" (click)="seleccionOpcion($event)">
+                                    <select class="form-select" aria-label="Default select example" name="id_tipo" id="id_tipo" (change)="seleccionOpcion($event)">
                                         <option selected hidden>Seleccione:</option>
                                         <option value="1">Cédula</option>
                                         <option value="2">Anónimo</option>
                                     </select>
                                 </div>
-                                <div class="mb-3" [hidden] = "!mostrar">
+                                <div [hidden] = "!mostrar">
                                     
                                     <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
                                     <div class="row">
                                         <div class="col">
                                             <div class="col-md-3 position-relative">
-                                                <input id="id_input" type="text" class="form-control btncedula" [(ngModel)]="cedulaDonador">
+                                                <input id="id_input" type="text" class="form-control inputCedula" [(ngModel)]="cedulaDonador">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="col-md">
-                                                <button type="button" class="btn btn-primary" (click)="buscarPersona()"><i class="pi pi-search"></i></button>
+                                                <button type="button" class="btn btn-outline-primary" (click)="buscarPersona()"><i class="pi pi-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
         
                                 <div class="mb-3">
                                     <label for="examplename" class="form-label"><b>Nombre Donador</b></label>
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="buton mb-3">
                                     <div class="d-grid gap-2">
-                                        <button class="btn btn-primary" type="button">Registrar <i class="pi pi-user-plus"></i></button>
+                                        <button class="btn btn-outline-primary" type="button">Registrar <i class="pi pi-user-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -77,41 +77,18 @@
                                     <div class="row gx-5">
                                         <div class="col">
                                             <!--Info Categoria-->
-                                            <select class="form-select" aria-label="Default select example" formControlName="categoria">
+                                            <select class="form-select" aria-label="Default select example" formControlName="categoria" (click)="optionCategory($event)">
                                                 <option value="ALIMENTO">Alimento</option>
                                                 <option value="VESTIMENTA">Vestimenta</option>
                                                 <option value="MEDICINA">Medicina</option>
                                                 <option value="ELECTRONICO">Electronico</option>
+                                                <option value="OTRO">Otro...</option>
                                             </select>
                                         </div>
                                         <div class="col">
-        
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal "
-                                                data-bs-target="#staticBackdrop">Otro...</button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="staticBackdropLabel"><b>ESPECIFIQUE</b></h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="mb-3">
-                                                            <!--examplenameprod-->
-                                                            <label for="examplenameprod" class="form-label">Nombre Categoria:</label>
-                                                            <input type="text" class="form-control" formControlName="categoria">
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
-                                                        <button type="button" class="btn btn-primary">ACEPTAR</button>
-                                                    </div>
-                                                </div>
+                                            <div class="mb-3" [hidden]="!otraCategoria">
+                                                <input type="text" class="form-control" formControlName="categoria" placeholder="Escribalo aqui...">
                                             </div>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -158,13 +135,13 @@
                         <div class="botones">
                             <div class="row">
                                 <div class="col d-grid gap-2">
-                                    <button class="btn btn-danger btnfooter" type="button" style="margin-left: 10px" (click)="limpiarForm()">CANCELAR</button>
+                                    <button class="btn btn-outline-danger btnfooter" type="button" style="margin-left: 10px" (click)="limpiarForm()">Cancelar <i class="pi pi-times"></i></button>
                                 </div>
                                 <div class="col d-grid gap-2"> <!--style="margin: 10px"-->
-                                    <button class="btn btn-outline-primary btnfooter" type="button"style="margin-left: 10px"(click)="navegarlista()">INVENTARIO</button>
+                                    <button class="btn btn-outline-primary btnfooter" type="button"style="margin-left: 10px"(click)="navegarlista()">Inventario <i class="pi pi-book"></i></button>
                                 </div>
                                 <div class="col d-grid gap-2">
-                                    <button class="btn btn-success btnfooter" type="button" style="margin-left: 10px" (click)="registrarProducto()">GUARDAR</button>
+                                    <button class="btn btn-outline-success btnfooter" type="button" style="margin-left: 10px" (click)="registrarProducto()">Guardar <i class="pi pi-check"></i></button>
                                 </div>                          
                             </div>                    
                         </div>

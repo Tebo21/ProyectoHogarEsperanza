@@ -15,6 +15,7 @@ import {DividerModule} from 'primeng/divider';
 export class RegistroProductoComponent implements OnInit {
 
   mostrar = false;
+  otraCategoria = false;
 
   //today: string;
 
@@ -84,6 +85,13 @@ export class RegistroProductoComponent implements OnInit {
 
     return this.today; 
   }*/
+  optionCategory(event: any){
+    if (event.target.value == "OTRO"){
+      this.otraCategoria = true;
+    }else{
+      this.otraCategoria = false;
+    }
+  }
 
   seleccionOpcion(event: any){
   
