@@ -25,7 +25,7 @@ export class DonaProductoService {
   }
 
   getDonacionesPorCateg(categoria: any){
-    return this.http.get<Donaciones[]>(this.URL+`byCategoria/${categoria}`);
+    return this.http.get<Donaciones[]>(this.URL+`listaByCategoria/${categoria}`);
   }
 
 }

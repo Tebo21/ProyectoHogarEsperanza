@@ -93,7 +93,7 @@ export class RegistroProductoComponent implements OnInit {
       this.nombreDonador = '';
       this.correoDonador = '';
       this.telefonoDonador = '';
-    } else {
+    } else if (event.target.value == "2"){
       this.mostrar = false;
       this.cedulaDonador = 'ANONIMO';
       this.nombreDonador = 'ANONIMO';
@@ -119,7 +119,6 @@ export class RegistroProductoComponent implements OnInit {
       /*console.log(this.selectedFile);
       const uploadImageData = new FormData();
       uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);*/
-      this.fechaActual = new Date();
 
       const {nombre, categoria, descripcion, unidades} = this.formProducto.value;
 
