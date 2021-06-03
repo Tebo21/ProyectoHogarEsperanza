@@ -37,8 +37,8 @@ export class RegistroPersonaComponent implements OnInit {
     .subscribe(data=>{
       console.log("persona registrada")
     },
-    error=>console.log("mensajito"+error));
-    this.router.navigate(['/registro-familiares'])
+    error=>console.log(error));
+    this.router.navigate(['/Init/registro-familiares'])
   }
 
   validar(){
