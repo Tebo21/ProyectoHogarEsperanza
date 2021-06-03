@@ -4,6 +4,8 @@ import { CentroMedico } from 'src/app/models/centro-medico';
 import { CitasMedicas } from '../../../models/citas-medicas';
 import { CitaMedicaService } from '../../../services/cita-medica.service';
 import { CentroMedicoService } from '../../../services/centro-medico.service';
+import { EspecialidadService } from '../../../services/especialidad.service';
+import { Especialidad } from '../../../models/especialidad';
 
 @Component({
   selector: 'app-crear-cita',
@@ -14,20 +16,25 @@ export class CrearCitaComponent implements OnInit {
 
   cita: CitasMedicas = new CitasMedicas();
   centro: CentroMedico[] = [];
+  especialidad: Especialidad[] = [];
   nombreSeCe: number;
+  nombreSeEspecialidad: string;
 
   constructor(private citaMedicaService: CitaMedicaService,
               private serviCentro: CentroMedicoService,
-              private router: Router) { }
+              private router: Router,
+              private serviceEspecialidad: EspecialidadService) { }
 
   // tslint:disable-next-line: typedef
   ngOnInit(): void {
     this.listCentro();
+    this.listEspecialidad();
   }
 
   // tslint:disable-next-line: typedef
   save() {
     this.cita.idCentroMedico = this.nombreSeCe.toString();
+    this.cita.especialidad = this.nombreSeEspecialidad;
     console.log(this.cita.idCentroMedico);
     console.log(this.centro);
     this.citaMedicaService.createCitas(this.cita)
@@ -39,10 +46,14 @@ export class CrearCitaComponent implements OnInit {
   listCentro(){
     this.serviCentro.listCentro().subscribe(data => {
         this.centro = data;
+    })
+  }
+
+  listEspecialidad(){
+    this.serviceEspecialidad.listEspecialidad().subscribe(data => {
+        this.especialidad = data;
         console.log(data);
-        console.log("CENTRO");
-        console.log(this.centro);
-    });
+    })
   }
 
 

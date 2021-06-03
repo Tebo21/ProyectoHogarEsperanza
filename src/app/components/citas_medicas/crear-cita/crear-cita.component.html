@@ -33,15 +33,29 @@
         <input type="text" style="margin-left: 5%;" class="form-control" id="trabajador" required [(ngModel)]="cita.id_trabajadorFundacion" name="trabajador">
     </div>
     <div class="input-group mb-3">
-        <label for="centroMedico">Seleccione el Centro Médico</label>
+        <label for="centroMedico">Seleccione el Centro Médico:</label>
+        <br>
         <div class="dropdown show">
             <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
-                              <option *ngFor="let c of centro" class="dropdown-item">
-                                 {{c.nombreCentroMedico}}
-                             </option>
-                            </select>
+              <option *ngFor="let c of centro" class="dropdown-item">
+                 {{c.nombreCentroMedico}}
+             </option>
+            </select>
         </div>
     </div>
+
+    <div class="input-group mb-3">
+        <label for="centroMedico">Seleccione la Especialidad:</label>
+        <br>
+        <div class="dropdown show">
+            <select [(ngModel)]="nombreSeEspecialidad" class="btn btn-secondary dropdown-toggle" id="nomespecialidad" forControlName="nomespecialidad">
+              <option *ngFor="let e of especialidad" class="dropdown-item">
+                 {{e.nombreEspecialidad}}
+             </option>
+            </select>
+        </div>
+    </div>
+
     <div class="form-group">
         <label for="name">Observaciones a tener en cuenta</label>
         <input type="text" class="form-control" id="nota" required [(ngModel)]="cita.nota" name="nota">

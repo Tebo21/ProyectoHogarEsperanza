@@ -17,8 +17,8 @@ export class CitaMedicaService {
   }
 
 
-  listCentro(): Observable<any>{
-    return this.httpClient.get(`${this.url}/listar`);
+  listCitas(): Observable<any>{
+    return this.httpClient.get(`${this.url}/listadoCitasMedicas`);
   }
 
 

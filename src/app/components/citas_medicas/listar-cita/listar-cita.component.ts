@@ -26,7 +26,7 @@ export class ListarCitaComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   reloadData(): void {
-    this.citaMedica = this.citaMedicaS.listCentro();
+    this.citaMedica = this.citaMedicaS.listCitas();
     console.log('Si lista');
     console.log(this.citaMedica);
   }

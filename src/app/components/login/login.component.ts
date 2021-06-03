@@ -74,6 +74,7 @@ export class LoginComponent implements OnInit {
       if (this.userRecibido.usuarioCedula != null) {
         this.alerta = 'Bienvendo ' + this.userRecibido.usuarioNombre
         localStorage.setItem('usuarioA', this.userRecibido.usuarioNombre);
+        localStorage.setItem('rolUser', this.userRecibido.usuarioTipo.toString());
         this.display = true;
         this.redireccion();
       } else {

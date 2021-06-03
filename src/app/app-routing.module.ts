@@ -21,10 +21,11 @@ import { ListarCitaComponent } from './components/citas_medicas/listar-cita/list
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
-import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
-// AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
-// NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
-// ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
+import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+
+      // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
+      // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
+ // ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
 
 const routes: Routes = [
   {
@@ -32,81 +33,77 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'listado-usuarios',
-    component: ListadoUsuariosComponent,
-  },
-  {
-    path: 'centromedico-listar',
-    component: ListCentroComponent,
-  },
-  {
-    path: 'especialidad',
-    component: EspecialidadComponent,
-  },
-  {
-    path: 'actividades',
-    component: ActividadPersonaComponent,
-  },
-  {
-    path: 'crear-actividad',
-    component: CrearActividadComponent,
-  },
-  {
-    path: 'registro-persona',
-    component: RegistroPersonaComponent,
-  },
-  {
-    path: 'registro-familiares',
-    component: RegistroFamiliaresComponent,
-  },
-  {
-    path: 'registro-producto',
-    component: RegistroProductoComponent,
-  },
-  {
-    path: 'control-donacion',
-    component: ControlDonacionesComponent,
-  },
-  {
-    path: 'ficha-socioeconomica',
-    component: FichaSocioeconomicaComponent,
-  },
-  {
-    path: 'registro-usuario',
-    component: RegistroUsuariosComponent,
-  },
-  {
-    path: 'dashboard',
-    component: DasboardvoluntariosComponent,
-  },
-  {
-    path: 'listado-usuarios',
-    component: ListadoUsuariosComponent,
-  },
-  {
-    path: 'calendario',
-    component: VoluntarioCalendarioComponent,
-  },
-  {
-    path: 'crear-citaM',
-    component: CrearCitaComponent,
-  },
-  {
-    path: 'listar-citaM',
-    component: ListarCitaComponent
-  },
-  {
-    path: 'vista-ficha',
-    component: VistaFichaComponent
-  },
-  {
-    path: 'registro-coordinador',
-    component: RegistroActividadCoordinadorComponent
-  },
-  {
-    path: 'inicio-super-admin',
-    component: InicioSuperAdminComponent
-  },
+        path: 'centromedico-listar',
+        component: ListCentroComponent,
+      },
+      {
+        path: 'especialidad',
+        component: EspecialidadComponent,
+      },
+      {
+        path: 'actividades',
+        component: ActividadPersonaComponent,
+      },
+      {
+        path: 'crear-actividad',
+        component: CrearActividadComponent,
+      },
+      {
+        path: 'registro-persona',
+        component: RegistroPersonaComponent,
+      },
+      {
+        path: 'registro-familiares',
+        component: RegistroFamiliaresComponent,
+      },
+      {
+        path: 'registro-producto',
+        component: RegistroProductoComponent,
+      },
+      {
+        path: 'control-donacion',
+        component: ControlDonacionesComponent,
+      },
+      {
+        path: 'ficha-socioeconomica',
+        component: FichaSocioeconomicaComponent,
+      },
+      {
+        path: 'registro-usuario',
+        component: RegistroUsuariosComponent,
+      },
+      {
+        path: 'dashboard',
+        component : DasboardvoluntariosComponent,
+      },
+      {
+        path: 'listado-usuarios',
+        component : ListadoUsuariosComponent,
+      },
+      {
+        path: 'calendario',
+        component: VoluntarioCalendarioComponent,
+      },
+      {
+        path: 'crear-citaM',
+        component: CrearCitaComponent,
+      },
+      {
+        path: 'listar-citaM',
+        component: ListarCitaComponent
+      },
+      {
+        path: 'vista-ficha',
+        component: VistaFichaComponent
+      },
+      {
+        path: 'registro-coordinador',
+        component: RegistroActividadCoordinadorComponent
+      },
+      {
+        path: 'entrega-donacion',
+        component: EntregaDonacionComponent
+      },
   {
     path: '**',
     pathMatch: 'full',

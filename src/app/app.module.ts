@@ -26,6 +26,7 @@ import { PanelModule } from 'primeng/panel';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {InputSwitchModule} from 'primeng/inputswitch';
+
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
@@ -44,7 +45,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
-import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
+import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+
 
 @NgModule({
   declarations: [
@@ -74,7 +76,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     NavbarAdminComponent,
     NavbarVoluntarioComponent,
     VistaFichaComponent,
-    InicioSuperAdminComponent,
+    EntregaDonacionComponent,
   ],
   imports: [
     CommonModule,
