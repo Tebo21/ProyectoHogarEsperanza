@@ -26,6 +26,7 @@ import { PanelModule } from 'primeng/panel';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {InputSwitchModule} from 'primeng/inputswitch';
+
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
@@ -40,6 +41,8 @@ import {TableModule} from 'primeng/table';
 import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
+import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -66,6 +69,7 @@ import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.compon
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
     VistaFichaComponent,
+    EntregaDonacionComponent,
   ],
   imports: [
     CommonModule,
@@ -86,6 +90,7 @@ import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.compon
     VirtualScrollerModule,
     KeyFilterModule,
     InputSwitchModule,
+    ConfirmDialogModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService],
