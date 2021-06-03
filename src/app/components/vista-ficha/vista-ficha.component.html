@@ -27,9 +27,9 @@
       </div>
       <div class="input-group mb-3">
         <label class="labelDiscapacidad" for="">Discapacidad:</label>
-        <input [(ngModel)]="persona.discapacidad" class="Discapacidad" type="text">
+        <input  class="Discapacidad" type="text" value="{{discapacidad}}">
         <label class="labelAdultosM" for="">Adultos Mayores:</label>
-        <input [(ngModel)]="fichaS.adultoMayor" class="AdultosM" type="text">
+        <input  class="AdultosM" type="text" value="{{adultoMayor}}">
         <label  class="labelEstadoC" for="">Estado Civil:</label>
         <input [(ngModel)]="persona.estado_civil" class="EstadoC" type="text">  
       </div>
@@ -72,13 +72,13 @@
       <label class="labelViveFami" for="">Vive con otros familiares:</label>
     </div>
     <div class="input-group mb-3">
-        <input [(ngModel)]="fichaS.viveConOtros" class="ViveFami" type="text">
+        <input  class="ViveFami" type="text" value="{{viveConOtros}}">
     </div>
     <div class="input-group mb-1">
       <label  class="labelSituEcono" for="">Situación Economica:</label>
     </div>
     <div class="input-group mb-3">
-        <input  [(ngModel)]="fichaS.situacionEconomica" class="SituEcono" type="text">
+      <textarea [(ngModel)]="fichaS.situacionEconomica" class="SituEcono" type="text"></textarea>
     </div>
     <div class="input-group mb-1">
       <label  class="labelViviPro" for="">Posee vivienda Propia:</label>
