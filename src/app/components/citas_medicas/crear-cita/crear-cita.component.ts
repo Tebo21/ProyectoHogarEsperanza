@@ -34,6 +34,7 @@ export class CrearCitaComponent implements OnInit {
   // tslint:disable-next-line: typedef
   save() {
     this.cita.idCentroMedico = this.nombreSeCe.toString();
+    this.cita.especialidad = this.nombreSeEspecialidad;
     console.log(this.cita.idCentroMedico);
     console.log(this.centro);
     this.citaMedicaService.createCitas(this.cita)
