@@ -62,6 +62,7 @@ export class ActividadPersonaComponent implements OnInit {
         act.descripcionActividad
       ]);
     });
+    
     return values;
   }
 
