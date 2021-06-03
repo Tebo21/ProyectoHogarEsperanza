@@ -40,8 +40,8 @@
           <option *ngFor="let nac of catalogoNacionalidad" value="{{nac}}">{{nac}}</option>
         </select>
         <select [(ngModel)]="Personas.discapacidad" name="discapacidad" id="discapacidad" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="discapacidad">
-          <option value="No">No</option>
-          <option value="Si">Si</option>
+          <option value="false">No</option>
+          <option value="true">Si</option>
         </select>
         <select [(ngModel)]="Personas.estado_civil" name="estado_civil" id="estado_civil" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="estado_civil">
           <option  *ngFor="let estc of catalogoEstadoCivil" value="{{estc}}">{{estc}}</option>

@@ -13,8 +13,6 @@ export class ListarCitaComponent implements OnInit {
 
   citaMedica!: Observable<CitasMedicas[]>;
 
-  //cita: CitasMedicas[] = [];
-
   constructor(
     private citaMedicaS: CitaMedicaService,
     private router: Router
@@ -31,14 +29,6 @@ export class ListarCitaComponent implements OnInit {
     this.citaMedica = this.citaMedicaS.listCentro();
     console.log('Si lista');
     console.log(this.citaMedica);
-    // tslint:disable-next-line: deprecation
-    /*this.citaMedicaS.listCentro().subscribe(data => {
-      this.cita = data.data;
-      console.log('DATA');
-      console.log(data);
-      console.log('CENTROM2');
-      console.log(this.cita);
-    });*/
   }
 
 }

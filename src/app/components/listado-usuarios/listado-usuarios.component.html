@@ -4,8 +4,7 @@
 
 <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
 
-    <p-table [value]="listaUsusarios" styleClass="p-datatable-striped-responsive-demo" [scrollable]="true"
-        scrollHeight="450px">
+    <p-table [value]="listaUsusarios" styleClass="p-datatable-striped-responsive-demo" [scrollable]="true" scrollHeight="450px">
         <ng-template pTemplate="header">
             <tr>
                 <th>Id</th>
@@ -22,10 +21,8 @@
                 <td>{{user.usuarioNombre}}</td>
                 <td>{{tipoUsuario(user.usuarioTipo)}}</td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-user-edit"
-                        class="p-button-rounded p-button-outlined" (click)="showDialogEditar(user)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
-                        (click)="eliminarUsuario(user.idUsuario)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-user-edit" class="p-button-rounded p-button-outlined" (click)="showDialogEditar(user)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger" (click)="eliminarUsuario(user.idUsuario)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -35,7 +32,7 @@
 <p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
 </p-confirmDialog>
 <p-dialog header="Editar Usuario" [(visible)]="displayEditar" [style]="{width: '50vw'}" [baseZIndex]="10000">
-    <div class="card">    
+    <div class="card">
         <label for="float-input">Cedula</label>
         <input id="float-input" type="text" pInputText [(ngModel)]="usuarioA.usuarioCedula" disabled>
         <br>

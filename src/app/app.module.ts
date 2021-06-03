@@ -31,8 +31,6 @@ import { VoluntarioCalendarioComponent } from './components/voluntario-calendari
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { CommonModule } from '@angular/common';
 import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
-import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
-import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -43,6 +41,8 @@ import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navba
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
+import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 
@@ -62,8 +62,6 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     VoluntarioCalendarioComponent,
     ListCentroComponent,
     EspecialidadComponent,
-    CrearCitaComponent,
-    ListarCitaComponent,
     CrearCitaComponent,
     ListarCitaComponent,
     RegistroUsuariosComponent,
@@ -88,7 +86,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     HttpClientModule,
     NgbModule,
     DialogModule,
-    DropdownModule, 
+    DropdownModule,
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
@@ -96,8 +94,8 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     TableModule,
     VirtualScrollerModule,
     KeyFilterModule,
-    ConfirmDialogModule,
     InputSwitchModule,
+    ConfirmDialogModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService],
