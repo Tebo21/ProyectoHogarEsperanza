@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CentroMedico } from 'src/app/models/centro-medico';
 import { CitasMedicas } from '../../../models/citas-medicas';
 import { CitaMedicaService } from '../../../services/cita-medica.service';
+import { CentroMedicoService } from '../../../services/centro-medico.service';
 
 @Component({
   selector: 'app-crear-cita',
@@ -11,33 +13,38 @@ import { CitaMedicaService } from '../../../services/cita-medica.service';
 export class CrearCitaComponent implements OnInit {
 
   cita: CitasMedicas = new CitasMedicas();
-  submitted = false;
+  centro: CentroMedico[] = [];
+  nombreSeCe: number;
 
   constructor(private citaMedicaService: CitaMedicaService,
+              private serviCentro: CentroMedicoService,
               private router: Router) { }
 
   // tslint:disable-next-line: typedef
-  ngOnInit() {
-  }
-
-  newEmployee(): void {
-    this.submitted = false;
-    this.cita = new CitasMedicas();
+  ngOnInit(): void {
+    this.listCentro();
   }
 
   // tslint:disable-next-line: typedef
   save() {
+    this.cita.idCentroMedico = this.nombreSeCe.toString();
+    console.log(this.cita.idCentroMedico);
+    console.log(this.centro);
     this.citaMedicaService.createCitas(this.cita)
       .subscribe(data => console.log(data), error => console.log(error));
     this.cita = new CitasMedicas();
     this.gotoList();
   }
 
-  // tslint:disable-next-line: typedef
-  onSubmit() {
-    this.submitted = true;
-    this.save();
+  listCentro(){
+    this.serviCentro.listCentro().subscribe(data => {
+        this.centro = data;
+        console.log(data);
+        console.log("CENTRO");
+        console.log(this.centro);
+    });
   }
+
 
   // tslint:disable-next-line: typedef
   gotoList() {

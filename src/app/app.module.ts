@@ -31,14 +31,16 @@ import { VoluntarioCalendarioComponent } from './components/voluntario-calendari
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { CommonModule } from '@angular/common';
 import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
-import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
-import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
+import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
+import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
+import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -58,14 +60,13 @@ import {TableModule} from 'primeng/table';
     EspecialidadComponent,
     CrearCitaComponent,
     ListarCitaComponent,
-    CrearCitaComponent,
-    ListarCitaComponent,
     RegistroUsuariosComponent,
     DasboardvoluntariosComponent,
     VoluntarioCalendarioComponent,
     ListCentroComponent,
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
+    VistaFichaComponent,
   ],
   imports: [
     CommonModule,
@@ -77,13 +78,14 @@ import {TableModule} from 'primeng/table';
     HttpClientModule,
     NgbModule,
     DialogModule,
-    DropdownModule, 
+    DropdownModule,
     AccordionModule,
     BrowserAnimationsModule,
     ButtonModule,
     PanelModule,
     TableModule,
     VirtualScrollerModule,
+    ConfirmDialogModule,
     KeyFilterModule,
     InputSwitchModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),

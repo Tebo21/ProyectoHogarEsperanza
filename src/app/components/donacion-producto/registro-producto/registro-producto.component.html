@@ -11,8 +11,7 @@
                         <h3 class="titulo"><b>Donaciones</b></h3>
                         <br />
                         <div class="row">
-                            <!-- <form action="" [formGroup] = "formDonador"> -->
-                            <div class="col-6">
+                            <div class="col">
                                 <!--Info Donador-->
                                 <label for="exampleIdDonator" class="form-label"><b>Donador:</b></label>
                                 <div class="mb-3">
@@ -55,11 +54,10 @@
                                 </div>
                                 <div class="buton mb-3">
                                     <div class="d-grid gap-2">
-                                        <button class="btn btn-outline-primary" type="button">Registrar <i class="pi pi-user-plus"></i></button>
+                                        <button class="btn btn-outline-primary" type="button" (click) = "redigirCrear()" >Registrar <i class="pi pi-user-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- </form> -->
                         </div>
                     </div>
                     <div class="card-body">     
@@ -78,6 +76,7 @@
                                         <div class="col">
                                             <!--Info Categoria-->
                                             <select class="form-select" aria-label="Default select example" formControlName="categoria" (click)="optionCategory($event)">
+                                                <option selected hidden>Seleccione:</option>
                                                 <option value="ALIMENTO">Alimento</option>
                                                 <option value="VESTIMENTA">Vestimenta</option>
                                                 <option value="MEDICINA">Medicina</option>
@@ -87,7 +86,7 @@
                                         </div>
                                         <div class="col">
                                             <div class="mb-3" [hidden]="!otraCategoria">
-                                                <input type="text" class="form-control" formControlName="categoria" placeholder="Escribalo aqui...">
+                                                <input type="text" class="form-control" formControlName="categoria2" placeholder="Escribelo aqui...">
                                             </div>
                                         </div>
                                     </div>
@@ -106,28 +105,6 @@
                                 <label for="exampleFecha" class="form-label"><b>Fecha:</b></label>
                                 <input type="date" class="form-control" [ngModel] = "fechaActual | date:'yyyy-MM-dd'">
                             </div>
-                            
-                            <!-- <div>
-                                <div class="container row">
-                                    <div class="col-md-12">
-                                        <h1>Upload Image</h1>
-                                    </div>
-                                </div>
-                                
-                                <div class="container row">
-                                    <div class="col-md-6">
-                                        <input type="file" (change)="onFileChanged($event)">
-                                
-                                        <img [src]="imgURL" height="200" *ngIf="imgURL">
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="container row">
-                                    <div class="col-md-12">
-                                        <div *ngIf=message>{{message}}</div>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>        
         
                     </div>
@@ -135,7 +112,7 @@
                         <div class="botones">
                             <div class="row">
                                 <div class="col d-grid gap-2">
-                                    <button class="btn btn-outline-danger btnfooter" type="button" style="margin-left: 10px" (click)="limpiarForm()">Cancelar <i class="pi pi-times"></i></button>
+                                    <button class="btn btn-outline-danger btnfooter" type="button" style="margin-left: 10px" (click)="cancelar()">Cancelar <i class="pi pi-times"></i></button>
                                 </div>
                                 <div class="col d-grid gap-2"> <!--style="margin: 10px"-->
                                     <button class="btn btn-outline-primary btnfooter" type="button"style="margin-left: 10px"(click)="navegarlista()">Inventario <i class="pi pi-book"></i></button>

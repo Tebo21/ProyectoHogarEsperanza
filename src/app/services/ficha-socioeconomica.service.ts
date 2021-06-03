@@ -13,4 +13,7 @@ export class FichaSocioeconomicaService {
   postFichaSocio(fichasocioeonomica:FichaSocioeconomica):Observable<any>{
     return this.http.post(`${this.URL}/addfichaSocioeconomica`,fichasocioeonomica);
   }
+  getfichacedula(cedula: any): Observable<any>{
+    return this.http.get<any>(this.URL+`/bycedula/${cedula}`);
+  }
 }

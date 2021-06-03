@@ -1,0 +1,116 @@
+<div class="hoja">
+
+    <div class="titulo" >
+      <div class="input-group mb-3">
+        <h1>Hoja de Registro</h1>
+      </div>
+    </div>
+    <div class="estructura">
+  
+      <div class="input-group mb-3">
+        <label class="fechalabel" for="">Fecha:</label>
+        <input [(ngModel)]="fichaS.fechaRegistro" class="fecha" type="text">
+      </div>
+      <div class="input-group mb-3">
+        <label class="labelNombre" for="">Nombres:</label>
+        <input  value="{{nombreCompleto}}" class="Nombres" type="text">
+      </div>
+      <div class="input-group mb-3">
+        <label class="labelDireccion" for="">Dirección Exacta:</label>
+        <input [(ngModel)]="persona.direccion" class="Direccion" type="text">
+      </div>
+      <div class="input-group mb-3">
+        <label class="labelTelefono" for="">Telefono:</label>
+        <input [(ngModel)]="persona.celular" class="Telefono" type="text">
+        <label class="labelNacionalidad" for="">Nacionalidad:</label>
+        <input [(ngModel)]="persona.nacionalidad" class="Nacionalidad" type="text">
+      </div>
+      <div class="input-group mb-3">
+        <label class="labelDiscapacidad" for="">Discapacidad:</label>
+        <input [(ngModel)]="persona.discapacidad" class="Discapacidad" type="text">
+        <label class="labelAdultosM" for="">Adultos Mayores:</label>
+        <input [(ngModel)]="fichaS.adultoMayor" class="AdultosM" type="text">
+        <label  class="labelEstadoC" for="">Estado Civil:</label>
+        <input [(ngModel)]="persona.estado_civil" class="EstadoC" type="text">  
+      </div>
+      <div class="input-group mb-3">
+        <label class="labelNacionalidad" for="">Nro. Integrantes de Familia:</label>
+        <input [(ngModel)]="familiares.numHijos" class="Nacionalidad" type="text">
+        <label class="labelNacionalidad" for="">Nombre de la pareja o Esposo/a:</label>
+        <input class="Nacionalidad" type="text">
+      </div>
+      <div class="input-group mb-3">
+        <label class="labelNacionalidad" for="">Nombre y edad de los familiares:</label>
+      </div>
+      
+      <div class="input-group mb-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cedula</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Edad</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Parentesco</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hijos of listaFamiliares;let i=index">
+            <th>{{i}}</th>
+            <td>{{hijos[0]}}</td>
+            <td>{{hijos[1]}} {{hijos[2]}}</td>
+            <td>{{hijos[6]}}</td>
+            <td>{{hijos[7]}}</td>
+            <td>{{hijos[8]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <div class="input-group mb-1">
+      <label class="labelViveFami" for="">Vive con otros familiares:</label>
+    </div>
+    <div class="input-group mb-3">
+        <input [(ngModel)]="fichaS.viveConOtros" class="ViveFami" type="text">
+    </div>
+    <div class="input-group mb-1">
+      <label  class="labelSituEcono" for="">Situación Economica:</label>
+    </div>
+    <div class="input-group mb-3">
+        <input  [(ngModel)]="fichaS.situacionEconomica" class="SituEcono" type="text">
+    </div>
+    <div class="input-group mb-1">
+      <label  class="labelViviPro" for="">Posee vivienda Propia:</label>
+    </div>
+    <div class="input-group mb-3">
+        <input [(ngModel)]="fichaS.tipoVivienda" class="ViviPro" type="text">
+    </div>
+    <div class="input-group mb-1">
+      <label class="labelNotas" for="">Notas:</label>
+    </div>
+    <div class="input-group mb-2">
+      <textarea  class="Notas1" name="Notas1" id="Notas1" style="margin-left: 1%;margin-right: 5%;width: 18cm;height: 2cm;"type="text" class="form-control" value="{{nota1}}" ></textarea>        
+    </div>
+    <div class="input-group mb-3">
+      <textarea class="Notas2" name="Notas2" id="Notas2" style="margin-left: 1%;margin-right: 5%;width: 12cm;height: 2cm;"type="text" class="form-control" value="{{nota2}}" ></textarea>
+    </div>
+    <div class="input-group mb-3">
+      <label for="" class="lblACP">Acepta:</label>
+      <p> </p>
+      <label for=""> Si:.........</label>
+      <label for=""> No:.........</label>
+    </div>
+    <div class="input-group ">
+      <label style="margin-left: 20%;margin-right: 2%;" for="">__________________________________</label>
+      <label style="margin-right: 20%;" for="">__________________________________</label>
+    </div>
+    <div class="input-group mb-3">
+      <label style="margin-left: 25%;margin-right: 10%;" for="">Entrevistado/Usuario</label>
+      <label style="margin-right: 20%;" for="">entrevistado/representante de la organización</label>
+    </div>
+    </div>
+  </div>
+    <button type="button" style="margin: 10px;" class="btn btn-primary" >Generar Ficha</button>
+  
+             

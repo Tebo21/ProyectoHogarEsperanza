@@ -28,63 +28,20 @@ export class RegistroProductoComponent implements OnInit {
 
   donacionProd: Donaciones = new Donaciones;
 
-   /*formDonador: FormGroup = new FormGroup({
-    cedula: new FormControl(''),
-     nombre: new FormControl(''),
-
-   });*/
   formProducto: FormGroup = new FormGroup({
 
     nombre: new FormControl('', Validators.required),
     categoria: new FormControl('', Validators.required),
+    categoria2: new FormControl(''),
     descripcion: new FormControl('', Validators.required),
     unidades: new FormControl('', Validators.required)
   });;
-
-  //Imagen
-  selectedFile: File;
-  imgURL: any;
-  retrievedImage: any;
-  base64Data: any;
-  retrieveResonse: any;
-  message: string;
-  imageName: any;
-
 
   constructor(private personaService: PersonasService, private donaProductoService: DonaProductoService, private router:Router) { }
 
   ngOnInit(): void {
   }
 
-  onFileChanged(event) {
-    //Select File
-    this.selectedFile = event.target.files[0];
-  }
-
-  /*currentDate(): string{
-    
-    let fecha = new Date();
-    let mes = (fecha.getMonth()+1);
-    let day = (fecha.getDate());
-
-    if (mes < 10 && day < 10){
-      this.today =  '0'+day + '-' + '0'+mes + '-' + fecha.getFullYear();
-    }
-
-    if (mes < 10 && day > 10){
-      this.today = day + '-' + '0'+mes + '-' + fecha.getFullYear();
-    }
-
-    if (mes > 10 && day < 10){
-      this.today = '0'+day + '-' + mes + '-' + fecha.getFullYear();
-    }
-
-    if (mes > 10 && day > 10){
-      this.today = day + '-' + mes + '-' + fecha.getFullYear();
-    }
-
-    return this.today; 
-  }*/
   optionCategory(event: any){
     if (event.target.value == "OTRO"){
       this.otraCategoria = true;
@@ -113,9 +70,17 @@ export class RegistroProductoComponent implements OnInit {
   buscarPersona(){
     this.personaService.getPorCedula(this.cedulaDonador).subscribe(
       data => {
-        this.nombreDonador = data.nombres + ' ' + data.apellidos;
-        this.correoDonador = data.correo;
-        this.telefonoDonador = data.celular;
+        if (data != null){
+          this.nombreDonador = data.nombres + ' ' + data.apellidos;
+          this.correoDonador = data.correo;
+          this.telefonoDonador = data.celular;
+        }else{
+          alert('No hay resultados');    
+          this.cedulaDonador = '';
+          this.nombreDonador = '';
+          this.correoDonador = '';
+          this.telefonoDonador = '';
+        }
       }
     )
   }
@@ -124,14 +89,16 @@ export class RegistroProductoComponent implements OnInit {
 
     if( this.cedulaDonador != '' && this.formProducto.valid){
 
-      /*console.log(this.selectedFile);
-      const uploadImageData = new FormData();
-      uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);*/
+      const {nombre, categoria, categoria2, descripcion, unidades} = this.formProducto.value;
 
-      const {nombre, categoria, descripcion, unidades} = this.formProducto.value;
+      if (this.otraCategoria){
+        this.donacionProd.categoria = categoria2;
+        this.donacionProd.categoria = this.donacionProd.categoria.toUpperCase();
+      }else if (!this.otraCategoria){
+        this.donacionProd.categoria = categoria;
+      }
 
       this.donacionProd.nombreDonacion = nombre;
-      this.donacionProd.categoria = categoria;
       this.donacionProd.descripcionDonacion = descripcion;
       this.donacionProd.cantidad = unidades;
       this.donacionProd.fechaDonacion = this.fechaActual;
@@ -140,9 +107,10 @@ export class RegistroProductoComponent implements OnInit {
 
       this.donaProductoService.postDonacionProd(this.donacionProd).subscribe(
         data => {
-          console.log(data);
-          alert("Producto agregado: "+data.nombreDonacion);
-          this.limpiarForm();
+          if (data != null){
+            this.limpiarForm();
+            alert("Producto agregado: "+data.nombreDonacion);
+          }
         }
       )
     }else{
@@ -157,6 +125,14 @@ export class RegistroProductoComponent implements OnInit {
       descripcion: '',
       unidades: ''
     })
+  }
+
+  cancelar(){
+    location.reload();
+  }
+
+  redigirCrear(){
+    this.router.navigate(['/Init/registro-usuario']);
   }
   
   navegarlista(){
