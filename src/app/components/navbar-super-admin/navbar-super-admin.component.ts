@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarSuperAdminComponent implements OnInit {
 
+  tipoUser:any;
+  mostrarSuperAdmin:boolean;
+  mostrarAdmin:boolean;
+  mostrarVoluntarioInterno:boolean;
+  mostrarVoluntarioExterno:boolean;
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
   }
 
 }

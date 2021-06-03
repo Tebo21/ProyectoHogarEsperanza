@@ -10,71 +10,82 @@ import { Router } from '@angular/router';
   styleUrls: ['./registro-persona.component.css']
 })
 export class RegistroPersonaComponent implements OnInit {
-  Personas: Personas=new Personas();
-  mensaje:boolean
-  today= new Date();
-  fecha =  new Date();
-  fecha1 =  new Date();
-  catalogoNacionalidad = ["Afganistán","Alemania","Arabia Saudita", "Argentina", "Australia", "Bélgica", "Bolivia",
-   "Brasil", "Camboya", "Canadá", "Chile", "China", "Colombia", "Corea", "Costa Rica", "Cuba", "Dinamarca", "Ecuador",
-   "Egipto", "El Salvador", "Escocia", "España", "Estados Unidos", "Estonia", "Etiopia", "Filipinas", "Finlandia",
-   "Francia", "Gales", "Grecia", "Guatemala", "Haití", "Holanda", "Honduras", "Indonesia", "Inglaterra", "Irak",
-   "Irán", "Irlanda", "Israel", "Italia", "Japón", "Jordania", "Laos", "Letonia", "Lituania", "Malasia", "Marruecos",
-   "México", "Nicaragua", "Noruega", "Nueva Zelanda", "Panamá", "Paraguay", "Perú", "Polonia", "Portugal", "Puerto Rico",
-   "Puerto Rico", "Republica Dominicana", "Rumania", "Rusia", "Suecia", "Suiza", "Tailandia", "Taiwán", "Turquía",
+  Personas: Personas = new Personas();
+  mensaje: boolean
+  today = new Date();
+  fecha = new Date();
+  fecha1 = new Date();
+  catalogoNacionalidad = ["Afganistán", "Alemania", "Arabia Saudita", "Argentina", "Australia", "Bélgica", "Bolivia",
+    "Brasil", "Camboya", "Canadá", "Chile", "China", "Colombia", "Corea", "Costa Rica", "Cuba", "Dinamarca", "Ecuador",
+    "Egipto", "El Salvador", "Escocia", "España", "Estados Unidos", "Estonia", "Etiopia", "Filipinas", "Finlandia",
+    "Francia", "Gales", "Grecia", "Guatemala", "Haití", "Holanda", "Honduras", "Indonesia", "Inglaterra", "Irak",
+    "Irán", "Irlanda", "Israel", "Italia", "Japón", "Jordania", "Laos", "Letonia", "Lituania", "Malasia", "Marruecos",
+    "México", "Nicaragua", "Noruega", "Nueva Zelanda", "Panamá", "Paraguay", "Perú", "Polonia", "Portugal", "Puerto Rico",
+    "Puerto Rico", "Republica Dominicana", "Rumania", "Rusia", "Suecia", "Suiza", "Tailandia", "Taiwán", "Turquía",
     "Ucrania", "Uruguay", "Venezuela", "Vietnam"];
-    catalogoEstadoCivil = ["Soltero/a","Casado/a", "Divorciado/a", "Viudo/a"];
+  catalogoEstadoCivil = ["Soltero/a", "Casado/a", "Divorciado/a", "Viudo/a"];
   f1: Number;
-  constructor(private PersonasService:PersonasService, private router:Router) { }
-
+  constructor(private PersonasService: PersonasService, private router: Router) { }
+  tipoUser: any;
   ngOnInit(): void {
+    this.ComprobarLogin();
   }
 
-  addPersona(){
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == '1' || this.tipoUser == 2) {
+    } else if (this.tipoUser == '3' || this.tipoUser == '4') {
+      alert('No tiene permisos para registrar beneficiarios')
+      this.router.navigateByUrl('inicio-super-admin');
+    }
+  }
+
+
+  addPersona() {
     var cedulalocalstorage = this.Personas.cedula
-    localStorage.setItem("cedulalocalstorage",cedulalocalstorage)
+    localStorage.setItem("cedulalocalstorage", cedulalocalstorage)
     this.PersonasService.postPersona(this.Personas)
-    .subscribe(data=>{
-      console.log("persona registrada")
-    },
-    error=>console.log(error));
+      .subscribe(data => {
+        console.log("persona registrada")
+      },
+        error => console.log(error));
     this.router.navigate(['registro-familiares'])
   }
 
-  validar(){
-    if(this.Personas.cedula.length==10){
-             this.mensaje=true;
-    }else{
+  validar() {
+    if (this.Personas.cedula.length == 10) {
+      this.mensaje = true;
+    } else {
       var cedul = document.getElementById("cedula")
-      cedul.style.backgroundColor="#FF5733"
-          this.mensaje=false
-          console.log("cedula")
+      cedul.style.backgroundColor = "#FF5733"
+      this.mensaje = false
+      console.log("cedula")
     }
-     if(this.Personas.nombres.length==0){
+    if (this.Personas.nombres.length == 0) {
       var nom = document.getElementById("nombres")
-      nom.style.backgroundColor="#FF5733"
-      this.mensaje=false
+      nom.style.backgroundColor = "#FF5733"
+      this.mensaje = false
       console.log("asd")
-    }else{
-      this.mensaje=true;
+    } else {
+      this.mensaje = true;
       console.log("asd")
     }
 
-    if(this.Personas.apellidos.length<=0){
-            this.mensaje=true;
-    }else{
+    if (this.Personas.apellidos.length <= 0) {
+      this.mensaje = true;
+    } else {
       var ape = document.getElementById("apellidos")
-      ape.style.backgroundColor="#FF5733"
-      this.mensaje=false
+      ape.style.backgroundColor = "#FF5733"
+      this.mensaje = false
     }
     return this.mensaje
   }
 
-  calcularedad(event:any){
-    let fecha=new Date(event.target.value);
-    let fechactual=new Date();
-    var f1 = fechactual.getFullYear()-fecha.getFullYear();
-    this.Personas.edad=f1
+  calcularedad(event: any) {
+    let fecha = new Date(event.target.value);
+    let fechactual = new Date();
+    var f1 = fechactual.getFullYear() - fecha.getFullYear();
+    this.Personas.edad = f1
   }
 
 }

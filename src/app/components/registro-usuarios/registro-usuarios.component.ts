@@ -51,6 +51,8 @@ export class RegistroUsuariosComponent implements OnInit {
   discap = false;
   estadoDiscapacidad: boolean;
   adminActivar: boolean;
+  //Validacion de Logeo
+  tipoUser: any;
 
   constructor(private router: Router, private personaservice: PersonasService, private usuarioservice: UsuarioService, private fichaServicio: FichaSocioeconomicaService) {
 
@@ -102,7 +104,7 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.comprobarLogin();
+    this.ComprobarLogin();
     this.displayV = false;
     this.displayB = false;
     this.adminActivar = true;
@@ -137,12 +139,12 @@ export class RegistroUsuariosComponent implements OnInit {
     }
   }
 
-  comprobarLogin() {
-    this.nombredeUsuario = localStorage.getItem('usuarioA');
-    if (this.nombredeUsuario == null) {
-      this.router.navigateByUrl('/login');
-    } else {
-
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == '1') {
+    } else if (this.tipoUser == '3' || this.tipoUser == '4' || this.tipoUser == 2) {
+      alert('No tiene permisos para registrar beneficiarios')
+      this.router.navigateByUrl('inicio-super-admin');
     }
   }
 
