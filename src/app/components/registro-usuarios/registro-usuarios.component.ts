@@ -56,7 +56,6 @@ export class RegistroUsuariosComponent implements OnInit {
 
     this.listadoTipo = [
       { top: 'Administrador' },
-      { top: 'Beneficiario' },
       { top: 'Voluntario' }
     ]
     this.nacionalidades = [
@@ -117,8 +116,6 @@ export class RegistroUsuariosComponent implements OnInit {
       if (this.tipo.top == 'Voluntario') {
         this.adminActivar = true;
         this.displayV = true;
-      } else if (this.tipo.top == 'Beneficiario') {
-        this.displayB = true;
       } else if (this.tipo.top == 'Administrador') {
         this.adminActivar = false;
         this.displayV = true;
@@ -186,36 +183,6 @@ export class RegistroUsuariosComponent implements OnInit {
       this.usuarioCreado = data;
       this.GurdarPersona();
       alert("Se ha registrado a :" + this.usuario.usuarioNombre)
-      function delay(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
-      (async () => {
-        await delay(2000);
-        window.location.reload();
-      });
-    });
-  }
-
-  GuardarBeneficiario() {
-    const nuevoBeneficiario: FichaSocioeconomica = {
-      cedulaPersona: this.persona.cedula,
-      situacionEconomica: this.sitEco.eco,
-      tipoVivienda: this.tipoVi.viv,
-      descripcionVivienda: this.ficha.descripcionVivienda,
-      seguro: this.ficha.seguro,
-      discapacidad: this.ficha.discapacidad,
-      discapacidadDescipcion: this.ficha.discapacidadDescipcion,
-      nacionalidad: this.nacio.nop,
-      estadoCivil: this.estado.eop,
-      salario: this.ficha.salario,
-      fechaRegistro: this.ficha.fechaRegistro,
-      adultoMayor: this.adultoMayor,
-      viveConOtros: this.viveOtros
-    }
-    console.log(nuevoBeneficiario);
-    this.fichaServicio.postFichaSocio(nuevoBeneficiario).subscribe(data3 => {
-      this.GurdarPersona();
-      alert("Beneficiario Guardado!");
       function delay(ms: number) {
         return new Promise(resolve => setTimeout(resolve, ms));
       }

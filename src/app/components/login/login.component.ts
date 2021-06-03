@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         this.display = true;
         this.redireccion();
       } else {
-        this.alerta = 'Datos errnóneos'
+        this.alerta = 'Datos erróneos'
         this.display = true;
       }
     });

@@ -151,7 +151,7 @@ export class RegistroProductoComponent implements OnInit {
     })
   }
   redigirCrear(){
-    this.router.navigate(['/Init/registro-usuario']);
+    this.router.navigate(['registro-usuario']);
   }
   
   navegarlista(){

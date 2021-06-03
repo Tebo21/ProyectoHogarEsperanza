@@ -34,7 +34,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     this.fichasocioserve.postFichaSocio(this.fichasocieconomicaModel).subscribe(data=>{
       console.log("ficha 1 creada")
     });
-    this.root.navigate(['/Init/vista-ficha'])
+    this.root.navigate(['vista-ficha'])
   }
 
 }

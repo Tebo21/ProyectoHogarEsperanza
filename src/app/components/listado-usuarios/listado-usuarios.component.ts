@@ -81,7 +81,7 @@ export class ListadoUsuariosComponent implements OnInit {
     const nu : Usuarios = {
       idUsuario: this.usuarioA.idUsuario,
       usuarioCedula: this.usuarioA.usuarioCedula,
-      usuarioContrasenia: this.usuarioA.usuarioCedula,
+      usuarioContrasenia: this.usuarioA.usuarioContrasenia,
       usuarioNombre: this.usuarioA.usuarioNombre,
       usuarioTipo: this.usuarioT
     }
