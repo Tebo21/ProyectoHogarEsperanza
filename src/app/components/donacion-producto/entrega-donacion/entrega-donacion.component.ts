@@ -11,12 +11,14 @@ import { DonaProductoService } from '../../../services/dona-producto.service';
   styleUrls: ['./entrega-donacion.component.css']
 })
 export class EntregaDonacionComponent implements OnInit {
-  donacionProd: FichaSocioeconomica={};
 
+  donacionProd: FichaSocioeconomica
+
+/*Array de donaciones Lista  */
   listaDonaciones: Array<Donaciones> = [];
 
+/*Atributos de la clase persona */
   cedulaPersona: string = '';
-
   nombreBeneficiario: string = '';
   edadBeneficiario: number ;
   direccionBeneficiario: string ='';
@@ -38,21 +40,19 @@ export class EntregaDonacionComponent implements OnInit {
   }
   
 
-  /*buscarPersona(){   
-    if(this.donacionProd.cedulaPersona == this.cedulaPersona ){
-      this.personaService.getPorCedula(this.cedulaPersona).subscribe(
-        data => {
-          this.nombreBeneficiado = data.nombres + ' ' + data.apellidos;
-          this.correoBeneficiado = data.correo;
-          this.telefonoBeneficiado = data.celular;
-        }) 
-      
-    }else{
-      alert('Usted no es beneficiario')
+  /*buscarPersona(){    
+        this.fichaSer.getfichacedula(this.cedulaPersona).subscribe(
+          data => {
+            this.nombreBeneficiario = data.nombres + ' ' + data.apellidos;
+            this.edadBeneficiario = data.edad;
+            this.direccionBeneficiario = data.direccion;
+            this.estadoCivil = data.estado_civil;
+          })   
+    
+  
+}  */ 
 
-    }  
-
-  }*/
+  
   buscarPersona(){      
       this.personaService.getPorCedula(this.cedulaPersona).subscribe(
         data => {

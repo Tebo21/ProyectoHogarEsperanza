@@ -12,20 +12,18 @@
                         <br />
                         <div class="row">
                             <div class="col-6">
-                               <!--  <label for="exampleIdDonator" class="form-label"><b>Buscar Beneficiario:</b></label>-->
-                                <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="col-md-3 position-relative">
+                               <!--  <label for="exampleIdDonator" class="form-label"><b>Buscar Beneficiario:</b></label>-->    
+                                <div class="mb-3">
+                                    <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
+                                    <div class="row">
+                                        <div class="col">
                                             <input id="id_input" type="text" class="form-control btncedula" [(ngModel)]="cedulaPersona">
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col-md">
+                                        <div class="col">
                                             <button type="button" class="btn btn-outline-primary" (click)="buscarPersona()"><i class="pi pi-search"></i></button>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div>                                            
+                                </div>                               
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
@@ -54,40 +52,42 @@
                             </div>
                         </div>
                     </div>
-    
-                    <!--ENTREGA AYUDA-->
-                    <div class="card-body">
-                        <div class="contenedor">
-                            <h3 style="text-align: center;">
-                                Productos Disponibles
-                            </h3>
-    
-                            <div class="panel panel-primary">
-                                <div class="panel-body">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Categoria</th>
-                                                <th>Nombre Producto</th>
-                                                <th>Descripción</th>
-                                                <th>Cantidad</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let donacion of listaDonaciones">
-                                                <td>{{donacion.categoria}}</td>
-                                                <td>{{donacion.nombreDonacion}}</td>
-                                                <td>{{donacion.descripcionDonacion}}</td>
-                                                <td>{{donacion.cantidad}}</td>
-                                                <td>
-                                                    <button class="btn btn-info" style="margin-left: 10px"
-                                                        (click)="donar()">Donar</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                </div>
+
+                <!--ENTREGA AYUDA-->
+                <div class="card-body">
+                    <div class="contenedor">
+                        <h3 style="text-align: center;">
+                            Productos Disponibles
+                        </h3>
+
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Categoria</th>
+                                            <th>Nombre Producto</th>
+                                            <th>Descripción</th>
+                                            <th>Cantidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let donacion of listaDonaciones">
+                                            <td>{{donacion.categoria}}</td>
+                                            <td>{{donacion.nombreDonacion}}</td>
+                                            <td>{{donacion.descripcionDonacion}}</td>
+                                            <td>{{donacion.cantidad}}</td>
+                                            <td>
+                                                <button class="btn btn-info" style="margin-left: 10px" (click)="donar()">Donar</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <br>
+                                <br>
                             </div>
                         </div>
                     </div>
