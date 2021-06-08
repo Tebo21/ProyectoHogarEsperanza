@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class EspecialidadService {
 
-  private conexion = 'http://127.0.0.1:8080/especialidad';
+  private conexion = 'http://localhost:8080/especialidad';
 
   constructor(private http: HttpClient){}
 

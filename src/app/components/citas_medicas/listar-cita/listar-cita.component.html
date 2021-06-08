@@ -1,8 +1,9 @@
 <app-navbar-super-admin></app-navbar-super-admin>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h2 class="title">Lista de las Citas Medicas agendadas</h2>
+<form>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="title">Lista de las Citas Medicas agendadas</h2>
+        </div>
     </div>
     <div class="panel-body">
         <table class="table  table-striped">
@@ -11,10 +12,7 @@
                     <th>Descripción Cita Médica</th>
                     <th>Fecha Registro</th>
                     <th>Fecha de la Cita Medica</th>
-                    <th>Paciente</th>
-                    <th>Acompañante</th>
                     <th>Mensaje que se enviará</th>
-                    <th>Trabajador de la Fundación</th>
                     <th>Especialidad</th>
                     <th>Nota</th>
                     <th>Centro Médico</th>
@@ -32,16 +30,7 @@
                         {{ u.fechaCitaMedica }}
                     </td>
                     <td>
-                        {{ u.id_paciente }}
-                    </td>
-                    <td>
-                        {{ u.id_acompaniante }}
-                    </td>
-                    <td>
                         {{ u.mensaje }}
-                    </td>
-                    <td>
-                        {{ u.id_trabajadorFundacion }}
                     </td>
                     <td>
                         {{ u.especialidad }}
@@ -63,4 +52,5 @@
             </tbody>
         </table>
     </div>
-</div>
+
+</form>
