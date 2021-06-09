@@ -47,6 +47,11 @@ import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
 import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {MessageService} from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 
 
 @NgModule({
@@ -79,6 +84,7 @@ import { ResumenDonacionComponent } from './components/donacion-producto/resumen
     VistaFichaComponent,
     EntregaDonacionComponent,
     ResumenDonacionComponent,
+    InicioSuperAdminComponent
   ],
   imports: [
     CommonModule,
@@ -100,10 +106,13 @@ import { ResumenDonacionComponent } from './components/donacion-producto/resumen
     ConfirmDialogModule,
     KeyFilterModule,
     InputSwitchModule,
+    MessagesModule,
+    MessageModule,
     ConfirmDialogModule,
+    ToastModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
-  providers: [UsuarioService,FichaSocioeconomicaService],
+  providers: [UsuarioService,FichaSocioeconomicaService,MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

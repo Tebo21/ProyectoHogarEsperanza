@@ -23,6 +23,7 @@ import { RegistroActividadCoordinadorComponent } from './components/registro-act
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
 import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
+import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -108,6 +109,10 @@ const routes: Routes = [
       {
         path: 'resumen-donacion',
         component: ResumenDonacionComponent
+      },
+      {
+        path: 'inicio-super-admin',
+        component: InicioSuperAdminComponent
       },
   {
     path: '**',

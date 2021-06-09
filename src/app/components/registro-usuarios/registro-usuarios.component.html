@@ -1,5 +1,6 @@
 <app-navbar-super-admin></app-navbar-super-admin>
 
+<p-messages [(value)]="msgs"></p-messages>
 <br>
 
 <div class="container animated  d-flex justify-content-center animated fadeIn">
@@ -9,7 +10,7 @@
             <div class="form-floating mb-3">
                 <label for="floatingInput">Cédula</label>
                 <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10"
-                    id="usuarioCedula" placeholder="Cédula" [(ngModel)]="persona.cedula" name="cedula" required
+                    id="usuarioCedula" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required
                     disabled>
             </div>
             <div class="form-floating mb-3" *ngIf="adminActivar">
@@ -48,32 +49,32 @@
             <div class="form-floating mb-3">
                 <label for="floatingInput">Cédula</label>
                 <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula"
-                    placeholder="Cédula" [(ngModel)]="persona.cedula" name="cedula" required>
+                placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Nombre</label>
                 <input class="form-control" type="text" pKeyFilter="alpha" maxlength="30" minlength="3" id="nombres"
-                    placeholder="Nombres" [(ngModel)]="persona.nombres" name="nombres" required>
+                    placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Apellido</label>
                 <input class="form-control" type="text" pKeyFilter="alpha" maxlength="30" minlength="3" id="apellidos"
-                    placeholder="Apellidos" [(ngModel)]="persona.apellidos" name="apellidos" required>
+                    placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Direccion</label>
                 <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
-                    id="direccion" placeholder="Direccion" [(ngModel)]="persona.direccion" name="direccion" required>
+                    id="direccion" placeholder="Direccion" [(ngModel)]="direccion" name="direccion" required>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Número de Celular</label>
                 <input class="form-control" type="text" pKeyFilter="int" id="celular" placeholder="Número Celular"
-                    [(ngModel)]="persona.celular" name="celular" minlength="7" maxlength="13" required>
+                    [(ngModel)]="celular" name="celular" minlength="7" maxlength="13" required>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Correo Electrónico</label>
                 <input class="form-control" type="email" maxlength="40" minlength="12" id="correo"
-                    placeholder="Correo Electrónico" [(ngModel)]="persona.correo" name="correo" required>
+                    placeholder="Correo Electrónico" [(ngModel)]="correo" name="correo" required>
             </div>
         </div>
 
@@ -87,7 +88,7 @@
 
             <div class="form-floating mb-3">
                 <label for="floatingInput">Fecha de nacimiento</label>
-                <input class="form-control" type="date" id="pasajeroFechaNaci" placeholder="Fecha de nacimiento"
+                <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
                     [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" maxlength="10" required>
             </div>
             <div class="form-floating mb-3">
@@ -104,10 +105,11 @@
             <div class="form-floating mb-3">
                 <label for="floatingInput">Estado Civil</label>
                 <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
-                    optionLabel="eop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true">
+                    optionLabel="eop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
+                    (onChange)="onChangeEstado($event)">
                 </p-dropdown>
             </div>
-            <div class="form-floating mb-3">
+            <div class="form-floating mb-3" *ngIf="cb">
                 <label for="floatingInput">Tipo de usuario</label>
                 <p-dropdown [options]="listadoTipo" [(ngModel)]="tipo" placeholder="Seleccione el tipo de usuario"
                     optionLabel="top" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
