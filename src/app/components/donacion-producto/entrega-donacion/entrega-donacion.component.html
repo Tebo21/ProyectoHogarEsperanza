@@ -52,40 +52,42 @@
                             </div>
                         </div>
                     </div>
-    
-                    <!--ENTREGA AYUDA-->
-                    <div class="card-body">
-                        <div class="contenedor">
-                            <h3 style="text-align: center;">
-                                Productos Disponibles
-                            </h3>
-    
-                            <div class="panel panel-primary">
-                                <div class="panel-body">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Categoria</th>
-                                                <th>Nombre Producto</th>
-                                                <th>Descripción</th>
-                                                <th>Cantidad</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let donacion of listaDonaciones">
-                                                <td>{{donacion.categoria}}</td>
-                                                <td>{{donacion.nombreDonacion}}</td>
-                                                <td>{{donacion.descripcionDonacion}}</td>
-                                                <td>{{donacion.cantidad}}</td>
-                                                <td>
-                                                    <button class="btn btn-info" style="margin-left: 10px"
-                                                        (click)="donar()">Donar</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                </div>
+
+                <!--ENTREGA AYUDA-->
+                <div class="card-body">
+                    <div class="contenedor">
+                        <h3 style="text-align: center;">
+                            Productos Disponibles
+                        </h3>
+
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Categoria</th>
+                                            <th>Nombre Producto</th>
+                                            <th>Descripción</th>
+                                            <th>Cantidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let donacion of listaDonaciones">
+                                            <td>{{donacion.categoria}}</td>
+                                            <td>{{donacion.nombreDonacion}}</td>
+                                            <td>{{donacion.descripcionDonacion}}</td>
+                                            <td>{{donacion.cantidad}}</td>
+                                            <td>
+                                                <button class="btn btn-info" style="margin-left: 10px" (click)="donar()">Donar</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <br>
+                                <br>
                             </div>
                         </div>
                     </div>

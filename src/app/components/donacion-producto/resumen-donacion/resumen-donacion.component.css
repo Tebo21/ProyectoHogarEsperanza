@@ -1,0 +1,13 @@
+#contenedor{
+    width: 95%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+  
+.p {
+    margin-bottom: 1.6em;
+  }
+  .btncedula{
+    min-width: 120%;
+}
+  

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CitaMedicaService {
 
-  url = 'http://localhost:3000/citasMedicas';
+  url = 'http://localhost:8080/citasMedicas';
 
   constructor(private httpClient: HttpClient) { }
 
