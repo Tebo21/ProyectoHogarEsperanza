@@ -22,7 +22,7 @@ export class CitaMedicaService {
   }
 
 
-  deletCentro( id: number): Observable<any>{
-    return this.httpClient.delete(`${this.url} +'/eliminar'/${id}`, { responseType: 'text' });
+  deletCita( id: number): Observable<any>{
+    return this.httpClient.delete(`${this.url}/eliminar/${id}`);
   }
 }

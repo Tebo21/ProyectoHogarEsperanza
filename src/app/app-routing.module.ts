@@ -17,7 +17,6 @@ import { VoluntarioCalendarioComponent } from './components/voluntario-calendari
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
-import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
@@ -87,10 +86,6 @@ const routes: Routes = [
       {
         path: 'crear-citaM',
         component: CrearCitaComponent,
-      },
-      {
-        path: 'listar-citaM',
-        component: ListarCitaComponent
       },
       {
         path: 'vista-ficha',

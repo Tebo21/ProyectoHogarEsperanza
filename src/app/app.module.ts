@@ -42,10 +42,10 @@ import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navba
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+
 
 
 @NgModule({
@@ -65,7 +65,6 @@ import { EntregaDonacionComponent } from './components/donacion-producto/entrega
     ListCentroComponent,
     EspecialidadComponent,
     CrearCitaComponent,
-    ListarCitaComponent,
     RegistroUsuariosComponent,
     DasboardvoluntariosComponent,
     VoluntarioCalendarioComponent,
