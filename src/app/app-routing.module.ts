@@ -82,10 +82,6 @@ const routes: Routes = [
         component : ListadoUsuariosComponent,
       },
       {
-        path: 'calendario',
-        component: VoluntarioCalendarioComponent,
-      },
-      {
         path: 'crear-citaM',
         component: CrearCitaComponent,
       },
@@ -108,6 +104,11 @@ const routes: Routes = [
       {
         path: 'inicio-super-admin',
         component: InicioSuperAdminComponent
+      },
+
+      {
+        path: 'calendario',
+        component: VoluntarioCalendarioComponent,
       },
   {
     path: '**',
