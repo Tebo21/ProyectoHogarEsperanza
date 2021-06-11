@@ -158,7 +158,7 @@ export class RegistroUsuariosComponent implements OnInit {
     }
   }
   onChangeEstado(event: any) {
-    this.displayV=true;
+    this.Validacion();
   }
 
   ComprobarLogin() {
