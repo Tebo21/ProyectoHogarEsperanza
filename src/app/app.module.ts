@@ -51,7 +51,7 @@ import {MessageModule} from 'primeng/message';
 import {MessageService} from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
-
+import {MenubarModule} from 'primeng/menubar';
 
 
 @NgModule({
@@ -109,6 +109,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     MessageModule,
     ConfirmDialogModule,
     ToastModule,
+    MenubarModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService,MessageService],

@@ -1,5 +1,5 @@
-<app-navbar-super-admin></app-navbar-super-admin>
-
+<app-navbar-admin></app-navbar-admin>
+<br>
 <p-messages [(value)]="msgs"></p-messages>
 <br>
 
@@ -31,6 +31,13 @@
                 <input class="form-control" type="password" maxlength="16" minlength="5" id="usuario.usuarioContrasenia"
                     placeholder="Contraseña del Usuario" [(ngModel)]="usuarioContrasenia" 
                     name="usuarioContrasenia"
+                    required>
+            </div> 
+            <div class="form-floating mb-3">
+                <label for="floatingInput">Confirmar contraseña</label>
+                <input class="form-control" type="password" maxlength="16" minlength="5" id="usuarioConfirContrasenia"
+                    placeholder="Contraseña del Usuario" [(ngModel)]="usuarioConfirContrasenia" 
+                    name="usuarioConfirContrasenia"
                     required>
             </div>
         </p-panel>

@@ -65,8 +65,9 @@ export class RegistroUsuariosComponent implements OnInit {
   celular: string = '';
   //Validacion Usuario
   correo: string = '';
-  usuarioNombre:string = '';
-  usuarioContrasenia:string = '';
+  usuarioNombre: string = '';
+  usuarioContrasenia: string = '';
+  usuarioConfirContrasenia: string = '';
 
 
   constructor(private router: Router, private personaservice: PersonasService,
@@ -157,7 +158,7 @@ export class RegistroUsuariosComponent implements OnInit {
     }
   }
   onChangeEstado(event: any) {
-    this.Validacion();
+    this.displayV=true;
   }
 
   ComprobarLogin() {
@@ -183,7 +184,7 @@ export class RegistroUsuariosComponent implements OnInit {
       this.cb = false;
       this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
       const contador = timer(2000);
-      contador.subscribe((n)=>{
+      contador.subscribe((n) => {
         this.clear();
       })
     }
@@ -203,38 +204,39 @@ export class RegistroUsuariosComponent implements OnInit {
       nacionalidad: this.nacio.nop,
       nombres: this.nombres
     }
-    console.log(nuevaPersona)
     this.personaservice.postPersona(nuevaPersona).subscribe(data2 => {
       this.personaCreada = data2;
     });
   }
 
   GuardarUsuario() {
-
-    if(this.usuarioNombre != '' &&
-    this.usuarioContrasenia !=''){
-
-      const nuevoUsuario: Usuarios = {
-        usuarioCedula: this.cedula,
-        usuarioContrasenia: this.usuarioContrasenia,
-        usuarioNombre: this.usuarioNombre,
-        usuarioTipo: this.tipoUsuario
+    if (this.usuarioNombre != '' &&
+      this.usuarioContrasenia != '') {
+      if (this.usuarioContrasenia == this.usuarioConfirContrasenia) {
+        const nuevoUsuario: Usuarios = {
+          usuarioCedula: this.cedula,
+          usuarioContrasenia: this.usuarioContrasenia,
+          usuarioNombre: this.usuarioNombre,
+          usuarioTipo: this.tipoUsuario
+        }
+        this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
+          this.usuarioCreado = data;
+          this.GurdarPersona();
+          this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            this.clear();
+          })
+        });
+        this.displayV = false
+      } else {
+        this.addMultiple('error', 'Error', 'Las contraseñas no coinciden');
       }
-      this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
-        this.usuarioCreado = data;
-        this.GurdarPersona();
-        this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
-        const contador = timer(2000);
-        contador.subscribe((n)=>{
-          this.clear();
-      })
-      });
-      this.displayV = false
-    }else{
+    } else {
         this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
-    }
-    
+      }
   }
+
   addMultiple(severity1: string, sumary1: string, detail1: string) {
     this.msgs =
       [{ severity: severity1, summary: sumary1, detail: detail1 }];
