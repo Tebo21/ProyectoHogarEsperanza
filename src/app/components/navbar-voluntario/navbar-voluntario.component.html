@@ -1,1 +1,64 @@
-<p>navbar-voluntario works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fondo-nav sticky-top animated fadeIn" id="menu-navegacion">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="home">
+            <img src="https://hogaresperanza.org/wp-content/uploads/2018/03/logo.png" alt="" width="100" height="30" alt="Logo" class="img-fluid">Tranvía Cuenca
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/home">Inicio</a>
+                </li>
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link"  routerLink="/empresa">Empresa</a>
+                </li>
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link"  routerLink="/rutas">Rutas y Estaciones</a>
+                </li>
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link"  routerLink="/sitios-turisticos">Sitios Turísticos</a>
+                </li>
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link"  routerLink="/educacion-vial">Educación Vial</a>
+                </li>
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link"  routerLink="/recargas">Recargas en Línea</a>
+                </li>
+
+
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/reclamos">Reclamos</a>
+                </li>
+
+
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link"  routerLink="/iniciar-sesion">Iniciar Sesíon</a>
+                </li>
+
+
+                <li class="nav-item" routerLinkActive="active" >
+                    <a class="nav-link"  routerLink="/registro">Crear Cuenta</a>
+                </li>
+
+
+
+
+                <ng-template #loggedOut>
+                    <a class="nav-link"  routerLink="/emision-tarjeta">Mi Perfil</a>
+
+                    <a class="nav-link" routerLink="/iniciar-sesion">Cerrar Sesíon</a>
+
+                </ng-template>
+
+
+            </ul>
+
+        </div>
+    </div>
+</nav>

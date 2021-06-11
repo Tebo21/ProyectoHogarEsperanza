@@ -45,13 +45,14 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+import { RegistroDonacionComponent } from './components/donacion-producto/registro-donacion/registro-donacion.component';
 import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {MessageService} from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
-
+import {MenubarModule} from 'primeng/menubar';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     NavbarVoluntarioComponent,
     VistaFichaComponent,
     EntregaDonacionComponent,
+    RegistroDonacionComponent,
     ResumenDonacionComponent,
     InicioSuperAdminComponent
   ],
@@ -109,6 +111,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
     MessageModule,
     ConfirmDialogModule,
     ToastModule,
+    MenubarModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService,MessageService],

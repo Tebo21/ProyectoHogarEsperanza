@@ -11,11 +11,14 @@ import { DonaProductoService } from '../../../services/dona-producto.service';
   styleUrls: ['./entrega-donacion.component.css']
 })
 export class EntregaDonacionComponent implements OnInit {
+  total: number;
 
-  donacionProd: FichaSocioeconomica
-
+valor:number;
 /*Array de donaciones Lista  */
   listaDonaciones: Array<Donaciones> = [];
+
+  /**Modelo de donaciones */
+  //donacionN: Donaciones = {};
 
 /*Atributos de la clase persona */
   cedulaPersona: string = '';
@@ -27,6 +30,7 @@ export class EntregaDonacionComponent implements OnInit {
   alerta: string;
   display: boolean;
   displayF: boolean;
+
 
 
   constructor(
@@ -57,7 +61,7 @@ export class EntregaDonacionComponent implements OnInit {
       this.personaService.getPorCedula(this.cedulaPersona).subscribe(
         data => {
           this.nombreBeneficiario = data.nombres + ' ' + data.apellidos;
-          this.edadBeneficiario = data.edad;
+          //this.edadBeneficiario = data.edad;
           this.direccionBeneficiario = data.direccion;
           this.estadoCivil = data.estado_civil;
         }) 
@@ -86,11 +90,37 @@ export class EntregaDonacionComponent implements OnInit {
         }
       )
     } 
-    donar(){ 
-      this.alerta ="Cantidad a donar";      
-      this.display = true;     
-
-    }
+    donar(){      
+      //this.alerta ="Cantidad a donar";      
+      //this.display = true; 
+      this.EntregaDonacion();      
+    } 
+ 
   
+    EntregaDonacion(){      
+      for (let cantidad of this.listaDonaciones){
+        if( cantidad.cantidad > 0){
+
+          this.alerta ="Cantidad a donar";      
+          this.display = true;
+
+          console.log(cantidad.cantidad-this.valor)
+         
+            this.total = cantidad.cantidad   
+
+            /**Actualizacion de los datos */
+            // const nueva: Donaciones = {              
+            //   cantidad: this.donacionN.cantidad
+            // };        
+         
+
+        }else{
+          alert('Usted no puede hacer la donacion del producto: ' +cantidad.nombreDonacion);
+        }        
+      }      
+    }
+    restar(){
+      
+    }
 
 }

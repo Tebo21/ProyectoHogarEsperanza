@@ -3,11 +3,10 @@ export class Donaciones{
     nombreDonacion!: string;
     cantidad!: number;
     categoria!: string;
-    fechaDonacion!: Date;
+    fechaDonacion!: Date[];
     descripcionDonacion!: string;
-
     //picByte?: FormData;
 
     //Relacion
-    cedulaPersona!: string;
+    cedulaPersona!: string[];
 }
