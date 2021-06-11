@@ -57,7 +57,7 @@ export class EntregaDonacionComponent implements OnInit {
       this.personaService.getPorCedula(this.cedulaPersona).subscribe(
         data => {
           this.nombreBeneficiario = data.nombres + ' ' + data.apellidos;
-          this.edadBeneficiario = data.edad;
+          //this.edadBeneficiario = data.edad;
           this.direccionBeneficiario = data.direccion;
           this.estadoCivil = data.estado_civil;
         }) 
