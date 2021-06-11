@@ -11,12 +11,17 @@ import { DonaProductoService } from '../../../services/dona-producto.service';
   styleUrls: ['./entrega-donacion.component.css']
 })
 export class EntregaDonacionComponent implements OnInit {
-  donacionProd: FichaSocioeconomica={};
+  total: number;
 
+valor:number;
+/*Array de donaciones Lista  */
   listaDonaciones: Array<Donaciones> = [];
 
-  cedulaPersona: string = '';
+  /**Modelo de donaciones */
+  //donacionN: Donaciones = {};
 
+/*Atributos de la clase persona */
+  cedulaPersona: string = '';
   nombreBeneficiario: string = '';
   edadBeneficiario: number ;
   direccionBeneficiario: string ='';
@@ -25,6 +30,7 @@ export class EntregaDonacionComponent implements OnInit {
   alerta: string;
   display: boolean;
   displayF: boolean;
+
 
 
   constructor(
@@ -38,21 +44,19 @@ export class EntregaDonacionComponent implements OnInit {
   }
   
 
-  /*buscarPersona(){   
-    if(this.donacionProd.cedulaPersona == this.cedulaPersona ){
-      this.personaService.getPorCedula(this.cedulaPersona).subscribe(
-        data => {
-          this.nombreBeneficiado = data.nombres + ' ' + data.apellidos;
-          this.correoBeneficiado = data.correo;
-          this.telefonoBeneficiado = data.celular;
-        }) 
-      
-    }else{
-      alert('Usted no es beneficiario')
+  /*buscarPersona(){    
+        this.fichaSer.getfichacedula(this.cedulaPersona).subscribe(
+          data => {
+            this.nombreBeneficiario = data.nombres + ' ' + data.apellidos;
+            this.edadBeneficiario = data.edad;
+            this.direccionBeneficiario = data.direccion;
+            this.estadoCivil = data.estado_civil;
+          })   
+    
+  
+}  */ 
 
-    }  
-
-  }*/
+  
   buscarPersona(){      
       this.personaService.getPorCedula(this.cedulaPersona).subscribe(
         data => {
@@ -86,11 +90,37 @@ export class EntregaDonacionComponent implements OnInit {
         }
       )
     } 
-    donar(){ 
-      this.alerta ="Cantidad a donar";      
-      this.display = true;     
-
-    }
+    donar(){      
+      //this.alerta ="Cantidad a donar";      
+      //this.display = true; 
+      this.EntregaDonacion();      
+    } 
+ 
   
+    EntregaDonacion(){      
+      for (let cantidad of this.listaDonaciones){
+        if( cantidad.cantidad > 0){
+
+          this.alerta ="Cantidad a donar";      
+          this.display = true;
+
+          console.log(cantidad.cantidad-this.valor)
+         
+            this.total = cantidad.cantidad   
+
+            /**Actualizacion de los datos */
+            // const nueva: Donaciones = {              
+            //   cantidad: this.donacionN.cantidad
+            // };        
+         
+
+        }else{
+          alert('Usted no puede hacer la donacion del producto: ' +cantidad.nombreDonacion);
+        }        
+      }      
+    }
+    restar(){
+      
+    }
 
 }

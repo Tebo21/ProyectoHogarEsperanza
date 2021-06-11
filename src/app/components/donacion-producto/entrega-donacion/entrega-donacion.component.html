@@ -1,3 +1,5 @@
+<app-navbar-admin></app-navbar-admin>
+<br>
 <html>
     <head>
 
@@ -17,7 +19,7 @@
                                     <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
                                     <div class="row">
                                         <div class="col">
-                                            <input id="id_input" type="text" class="form-control btncedula" [(ngModel)]="cedulaPersona">
+                                            <input id="id_input" type="text" pKeyFilter="int"  maxlength="10" class="form-control btncedula" [(ngModel)]="cedulaPersona">
                                         </div>
                                         <div class="col">
                                             <button type="button" class="btn btn-outline-primary" (click)="buscarPersona()"><i class="pi pi-search"></i></button>
@@ -52,40 +54,42 @@
                             </div>
                         </div>
                     </div>
-    
-                    <!--ENTREGA AYUDA-->
-                    <div class="card-body">
-                        <div class="contenedor">
-                            <h3 style="text-align: center;">
-                                Productos Disponibles
-                            </h3>
-    
-                            <div class="panel panel-primary">
-                                <div class="panel-body">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Categoria</th>
-                                                <th>Nombre Producto</th>
-                                                <th>Descripción</th>
-                                                <th>Cantidad</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let donacion of listaDonaciones">
-                                                <td>{{donacion.categoria}}</td>
-                                                <td>{{donacion.nombreDonacion}}</td>
-                                                <td>{{donacion.descripcionDonacion}}</td>
-                                                <td>{{donacion.cantidad}}</td>
-                                                <td>
-                                                    <button class="btn btn-info" style="margin-left: 10px"
-                                                        (click)="donar()">Donar</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                </div>
+
+                <!--ENTREGA AYUDA-->
+                <div class="card-body">
+                    <div class="contenedor">
+                        <h3 style="text-align: center;">
+                            Productos Disponibles
+                        </h3>
+
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Categoria</th>
+                                            <th>Nombre Producto</th>
+                                            <th>Descripción</th>
+                                            <th>Cantidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let donacion of listaDonaciones">
+                                            <td>{{donacion.categoria}}</td>
+                                            <td>{{donacion.nombreDonacion}}</td>
+                                            <td>{{donacion.descripcionDonacion}}</td>
+                                            <td>{{donacion.cantidad}}</td>
+                                            <td>
+                                                <button class="btn btn-info" style="margin-left: 10px" (click)="donar()">Donar</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <br>
+                                <br>
                             </div>
                         </div>
                     </div>
@@ -97,7 +101,7 @@
     <p-dialog header="Donación" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
         [draggable]="false" [resizable]="false">
         <p class="p-m-0">{{alerta}}</p>
-        <input id="id_input" type="number" class="form-control">
+        <input id="id_input" type="number" maxlength="2"class="form-control">
         <ng-template pTemplate="footer">
             <p-button icon="pi pi-check" (click)="display=false" label="Aceptar" styleClass="p-button-text">
             </p-button>

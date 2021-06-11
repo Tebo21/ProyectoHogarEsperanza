@@ -85,6 +85,7 @@ export class RegistroProductoComponent implements OnInit {
     )
   }
 
+
   registrarProducto(){
 
     if( this.cedulaDonador != '' && this.formProducto.valid){

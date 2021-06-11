@@ -17,12 +17,13 @@ import { VoluntarioCalendarioComponent } from './components/voluntario-calendari
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
-import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
 import { RegistroDonacionComponent } from './components/donacion-producto/registro-donacion/registro-donacion.component';
+import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
+import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -82,16 +83,8 @@ const routes: Routes = [
         component : ListadoUsuariosComponent,
       },
       {
-        path: 'calendario',
-        component: VoluntarioCalendarioComponent,
-      },
-      {
         path: 'crear-citaM',
         component: CrearCitaComponent,
-      },
-      {
-        path: 'listar-citaM',
-        component: ListarCitaComponent
       },
       {
         path: 'vista-ficha',
@@ -108,6 +101,19 @@ const routes: Routes = [
       {
         path: 'registro-donacion',
         component: RegistroDonacionComponent
+      },
+      {
+        path: 'resumen-donacion',
+        component: ResumenDonacionComponent
+      },
+      {
+        path: 'inicio-super-admin',
+        component: InicioSuperAdminComponent
+      },
+
+      {
+        path: 'calendario',
+        component: VoluntarioCalendarioComponent,
       },
   {
     path: '**',

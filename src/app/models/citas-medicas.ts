@@ -1,19 +1,13 @@
 export class CitasMedicas {
-    idCitasMedicas!: number;
-    descripcionCitaMedica!: string;
-    fechaRegistro!: Date;
-    fechaCitaMedica!: Date;
-    // tslint:disable-next-line: variable-name
-    // tslint:disable-next-line: variable-name
-    id_paciente!: string;
-    // tslint:disable-next-line: variable-name
-    // tslint:disable-next-line: variable-name
-    id_acompaniante!: string;
-    mensaje!: string;
-    // tslint:disable-next-line: variable-name
-    // tslint:disable-next-line: variable-name
-    id_trabajadorFundacion!: string;
-    especialidad!: string;
-    nota!: string;
-    idCentroMedico!: string;
+    idCitasMedicas: number;
+    descripcionCitaMedica: string;
+    fechaRegistro: Date;
+    fechaCitaMedica: Date;
+    paciente: string;
+    acompaniante: string;
+    mensaje: string;
+    trabajadorFundacion: string;
+    centroMedico: string;
+    especialidad: string;
+    nota: string;
 }

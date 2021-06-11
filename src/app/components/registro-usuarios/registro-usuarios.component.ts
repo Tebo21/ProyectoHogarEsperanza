@@ -6,6 +6,9 @@ import { Usuarios } from 'src/app/models/usuarios';
 import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomica.service';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
+import { MessageService } from 'primeng/api';
+import { Message } from 'primeng/api';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-registro-usuarios',
@@ -13,7 +16,8 @@ import { UsuarioService } from 'src/app/services/usuarios.service';
   styleUrls: ['./registro-usuarios.component.css']
 })
 export class RegistroUsuariosComponent implements OnInit {
-  blockSpecial: RegExp = /^[^< >*!]+$/
+  blockSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"'/]+$/
+  noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"']+$/
   //Comprobacion
   nombredeUsuario: any;
   //Modelos
@@ -53,8 +57,24 @@ export class RegistroUsuariosComponent implements OnInit {
   adminActivar: boolean;
   //Validacion de Logeo
   tipoUser: any;
+  msgs: Message[];
+  cb: boolean = false;
+  cedula: string = '';
+  nombres: string = '';
+  apellidos: string = '';
+  direccion: string = '';
+  celular: string = '';
+  //Validacion Usuario
+  correo: string = '';
+  usuarioNombre: string = '';
+  usuarioContrasenia: string = '';
+  usuarioConfirContrasenia: string = '';
 
-  constructor(private router: Router, private personaservice: PersonasService, private usuarioservice: UsuarioService, private fichaServicio: FichaSocioeconomicaService) {
+
+  constructor(private router: Router, private personaservice: PersonasService,
+    private usuarioservice: UsuarioService,
+    private fichaServicio: FichaSocioeconomicaService,
+    private messageService: MessageService) {
 
     this.listadoTipo = [
       { top: 'Administrador' },
@@ -138,6 +158,9 @@ export class RegistroUsuariosComponent implements OnInit {
       }
     }
   }
+  onChangeEstado(event: any) {
+    this.Validacion();
+  }
 
   ComprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
@@ -147,52 +170,90 @@ export class RegistroUsuariosComponent implements OnInit {
       this.router.navigateByUrl('inicio-super-admin');
     }
   }
-
   Validacion() {
-    if (this.persona.cedula == "") {
-
+    if (this.cedula != '' &&
+      this.nombres != '' &&
+      this.apellidos != '' &&
+      this.direccion != '' &&
+      this.celular != '' &&
+      this.correo != '' &&
+      this.genero != undefined &&
+      this.nacio != undefined &&
+      this.estado != undefined) {
+      this.cb = true;
+    } else {
+      this.cb = false;
+      this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
+      const contador = timer(2000);
+      contador.subscribe((n) => {
+        this.clear();
+      })
     }
   }
 
   GurdarPersona() {
     const nuevaPersona: Personas = {
-      apellidos: this.persona.apellidos,
-      cedula: this.persona.cedula,
-      celular: this.persona.celular,
-      correo: this.persona.correo,
-      direccion: this.persona.direccion,
+      apellidos: this.apellidos,
+      cedula: this.cedula,
+      celular: this.celular,
+      correo: this.correo,
+      direccion: this.direccion,
       discapacidad: this.discap,
       estado_civil: this.estado.eop,
       fechaNacimiento: this.persona.fechaNacimiento,
       genero: this.genero.gop,
       nacionalidad: this.nacio.nop,
-      nombres: this.persona.nombres
+      nombres: this.nombres
     }
-    console.log(nuevaPersona)
     this.personaservice.postPersona(nuevaPersona).subscribe(data2 => {
       this.personaCreada = data2;
     });
   }
 
   GuardarUsuario() {
-    const nuevoUsuario: Usuarios = {
-      usuarioCedula: this.persona.cedula,
-      usuarioContrasenia: this.usuario.usuarioContrasenia,
-      usuarioNombre: this.usuario.usuarioNombre,
-      usuarioTipo: this.tipoUsuario
-    }
-    this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
-      this.usuarioCreado = data;
-      this.GurdarPersona();
-      alert("Se ha registrado a :" + this.usuario.usuarioNombre)
-      function delay(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    if (this.usuarioNombre != '' &&
+      this.usuarioContrasenia != '') {
+      if (this.usuarioContrasenia == this.usuarioConfirContrasenia) {
+        const nuevoUsuario: Usuarios = {
+          usuarioCedula: this.cedula,
+          usuarioContrasenia: this.usuarioContrasenia,
+          usuarioNombre: this.usuarioNombre,
+          usuarioTipo: this.tipoUsuario
+        }
+        this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
+          this.usuarioCreado = data;
+          this.GurdarPersona();
+          this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            this.clear();
+          })
+        });
+        this.displayV = false
+      } else {
+        this.addMultiple('error', 'Error', 'Las contraseñas no coinciden');
       }
-      (async () => {
-        await delay(2000);
-        window.location.reload();
-      });
+    } else {
+        this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
+      }
+  }
+
+  addMultiple(severity1: string, sumary1: string, detail1: string) {
+    this.msgs =
+      [{ severity: severity1, summary: sumary1, detail: detail1 }];
+    function delay(ms: number) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    (async () => {
+      await delay(2000);
+      window.location.reload();
     });
+
+  }
+
+
+  clear() {
+    this.msgs = [];
   }
 
 }

@@ -42,11 +42,17 @@ import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navba
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ListarCitaComponent } from './components/citas_medicas/listar-cita/listar-cita.component';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
 import { RegistroDonacionComponent } from './components/donacion-producto/registro-donacion/registro-donacion.component';
+import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {MessageService} from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
+import {MenubarModule} from 'primeng/menubar';
 
 
 @NgModule({
@@ -66,7 +72,6 @@ import { RegistroDonacionComponent } from './components/donacion-producto/regist
     ListCentroComponent,
     EspecialidadComponent,
     CrearCitaComponent,
-    ListarCitaComponent,
     RegistroUsuariosComponent,
     DasboardvoluntariosComponent,
     VoluntarioCalendarioComponent,
@@ -79,6 +84,8 @@ import { RegistroDonacionComponent } from './components/donacion-producto/regist
     VistaFichaComponent,
     EntregaDonacionComponent,
     RegistroDonacionComponent,
+    ResumenDonacionComponent,
+    InicioSuperAdminComponent
   ],
   imports: [
     CommonModule,
@@ -100,10 +107,14 @@ import { RegistroDonacionComponent } from './components/donacion-producto/regist
     ConfirmDialogModule,
     KeyFilterModule,
     InputSwitchModule,
+    MessagesModule,
+    MessageModule,
     ConfirmDialogModule,
+    ToastModule,
+    MenubarModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
-  providers: [UsuarioService,FichaSocioeconomicaService],
+  providers: [UsuarioService,FichaSocioeconomicaService,MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

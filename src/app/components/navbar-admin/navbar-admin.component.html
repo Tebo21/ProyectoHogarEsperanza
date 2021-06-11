@@ -1,1 +1,14 @@
-<p>navbar-admin works!</p>
+<nav class="sticky-top animated fadeIn" >
+<p-menubar [model]="items" styleClass="menucus">
+    <ng-template pTemplate="start">
+        <a class="navbar-brand" href="inicio-super-admin">
+            <img src="https://hogaresperanza.org/wp-content/uploads/2018/03/logo.png" alt="" width="100" height="30"
+                class="p-mr-2">
+        </a>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <button  pButton pRipple type="button" label="Cerrar Sesión" icon="pi pi-sign-out" class="p-button-danger p-button-text"
+        [routerLink]="'url'"></button>
+    </ng-template>
+</p-menubar>
+</nav>

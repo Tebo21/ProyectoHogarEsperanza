@@ -1,62 +1,150 @@
-<app-navbar-super-admin></app-navbar-super-admin>
+<app-navbar-admin></app-navbar-admin>
+<br>
+<div class="container1">
+    <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+        <div class="card card0 border-0">
+            <div class="panel-heading">
+                <h2 class="title">Agregar Cita Medica</h2>
+            </div>
+            <div style="margin-right: 20%;" class="input-group mb-3">
+                <div class="form-group">
+                    <label for="name">Descripcion de la cita</label>
+                    <input type="text" class="form-control" id="firstName" style="margin-left: 5%;" required [(ngModel)]="cita.descripcionCitaMedica" name="firstName">
+                </div>
 
-<h3>Nueva Cita</h3>
-<form>
-    <div style="margin-right: 20%;" class="input-group mb-3">
-        <div class="form-group">
-            <label for="name">Descripcion de la cita</label>
-            <input type="text" class="form-control" id="firstName" required [(ngModel)]="cita.descripcionCitaMedica" name="firstName">
-        </div>
+                <div class="input-group mb-3">
+                    <label for="name">Fecha Registro</label>
+                    <input [(ngModel)]="cita.fechaRegistro" name="fechaRegistro" id="fehaRegistro" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de registro">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="name">Fecha de la cita medica</label>
+                    <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="fechaCitaMedica" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
+                </div>
 
-        <div class="input-group mb-3">
-            <label for="name">Fecha Registro</label>
-            <input [(ngModel)]="cita.fechaRegistro" name="fechaRegistro" id="fehaRegistro" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de registro">
-            <p style="margin-left: 2%;"> </p>
-            <label for="name">Fecha de la cita medica</label>
-            <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="fechaCitaMedica" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
-        </div>
+                <div class="input-group mb-3">
+                    <label for="name"> Ingrese numero de cedula del Paciente</label>
+                    <input type="text" style="margin-left: 5%;" class="form-control" id="paciente" required [(ngModel)]="cita.paciente" name="paciente">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="name"> Ingrese numero de cedula del Acompanante</label>
+                    <input type="text" style="margin-left: 5%;" class="form-control" id="acompanante" required [(ngModel)]="cita.acompaniante" name="acompanante">
+                </div>
 
-        <div class="input-group mb-3">
-            <label for="name">Fecha Registro</label>
-            <input [(ngModel)]="cita.fechaRegistro" name="fechaRegistro" id="fehaRegistro" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de registro">
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">Fecha de la cita medica</label>
-            <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="fechaCitaMedica" style="margin-left: 5%;" type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
-        </div>
+                <div class="input-group mb-3">
+                    <label for="name">Ingrese el correo al que se enviara el recordatorio</label>
+                    <input type="text" style="margin-left: 5%;" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="name"> Ingrese numero de cedula del Trabajador de la fundacion</label>
+                    <input type="text" style="margin-left: 5%;" class="form-control" id="trabajador" required [(ngModel)]="cita.trabajadorFundacion" name="trabajador">
+                </div>
 
-        <div class="input-group mb-3">
-            <label for="name"> Ingrese numero de cedula del Paciente</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="paciente" required [(ngModel)]="cita.id_paciente" name="paciente">
-        </div>
-        <div class="input-group mb-3">
-            <label for="name"> Ingrese numero de cedula del Acompanante</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="acompanante" required [(ngModel)]="cita.id_acompaniante" name="acompanante">
-        </div>
+                <div class="input-group mb-3">
+                    <label for="centroMedico">Seleccione el Centro Médico:</label>
+                    <br>
+                    <div class="dropdown show">
+                        <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
+                  <option *ngFor="let c of centro" class="dropdown-item">
+                     {{c.nombreCentroMedico}}
+                 </option>
+                </select>
+                    </div>
+                </div>
 
-        <div class="input-group mb-3">
-            <label for="name">Ingrese el correo al que se enviara el recordatorio</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje">
-        </div>
-        <div class="input-group mb-3">
-            <label for="name"> Ingrese numero de cedula del Trabajador de la fundacion</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="trabajador" required [(ngModel)]="cita.id_trabajadorFundacion" name="trabajador">
-        </div>
-        <div class="input-group mb-3">
-            <label for="name">Ingrese el centro medico</label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="mensaje" required [(ngModel)]="cita.idCentroMedico" name="mensaje">
-        </div>
+                <div class="input-group mb-3">
+                    <label for="centroMedico">Seleccione la Especialidad:</label>
+                    <br>
+                    <div class="dropdown show">
+                        <select [(ngModel)]="nombreSeEspecialidad" class="btn btn-secondary dropdown-toggle" id="nomespecialidad" forControlName="nomespecialidad">
+                  <option *ngFor="let e of especialidad" class="dropdown-item">
+                     {{e.nombreEspecialidad}}
+                 </option>
+                </select>
+                    </div>
+                </div>
 
-        <div class="input-group mb-3">
-            <label for="name">Ingrese el la Especialidad </label>
-            <input type="text" style="margin-left: 5%;" class="form-control" id="mensaje" required [(ngModel)]="cita.especialidad" name="mensaje">
-        </div>
+                <div class="form-group mb-3 ">
+                    <label for="name ">Observaciones a tener en cuenta para la cita</label>
+                    <input type="text " style="margin-left: 5%; " class="form-control " id="nota " required [(ngModel)]="cita.nota " name="nota ">
+                </div>
 
-        <div class="form-group">
-            <label for="name">Observaciones a tener en cuenta</label>
-            <input type="text" class="form-control" id="nota" required [(ngModel)]="cita.nota" name="nota">
+                <div class="form-group mb-3 " style="margin-left: 45%; ">
+                    <br>
+                    <button type="submit " style="margin-left: 50%; " class="btn btn-success " (click)="save() ">Guardar</button>
+                </div>
+            </div>
         </div>
-
-        <button type="submit" style="margin-left: 50%;" class="btn btn-success" (click)="save()">Guardar</button>
     </div>
-</form>
+</div>
+
+
+<div class="container2">
+    <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+        <div class="card card0 border-0">
+            <div>
+                <div class="panel-heading ">
+                    <h2 class="title ">Lista de las Citas Medicas agendadas</h2>
+                </div>
+                <div class="panel-body ">
+                    <table class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th>Descripcion Cita Medica</th>
+                                <th>Fecha Registro</th>
+                                <th>Fecha de la Cita Medica</th>
+                                <th>Paciente</th>
+                                <th>Acompanante</th>
+                                <th>Correo al que se enviara mensaje</th>
+                                <th>Trabajador de la Fundacion</th>
+                                <th>Centro Medico</th>
+                                <th>Especialidad</th>
+                                <th>Nota</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let u of citaMedica | async ">
+                                <td>
+                                    {{ u.descripcionCitaMedica}}
+                                </td>
+                                <td>
+                                    {{ u.fechaRegistro }}
+                                </td>
+                                <td>
+                                    {{ u.fechaCitaMedica }}
+                                </td>
+                                <td>
+                                    {{ u.paciente }}
+                                </td>
+                                <td>
+                                    {{ u.acompaniante }}
+                                </td>
+                                <td>
+                                    {{ u.mensaje }}
+                                </td>
+                                <td>
+                                    {{ u.trabajadorFundacion }}
+                                </td>
+                                <td>
+                                    {{ u.centroMedico }}
+                                </td>
+                                <td>
+                                    {{ u.especialidad }}
+                                </td>
+                                <td>
+                                    {{ u.nota }}
+                                </td>
+                                <td>
+                                    <div class="cell" data-title="opciones">
+                                        <input class="btn-update" type="image" src="../../../assets/img/pencil.svg" alt="Delete">
+                                        <input class="btn-delete" (click)="deleteCita(u)" type="image" src="../../../assets/img/delete.svg" alt="Delete">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<app-navbar-admin></app-navbar-admin>
+<br>
+<form > 
+    <body class="body">  
+        <div class="modal-body "> 
+            <div class="card">
+                <p-panel class="card" id="contenedor">
+                    <h2 class="text-center">Resumen Donaciones</h2>
+                    <div class="input-group mb-3">
+                        <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
+                        <p style="margin-left: 2%;"> </p>    
+                        <div class="row">
+                            <div class="col">
+                                <input id="id_input" type="text" class="form-control btncedula">
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-primary" ><i class="pi pi-search"></i></button>
+                            </div>
+                        </div>                                            
+                    </div>  
+                    
+                    <div style="width: 100%; float:left">
+                        <br>
+                        <div style="margin-right: 5%;" class="input-group mb-3">
+                            <input  name="cedula" id="cedula" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Numero de cedula">
+                          </div>
+                        <div class="input-group mb-3">
+                            <input  name="nombre" id="nombre" style="margin-left: 5%;" type="text" class="form-control" placeholder="Nombre">
+                            <p style="margin-left: 2%;"> </p>           
+                            <input  name="apellido" id="apellido" style="margin-right: 5%;" type="text" class="form-control" placeholder="Apellido">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input class="form-control" type="text" pKeyFilter="alphanum"  id="direccion" 
+                                placeholder="Direccion" name="direccion" style="margin-left: 5%; margin-right: 5%;" required>
+                        </div>
+                   
+                    <div class="input-group mb-2">
+                        <input class="form-control" type="text" id="personaFechaNaci" placeholder="Fecha de nacimiento" name="fechadenacimiento" style="margin-left: 5%; margin-right: 5%;" required>
+                    </div>
+                
+                    <div class="input-group mb-3">
+                        <input  name="discapacidad" id="discapacidad" style="margin-left: 5%; "  type="text" class="form-control" placeholder="Discapacidad">
+                        <p style="margin-left: 2%;"> </p>    
+                        <input class="form-control" type="text" id="estadoCivil" placeholder="Estado Civil" name="estadoCivil" style="margin-right: 5%;">
+                      
+                    </div>
+                     </div>
+
+                </p-panel>
+                
+                </div>
+             </div>
+
+       
+
+    </body> 
+    
+
+</form>
