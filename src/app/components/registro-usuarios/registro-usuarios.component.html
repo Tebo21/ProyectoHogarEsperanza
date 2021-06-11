@@ -61,12 +61,12 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Apellido</label>
-            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="30" minlength="3" id="apellidos"
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3" id="apellidos"
                 placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Direccion</label>
-            <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3" id="direccion"
+            <input class="form-control" type="text" [pKeyFilter]="noSpecial" maxlength="30" minlength="3" id="direccion"
                 placeholder="Direccion" [(ngModel)]="direccion" name="direccion" required>
         </div>
         <div class="form-floating mb-3">
