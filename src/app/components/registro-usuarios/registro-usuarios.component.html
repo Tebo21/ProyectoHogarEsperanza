@@ -23,13 +23,14 @@
             <div class="form-floating mb-3">
                 <label for="floatingInput">Nombre de Usuario</label>
                 <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
-                    id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuario.usuarioNombre"
+                    id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuarioNombre"
                     name="usuarioNombre" required>
             </div>
             <div class="form-floating mb-3">
                 <label for="floatingInput">Contraseña</label>
                 <input class="form-control" type="password" maxlength="16" minlength="5" id="usuario.usuarioContrasenia"
-                    placeholder="Contraseña del Usuario" [(ngModel)]="usuario.usuarioContrasenia" name="usuario.usuarioContrasenia"
+                    placeholder="Contraseña del Usuario" [(ngModel)]="usuarioContrasenia" 
+                    name="usuarioContrasenia"
                     required>
             </div>
         </p-panel>

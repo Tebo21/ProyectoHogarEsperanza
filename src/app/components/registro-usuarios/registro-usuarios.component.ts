@@ -63,7 +63,11 @@ export class RegistroUsuariosComponent implements OnInit {
   apellidos: string = '';
   direccion: string = '';
   celular: string = '';
+  //Validacion Usuario
   correo: string = '';
+  usuarioNombre:string = '';
+  usuarioContrasenia:string = '';
+
 
   constructor(private router: Router, private personaservice: PersonasService,
     private usuarioservice: UsuarioService,
@@ -206,29 +210,34 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   GuardarUsuario() {
-    const nuevoUsuario: Usuarios = {
-      usuarioCedula: this.cedula,
-      usuarioContrasenia: this.usuario.usuarioContrasenia,
-      usuarioNombre: this.usuario.usuarioNombre,
-      usuarioTipo: this.tipoUsuario
-    }
-    this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
-      this.usuarioCreado = data;
-      this.GurdarPersona();
-      this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
-      function delay(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+
+    if(this.usuarioNombre != '' &&
+    this.usuarioContrasenia !=''){
+
+      const nuevoUsuario: Usuarios = {
+        usuarioCedula: this.cedula,
+        usuarioContrasenia: this.usuarioContrasenia,
+        usuarioNombre: this.usuarioNombre,
+        usuarioTipo: this.tipoUsuario
       }
-      (async () => {
-        await delay(2000);
-        window.location.reload();
+      this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
+        this.usuarioCreado = data;
+        this.GurdarPersona();
+        this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
+        const contador = timer(2000);
+        contador.subscribe((n)=>{
+          this.clear();
+      })
       });
-    });
+      this.displayV = false
+    }else{
+        this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
+    }
+    
   }
   addMultiple(severity1: string, sumary1: string, detail1: string) {
     this.msgs =
       [{ severity: severity1, summary: sumary1, detail: detail1 }];
-    this.displayV = false
     function delay(ms: number) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
