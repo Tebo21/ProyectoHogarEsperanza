@@ -17,7 +17,7 @@
                                     <label for="examplename" class="form-label" id="id_label"><b>C.I.</b></label>
                                     <div class="row">
                                         <div class="col">
-                                            <input id="id_input" type="text" class="form-control btncedula" [(ngModel)]="cedulaPersona">
+                                            <input id="id_input" type="text" pKeyFilter="int"  maxlength="10" class="form-control btncedula" [(ngModel)]="cedulaPersona">
                                         </div>
                                         <div class="col">
                                             <button type="button" class="btn btn-outline-primary" (click)="buscarPersona()"><i class="pi pi-search"></i></button>
@@ -99,7 +99,7 @@
     <p-dialog header="Donación" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
         [draggable]="false" [resizable]="false">
         <p class="p-m-0">{{alerta}}</p>
-        <input id="id_input" type="number" class="form-control">
+        <input id="id_input" type="number" maxlength="2"class="form-control">
         <ng-template pTemplate="footer">
             <p-button icon="pi pi-check" (click)="display=false" label="Aceptar" styleClass="p-button-text">
             </p-button>
