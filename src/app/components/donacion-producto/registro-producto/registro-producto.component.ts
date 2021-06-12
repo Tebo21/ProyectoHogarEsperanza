@@ -102,9 +102,9 @@ export class RegistroProductoComponent implements OnInit {
       this.donacionProd.nombreDonacion = nombre;
       this.donacionProd.descripcionDonacion = descripcion;
       this.donacionProd.cantidad = unidades;
-      this.donacionProd.fechaDonacion = this.fechaActual;
+      //this.donacionProd.fechaDonacion = this.fechaActual;
 
-      this.donacionProd.cedulaPersona = this.cedulaDonador;
+      //this.donacionProd.cedulaPersona = this.cedulaDonador;
 
       this.donaProductoService.postDonacionProd(this.donacionProd).subscribe(
         data => {

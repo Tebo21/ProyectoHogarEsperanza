@@ -21,6 +21,7 @@ import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+import { RegistroDonacionComponent } from './components/donacion-producto/registro-donacion/registro-donacion.component';
 import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
 import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 
@@ -96,6 +97,10 @@ const routes: Routes = [
       {
         path: 'entrega-donacion',
         component: EntregaDonacionComponent
+      },
+      {
+        path: 'registro-donacion',
+        component: RegistroDonacionComponent
       },
       {
         path: 'resumen-donacion',

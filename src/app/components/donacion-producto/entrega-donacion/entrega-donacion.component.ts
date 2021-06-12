@@ -18,7 +18,7 @@ valor:number;
   listaDonaciones: Array<Donaciones> = [];
 
   /**Modelo de donaciones */
-  donacionN: Donaciones = {};
+  //donacionN: Donaciones = {};
 
 /*Atributos de la clase persona */
   cedulaPersona: string = '';
@@ -61,7 +61,7 @@ valor:number;
       this.personaService.getPorCedula(this.cedulaPersona).subscribe(
         data => {
           this.nombreBeneficiario = data.nombres + ' ' + data.apellidos;
-          this.edadBeneficiario = data.edad;
+          //this.edadBeneficiario = data.edad;
           this.direccionBeneficiario = data.direccion;
           this.estadoCivil = data.estado_civil;
         }) 
@@ -109,9 +109,9 @@ valor:number;
             this.total = cantidad.cantidad   
 
             /**Actualizacion de los datos */
-            const nueva: Donaciones = {              
-              cantidad: this.donacionN.cantidad
-            };        
+            // const nueva: Donaciones = {              
+            //   cantidad: this.donacionN.cantidad
+            // };        
          
 
         }else{

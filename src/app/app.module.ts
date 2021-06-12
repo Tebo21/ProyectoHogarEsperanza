@@ -45,6 +45,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
 import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
+import { RegistroDonacionComponent } from './components/donacion-producto/registro-donacion/registro-donacion.component';
 import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -82,6 +83,7 @@ import {MenubarModule} from 'primeng/menubar';
     NavbarVoluntarioComponent,
     VistaFichaComponent,
     EntregaDonacionComponent,
+    RegistroDonacionComponent,
     ResumenDonacionComponent,
     InicioSuperAdminComponent
   ],
