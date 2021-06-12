@@ -1,10 +1,11 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbCalendarGregorian, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PersonasService } from 'src/app/services/personas.service';
 import { Personas } from 'src/app/models/personas';
 import { Actividades } from 'src/app/models/Actividades';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-actividad-persona',
@@ -13,27 +14,23 @@ import { Actividades } from 'src/app/models/Actividades';
 })
 export class ActividadPersonaComponent implements OnInit {
   catalogoId: number = 0;
-
   Person: Personas = new Personas();
   PersonAsId: Personas[]=[];
   PersonId: string;
   Actividadview: Actividades[] = [];
   values: any[] = [];
-
-   dia = new NgbCalendarGregorian().getToday().day;
-   mes = new NgbCalendarGregorian().getToday().month;
-   year = new NgbCalendarGregorian().getToday().year;
-  fecha : string = this.dia+"/"+this.mes+"/"+this.year;
-  fecha1 : string = this.fecha;
+  fecha1 : Date= new Date();
+  fecha2: string=this.datapipe.transform(this.fecha1,'yyyy-MM-dd');
+  Actividadview1: Actividades[] = [];
 
   constructor(
-    private router: Router,
     public _actividadservice: ActividadesService,
     public modalService: NgbModal,
-    public personaService: PersonasService
+    public personaService: PersonasService,
+    public datapipe: DatePipe
   ) {}
+
   ngOnInit(): void {
-    this.mostrarActividades();
     this.PersonId;
   }
 
@@ -50,7 +47,6 @@ export class ActividadPersonaComponent implements OnInit {
     );
   }
   private nuevosData(): any[] {
-
     const values:any[] = [];
     this.Actividadview.forEach((act) => {
       values.push([
@@ -62,7 +58,7 @@ export class ActividadPersonaComponent implements OnInit {
         act.descripcionActividad
       ]);
     });
-    
+
     return values;
   }
 
@@ -80,8 +76,27 @@ export class ActividadPersonaComponent implements OnInit {
     );
 
   }
-
-  gotoList() {
-    this.router.navigate(['/crear-actividad']);
+  getCedulaAndFecha(){
+    this.getPersonsById();
+    const values:any[]=[];
+    this._actividadservice.getActividadCedulaAndFecha(this.fecha2).subscribe(
+      (res)=> {
+        res.forEach((act)=> {
+          if (act.cedulaPersona.cedula==this.Person.cedula) {
+            values.push([
+              act.horaInicio,
+              act.horaFin,
+              act.tipoActividad.nombreActividad,
+              act.fechaActividad,
+              act.cedulaPersona.nombres,
+              act.descripcionActividad
+            ]);
+          }
+        });
+        this.values=values;
+      }
+    )
+    console.log("uno"+values);
+    console.log("dos"+this.values)
   }
 }

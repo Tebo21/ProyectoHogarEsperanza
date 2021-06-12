@@ -5,14 +5,25 @@ import { Personas } from 'src/app/models/personas';
 import { DonaProductoService } from 'src/app/services/dona-producto.service';
 import { PersonasService } from 'src/app/services/personas.service';
 
-import {TableModule} from 'primeng/table';
-
 @Component({
   selector: 'app-registro-donacion',
   templateUrl: './registro-donacion.component.html',
   styleUrls: ['./registro-donacion.component.css']
 })
 export class RegistroDonacionComponent implements OnInit {
+
+  editProducto: Donaciones = new Donaciones;
+  displayEP: boolean = false;
+
+  addCantidad: number = 0;
+  addProducto: Donaciones = new Donaciones;
+  displayAP: boolean = false;
+
+  mostrarDonadores: boolean = false;
+  listaDonadores: Array<Personas> = [];
+
+  displayRP: boolean = false;
+  buscar: boolean = false;
 
   //INFO DONADOR
   cedula: string;
@@ -21,9 +32,6 @@ export class RegistroDonacionComponent implements OnInit {
   fecha_nac: string;
 
   donaciones: Array<Donaciones> = [];
-
-  mostrarDonadores: boolean = false;
-  listaDonadores: Array<Personas> = [];
 
   loading: boolean = true;
 
@@ -39,9 +47,6 @@ export class RegistroDonacionComponent implements OnInit {
   otraCategoria: boolean = false;
   tipo: any;
   categoria: any;
-  buscar: boolean = false;
-
-  registrar: boolean = false;
 
   constructor(private personaService: PersonasService, private donacionService: DonaProductoService, private router: Router) { }
 
@@ -65,7 +70,11 @@ export class RegistroDonacionComponent implements OnInit {
   onChangeT(event: any){
     if (event.value != null){
       if (this.tipo.don == 'Anónimo'){
+        this.cedula = 'Anónimo';
         this.buscar = false;
+        this.nombres = 'Anónimo';
+        this.apellidos = 'Anónimo';
+        this.fecha_nac = '9999-99-99'
       }else if (this.tipo.don == 'Cédula'){
         this.buscar = true;
       }
@@ -129,6 +138,12 @@ export class RegistroDonacionComponent implements OnInit {
         }
       );
     }else{
+      let persona = new Personas;
+      persona.cedula = 'Anónimo';
+      persona.nombres = 'Anónimo';
+      persona.apellidos = 'Anónimo';
+
+      this.listaDonadores.push(persona);
       console.log('CEDULA ANONIMO')
     }
     
@@ -157,21 +172,49 @@ export class RegistroDonacionComponent implements OnInit {
   }
 
   agregar(prod: Donaciones){
-    this.cedulasDonadores = prod.cedulaPersona;
-    this.fechaDonaciones = prod.fechaDonacion;
-
     //OBTENGO LOS DONADORES DE LA DONACION QUE VOY A AGREGAR
-    for (let index = 0; index < this.cedulasDonadores.length; index++) {
-      this.buscarDonador(this.cedulasDonadores[index]);
+    for (let index = 0; index < prod.cedulaPersona.length; index++) {
+      this.buscarDonador(prod.cedulaPersona[index]);
     }
     this.mostrarDonadores = true;
-    
-    this.donacion.categoria = prod.categoria;
-    this.donacion.descripcionDonacion = prod.descripcionDonacion;
-    this.donacion.idDonacion = prod.idDonacion;
-    this.donacion.nombreDonacion = prod.nombreDonacion;
+    this.displayAP = true;
+    this.cedula = '';
 
-    console.log(this.listaDonadores)
+    this.addProducto.cedulaPersona = prod.cedulaPersona;
+    this.addProducto.fechaDonacion = prod.fechaDonacion;
+    this.addProducto.categoria = prod.categoria;
+    this.categoria = this.addProducto.categoria;
+    this.addProducto.descripcionDonacion = prod.descripcionDonacion;
+    this.addProducto.idDonacion = prod.idDonacion;
+    this.addProducto.nombreDonacion = prod.nombreDonacion;
+    this.addProducto.cantidad = prod.cantidad;
+  }
+
+  agregarDonacion(){
+    //this.displayAP = false;
+    if (this.cedula == 'Anónimo' || this.cedula.length >= 10){
+      this.addProducto.cedulaPersona.push(this.cedula);
+      this.addProducto.fechaDonacion.push(this.today);
+
+      this.addProducto.cantidad = this.addProducto.cantidad + this.addCantidad;
+
+      this.donacionService.updateDonacionProd(this.addProducto.idDonacion, this.addProducto).subscribe(
+        data => {
+          this.addProducto = new Donaciones;
+          console.log(data);
+        }
+      )
+    }else{
+      console.log("Error en la cedula");
+      alert('Elija el tipo de Donador');
+    }
+    this.listaDonadores = [];
+  }
+
+  cancelarAgregar(){
+    this.listaDonadores = [];
+    this.displayAP = false;
+    this.addCantidad = 0;
   }
 
   cancelar(){
@@ -179,7 +222,75 @@ export class RegistroDonacionComponent implements OnInit {
   }
 
   editar(prod: Donaciones){
+    //OBTENGO LOS DONADORES DE LA DONACION QUE VOY A AGREGAR
+    for (let index = 0; index < prod.cedulaPersona.length; index++) {
+      this.buscarDonador(prod.cedulaPersona[index]);
+    }
+    this.mostrarDonadores = true;
+    this.displayEP = true;
+    this.cedula = '';
 
+    this.editProducto.cantidad = prod.cantidad;
+    this.editProducto.categoria = prod.categoria;
+    this.editProducto.cedulaPersona = prod.cedulaPersona;
+    this.editProducto.descripcionDonacion = prod.descripcionDonacion;
+    this.editProducto.fechaDonacion = prod.fechaDonacion;
+    this.editProducto.idDonacion = prod.idDonacion;
+    this.editProducto.nombreDonacion = prod.nombreDonacion;
+
+  }
+
+  agregarDonador(){
+    if (this.cedula == 'Anónimo' || this.cedula.length >= 10){
+      this.editProducto.cedulaPersona.push(this.cedula);
+      this.editProducto.fechaDonacion.push(this.today);
+    }else{
+      alert('No se a elejido el tipo de donador');
+    }
+  }
+
+  quitarDonador(i: number){
+    var verificacion = confirm('Seguro de eliminar al donador');
+    if (verificacion){
+      delete this.editProducto.cedulaPersona[i];
+    } 
+  }
+
+  editarDonacion(){
+    this.donacionService.updateDonacionProd(this.editProducto.idDonacion, this.editProducto).subscribe(
+      data => {
+        console.log(data);
+        this.editProducto = new Donaciones;
+        this.donaciones = [];
+        this.obtenerDonaciones();
+        this.displayEP = false;
+        alert('Producto '+data.nombreDonacion+' Actualizado')
+        this.displayEP = false;
+      }
+    )
+  }
+
+  registrarNuevoProducto(){
+    this.cedulasDonadores = [];
+    this.fechaDonaciones = [];
+
+    this.cedulasDonadores.push(this.cedula);
+    this.fechaDonaciones.push(this.today);
+
+    this.donacion.cedulaPersona = this.cedulasDonadores;
+    this.donacion.fechaDonacion = this.fechaDonaciones;
+
+    console.log(this.donacion);
+    this.donacionService.postDonacionProd(this.donacion).subscribe(
+      data =>{
+        console.log(data);
+        this.donacion = new Donaciones;
+        alert('Producto '+data.nombreDonacion+' agregado correctamente');
+        this.donaciones = [];
+        this.obtenerDonaciones();
+        this.displayRP = false;
+      }
+    )
   }
 
   eliminar(prod: Donaciones){
@@ -193,10 +304,5 @@ export class RegistroDonacionComponent implements OnInit {
         }
       }
     )
-  }
-
-  registrarProducto(){
-    this.mostrarDonadores = false;
-    this.registrar = true;
   }
 }

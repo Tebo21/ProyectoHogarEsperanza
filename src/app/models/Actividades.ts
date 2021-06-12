@@ -4,7 +4,7 @@ import { TipoActividad } from "./TipoActividad";
 export class Actividades {
   public idActividadPersona: number;
   public cedulaPersona: Personas;
-  public fechaActividad: Date;
+  public fechaActividad: string;
   public horaInicio:Date;
 	public horaFin : Date;
   public descripcionActividad: string;
@@ -12,7 +12,7 @@ export class Actividades {
 
   constructor(idActividadPersona: number,
     cedulaPersona: Personas,
-    fechaActividad: Date,
+    fechaActividad: string,
     horaInicio:Date,
     horaFin : Date,
     descripcionActividad: string,

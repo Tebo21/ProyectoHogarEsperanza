@@ -30,7 +30,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -114,7 +114,7 @@ import {MenubarModule} from 'primeng/menubar';
     MenubarModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
-  providers: [UsuarioService,FichaSocioeconomicaService,MessageService],
+  providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

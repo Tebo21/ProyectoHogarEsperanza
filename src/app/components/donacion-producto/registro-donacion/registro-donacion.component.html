@@ -2,158 +2,19 @@
     <header></header>
     <body>
         <div>
+
+            <!--BOTON PARA REGISTRAR NUEVA DONACION-->
             <div class="container animated d-flex justify-content-center animated fadeIn">
-                <p-panel class="card" [hidden]="!registrar"> 
-                    <h2>Registro de donaciones</h2>
-                    <div style="float: left;">
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput">Tipo Donador:</label>
-                            <br>
-                            <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" [filter]="true" [showClear]="true" (onChange)="onChangeT($event)"></p-dropdown>
-                        </div>
-                        <div class="form-floating mb-3" [hidden]="!buscar">
-                            <label for="floatingInput">Cédula:</label>
-                            <div class="row">
-                                <div class="col">
-                                    <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required>
-                                </div>
-                                <div class="col">
-                                    <button pButton pRipple type="button" label="" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                                        style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-search"
-                                        (click)="buscarPersona()"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="float: right;">
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput">Nombres:</label>
-                            <input class="form-control" type="text" pKeyFilter="alpha" id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput">Apellidos:</label>
-                            <input class="form-control" type="text" pKeyFilter="alpha" id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput">Fecha Nacimiento:</label>
-                            <input class="form-control" type="date" placeholder="Fecha Nacimiento" [(ngModel)]="fecha_nac" name="fechaNacimiento" required>
-                        </div>
-                    </div>
-                </p-panel>
                 <div>
                     <button pButton pRipple type="button" label="Registrar nueva donacion" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                                         style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
-                                        (click)="registrarProducto()" [hidden]="registrar"></button>
+                                        (click)="displayRP=true"></button>
                 </div>
             </div>
-            <div class="container animated d-flex justify-content-center animated fadeIn">
-                <p-panel class="card" [hidden]="!mostrarDonadores">
-                    <!--TABLA PARA CONTROLAR A LOS DONADORES-->
-                    <p-table #dt2 [value]="listaDonadores" dataKey="id2" [rowHover]="true"
-                        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-                        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
-                        <ng-template pTemplate="caption">
-                            <div class="table-header">
-                                Lista de Donadores
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th pSortableColumn="cedula">
-                                    <div class="p-d-flex p-jc-between p-ai-center">
-                                        Cedula Donador
-                                        <p-sortIcon field="cedula"></p-sortIcon>
-                                        <p-columnFilter type="text" field="cedula" display="menu" class="p-ml-auto"></p-columnFilter>
-                                    </div>
-                                </th>
-                                <th pSortableColumn="nombres">
-                                    <div class="p-d-flex p-jc-between p-ai-center">
-                                        Nombres
-                                        <p-sortIcon field="nombres"></p-sortIcon>
-                                        <p-columnFilter type="text" field="nombres" display="menu" class="p-ml-auto"></p-columnFilter>
-                                    </div>
-                                </th>
-                                <th pSortableColumn="apellidos">
-                                    <div class="p-d-flex p-jc-between p-ai-center">
-                                        Apellidos
-                                        <p-sortIcon field="apellidos"></p-sortIcon>
-                                        <p-columnFilter type="text" field="apellidos" display="menu" class="p-ml-auto"></p-columnFilter>
-                                    </div>
-                                </th>
-                                <th style="width: 8rem"></th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-donador>
-                            <tr class="p-selectable-row">
-                                <td>
-                                    {{donador.cedula}}
-                                </td>
-                                <td>
-                                    {{donador.nombres}}
-                                </td>
-                                <td>
-                                    {{donador.apellidos}}
-                                </td>
-                                <td>
-                                    <button pButton type="button" class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-times"></button>
-                                </td>
-                            </tr>                            
-                        </ng-template>
-                        <ng-template pTemplate="emptymessage">
-                            <tr>
-                                <td colspan="8">No hay coincidencias</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                    <div class="card-footer">
 
-                    </div>
-                </p-panel>
-            </div>
-            <div class="container animated d-flex justify-content-center animated fadeIn">
-                <!--PANEL PARA INGRESAR EL PRODUCTO-->
-                <p-panel class="card" [hidden]="!registrar">
-                    <h3>Ingreso producto</h3>
-                    <div style="float: left;">
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput">Nombre Producto:</label>
-                            <input class="form-control" type="text" id="nombreDonacion" placeholder="Nombre del producto" [(ngModel)]="donacion.nombreDonacion" name="nombreDonacion" required>
-                        </div>
-                    </div>
-                    <div style="float: right;">
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput">Fecha:</label>
-                            <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required>
-                        </div>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <label for="floatingInput">Descripcion:</label>
-                        <input class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="donacion.descripcionDonacion" name="descripcionDonacion" required>
-                    </div>
-                    <div style="float: left;">
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput">Categoria:</label>
-                            <br>
-                            <p-dropdown [options]="categoriasDonacion" [(ngModel)]="categoria" placeholder="Seleccione" optionLabel="cat" [filter]="true" [showClear]="true" (onChange)="onChangeC($event)"></p-dropdown>
-                        </div>
-                        <div class="form-floating mb-3" [hidden]="!otraCategoria">
-                            <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="donacion.categoria" name="otraCategoria" required>
-                        </div>
-                    </div>
-                    <div style="float: right;">
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput">Cantidad:</label>
-                            <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="donacion.cantidad" name="cantidad" required>
-                        </div>
-                    </div>
-                </p-panel>
-            </div>
-            <button pButton pRipple type="button" label="Cancelar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                                        style="color: #ff0000;" class="p-button-raised p-button-danger p-button-text" icon="pi pi-times"
-                                        (click)="cancelar()" [hidden]="!registrar"></button>
+            <!--TABLA PARA CONTROLAR TODAS LAS DONACIONES-->
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel class="card">
-                    <!--TABLA PARA CONTROLAR TODAS LAS DONACIONES-->
                     <p-table #dt [value]="donaciones" dataKey="id" [rowHover]="true"
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
                     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -217,7 +78,10 @@
                         <ng-template pTemplate="body" let-donacion>
                             <tr class="p-selectable-row">
                                 <td>
-                                    {{donacion.cedulaPersona}}
+                                    <!-- {{donacion.cedulaPersona}} -->
+                                    <tr *ngFor="let ced of donacion.cedulaPersona">
+                                        <td>{{ced}}</td>
+                                    </tr>
                                 </td>
                                 <td>
                                     {{donacion.nombreDonacion}}
@@ -232,7 +96,10 @@
                                     {{donacion.categoria}}
                                 </td>                     
                                 <td>
-                                    {{donacion.fechaDonacion | date: 'MM/dd/yyyy'}}
+                                    <!-- {{donacion.fechaDonacion | date: 'MM/dd/yyyy'}} -->
+                                    <tr *ngFor="let fech of donacion.fechaDonacion">
+                                        <td>{{fech | date: 'MM/dd/yyyy'}}</td>
+                                    </tr>
                                 </td>
                                 <td style="text-align: center">
                                     <button pButton type="button" class="p-button-rounded p-button-success p-button-outlined" icon="pi pi-plus" (click)="agregar(donacion)"></button>
@@ -251,4 +118,419 @@
             </div>
         </div>
     </body>
+    <!--PANEL PARA INGRESAR EL NUEVO PRODUCTO-->
+    <p-dialog header="Registrar Nueva Donación" [(visible)]="displayRP" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <ng-template pTemplate="body">
+            <div class="container animated d-flex justify-content-center animated fadeIn">
+                <p-panel header="Donador">
+                    <div class="container animated d-flex justify-content-center animated fadeIn">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Tipo Donador:</label>
+                                <br>
+                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" [filter]="true" [showClear]="true" (onChange)="onChangeT($event)"></p-dropdown>
+                            </div>
+                            <div class="form-floating mb-3" [hidden]="!buscar">
+                                <label for="floatingInput">Cédula:</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required>
+                                    </div>
+                                    <div class="col">
+                                        <button pButton pRipple type="button" label="" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-search"
+                                            (click)="buscarPersona()"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Nombres:</label>
+                                <input class="form-control" type="text" pKeyFilter="alpha" id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required disabled>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Apellidos:</label>
+                                <input class="form-control" type="text" pKeyFilter="alpha" id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required disabled>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Fecha Nacimiento:</label>
+                                <input class="form-control" type="date" placeholder="Fecha Nacimiento" [(ngModel)]="fecha_nac" name="fechaNacimiento" required disabled>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+            <div class="container animated d-flex justify-content-center animated fadeIn">
+                <p-panel header="Producto">
+                    <div class="row">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Nombre Producto:</label>
+                                <input class="form-control" type="text" id="nombreDonacion" placeholder="Nombre del producto" [(ngModel)]="donacion.nombreDonacion" name="nombreDonacion" required>
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Fecha:</label>
+                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-floating mb-3">
+                        <label for="floatingInput">Descripcion:</label>
+                        <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="donacion.descripcionDonacion" name="descripcionDonacion" required></textarea>
+                    </div>  
+                    <div class="row">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Categoria:</label>
+                                <br>
+                                <p-dropdown [options]="categoriasDonacion" [(ngModel)]="categoria" placeholder="Seleccione" optionLabel="cat" [filter]="true" [showClear]="true" (onChange)="onChangeC($event)"></p-dropdown>
+                            </div>
+                            <div class="form-floating mb-3" [hidden]="!otraCategoria">
+                                <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="donacion.categoria" name="otraCategoria" required>
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Cantidad:</label>
+                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="donacion.cantidad" name="cantidad" required>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="registrarNuevoProducto()" label="Aceptar" styleClass="p-button-text">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="displayRP=false" label="Cancelar" styleClass="p-button-text">
+            </p-button>
+        </ng-template>
+    </p-dialog>
+
+    <!--PANEL PARA AGREGAR UN PRODUCTO YA EXISTENTE-->
+    <p-dialog header="Agregar Donación" [(visible)]="displayAP" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <ng-template pTemplate="body">
+            <div class="container animated d-flex justify-content-center animated fadeIn">
+                <p-panel header="Donador">
+                    <div class="container animated d-flex justify-content-center animated fadeIn">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Tipo Donador:</label>
+                                <br>
+                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" [filter]="true" [showClear]="true" (onChange)="onChangeT($event)"></p-dropdown>
+                            </div>
+                            <div class="form-floating mb-3" [hidden]="!buscar">
+                                <label for="floatingInput">Cédula:</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required>
+                                    </div>
+                                    <div class="col">
+                                        <button pButton pRipple type="button" label="" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-search"
+                                            (click)="buscarPersona()"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Nombres:</label>
+                                <input class="form-control" type="text" pKeyFilter="alpha" id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required disabled>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Apellidos:</label>
+                                <input class="form-control" type="text" pKeyFilter="alpha" id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required disabled>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Fecha Nacimiento:</label>
+                                <input class="form-control" type="date" placeholder="Fecha Nacimiento" [(ngModel)]="fecha_nac" name="fechaNacimiento" required disabled>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+
+            <!--TABLA PARA CONTROLAR A LOS DONADORES-->
+            <div class="container animated d-flex justify-content-center animated fadeIn">
+                <p-panel class="card" [hidden]="!mostrarDonadores">
+                    <p-table #dt2 [value]="listaDonadores" dataKey="id2" [rowHover]="true"
+                        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+                        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                        <ng-template pTemplate="caption">
+                            <div class="table-header">
+                                Lista de Donadores
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="cedula">
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Cedula Donador
+                                        <p-sortIcon field="cedula"></p-sortIcon>
+                                        <p-columnFilter type="text" field="cedula" display="menu" class="p-ml-auto"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th pSortableColumn="nombres">
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Nombres
+                                        <p-sortIcon field="nombres"></p-sortIcon>
+                                        <p-columnFilter type="text" field="nombres" display="menu" class="p-ml-auto"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th pSortableColumn="apellidos">
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Apellidos
+                                        <p-sortIcon field="apellidos"></p-sortIcon>
+                                        <p-columnFilter type="text" field="apellidos" display="menu" class="p-ml-auto"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>Fecha Donacion</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-donador let-i="rowIndex">
+                            <tr class="p-selectable-row">
+                                <td>
+                                    {{donador.cedula}}
+                                </td>
+                                <td>
+                                    {{donador.nombres}}
+                                </td>
+                                <td>
+                                    {{donador.apellidos}}
+                                </td>
+                                <td>
+                                    {{addProducto.fechaDonacion[i] | date:'yyyy-MM-dd'}}
+                                </td>
+                            </tr>                            
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No hay coincidencias</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <div class="card-footer">
+
+                    </div>
+                </p-panel>
+            </div>
+            <div class="container animated d-flex justify-content-center animated fadeIn">
+                <p-panel header="Producto">
+                    <div class="row">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Nombre Producto:</label>
+                                <input class="form-control" type="text" id="nombreDonacion" placeholder="Nombre del producto" [(ngModel)]="addProducto.nombreDonacion" name="nombreDonacion" required [disabled]="displayAP">
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Fecha:</label>
+                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-floating mb-3">
+                        <label for="floatingInput">Descripcion:</label>
+                        <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="addProducto.descripcionDonacion" name="descripcionDonacion" required></textarea>
+                    </div>  
+                    <div class="row">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Categoria:</label>
+                                <br>
+                                <p-dropdown [options]="categoriasDonacion" [(ngModel)]="categoria" placeholder="{{categoria}}" optionLabel="cat" [filter]="true" [showClear]="true" (onChange)="onChangeC($event)" [disabled]="displayAP"></p-dropdown>
+                            </div>
+                            <div class="form-floating mb-3" [hidden]="!otraCategoria">
+                                <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="addProducto.categoria" name="otraCategoria" required [disabled]="displayAP">
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Cantidad Actual:</label>
+                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="addProducto.cantidad" name="cantidad" required [disabled]="displayAP">
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Cantidad a agregar:</label>
+                                <input class="form-control" type="number" id="cantidad2" placeholder="Cantidad del producto" [(ngModel)]="addCantidad" name="cantidad" required>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="agregarDonacion()" label="Agregar" styleClass="p-button-text">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="cancelarAgregar()" label="Cancelar" styleClass="p-button-text">
+            </p-button>
+        </ng-template>
+    </p-dialog>
+    <!--PANEL PARA EDITAR UN PRODUCTO YA EXISTENTE-->
+    <p-dialog header="Editar Donación" [(visible)]="displayEP" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <ng-template pTemplate="body">
+            <div class="container animated d-flex justify-content-center animated fadeIn">
+                <p-panel header="Donador">
+                    <div class="container animated d-flex justify-content-center animated fadeIn">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Tipo Donador:</label>
+                                <br>
+                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" [filter]="true" [showClear]="true" (onChange)="onChangeT($event)"></p-dropdown>
+                            </div>
+                            <div class="form-floating mb-3" [hidden]="!buscar">
+                                <label for="floatingInput">Cédula:</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required>
+                                    </div>
+                                    <div class="col">
+                                        <button pButton pRipple type="button" label="" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-search"
+                                            (click)="buscarPersona()"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Nombres:</label>
+                                <input class="form-control" type="text" pKeyFilter="alpha" id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required disabled>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Apellidos:</label>
+                                <input class="form-control" type="text" pKeyFilter="alpha" id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required disabled>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Fecha Nacimiento:</label>
+                                <input class="form-control" type="date" placeholder="Fecha Nacimiento" [(ngModel)]="fecha_nac" name="fechaNacimiento" required disabled>
+                            </div>
+                        </div>
+                        <button pButton pRipple type="button" label="Agregar Donador" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
+                                            (click)="agregarDonador()"></button>
+                    </div>
+                </p-panel>
+            </div>
+
+            <!--TABLA PARA CONTROLAR A LOS DONADORES-->
+            <div class="container animated d-flex justify-content-center animated fadeIn">
+                <p-panel class="card" [hidden]="!mostrarDonadores">
+                    <p-table #dt2 [value]="listaDonadores" dataKey="id2" [rowHover]="true"
+                        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+                        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                        <ng-template pTemplate="caption">
+                            <div class="table-header">
+                                Lista de Donadores
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="cedula">
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Cedula Donador
+                                        <p-sortIcon field="cedula"></p-sortIcon>
+                                        <p-columnFilter type="text" field="cedula" display="menu" class="p-ml-auto"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th pSortableColumn="nombres">
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Nombres
+                                        <p-sortIcon field="nombres"></p-sortIcon>
+                                        <p-columnFilter type="text" field="nombres" display="menu" class="p-ml-auto"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th pSortableColumn="apellidos">
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Apellidos
+                                        <p-sortIcon field="apellidos"></p-sortIcon>
+                                        <p-columnFilter type="text" field="apellidos" display="menu" class="p-ml-auto"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>Fecha Donacion</th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-donador let-i="rowIndex">
+                            <tr class="p-selectable-row">
+                                <td>
+                                    {{donador.cedula}}
+                                </td>
+                                <td>
+                                    {{donador.nombres}}
+                                </td>
+                                <td>
+                                    {{donador.apellidos}}
+                                </td>
+                                <td>
+                                    {{editProducto.fechaDonacion[i] | date:'yyyy-MM-dd'}}
+                                </td>
+                                <td>
+                                    <button pButton type="button" class="p-button-rounded p-button-danger p-button-outlined" icon="pi pi-times" (click)="quitarDonador(i)"></button>
+                                </td>
+                            </tr>                            
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No hay coincidencias</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <div class="card-footer">
+
+                    </div>
+                </p-panel>
+            </div>
+            <div class="container animated d-flex justify-content-center animated fadeIn">
+                <p-panel header="Producto">
+                    <div class="row">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Nombre Producto:</label>
+                                <input class="form-control" type="text" id="nombreDonacion" placeholder="Nombre del producto" [(ngModel)]="editProducto.nombreDonacion" name="nombreDonacion" required>
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Fecha:</label>
+                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-floating mb-3">
+                        <label for="floatingInput">Descripcion:</label>
+                        <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="editProducto.descripcionDonacion" name="descripcionDonacion" required></textarea>
+                    </div>  
+                    <div class="row">
+                        <div style="float: left;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Categoria:</label>
+                                <br>
+                                <p-dropdown [options]="categoriasDonacion" [(ngModel)]="editProducto.categoria" placeholder="{{editProducto.categoria}}" optionLabel="cat" [filter]="true" [showClear]="true" (onChange)="onChangeC($event)" [disabled]="displayAP"></p-dropdown>
+                            </div>
+                            <div class="form-floating mb-3" [hidden]="!otraCategoria">
+                                <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="editProducto.categoria" name="otraCategoria" required>
+                            </div>
+                        </div>
+                        <div style="float: right;">
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Cantidad:</label>
+                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="editProducto.cantidad" name="cantidad" required>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="editarDonacion()" label="Agregar" styleClass="p-button-text">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="cancelar()" label="Cancelar" styleClass="p-button-text">
+            </p-button>
+        </ng-template>
+    </p-dialog>
 </html>
