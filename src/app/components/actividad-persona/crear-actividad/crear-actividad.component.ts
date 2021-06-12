@@ -62,12 +62,19 @@ export class CrearActividadComponent implements OnInit {
     console.log(this.actividadCreate);
     console.log(this._tipoactividad1);
 
-    this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
-      window.location.reload();
-      alert("Guardado satisfactoriamente");
-      this.modalService.dismissAll();
-    });
-  }
+    if(this._tipoactividad1 != null || this.actividadCreate.horaFin != null || this.actividadCreate.horaInicio || this.actividadCreate.fechaActividad){
+      this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
+        window.location.reload();
+        alert("Guardado satisfactoriamente");
+        this.modalService.dismissAll();
+      });
+    }
+    else{
+      alert("Existen campos vacios");
+    }
+    }
+
+   
   gotoList() {
     this.router.navigate(['/actividades']);
   }
