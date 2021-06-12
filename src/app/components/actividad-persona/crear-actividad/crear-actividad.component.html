@@ -1,96 +1,103 @@
-<app-navbar-admin></app-navbar-admin>
-<br>
 <div class="modal-header  text-center">
-    <h5 class="text-center">Registro de actividades </h5>
+  <h5 class="text-center">Registro de actividades </h5>
 </div>
 <div class="modal-body">
-    <div>
-        <div class="row">
-            <div class=" col-sm-6 ">
-                <label> Fecha registro: </label>
-            </div>
-            <div class=" col-sm-6 ">
-                <input name="fechaActividad" #fechaActividad="ngModel" [(ngModel)]="actividadCreate.fechaActividad">
-                <p style="margin-left: 2%;"> </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class=" col-sm-6 ">
-                <label>Hora de inicio :</label>
-            </div>
-            <div class=" col-sm-6 ">
-                <input type="time" step="3600:3600" id="start" name="horaInicio" #horaInicio="ngModel" [(ngModel)]="actividadCreate.horaInicio">
-                <p style="margin-left: 2%;">
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class=" col-sm-6 ">
-                <label>Hora de finalización:</label>
-            </div>
-            <div class=" col-sm-6 ">
-                <input type="time" step="3600" id="start" name="horaFin" #horaFin="ngModel" [(ngModel)]="actividadCreate.horaFin">
-                <p style="margin-left: 2%;"> </p>
-            </div>
-        </div>
-        <div class="row ">
-            <div class=" col-sm-6 ">
-                <label>Tipo de Actividad:</label>
-            </div>
-            <div class=" col-sm-3">
-                <select class="form-select" name="tipo" #tipo="ngModel" [(ngModel)]="_tipoactividad1">
+  <div>
+    <div class="row">
+      <div class=" col-sm-6 ">
+        <label> Fecha registro: </label>
+      </div>
+      <div class=" col-sm-6 ">
+        <input type="date" name="fechaActividad" #fechaActividad="ngModel" [(ngModel)]="fechaT">
+        <p style="margin-left: 2%;"> </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" col-sm-6 ">
+        <label>Hora de inicio :</label>
+      </div>
+      <div class=" col-sm-6 ">
+        <input type="time" step="3600:3600" id="start" name="horaInicio" #horaInicio="ngModel"
+          [(ngModel)]="actividadCreate.horaInicio">
+        <p style="margin-left: 2%;">
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" col-sm-6 ">
+        <label>Hora de finalización:</label>
+      </div>
+      <div class=" col-sm-6 ">
+        <input type="time" step="3600" id="start" name="horaFin" #horaFin="ngModel"
+          [(ngModel)]="actividadCreate.horaFin">
+        <p style="margin-left: 2%;"> </p>
+      </div>
+    </div>
+    <div class="row ">
+      <div class=" col-sm-6 ">
+        <label>Tipo de Actividad:</label>
+      </div>
+      <div class=" col-sm-3">
+        <select class="form-select" name="tipo" #tipo="ngModel" [(ngModel)]="_tipoactividad1">
           <option [ngValue]="x" *ngFor="let x of _tipoactividad">{{x.nombreActividad}}</option>
         </select>
-            </div>
-            <div class=" col-sm-2">
-                <button type="button" class="btn btn-primary" (click)="modalService.open(modalForm)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle"
-            viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-            <path
-              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-          </svg>
+      </div>
+      <div>
+        <button type="button" class="btn btn-outline-info" (click)="modalService.open(modalForm)">
+          <i class="pi pi-calendar-plus"></i>
+          Add
         </button>
-            </div>
-            <p style="margin-left: 2%;"> </p>
-        </div>
-        <div class="row">
-            <div class=" col-sm-6 ">
-                <label>Descripción :</label>
-            </div>
-            <div class=" col-sm-6 ">
-                <textarea type="text" id="descripcion" #descripcion="ngModel" [(ngModel)]="actividadCreate.descripcionActividad"></textarea>
-            </div>
-        </div>
+      </div>
+      <p style="margin-left: 2%;"> </p>
     </div>
+    <div class="row">
+      <div class=" col-sm-6 ">
+        <label>Descripción :</label>
+      </div>
+      <div class=" col-sm-6 ">
+        <textarea type="text" id="descripcion" #descripcion="ngModel"
+          [(ngModel)]="actividadCreate.descripcionActividad"></textarea>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modalForm" (click)="modal.dismiss('Cross click')">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="addActividad()">Guardar</button>
+  <button type="button"
+  class="btn btn-outline-secondary"
+  data-bs-dismiss="modalForm"
+  (click)="modal.dismiss('Cross click')">
+  Cerrar
+</button>
+
+
+  <button type="button" class="btn btn-outline-success" (click)="addActividad()"><i class="pi pi-calendar-save"></i>
+    Guardar</button>
+
 </div>
 
 
 
 
 <ng-template #modalForm let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-header">
+    <h5 class="modal-title text-center" id="exampleModalLabel">Agregar Tipo de actividades</h5>
+  </div>
+  <div class="modal-body">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="categotria" #categoria="ngModel"
+        [(ngModel)]="tipoActCreate.nombreActividad" placeholder="categoria" maxlength="50">
+      <label for="categoria">Actividad</label>
     </div>
-    <div class="modal-body">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="categotria" placeholder="categoria" maxlength="50">
-            <label for="categoria">Actividad</label>
-        </div>
-        <div class="form-floating">
-            <textarea class="form-control" placeholder="Descripcion" id="descripcion" style="height: 100px" maxlength="300"></textarea>
-            <label for="descripcion ">Descripción</label>
-        </div>
-
-    </div>
-    <div class="modal-footer ">
-        <button type="button " class="btn btn-secondary " data-bs-dismiss="modal ">Close</button>
-        <button type="button " class="btn btn-primary ">Save changes</button>
+    <div class="form-floating">
+      <textarea class="form-control" placeholder="Descripcion" id="descripcion" #descripcion="ngModel"
+        [(ngModel)]="tipoActCreate.descripcionActividad" style="height: 100px" maxlength="300"></textarea>
+      <label for="descripcion ">Descripción</label>
     </div>
 
+  </div>
+  <div class="modal-footer ">
+    <button type="button " class="btn btn-outline-secondary" data-bs-dismiss="modal"
+      (click)="modal.dismiss('Cross click')">Cerrar</button>
+    <button type="button " class="btn btn-outline-success" (click)="crearTipoActividad()">Guardar</button>
+  </div>
 </ng-template>

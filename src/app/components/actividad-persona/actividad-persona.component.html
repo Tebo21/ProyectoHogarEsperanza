@@ -4,7 +4,7 @@
     <div class="modal-body ">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-tittle">Registro de actividades </h5>
+                <h5 class="card-tittle">Registro de actividades </h5> 
             </div>
             <div class="card-body">
                 <form class="row g-3 ">
@@ -14,20 +14,17 @@
                     <div class="col-md-3 position-relative">
                         <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId">
                     </div>
-                    <div class="col-md-4 position-relative ">
-                        <button type="submit " class="btn btn-primary mb-3" (click)="getPersonsById()">Buscar</button>
+                    <a class="col-md-4 position-relative"></a>
+                    <div>
+                        <input type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel" [(ngModel)]="fecha2">
                     </div>
-                    <div class="col-md-4 position-relative">
-                        <input type="date" id="start" name="trip-start" value="fecha1">
-                    </div>
+                    <button class="btn btn-outline-info" (click)="getCedulaAndFecha()"><i class="pi pi-search"></i> Buscar</button>
                 </form>
                 <br>
-
                 <form class="row g-3 needs-validation " novalidate>
                     <div class="col-md-4 position-relative ">
                         <label for="validationTooltip01 " class="form-label ">Nombre</label>
                         <input type="text " class="form-control" value="{{Person.nombres}}" readonly>
-
                     </div>
                     <div class="col-md-4 position-relative ">
                         <label for="validationTooltip02 " class="form-label ">Apellido</label>
@@ -54,12 +51,12 @@
 
             </div>
             <div class="card-header">
-                <form class="row g-3">
-                    <div class="col-md-10">
-                        <h5>Actividades realizadas:</h5>
+                <form class="row">
+                    <div class="col-md-9">
+                        <h5>Actividades diarias:</h5>
                     </div>
-                    <div class="col-md-2">
-                        <button type="submit " class="btn btn-primary mb-2 " (click)="modalService.open(modalForm)">Añadir
+                    <div>
+                        <button type="submit " class="btn btn-outline-info" (click)="modalService.open(modalForm)"><i class="pi pi-pencil"></i> <br>Añadir
                 actividad</button>
                     </div>
                 </form>

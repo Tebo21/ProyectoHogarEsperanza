@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
 import { TipoActividad } from 'src/app/models/TipoActividad';
 import { Personas } from '../../../models/personas';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -16,26 +17,30 @@ export class CrearActividadComponent implements OnInit {
   @Input() public modal: NgbModalWindow;
   @Input() Person: Personas = new Personas();
   public fecha: Date = new Date();
+  fechaT: string=this.datePipe.transform(this.fecha,'yyyy-MM-dd');
+
   public fecha1: Date = new Date();
+  public fecha2: Date = new Date();
   public tipo: string;
   _tipoactividadCreate: TipoActividad = new TipoActividad(0, '', '');
   _tipoactividad: TipoActividad[] = [];
   _tipoactividad1: TipoActividad = new TipoActividad(0, '', '');
+  public tipoActCreate: TipoActividad = new TipoActividad(0, '', '');
   public actividadCreate: Actividades = new Actividades(
     0,
     this.Person,
-    this.fecha,
-    this.fecha,
+    this.fechaT,
     this.fecha1,
+    this.fecha2,
     '',
     this._tipoactividadCreate
   );
   public id: number;
-
   constructor(
     private router: Router,
     public _actividadservice: ActividadesService,
-    public modalService: NgbModal
+    public modalService: NgbModal,
+    public datePipe: DatePipe
   ) {}
   ngOnInit(): void {
     this.mostrarTipoActividades();
@@ -54,8 +59,7 @@ export class CrearActividadComponent implements OnInit {
   }
 
   addActividad(): void {
-    var d = new Date();
-    this.fecha.getUTCDate;
+    this.actividadCreate.fechaActividad= this.fechaT;
     this.actividadCreate.cedulaPersona = this.Person;
     this.actividadCreate.tipoActividad= this._tipoactividad1;
     console.log(this._tipoactividadCreate);
@@ -67,9 +71,16 @@ export class CrearActividadComponent implements OnInit {
       alert("Guardado satisfactoriamente");
       this.modalService.dismissAll();
     });
+
   }
-  gotoList() {
-    this.router.navigate(['/actividades']);
+
+  crearTipoActividad() {
+    console.log(this.tipoActCreate)
+    this._actividadservice.createTipoAct(this.tipoActCreate).subscribe((res)=>{
+      window.location.reload();
+      alert("Guardado satisfactoriamente");
+      this.modalService.dismissAll();
+    })
   }
 
   mostrarTipoActividades(): void {
