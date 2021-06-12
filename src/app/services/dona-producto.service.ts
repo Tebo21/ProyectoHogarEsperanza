@@ -28,7 +28,9 @@ export class DonaProductoService {
     return this.http.get<Donaciones[]>(this.URL+`listaByCategoria/${categoria}`);
   }
 
-
+  updateDonacionProd(idDonacion: any, donacion: Donaciones){
+    return this.http.put<Donaciones>(this.URL+`update/${idDonacion}`, donacion)
+  }
 
 
 }
