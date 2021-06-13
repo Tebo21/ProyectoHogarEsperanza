@@ -29,6 +29,8 @@
     "date-fns": "^2.22.1",
     "flatpickr": "^4.6.9",
     "jquery": "^3.6.0",
+    "pdfmake": "^0.1.71",
+    "pdfmake-wrapper": "^2.1.1",
     "primeicons": "^4.1.0",
     "primeng": "^11.4.2",
     "rxjs": "~6.5.4",
