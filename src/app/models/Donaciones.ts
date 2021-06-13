@@ -1,5 +1,5 @@
 export class Donaciones{
-    idDonacion?: number;
+    idDonacion!: number;
     nombreDonacion!: string;
     cantidad!: number;
     categoria!: string;
