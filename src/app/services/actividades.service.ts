@@ -11,8 +11,8 @@ export class ActividadesService {
   @Output() open: EventEmitter<any> = new EventEmitter();
 
   public actividades: Actividades[] = [];
-  private _http = 'http://localhost:8080/actividadPersona';
-  private _httpTipo = 'http://localhost:8080/tipoactividad';
+  private _http = 'http://localhost:3000/actividadPersona';
+  private _httpTipo = 'http://localhost:3000/tipoactividad';
 
   constructor(private http: HttpClient) {}
 
@@ -29,5 +29,13 @@ export class ActividadesService {
   }
   getOneByNameTipo(nombreActividad: any): Observable<any> {
     return this.http.get<any>(this._httpTipo + `/bynombre/${nombreActividad}`);
+  }
+
+  createTipoAct(TipoActividad: any){
+    return this.http.post<any>(this._httpTipo,TipoActividad);
+  }
+
+  getActividadCedulaAndFecha(fecha: any){
+    return this.http.get<Actividades[]>(this._http+`/busquedaDiaria/${fecha}`)
   }
 }

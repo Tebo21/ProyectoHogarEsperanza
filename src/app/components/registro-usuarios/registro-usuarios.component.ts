@@ -24,7 +24,7 @@ export class RegistroUsuariosComponent implements OnInit {
   persona: Personas = {};
   usuario: Usuarios = {};
   //Variables
-  ficha: FichaSocioeconomica = {};
+  ficha: FichaSocioeconomica [];
   personaCreada: Personas = {};
   usuarioCreado: Usuarios = {};
   listadoTipo: any[];
