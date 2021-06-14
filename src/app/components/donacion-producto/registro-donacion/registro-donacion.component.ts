@@ -346,4 +346,12 @@ export class RegistroDonacionComponent implements OnInit {
       )
     }    
   }
+
+  registrarDonador(){
+    this.router.navigate(['registro-usuario']);
+  }
+
+  entregarDonacion(){
+    this.router.navigate(['entrega-donacion']);
+  }
 }

@@ -1,0 +1,14 @@
+p-dropdown{
+    min-width: 200%;
+}
+
+input{
+    min-width: 100%;
+}
+
+p-panel{
+    min-width: 75%;
+}
+.inpcont{
+    min-width: 50%;
+}

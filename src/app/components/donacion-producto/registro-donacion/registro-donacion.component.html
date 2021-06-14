@@ -9,6 +9,9 @@
                     <button pButton pRipple type="button" label="Registrar nueva donacion" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                                         style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
                                         (click)="displayRP=true"></button>
+                    <button pButton pRipple type="button" label="Entregar donacion" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                        style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
+                                        (click)="entregarDonacion()"></button>
                 </div>
             </div>
 
@@ -125,7 +128,7 @@
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel header="Donador">
                     <div class="container animated d-flex justify-content-center animated fadeIn">
-                        <div style="float: left;">
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Tipo Donador:</label>
                                 <br>
@@ -145,7 +148,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Nombres:</label>
                                 <input class="form-control" type="text" pKeyFilter="alpha" id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required disabled>
@@ -164,26 +167,28 @@
             </div>
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel header="Producto">
-                    <div class="row">
-                        <div style="float: left;">
+                    <div>
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Nombre Producto:</label>
                                 <input class="form-control" type="text" id="nombreDonacion" placeholder="Nombre del producto" [(ngModel)]="donacion.nombreDonacion" name="nombreDonacion" required>
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Fecha:</label>
                                 <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
                             </div>
                         </div>
                     </div>
-                    <div class="row form-floating mb-3">
-                        <label for="floatingInput">Descripcion:</label>
-                        <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="donacion.descripcionDonacion" name="descripcionDonacion" required></textarea>
+                    <div class="inpcont">
+                        <div class="form-floating mb-3">
+                            <label for="floatingInput">Descripcion:</label>
+                            <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="donacion.descripcionDonacion" name="descripcionDonacion" required></textarea>
+                        </div>
                     </div>  
-                    <div class="row">
-                        <div style="float: left;">
+                    <div>
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Categoria:</label>
                                 <br>
@@ -193,13 +198,17 @@
                                 <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="donacion.categoria" name="otraCategoria" required>
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Cantidad:</label>
                                 <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="donacion.cantidad" name="cantidad" required>
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </p-panel>
             </div>
         </ng-template>
@@ -217,7 +226,7 @@
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel header="Donador">
                     <div class="container animated d-flex justify-content-center animated fadeIn">
-                        <div style="float: left;">
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Tipo Donador:</label>
                                 <br>
@@ -237,7 +246,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Nombres:</label>
                                 <input class="form-control" type="text" pKeyFilter="alpha" id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required disabled>
@@ -250,6 +259,9 @@
                                 <label for="floatingInput">Fecha Nacimiento:</label>
                                 <input class="form-control" type="date" placeholder="Fecha Nacimiento" [(ngModel)]="fecha_nac" name="fechaNacimiento" required disabled>
                             </div>
+                            <button pButton pRipple type="button" label="Registrar Donador" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
+                                            (click)="registrarDonador()"></button>
                         </div>
                     </div>
                 </p-panel>
@@ -258,26 +270,28 @@
             <!--FORMULARIO PARA LOS CAMPOS DEL PRODUCTO-->
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel header="Producto">
-                    <div class="row">
-                        <div style="float: left;">
+                    <div>
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Nombre Producto:</label>
                                 <input class="form-control" type="text" id="nombreDonacion" placeholder="Nombre del producto" [(ngModel)]="addProducto.nombreDonacion" name="nombreDonacion" required [disabled]="displayAP">
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Fecha:</label>
                                 <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
                             </div>
                         </div>
                     </div>
-                    <div class="row form-floating mb-3">
-                        <label for="floatingInput">Descripcion:</label>
-                        <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="addProducto.descripcionDonacion" name="descripcionDonacion" required></textarea>
-                    </div>  
-                    <div class="row">
-                        <div style="float: left;">
+                    <div class="inpcont">
+                        <div class="form-floating mb-3">
+                            <label for="floatingInput">Descripcion:</label>
+                            <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="addProducto.descripcionDonacion" name="descripcionDonacion" required></textarea>
+                        </div>
+                    </div>                      
+                    <div>
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Categoria:</label>
                                 <br>
@@ -287,7 +301,7 @@
                                 <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="addProducto.categoria" name="otraCategoria" required [disabled]="displayAP">
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Cantidad Actual:</label>
                                 <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="addProducto.cantidad" name="cantidad" required [disabled]="displayAP">
@@ -298,6 +312,12 @@
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </p-panel>
             </div>
 
@@ -379,7 +399,7 @@
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel header="Donador">
                     <div class="container animated d-flex justify-content-center animated fadeIn">
-                        <div style="float: left;">
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Tipo Donador:</label>
                                 <br>
@@ -399,7 +419,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Nombres:</label>
                                 <input class="form-control" type="text" pKeyFilter="alpha" id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required disabled>
@@ -424,26 +444,28 @@
             <!--FORMULARIO DE CAMPOS PARA EL PRODUCTO-->
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel header="Producto">
-                    <div class="row">
-                        <div style="float: left;">
+                    <div>
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Nombre Producto:</label>
                                 <input class="form-control" type="text" id="nombreDonacion" placeholder="Nombre del producto" [(ngModel)]="editProducto.nombreDonacion" name="nombreDonacion" required>
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Fecha:</label>
                                 <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
                             </div>
                         </div>
                     </div>
-                    <div class="row form-floating mb-3">
-                        <label for="floatingInput">Descripcion:</label>
-                        <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="editProducto.descripcionDonacion" name="descripcionDonacion" required></textarea>
-                    </div>  
-                    <div class="row">
-                        <div style="float: left;">
+                    <div class="inpcont">
+                        <div class="form-floating mb-3">
+                            <label for="floatingInput">Descripcion:</label>
+                            <textarea class="form-control" type="text" id="descripcionDonacion" placeholder="Descripcion del producto" [(ngModel)]="editProducto.descripcionDonacion" name="descripcionDonacion" required></textarea>
+                        </div>
+                    </div>                      
+                    <div>
+                        <div style="float: left;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Categoria:</label>
                                 <br>
@@ -453,13 +475,17 @@
                                 <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="editProducto.categoria" name="otraCategoria" required>
                             </div>
                         </div>
-                        <div style="float: right;">
+                        <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Cantidad:</label>
                                 <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="editProducto.cantidad" name="cantidad" required>
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </p-panel>
             </div>
 
