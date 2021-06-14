@@ -39,7 +39,7 @@ export class ActividadesService {
     return this.http.get<Actividades[]>(this._http+`/busquedaDiaria/${fecha}`)
   }
 
-  trahsActi(id: number):Observable<any>{
-    return this.http.delete(this._http+`/eliminar/${id}`)
+  trahsActi(id: number):Observable<number>{
+    return this.http.delete<number>(this._http+`/eliminar/${id}`)
   }
 }

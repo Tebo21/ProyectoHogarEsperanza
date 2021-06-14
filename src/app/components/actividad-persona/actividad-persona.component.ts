@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { NgbCalendarGregorian, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,12 +22,12 @@ import { DatePipe } from '@angular/common';
 export class ActividadPersonaComponent implements OnInit {
   catalogoId: number = 0;
   Person: Personas = new Personas();
-  PersonAsId: Personas[]=[];
+  PersonAsId: Personas[] = [];
   PersonId: string;
   Actividadview: Actividades[] = [];
   values: any[] = [];
-  fecha1 : Date= new Date();
-  fecha2: string=this.datapipe.transform(this.fecha1,'yyyy-MM-dd');
+  fecha1: Date = new Date();
+  fecha2: string = this.datapipe.transform(this.fecha1, 'yyyy-MM-dd');
 
   constructor(
     public _actividadservice: ActividadesService,
@@ -44,35 +51,25 @@ export class ActividadPersonaComponent implements OnInit {
         console.log(error);
       }
     );
-
   }
-  getCedulaAndFecha(){
+  getCedulaAndFecha() {
     this.getPersonsById();
-    const values:any[]=[];
-    this._actividadservice.getActividadCedulaAndFecha(this.fecha2).subscribe(
-      (res)=> {
-        res.forEach((act)=> {
-          if (act.cedulaPersona.cedula==this.Person.cedula) {
-            values.push([
-              act.horaInicio,
-              act.horaFin,
-              act.tipoActividad.nombreActividad,
-              act.fechaActividad,
-              act.cedulaPersona.nombres,
-              act.descripcionActividad
-            ]);
+    this._actividadservice
+      .getActividadCedulaAndFecha(this.fecha2)
+      .subscribe((res) => {
+        res.forEach((act) => {
+          if (act.cedulaPersona.cedula == this.Person.cedula) {
+            this.Actividadview.push(act);
+            console.log(this.Actividadview);
           }
         });
-        this.Actividadview=res;
-        this.values=values;
-        console.log(this.Actividadview)
-      }
-    )
+      });
   }
 
-
-  trashActiv(){
-    console.log("ELIMINADO")
-
+  trashActiv(id: number) {
+    this._actividadservice.trahsActi(id).subscribe((res) => {
+        alert(`Eliminamos correctamente #${res}`);
+        window.location.reload();
+    });
   }
 }

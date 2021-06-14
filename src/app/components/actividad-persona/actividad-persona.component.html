@@ -73,11 +73,16 @@
                         <th scope="col">Acciones</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let x of values">
-                            <td *ngFor="let data of x">{{ data }}</td>
+                        <tr *ngFor="let x of Actividadview">
+                            <td>{{ x.horaInicio}}</td>
+                            <td>{{ x.horaFin}}</td>
+                            <td>{{ x.tipoActividad.nombreActividad}}</td>
+                            <td>{{ x.fechaActividad}}</td>
+                            <td>{{ x.cedulaPersona.nombres}}</td>
+                            <td>{{ x.descripcionActividad}}</td>
                             <td>
                               <button type="button" class="btn btn-outline-warning"> <i class="pi pi-user-edit"></i>Editar</button>
-                              <button type="button" class="btn btn-outline-danger" (click)="trashActiv()"> <i class="pi pi-trash"></i>Eliminar</button>
+                              <button type="button" class="btn btn-outline-danger" (click)="trashActiv(x.idActividadPersona)"> <i class="pi pi-trash"></i>Eliminar</button>
                             </td>
                         </tr>
                     </tbody>
@@ -89,8 +94,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <ng-template #modalForm let-modal>
