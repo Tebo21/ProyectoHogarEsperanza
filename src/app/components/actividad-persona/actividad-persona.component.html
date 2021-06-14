@@ -4,7 +4,7 @@
     <div class="modal-body ">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-tittle">Registro de actividades </h5> 
+                <h5 class="card-tittle">Registro de actividades </h5>
             </div>
             <div class="card-body">
                 <form class="row g-3 ">
@@ -70,10 +70,15 @@
                         <th scope="col">Fecha</th>
                         <th scope="col">Persona</th>
                         <th scope="col">Observaciones</th>
+                        <th scope="col">Acciones</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let x of values">
                             <td *ngFor="let data of x">{{ data }}</td>
+                            <td>
+                              <button type="button" class="btn btn-outline-warning"> <i class="pi pi-user-edit"></i>Editar</button>
+                              <button type="button" class="btn btn-outline-danger" (click)="trashActiv()"> <i class="pi pi-trash"></i>Eliminar</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -89,7 +94,6 @@
 
 
 <ng-template #modalForm let-modal>
-
     <div class="modal-body">
         <app-crear-actividad [modal]=modal [Person]="Person"></app-crear-actividad>
     </div>
