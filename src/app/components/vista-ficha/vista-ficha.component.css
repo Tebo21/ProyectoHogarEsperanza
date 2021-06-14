@@ -3,10 +3,12 @@ h4{
 }
 
 .hoja{
-    background-color: floralwhite;
-    margin-right: 40px;
+    background-color:#FFFFFF;
     height: 30cm;
     width: 30cm;
+}
+.hoja{
+    background-color:#f4fafe;
 }
 
 .fechalabel{
@@ -26,6 +28,11 @@ h4{
 .labelDireccion{
  margin-left: 1%;  
  margin-right: 1%; 
+}
+
+.Direccion{
+    width: 22cm;
+    height: 2cm;
 }
 
 
@@ -67,6 +74,8 @@ h4{
 
 .SituEcono{
     margin-left: 1%;
+    width: 25.5cm;
+    height: 2cm;
 }
 
 .labelViviPro{
