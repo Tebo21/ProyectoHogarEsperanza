@@ -38,4 +38,8 @@ export class ActividadesService {
   getActividadCedulaAndFecha(fecha: any){
     return this.http.get<Actividades[]>(this._http+`/busquedaDiaria/${fecha}`)
   }
+
+  trahsActi(id: number):Observable<any>{
+    return this.http.delete(this._http+`/eliminar/${id}`)
+  }
 }

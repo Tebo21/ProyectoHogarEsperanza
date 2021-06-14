@@ -5,16 +5,16 @@ export class Actividades {
   public idActividadPersona: number;
   public cedulaPersona: Personas;
   public fechaActividad: string;
-  public horaInicio:Date;
-	public horaFin : Date;
+  public horaInicio:string;
+	public horaFin : string;
   public descripcionActividad: string;
   public tipoActividad: TipoActividad;
 
   constructor(idActividadPersona: number,
     cedulaPersona: Personas,
     fechaActividad: string,
-    horaInicio:Date,
-    horaFin : Date,
+    horaInicio:string,
+    horaFin : string,
     descripcionActividad: string,
     tipoactividad: TipoActividad) {
     this.idActividadPersona = idActividadPersona,

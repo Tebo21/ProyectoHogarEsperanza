@@ -6,7 +6,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalWindow } from '@ng-bootstrap/ng-bootstrap/modal/modal-window';
 import { TipoActividad } from 'src/app/models/TipoActividad';
 import { Personas } from '../../../models/personas';
-import { DatePipe } from '@angular/common';
+
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -19,9 +22,10 @@ export class CrearActividadComponent implements OnInit {
   public fecha: Date = new Date();
   fechaT: string=this.datePipe.transform(this.fecha,'yyyy-MM-dd');
 
-  public fecha1: Date = new Date();
-  public fecha2: Date = new Date();
+  public fecha1 = formatDate(new Date(), 'HH:mm', 'EN');
+  public fecha2 = formatDate(new Date(), 'HH:mm', 'EN');
   public tipo: string;
+  public descripcionAc : string;
   _tipoactividadCreate: TipoActividad = new TipoActividad(0, '', '');
   _tipoactividad: TipoActividad[] = [];
   _tipoactividad1: TipoActividad = new TipoActividad(0, '', '');
@@ -62,11 +66,10 @@ export class CrearActividadComponent implements OnInit {
     this.actividadCreate.fechaActividad= this.fechaT;
     this.actividadCreate.cedulaPersona = this.Person;
     this.actividadCreate.tipoActividad= this._tipoactividad1;
-    console.log(this._tipoactividadCreate);
+   
     console.log(this.actividadCreate);
-    console.log(this._tipoactividad1);
 
-    if(this._tipoactividad1 != null || this.actividadCreate.horaFin != null || this.actividadCreate.horaInicio || this.actividadCreate.fechaActividad){
+    if( this.actividadCreate.cedulaPersona.cedula != "" && this.actividadCreate.cedulaPersona.nombres != "" && this.actividadCreate.cedulaPersona.apellidos != "" &&  this.actividadCreate.tipoActividad.nombreActividad != "" && this.actividadCreate.horaFin != "" && this.actividadCreate.horaInicio != ""  && this.actividadCreate.descripcionActividad != ""){
       this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
         window.location.reload();
         alert("Guardado satisfactoriamente");
@@ -74,7 +77,7 @@ export class CrearActividadComponent implements OnInit {
       });
     }
     else{
-      alert("Existen campos vacios");
+      console.log("Existen campos vacios");
     }
     }
 
@@ -91,11 +94,17 @@ export class CrearActividadComponent implements OnInit {
 
   crearTipoActividad() {
     console.log(this.tipoActCreate)
-    this._actividadservice.createTipoAct(this.tipoActCreate).subscribe((res)=>{
-      window.location.reload();
-      alert("Guardado satisfactoriamente");
-      this.modalService.dismissAll();
-    })
+
+    if(this.tipoActCreate.descripcionActividad != "" && this.tipoActCreate.descripcionActividad != ""){
+      this._actividadservice.createTipoAct(this.tipoActCreate).subscribe((res)=>{
+        window.location.reload();
+        alert("Guardado satisfactoriamente");
+        this.modalService.dismissAll();
+      })
+    }else{
+      console.log("Existen campos vacios");
+    }
+   
   }
 
   mostrarTipoActividades(): void {
@@ -107,7 +116,7 @@ export class CrearActividadComponent implements OnInit {
           (data) => {
             console.log('Datos cargado');
           },
-          (error) => console.log('No se cargaron los daros')
+          (error) => console.log('No se cargaron los datos')
         );
       },
       (error) => {
@@ -115,4 +124,16 @@ export class CrearActividadComponent implements OnInit {
       }
     );
   }
+
+  showExitoso(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Se guardó con exito',
+      showConfirmButton: false,
+      timer: 2000
+    })
+  }
+
 }
+
+

@@ -21,7 +21,6 @@ export class ActividadPersonaComponent implements OnInit {
   values: any[] = [];
   fecha1 : Date= new Date();
   fecha2: string=this.datapipe.transform(this.fecha1,'yyyy-MM-dd');
-  Actividadview1: Actividades[] = [];
 
   constructor(
     public _actividadservice: ActividadesService,
@@ -33,35 +32,6 @@ export class ActividadPersonaComponent implements OnInit {
   ngOnInit(): void {
     this.PersonId;
   }
-
-  mostrarActividades(): void {
-    this._actividadservice.getAll().subscribe(
-      (response) => {
-        this.Actividadview=response;
-        this.values=this.nuevosData();
-        console.log(this.values)
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-  private nuevosData(): any[] {
-    const values:any[] = [];
-    this.Actividadview.forEach((act) => {
-      values.push([
-        act.horaInicio,
-        act.horaFin,
-        act.tipoActividad.nombreActividad,
-        act.fechaActividad,
-        act.cedulaPersona.nombres,
-        act.descripcionActividad
-      ]);
-    });
-
-    return values;
-  }
-
   getPersonsById(): void {
     console.log(this.PersonId);
     this.personaService.getPorCedula(this.PersonId).subscribe(
@@ -93,10 +63,16 @@ export class ActividadPersonaComponent implements OnInit {
             ]);
           }
         });
+        this.Actividadview=res;
         this.values=values;
+        console.log(this.Actividadview)
       }
     )
-    console.log("uno"+values);
-    console.log("dos"+this.values)
+  }
+
+
+  trashActiv(){
+    console.log("ELIMINADO")
+
   }
 }
