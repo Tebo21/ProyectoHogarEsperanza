@@ -113,6 +113,7 @@ export class RegistroDonacionComponent implements OnInit {
   }
 
   buscarDonador(cedula: string){
+
     if (cedula.toUpperCase() != 'ANONIMO' && cedula.toUpperCase() != 'ANÓNIMO'){
       let persona = new Personas;
       this.personaService.getPorCedula(cedula).subscribe(
@@ -144,7 +145,7 @@ export class RegistroDonacionComponent implements OnInit {
       persona.apellidos = 'Anónimo';
 
       this.listaDonadores.push(persona);
-      console.log('CEDULA ANONIMO')
+      console.log('METODO BUSCARDONADOR 115 CEDULA ANONIMO')
     }
     
   }
@@ -173,6 +174,7 @@ export class RegistroDonacionComponent implements OnInit {
 
   agregar(prod: Donaciones){
     //OBTENGO LOS DONADORES DE LA DONACION QUE VOY A AGREGAR
+    this.listaDonadores = [];
     for (let index = 0; index < prod.cedulaPersona.length; index++) {
       this.buscarDonador(prod.cedulaPersona[index]);
     }
@@ -201,12 +203,15 @@ export class RegistroDonacionComponent implements OnInit {
       this.donacionService.updateDonacionProd(this.addProducto.idDonacion, this.addProducto).subscribe(
         data => {
           this.addProducto = new Donaciones;
+          this.displayAP = false;
+          this.donaciones = [];
+          this.obtenerDonaciones();
           console.log(data);
         }
       )
     }else{
       console.log("Error en la cedula");
-      alert('Elija el tipo de Donador');
+      alert('Elija el tipo de donador')
     }
     this.listaDonadores = [];
   }
@@ -223,9 +228,15 @@ export class RegistroDonacionComponent implements OnInit {
 
   editar(prod: Donaciones){
     //OBTENGO LOS DONADORES DE LA DONACION QUE VOY A AGREGAR
-    for (let index = 0; index < prod.cedulaPersona.length; index++) {
-      this.buscarDonador(prod.cedulaPersona[index]);
+    this.listaDonadores = [];
+    if (prod.cedulaPersona.length > 0){
+      for (let index = 0; index < prod.cedulaPersona.length; index++) {
+        this.buscarDonador(prod.cedulaPersona[index]);
+      }
+    }else{
+      alert('No se puede leer las cedulas del donador ya que es menor a 1')
     }
+    
     this.mostrarDonadores = true;
     this.displayEP = true;
     this.cedula = '';
@@ -240,10 +251,23 @@ export class RegistroDonacionComponent implements OnInit {
 
   }
 
+  //FALATA ARREGLAR AL AGREGAR UN DONADOR
   agregarDonador(){
     if (this.cedula == 'Anónimo' || this.cedula.length >= 10){
+      this.cedulasDonadores = [];
+      this.fechaDonaciones = [];
+      this.listaDonadores = [];
+
       this.editProducto.cedulaPersona.push(this.cedula);
       this.editProducto.fechaDonacion.push(this.today);
+      this.cedulasDonadores = this.editProducto.cedulaPersona;
+      this.fechaDonaciones = this.editProducto.fechaDonacion;
+
+      for (let index = 0; index < this.editProducto.cedulaPersona.length; index++) {
+        if (this.editProducto.cedulaPersona[index] != null){
+          this.buscarDonador(this.editProducto.cedulaPersona[index]);
+        }
+      }
     }else{
       alert('No se a elejido el tipo de donador');
     }
@@ -252,11 +276,25 @@ export class RegistroDonacionComponent implements OnInit {
   quitarDonador(i: number){
     var verificacion = confirm('Seguro de eliminar al donador');
     if (verificacion){
+      console.log('eliminar indice '+i)
       delete this.editProducto.cedulaPersona[i];
+      delete this.editProducto.fechaDonacion[i];
+      this.cedulasDonadores = [];
+      this.fechaDonaciones = [];
+      this.listaDonadores = [];
+      for (let index = 0; index < this.editProducto.cedulaPersona.length; index++) {
+        if (this.editProducto.cedulaPersona[index] != null){
+          this.cedulasDonadores.push(this.editProducto.cedulaPersona[index]);
+          this.fechaDonaciones.push(this.editProducto.fechaDonacion[index]);
+          this.buscarDonador(this.editProducto.cedulaPersona[index]);
+        }
+      }
     } 
   }
 
   editarDonacion(){
+    this.editProducto.cedulaPersona = this.cedulasDonadores;
+    this.editProducto.fechaDonacion = this.fechaDonaciones;
     this.donacionService.updateDonacionProd(this.editProducto.idDonacion, this.editProducto).subscribe(
       data => {
         console.log(data);
@@ -294,15 +332,18 @@ export class RegistroDonacionComponent implements OnInit {
   }
 
   eliminar(prod: Donaciones){
-    this.donacionService.deleteDonacionProd(prod.idDonacion).subscribe(
-      data => {
-        if (data == true){
-          location.reload();
-          alert("Producto eliminado")
-        }else{
-          alert("Error al eliminar")
+    var verificacion = confirm('Seguro de eliminar al producto '+prod.nombreDonacion);
+    if (verificacion){
+      this.donacionService.deleteDonacionProd(prod.idDonacion).subscribe(
+        data => {
+          if (data == true){
+            location.reload();
+            alert("Producto eliminado")
+          }else{
+            alert("Error al eliminar")
+          }
         }
-      }
-    )
+      )
+    }    
   }
 }

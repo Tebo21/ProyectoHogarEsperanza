@@ -53,6 +53,10 @@ import {MessageService} from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 import {MenubarModule} from 'primeng/menubar';
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import pdfFonts from "pdfmake/build/vfs_fonts";
+
+PdfMakeWrapper.setFonts(pdfFonts);
 
 
 @NgModule({
