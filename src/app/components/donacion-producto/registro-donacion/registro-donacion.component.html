@@ -1,19 +1,24 @@
+<app-navbar-admin></app-navbar-admin>
+
 <html>
     <header></header>
     <body>
         <div>
+            <br>
+            <br>
 
             <!--BOTON PARA REGISTRAR NUEVA DONACION-->
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <div>
                     <button pButton pRipple type="button" label="Registrar nueva donacion" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                                        style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
+                                        style="color: #008cff;"  class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
                                         (click)="displayRP=true"></button>
                     <button pButton pRipple type="button" label="Entregar donacion" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                                        style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
+                                        style="color: #008cff;"class="p-button-raised p-button-secondary p-button-text" icon="pi pi-plus"
                                         (click)="entregarDonacion()"></button>
                 </div>
             </div>
+<br>
 
             <!--TABLA PARA CONTROLAR TODAS LAS DONACIONES-->
             <div class="container animated d-flex justify-content-center animated fadeIn">

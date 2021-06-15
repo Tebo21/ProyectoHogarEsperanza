@@ -53,13 +53,10 @@ export class EntregaDonacionComponent implements OnInit {
       if ( this.cedula = data.cedulaPersona) {
       //this.cedula = data.cedulaPersona;
       console.log(this.cedulaPersona);
-
-     
+    
         this.personaService.getPorCedula(this.cedulaPersona).subscribe((data1) => {
           this.cedulaPersona = data1.cedula;
           console.log(this.cedulaPersona);
-    
-    
     
             if (this.cedula === this.cedulaPersona) {
               this.nombreBeneficiario = data1.nombres + ' ' + data1.apellidos;
