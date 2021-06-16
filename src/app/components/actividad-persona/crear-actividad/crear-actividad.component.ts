@@ -128,7 +128,7 @@ export class CrearActividadComponent implements OnInit {
   showExitoso(){
     Swal.fire({
       icon: 'success',
-      title: 'Se guardó con exito',
+      title: 'Se guardó con exito!',
       showConfirmButton: false,
       timer: 2000
     })
@@ -137,7 +137,7 @@ export class CrearActividadComponent implements OnInit {
     Swal.fire({
       icon: 'error',
       title: 'No se pueden guardar los datos',
-      text: 'Existen campos vacios, v'
+      text: 'Existen campos vacios.'
     })
   }
 

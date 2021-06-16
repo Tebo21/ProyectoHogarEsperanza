@@ -9,7 +9,7 @@
             </div>
             <div class=" col-sm-6 ">
                 <input type="text" class="form-control" name="fechaActividad" #fechaActividad="ngModel" [(ngModel)]="fechaT" readonly>
-                <p style="margin-left: 2%;" > </p>
+                <p style="margin-left: 2%;"> </p>
             </div>
         </div>
         <div class="row">
@@ -27,7 +27,7 @@
                 <label>Hora de finalización:</label>
             </div>
             <div class=" col-sm-6 ">
-                <input type="time" step="3600" id="start" name="horaFin" #horaFin="ngModel" [(ngModel)]="actividadCreate.horaFin">
+                <input type="time" step="3600:3600" id="end" name="horaFin" #horaFin="ngModel" [(ngModel)]="actividadCreate.horaFin">
                 <p style="margin-left: 2%;"> </p>
             </div>
         </div>
@@ -36,11 +36,11 @@
                 <label>Tipo de Actividad:</label>
             </div>
             <div class=" col-sm-3">
-                <select class="form-select" name="tipo" #tipo="ngModel" [(ngModel)]="_tipoactividad1">
+                <select class="form-select" name="tipo" #tipo="ngModel" required [(ngModel)]="_tipoactividad1">
           <option [ngValue]="x" *ngFor="let x of _tipoactividad" >{{x.nombreActividad}}</option>
         </select>
             </div>
-            <div>
+            <div class=" col-sm-3">
                 <button type="button" class="btn btn-outline-info" (click)="modalService.open(modalForm)">
           <i class="pi pi-calendar-plus"></i>
           Add
@@ -48,12 +48,15 @@
             </div>
             <p style="margin-left: 2%;"> </p>
         </div>
+
         <div class="row">
             <div class=" col-sm-6 ">
-                <label>Descripción :</label>
+                <label>Descripción : </label>
             </div>
             <div class=" col-sm-6 ">
+                <abbr title="Este campo es obligatorio" aria-label="required"></abbr>
                 <input type="text" id="descripcion" #descripcion="ngModel" required [(ngModel)]="actividadCreate.descripcionActividad">
+
             </div>
         </div>
     </div>
@@ -78,11 +81,11 @@
     </div>
     <div class="modal-body">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="categotria" #categoria="ngModel" [(ngModel)]="tipoActCreate.nombreActividad" placeholder="categoria" maxlength="50">
+            <input type="text" class="form-control" id="categotria" required #categoria="ngModel" [(ngModel)]="tipoActCreate.nombreActividad" placeholder="categoria" maxlength="50">
             <label for="categoria">Actividad</label>
         </div>
         <div class="form-floating">
-            <input class="form-control" placeholder="Descripcion" id="descripcion" #descripcion="ngModel" [(ngModel)]="tipoActCreate.descripcionActividad" style="height: 100px" maxlength="300">
+            <input class="form-control" placeholder="Descripcion" id="descripcion" required #descripcion="ngModel" [(ngModel)]="tipoActCreate.descripcionActividad" style="height: 100px" maxlength="300">
             <label for="descripcion ">Descripción</label>
         </div>
 
