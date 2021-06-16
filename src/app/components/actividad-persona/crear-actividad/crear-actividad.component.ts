@@ -72,12 +72,12 @@ export class CrearActividadComponent implements OnInit {
     if( this.actividadCreate.cedulaPersona.cedula != "" && this.actividadCreate.cedulaPersona.nombres != "" && this.actividadCreate.cedulaPersona.apellidos != "" &&  this.actividadCreate.tipoActividad.nombreActividad != "" && this.actividadCreate.horaFin != "" && this.actividadCreate.horaInicio != ""  && this.actividadCreate.descripcionActividad != ""){
       this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
         window.location.reload();
-        alert("Guardado satisfactoriamente");
+        this.showExitoso();
         this.modalService.dismissAll();
       });
     }
     else{
-      console.log("Existen campos vacios");
+      this.showError();
     }
     }
 
@@ -86,7 +86,7 @@ export class CrearActividadComponent implements OnInit {
     this.router.navigate(['/actividades']);
     this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
       window.location.reload();
-      alert("Guardado satisfactoriamente");
+     //this.showExitoso();
       this.modalService.dismissAll();
     });
 
@@ -98,11 +98,11 @@ export class CrearActividadComponent implements OnInit {
     if(this.tipoActCreate.descripcionActividad != "" && this.tipoActCreate.descripcionActividad != ""){
       this._actividadservice.createTipoAct(this.tipoActCreate).subscribe((res)=>{
         window.location.reload();
-        alert("Guardado satisfactoriamente");
+        this.showExitoso();
         this.modalService.dismissAll();
       })
     }else{
-      console.log("Existen campos vacios");
+     this.showError();
     }
    
   }
@@ -133,7 +133,15 @@ export class CrearActividadComponent implements OnInit {
       timer: 2000
     })
   }
+  showError(){
+    Swal.fire({
+      icon: 'error',
+      title: 'No se pueden guardar los datos',
+      text: 'Existen campos vacios, v'
+    })
+  }
 
 }
+
 
 

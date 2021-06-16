@@ -10,6 +10,7 @@ import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import { async } from '@angular/core/testing';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -167,4 +168,6 @@ export class ActividadPersonaComponent implements OnInit {
       pdfMake.createPdf(docDefinition).open();
     }
   }
+
+
 }
