@@ -28,6 +28,13 @@ export class EntregarDonacionComponent implements OnInit {
   alerta: string;
   displayPE: boolean = false;
 
+  entregaDonacion: EntregaDonacion;
+  cantidadEntrega: number;
+
+  displayED: boolean = false;
+
+  productoEntrega: Donaciones;
+
   constructor(private donacionService: DonaProductoService, private entregarDonacionService: EntregarDonacionService, private fichaSocioeconomicaService: FichaSocioeconomicaService, 
     private personaService: PersonasService, private router: Router) { }
 
@@ -69,6 +76,7 @@ export class EntregarDonacionComponent implements OnInit {
           this.fichaSocioeconomicaService.getfichacedula(data.cedula).subscribe(
             data => {
               if (data != null){
+                this.displayPE = true;
                 this.valBeneficiario = true;
                 this.obtenerEntregas(this.cedulaBeneficiario);
               }else{
@@ -110,9 +118,61 @@ export class EntregarDonacionComponent implements OnInit {
 
   donarProducto(producto: Donaciones){
     if (this.valBeneficiario){
-      
+      this.displayED = true;
+
+      this.productoEntrega = new Donaciones;
+
+      this.productoEntrega.cantidad = producto.cantidad;
+      this.productoEntrega.categoria = producto.categoria;
+      this.productoEntrega.cedulaPersona = producto.cedulaPersona;
+      this.productoEntrega.descripcionDonacion = producto.descripcionDonacion;
+      this.productoEntrega.fechaDonacion = producto.fechaDonacion;
+      this.productoEntrega.idDonacion = producto.idDonacion;
+      this.productoEntrega.nombreDonacion = producto.nombreDonacion;
+
     }else{
       alert('No ha elegido un beneficiario aún!')
     }
+  }
+
+  entregarDonacion(){
+    var verificacion = confirm('Seguro de donar ' + this.cantidadEntrega + ' unidades de ' + this.productoEntrega.nombreDonacion + "\n"
+                                  + 'Al señor/a ' + this.nombresBeneficiario + ' ' + this.apellidosBeneficiario);
+    if (verificacion){
+      if (this.productoEntrega.cantidad > 0 && this.productoEntrega.cantidad > this.cantidadEntrega){
+        this.entregaDonacion = new EntregaDonacion;
+        this.entregaDonacion.cantidadEntregada = this.cantidadEntrega;
+        this.entregaDonacion.cedulaBeneficiario = this.cedulaBeneficiario;
+        this.entregaDonacion.descripcionProducto = this.productoEntrega.descripcionDonacion;
+        this.entregaDonacion.fechaEntrega = this.today = new Date;
+        this.entregaDonacion.productoEntregado = this.productoEntrega.nombreDonacion;
+
+        this.entregarDonacionService.postEntrega(this.entregaDonacion).subscribe(
+          data => {
+            console.log(data);
+            this.productoEntrega.cantidad = this.productoEntrega.cantidad - this.cantidadEntrega;
+            this.donacionService.updateDonacionProd(this.productoEntrega.idDonacion, this.productoEntrega).subscribe(
+              result => {
+                console.log(result);
+                alert('Entrega registrada!')
+                this.reiniciar();
+              }
+            )
+          }
+        )
+      }else{
+        alert("Donacion insuficiente");
+      }        
+    }
+  }
+
+  reiniciar(){
+    this.obtenerDonaciones();
+    this.valBeneficiario = false;
+    this.cedulaBeneficiario = '';
+    this.nombresBeneficiario = '';
+    this.apellidosBeneficiario = '';
+    this.displayED = false;
+    this.displayPE = false;
   }
 }
