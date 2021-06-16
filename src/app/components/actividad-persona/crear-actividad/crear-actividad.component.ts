@@ -20,7 +20,7 @@ export class CrearActividadComponent implements OnInit {
   @Input() public modal: NgbModalWindow;
   @Input() Person: Personas = new Personas();
   public fecha: Date = new Date();
-  fechaT: string=this.datePipe.transform(this.fecha,'yyyy-MM-dd');
+  @Input() fechaT: string="";
 
   public fecha1 = formatDate(new Date(), 'HH:mm', 'EN');
   public fecha2 = formatDate(new Date(), 'HH:mm', 'EN');
