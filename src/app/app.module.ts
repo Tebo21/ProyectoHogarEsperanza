@@ -55,6 +55,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
 import {MenubarModule} from 'primeng/menubar';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
 
 PdfMakeWrapper.setFonts(pdfFonts);
 
@@ -89,7 +90,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     EntregaDonacionComponent,
     RegistroDonacionComponent,
     ResumenDonacionComponent,
-    InicioSuperAdminComponent
+    InicioSuperAdminComponent,
+    EntregarDonacionComponent
   ],
   imports: [
     CommonModule,

@@ -12,7 +12,7 @@ export class UsuarioService {
 
   //Logear Usuario
   getQueryLogin(query: string, usuarioCedula: string, usuarioContrasenia: string, usuarioTipo: number): Observable<Usuarios> {
-    const url = `http://localhost:8080/${query}?usuarioCedula=${usuarioCedula}&usuarioContrasenia=${usuarioContrasenia}&usuarioTipo=${usuarioTipo}`;
+    const url = `http://localhost:3000/${query}?usuarioCedula=${usuarioCedula}&usuarioContrasenia=${usuarioContrasenia}&usuarioTipo=${usuarioTipo}`;
     return this.http.request<Usuarios>('get', url);
   }
 
@@ -22,7 +22,7 @@ export class UsuarioService {
   }
 
   QueryAddUser(query: String, usuario: Usuarios ) {
-    const url = `http://localhost:8080/${query}`;
+    const url = `http://localhost:3000/${query}`;
     return this.http.request<Usuarios>('post',url, {
       body: usuario
   });
@@ -33,12 +33,12 @@ export class UsuarioService {
   }
 
   getAll(): Observable<any> {
-    const url = `http://localhost:8080/getAll-usuario`;
+    const url = `http://localhost:3000/getAll-usuario`;
     return this.http.get<Usuarios>(url);
   }
 
   QueryDeleteUser(query: String, idUsuario: number ) {
-    const url = `http://localhost:8080/${query}/${idUsuario}`;
+    const url = `http://localhost:3000/${query}/${idUsuario}`;
     return this.http.request<Usuarios>('delete',url);
   }
   deleteUser(idUsuario: number): Observable<any> {
@@ -47,7 +47,7 @@ export class UsuarioService {
   }
 
   QueryUpdateUser(query: String, usuario: Usuarios ) {
-    const url = `http://localhost:8080/${query}`;
+    const url = `http://localhost:3000/${query}`;
     return this.http.request<Usuarios>('put',url, {
       body: usuario
   });
