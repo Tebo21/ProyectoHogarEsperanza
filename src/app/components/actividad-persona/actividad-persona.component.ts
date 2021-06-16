@@ -5,9 +5,6 @@ import { PersonasService } from 'src/app/services/personas.service';
 import { Personas } from 'src/app/models/personas';
 import { Actividades } from 'src/app/models/Actividades';
 import { DatePipe } from '@angular/common';
-import { PdfMakeWrapper, Table } from 'pdfmake-wrapper';
-import { ITable } from 'pdfmake-wrapper/lib/interfaces';
-import { async } from '@angular/core/testing';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -24,6 +21,7 @@ export class ActividadPersonaComponent implements OnInit {
   PersonAsId: Personas[] = [];
   PersonId: string;
   Actividadview: Actividades[] = [];
+  ActividadviewActu: Actividades[] = [];
   values: any[] = [];
   fecha1: Date = new Date();
   fecha2: string = this.datapipe.transform(this.fecha1, 'yyyy-MM-dd');
@@ -36,8 +34,10 @@ export class ActividadPersonaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.PersonId;
+    this.PersonId = localStorage.getItem('carisma');
+    this.getCedulaAndFecha();
   }
+
   async getPersonsById() {
     this.personaService.getPorCedula(this.PersonId).subscribe(
       (response) => {
@@ -50,6 +50,7 @@ export class ActividadPersonaComponent implements OnInit {
     );
   }
   getCedulaAndFecha() {
+    this.Actividadview = [];
     this.getPersonsById();
     this._actividadservice
       .getActividadCedulaAndFecha(this.fecha2)
@@ -60,16 +61,32 @@ export class ActividadPersonaComponent implements OnInit {
           }
         });
       });
-    this.Actividadview = [];
   }
-
+  showExitoso() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Se elimino con exito!',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }
   trashActiv(id: number) {
     this._actividadservice.trahsActi(id).subscribe((res) => {
-      alert(`Eliminamos correctamente #${res}`);
+      this.showExitoso();
       window.location.reload();
     });
   }
-
+  editActi(id: any) {
+    this.setear();
+    this.Actividadview.forEach((act) => {
+      if (act.idActividadPersona == id) {
+        this.ActividadviewActu.push(act);
+      }
+    });
+  }
+  setear() {
+    this.ActividadviewActu = [];
+  }
   genereport(action = 'open') {
     var testImageDataUrl = this._actividadservice.img;
     let docDefinition = {
@@ -97,17 +114,11 @@ export class ActividadPersonaComponent implements OnInit {
           columns: [
             [
               {
-                table: {
-                  headerRows: 1,
-                  body: [
-                    this.Actividadview.map((res) => [
-                      'NOMBRE: ' +
-                        res.cedulaPersona.nombres +
-                        ' ' +
-                        res.cedulaPersona.apellidos,
-                    ]),
-                  ],
-                },
+                text:
+                  'NOMBRE: ' +
+                  this.Person.nombres +
+                  ' ' +
+                  this.Person.apellidos,
               },
             ],
             [
@@ -168,6 +179,4 @@ export class ActividadPersonaComponent implements OnInit {
       pdfMake.createPdf(docDefinition).open();
     }
   }
-
-
 }

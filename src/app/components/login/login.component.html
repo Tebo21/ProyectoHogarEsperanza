@@ -26,13 +26,13 @@
                         <div class="card2 card border-0 px-4 py-5">
                             <h3 align="center">Inicio de Sesión</h3>
                             <br>
-                            <div class="row px-3"> 
+                            <div class="row px-3">
                                 <label class="mb-0"><h6 class="mb-0 text-sm">Cédula de Identidad</h6></label>
                                 <input class="mb-4" type="text" [(ngModel)]="user.usuarioCedula"
                                     name="user.usuarioCedula" placeholder="Número de cédula de identidad">
                             </div>
-                            <div class="row px-3"> 
-                                <label class="mb-0"><h6 class="mb-0 text-sm">Contraseña</h6></label> 
+                            <div class="row px-3">
+                                <label class="mb-0"><h6 class="mb-0 text-sm">Contraseña</h6></label>
                                 <input class="mb-4" type="password" [(ngModel)]="user.usuarioContrasenia"
                                     name="user.usuarioContrasenia" placeholder="Contraseña">
                             </div>
@@ -48,7 +48,7 @@
                                 <a href="https://www.facebook.com/" class="ml-auto mb-0 text-sm">¿Olvidaste tu
                                     contraseña?</a>
                             </div>
-                            <div class="row mb-3 px-3"> 
+                            <div class="row mb-3 px-3">
                                 <button pButton pRipple type="button" label="Iniciar
                                 Sesión" (click)='Validar()' class="p-button-outlined p-button-info"></button>
                             </div>
@@ -80,3 +80,6 @@
         </p-button>
     </ng-template>
 </p-dialog>
+
+
+

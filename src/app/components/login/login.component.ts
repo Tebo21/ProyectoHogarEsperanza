@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuarios } from 'src/app/models/usuarios';
 import { UsuarioService } from 'src/app/services/usuarios.service';
@@ -10,6 +10,8 @@ import { UsuarioService } from 'src/app/services/usuarios.service';
 })
 export class LoginComponent implements OnInit {
 
+
+  cedula: string;
   //Comprobacion de Logeo
   user: Usuarios = {
     usuarioCedula: '',
@@ -71,6 +73,8 @@ export class LoginComponent implements OnInit {
   Logearse() {
     this.loginservce.getLogin(this.user.usuarioCedula, this.user.usuarioContrasenia, this.user.usuarioTipo).subscribe(data => {
       this.userRecibido = data;
+      this.cedula=data.usuarioCedula;
+      localStorage.setItem("carisma",this.cedula);
       if (this.userRecibido.usuarioCedula != null) {
         this.alerta = 'Bienvendo ' + this.userRecibido.usuarioNombre
         localStorage.setItem('usuarioA', this.userRecibido.usuarioNombre);
