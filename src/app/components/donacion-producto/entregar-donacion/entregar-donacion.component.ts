@@ -17,14 +17,22 @@ export class EntregarDonacionComponent implements OnInit {
   listaDonaciones: Array<Donaciones>;
   listaEntregaDonaciones: Array<EntregaDonacion>;
 
+  loading: boolean;
+
   cedulaBeneficiario: string;
   nombresBeneficiario: string;
   apellidosBeneficiario: string;
+
+  valBeneficiario: boolean = false;
+  today: Date;
+  alerta: string;
+  displayPE: boolean = false;
 
   constructor(private donacionService: DonaProductoService, private entregarDonacionService: EntregarDonacionService, private fichaSocioeconomicaService: FichaSocioeconomicaService, 
     private personaService: PersonasService, private router: Router) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.obtenerDonaciones();
   }
 
@@ -46,6 +54,7 @@ export class EntregarDonacionComponent implements OnInit {
             return donacion;
           }
         )
+        this.loading = false;
       }
     )
   }
@@ -60,6 +69,7 @@ export class EntregarDonacionComponent implements OnInit {
           this.fichaSocioeconomicaService.getfichacedula(data.cedula).subscribe(
             data => {
               if (data != null){
+                this.valBeneficiario = true;
                 this.obtenerEntregas(this.cedulaBeneficiario);
               }else{
                 alert('No existe Ficha Socioeconómica relacionada con esta cédula: '+this.cedulaBeneficiario);
@@ -92,9 +102,17 @@ export class EntregarDonacionComponent implements OnInit {
             }
           )
         }else{
-          alert("No se le ha donado aún");
+          this.alerta = 'No tiene entregas registradas';
         }
       }
     )
+  }
+
+  donarProducto(producto: Donaciones){
+    if (this.valBeneficiario){
+      
+    }else{
+      alert('No ha elegido un beneficiario aún!')
+    }
   }
 }

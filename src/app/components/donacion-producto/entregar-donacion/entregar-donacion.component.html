@@ -1,1 +1,145 @@
-<p>entregar-donacion works!</p>
+<html>
+    <header></header>
+    <body>
+        <div class="container animated d-flex justify-content-center animated fadeIn">
+            <p-panel class="card" header="Información Beneficiario">
+                <div>
+                    <div style="float: left;">
+                        
+                        <label for="floatingInput">Cédula Beneficiario:</label>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula" placeholder="Cédula" [(ngModel)]="cedulaBeneficiario" name="cedula" required>
+                        </div>           
+                        <button pButton pRipple type="button" label="Buscar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                        style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-search"
+                                        (click)="buscarBeneficiario()"></button>
+                    </div>
+                    <div style="float: right;">
+                        <label for="floatingInput">Nombres Beneficiario:</label>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" id="nombres" placeholder="Nombres" [(ngModel)]="nombresBeneficiario" name="nombres" required disabled>
+                        </div>
+                        <label for="floatingInput">Apellidos Beneficiario:</label>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidosBeneficiario" name="apellidos" required disabled>
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+        <div class="container animated d-flex justify-content-center animated fadeIn">
+            <p-panel class="card">
+                <p-table #dt [value]="listaDonaciones" dataKey="id" [rowHover]="true"
+                [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+                [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [filterDelay]="0" [globalFilterFields]="['cedulaPersona','nombreDonacion','categoria']">
+                    <ng-template pTemplate="caption">
+                        <div class="table-header">
+                            Lista de Donaciones
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="nombreDonacion">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    Nombre Producto
+                                    <p-sortIcon field="nombreDonacion"></p-sortIcon>
+                                    <p-columnFilter type="text" field="nombreDonacion" display="menu" class="p-ml-auto"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th pSortableColumn="descripcionDonacion">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    Descripcion
+                                    <p-sortIcon field="descripcionDonacion"></p-sortIcon>
+                                    <p-columnFilter type="text" field="descripcionDonacion" display="menu" class="p-ml-auto"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th pSortableColumn="cantidad">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    Cantidad
+                                    <p-sortIcon field="cantidad"></p-sortIcon>
+                                    <p-columnFilter type="numeric" field="cantidad" display="menu" class="p-ml-auto"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th pSortableColumn="categoria">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    Categoria
+                                    <p-sortIcon field="categoria"></p-sortIcon>
+                                    <p-columnFilter type="text" field="categoria" display="menu" class="p-ml-auto"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th pSortableColumn="fechaDonacion">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    Fecha Donacion
+                                    <p-sortIcon field="fechaDonacion"></p-sortIcon>
+                                    <p-columnFilter type="date" field="fechaDonacion" display="menu" class="p-ml-auto"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th pSortableColumn="cedulaPersona">
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    Cedula Donador
+                                    <p-sortIcon field="cedulaPersona"></p-sortIcon>
+                                    <p-columnFilter type="text" field="cedulaPersona" display="menu" class="p-ml-auto"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th style="width: 8rem"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-donacion>
+                        <tr class="p-selectable-row">
+                            
+                            <td>
+                                {{donacion.nombreDonacion}}
+                            </td>
+                            <td>
+                                {{donacion.descripcionDonacion}}
+                            </td>
+                            <td>
+                                {{donacion.cantidad}}
+                            </td>
+                            <td>
+                                {{donacion.categoria}}
+                            </td>                     
+                            <td>
+                                <!-- {{donacion.fechaDonacion | date: 'MM/dd/yyyy'}} -->
+                                <tr *ngFor="let fech of donacion.fechaDonacion">
+                                    <td>{{fech | date: 'MM/dd/yyyy'}}</td>
+                                </tr>
+                            </td>
+                            <td>
+                                <!-- {{donacion.cedulaPersona}} -->
+                                <tr *ngFor="let ced of donacion.cedulaPersona">
+                                    <td>{{ced}}</td>
+                                </tr>
+                            </td>
+                            <td style="text-align: center">
+                                <p-button icon="pi pi-heart" label="Donar" styleClass="p-button-text" (click)="donarProducto(donacion)"></p-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No se encontro donaciones</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-panel>
+        </div>
+    </body>
+    <p-dialog header="Registrar Nueva Donación" [(visible)]="displayPE" [modal]="true" [style]="{width: '75vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <ng-template pTemplate="body">
+            <p-panel header="Donador">
+                <div class="container animated d-flex justify-content-center animated fadeIn">
+                    <h3>{{alerta}}</h3>
+                    <div [hidden]="!valBeneficiario">
+                        
+                    </div>
+                </div>
+            </p-panel>
+        </ng-template>
+    </p-dialog>
+</html>

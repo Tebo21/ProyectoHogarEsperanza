@@ -24,6 +24,7 @@ import { EntregaDonacionComponent } from './components/donacion-producto/entrega
 import { RegistroDonacionComponent } from './components/donacion-producto/registro-donacion/registro-donacion.component';
 import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
 import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
+import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
 
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -101,6 +102,10 @@ const routes: Routes = [
       {
         path: 'registro-donacion',
         component: RegistroDonacionComponent
+      },
+      {
+        path: 'dar-donacion',
+        component: EntregarDonacionComponent
       },
       {
         path: 'resumen-donacion',
