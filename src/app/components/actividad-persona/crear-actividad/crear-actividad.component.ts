@@ -132,6 +132,13 @@ export class CrearActividadComponent implements OnInit {
     this._actividadservice.updateUser(this.actividadCreate.idActividadPersona,this.actividadCreate);
   }
 
+  trashActiv(id: number) {
+    this._actividadservice.trahsTipoActi(id).subscribe((res) => {
+      this.showExitoso();
+      window.location.reload();
+    });
+  }
+
   showExitoso(){
     Swal.fire({
       icon: 'success',

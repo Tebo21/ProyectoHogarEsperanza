@@ -89,9 +89,29 @@
             <label for="descripcion ">Descripción</label>
         </div>
 
-    </div>
-    <div class="modal-footer ">
-        <button type="button " class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')">Cerrar</button>
-        <button type="button " class="btn btn-outline-success" (click)="crearTipoActividad()">Guardar</button>
+        <div class="modal-footer ">
+          <button type="button " class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')">Cerrar</button>
+          <button type="button " class="btn btn-outline-success" data-toggle="tooltip" data-placement="bottom" title="GUARDAR" (click)="crearTipoActividad()">Guardar</button>
+      </div>
+      <div class="card">
+        <div class="card-footer">
+          <table class="table">
+            <thead class="table">
+              <th scope="col">Actividad</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Acciones</th>
+            </thead>
+            <tbody class="table">
+              <tr *ngFor="let x of _tipoactividad">
+                <td>{{x.nombreActividad}}</td>
+                <td>{{x.descripcionActividad}}</td>
+                <td> <button type="button" class="btn btn-outline-danger" (click)="trashActiv(x.idTipoActividad)">
+                  Eliminar
+                </button> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 </ng-template>

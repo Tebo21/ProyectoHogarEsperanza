@@ -65,14 +65,12 @@ export class ActividadPersonaComponent implements OnInit {
   showExitoso() {
     Swal.fire({
       icon: 'success',
-      title: 'Se elimino con exito!',
-      showConfirmButton: false,
-      timer: 2000,
+      title: 'Se elimino con exito!'
     });
   }
   trashActiv(id: number) {
+    this.showExitoso();
     this._actividadservice.trahsActi(id).subscribe((res) => {
-      this.showExitoso();
       window.location.reload();
     });
   }
