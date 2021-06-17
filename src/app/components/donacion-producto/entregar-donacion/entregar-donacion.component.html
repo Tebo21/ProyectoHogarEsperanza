@@ -1,32 +1,37 @@
 <html>
-    <header></header>
+    <header>
+        <app-navbar-admin></app-navbar-admin>
+    </header>
     <body>
+        <br>
         <div class="container animated d-flex justify-content-center animated fadeIn">
             <p-panel class="card" header="Información Beneficiario">
                 <div>
                     <div style="float: left;">
-                        
+                        <br>
                         <label for="floatingInput">Cédula Beneficiario:</label>
                         <div class="form-floating mb-3">
-                            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula" placeholder="Cédula" [(ngModel)]="cedulaBeneficiario" name="cedula" required>
+                            <input class="form-control" type="text"  pKeyFilter="int" maxlength="13" minlength="10" id="cedula" placeholder="Cédula" [(ngModel)]="cedulaBeneficiario" name="cedula" required>
                         </div>           
                         <button pButton pRipple type="button" label="Buscar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                                         style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-search"
                                         (click)="buscarBeneficiario()"></button>
                     </div>
                     <div style="float: right;">
-                        <label for="floatingInput">Nombres Beneficiario:</label>
+                        <br>
+                        <label  style="margin-left: 5%;" for="floatingInput">Nombres Beneficiario:</label>
                         <div class="form-floating mb-3">
-                            <input class="form-control" type="text" id="nombres" placeholder="Nombres" [(ngModel)]="nombresBeneficiario" name="nombres" required disabled>
+                            <input class="form-control" style="margin-left: 5%;" type="text" id="nombres" placeholder="Nombres" [(ngModel)]="nombresBeneficiario" name="nombres" required disabled>
                         </div>
-                        <label for="floatingInput">Apellidos Beneficiario:</label>
+                        <label style="margin-left: 5%;" for="floatingInput">Apellidos Beneficiario:</label>
                         <div class="form-floating mb-3">
-                            <input class="form-control" type="text" id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidosBeneficiario" name="apellidos" required disabled>
+                            <input class="form-control" style="margin-left: 5%;" type="text" id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidosBeneficiario" name="apellidos" required disabled>
                         </div>
                     </div>
                 </div>
             </p-panel>
         </div>
+        <br>
         <div class="container animated d-flex justify-content-center animated fadeIn">
             <p-panel class="card">
                 <p-table #dt [value]="listaDonaciones" dataKey="id" [rowHover]="true"
