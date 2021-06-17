@@ -10,71 +10,78 @@
                 <div class="col-md-3 position-relative ">
                     <label class="visually-hidden">Buscar por:</label>
                 </div>
-                <div class="col-md-3 position-relative">
-                    <select class="form-select" [(ngModel)]="busquedaSeleccion" (change)="validarVista()" aria-label="Default select example">
-                <option value="1">Cedula</option>
-                <option value="2">Fecha</option>
-                <option value="3">Tipo de actividad</option>
-              </select>
+                <div class="col-sm-6 ">
+                    <select class="form-select" name="busqueda" #busqueda="ngModel" [(ngModel)]=" busquedaSeleccion " (change)="validarVista() " aria-label="Default select example ">
+            <option value="1 ">Cedula</option>
+            <option value="2">Tipo de actividad</option>
+          </select>
                 </div>
             </form>
             <br>
-            <div *ngIf="selectBusqueda ==1">
-                <form class="row g-3 ">
+            <div *ngIf=" selectBusqueda==1 ">
+                <form class=" row g-3 ">
                     <div class="col-md-1 position-relative ">
-                        <label for="staticEmail2 " class="visually-hidden">Cedula</label>
+                        <label for="staticEmail2 " class="visually-hidden ">Cedula</label>
                     </div>
-                    <div class="col-md-3 position-relative">
-                        <input type="text " class="form-control " name="cedula">
+                    <div class="col-md-3 position-relative ">
+                        <input type="text " class="form-control " name="cedula ">
                     </div>
-                    <a class="col-md-4 position-relative"></a>
+                    <a class="col-md-4 position-relative "></a>
                     <div>
-                        <input type="date" id="start" class="form-control" name="fecha">
+                        <input type="date " id="start " class="form-control " name="fecha ">
                     </div>
-                    <button class="btn btn-outline-info"><i class="pi pi-search"></i>
-                Buscar</button>
+                    <button class="btn btn-outline-info "><i class="pi pi-search "></i>
+            Buscar</button>
                 </form>
                 <br>
                 <form class="row g-3 needs-validation " novalidate>
                     <div class="col-md-4 position-relative ">
                         <label for="validationTooltip01 " class="form-label ">Nombre</label>
-                        <input type="text " class="form-control" readonly>
+                        <input type="text " class="form-control " readonly>
                     </div>
                     <div class="col-md-4 position-relative ">
                         <label for="validationTooltip02 " class="form-label ">Apellido</label>
-                        <input type="text " class="form-control " id="apellido" readonly>
+                        <input type="text " class="form-control " id="apellido " readonly>
 
                     </div>
                     <div class="col-md-4 position-relative ">
                         <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
                         <div class="input-group has-validation ">
                             <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
-                            <input type="email " class="form-control " id="correo" readonly>
+                            <input type="email " class="form-control " id="correo " readonly>
                         </div>
                     </div>
                     <div class="col-md-3 position-relative ">
                         <label for="validationTooltip03 " class="form-label ">Telefono</label>
-                        <input type="text " class="form-control " id="telefono" readonly>
+                        <input type="text " class="form-control " id="telefono " readonly>
 
                     </div>
                     <div class="col-md-6 position-relative ">
                         <label for="validationTooltip04 " class="form-label ">Direccion</label>
-                        <input type="text " class="form-control " id="direccion" readonly>
+                        <input type="text " class="form-control " id="direccion " readonly>
                     </div>
                 </form>
             </div>
+
+            <div class=" col-sm-4" *ngIf=" selectBusqueda==2 ">
+                <select class="form-select" name="tipo" #tipo="ngModel" required [(ngModel)]="_tipoactividad1">
+          <option [ngValue]="x" *ngFor="let x of _tipoactividad" >{{x.nombreActividad}}</option>
+        </select>
+            </div>
+
+
         </div>
-        <div class="card-header">
+        <div class="card-header ">
         </div>
-        <div class="card-body">
+        <div class="card-body ">
             <table class="table ">
-                <thead class="table">
-                    <th scope="col">Hora de Inicio</th>
-                    <th scope="col">Hora Fin</th>
-                    <th scope="col">Actividad Realizada</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Persona</th>
-                    <th scope="col">Observaciones</th>
+                <thead class="table ">
+                    <th scope="col ">Hora de Inicio</th>
+                    <th scope="col ">Hora Fin</th>
+                    <th scope="col ">Actividad Realizada</th>
+                    <th scope="col ">Fecha</th>
+                    <th scope="col ">Persona</th>
+                    <th scope="col ">Observaciones</th>
 
                 </thead>
                 <tbody>
@@ -90,6 +97,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer"></div>
+        <div class="card-footer "></div>
     </div>
 </div>
