@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
@@ -25,6 +25,7 @@ import { RegistroDonacionComponent } from './components/donacion-producto/regist
 import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
 import { InicioSuperAdminComponent } from './components/inicio-super-admin/inicio-super-admin.component';
 import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
+import { ReportesActividadesComponent } from './components/actividad-persona/reportes-actividades/reportes-actividades.component';
 
       // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
       // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -119,6 +120,10 @@ const routes: Routes = [
       {
         path: 'calendario',
         component: VoluntarioCalendarioComponent,
+      },
+      {
+        path: 'reportes-actividades',
+        component: ReportesActividadesComponent
       },
   {
     path: '**',
