@@ -69,19 +69,51 @@ export class ActividadPersonaComponent implements OnInit {
     });
   }
   trashActiv(id: number) {
-    this.showExitoso();
     this._actividadservice.trahsActi(id).subscribe((res) => {
       window.location.reload();
     });
   }
+  showConfirmacion(id:number){
+    Swal.fire({
+      title: '¿Estas seguro de eliminar este registro?',
+      text: "Si eliminas no podras revertir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí,eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.trashActiv(id)
+        Swal.fire(
+          'Eliminado!',
+          'El registro ha sido eliminado',
+          'success'
+        )
+      }
+    })
+  }
+
   editActi(id: any) {
     this.setear();
     this.Actividadview.forEach((act) => {
       if (act.idActividadPersona == id) {
         this.ActividadviewActu.push(act);
+        this.showActualizacion();
       }
     });
   }
+  showActualizacion(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos Actualizados',
+      showConfirmButton: false,
+      timer: 2000
+    })
+  }
+
+  
   setear() {
     this.ActividadviewActu = [];
   }
