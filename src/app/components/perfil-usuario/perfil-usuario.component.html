@@ -1,0 +1,105 @@
+<app-navbar-admin></app-navbar-admin>
+<br>
+
+
+<div class="container animated  d-flex justify-content-center fadeIn">
+    <p-panel class="card" id="panel">
+        <h2 class="text-center">Datos Personales</h2>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Cédula</label>
+            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10"
+                id="usuarioCedula" placeholder="Cédula" [(ngModel)]="usuario.usuarioCedula" name="cedula" required disabled>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Nombres</label>
+            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="20" minlength="3"
+                id="personaNombre" placeholder="Nombres" [(ngModel)]="persona.nombres" name="nombres" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Apellidos</label>
+            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="20" minlength="3"
+                id="personaApellidos" placeholder="Apellidos" [(ngModel)]="persona.apellidos" name="apellidos" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Dirección</label>
+            <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="20" minlength="3"
+                id="personaDireccion" placeholder="Direccion" [(ngModel)]="persona.direccion" name="direccion" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Celular</label>
+            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="13" minlength="7"
+                id="personaCelular" placeholder="Celular" [(ngModel)]="persona.celular" name="direccion" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Correo Electrónico</label>
+            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="20" minlength="10"
+                id="personaCorreo" placeholder="Correo" [(ngModel)]="persona.correo" name="correo" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Género</label>
+            <p-dropdown [options]="generos" [(ngModel)]="genero" optionLabel="gop" placeholder="Seleccione su género" 
+                [style]="{'width': '100%'}" [showClear]="true" >
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Fecha de nacimiento</label>
+            <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
+                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" maxlength="10" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Nacionalidad</label>
+            <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="Seleccione su nacionalidad"
+                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Discapacidad</label>
+            <br>
+            <p-inputSwitch [(ngModel)]="discap"></p-inputSwitch>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Estado Civil</label>
+            <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
+                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true">
+            </p-dropdown>
+        </div>
+        <hr>
+        <h2 class="text-center">Mi Cuenta</h2>
+        <div class="form-floating mb-3" *ngIf="drop">
+            <label for="floatingInput">Tipo de usuario</label>
+            <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario"
+                optionLabel="string" [style]="{'width': '100%'}" [showClear]="true"
+                (onChange)="onChange($event)">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3" *ngIf="vistaTipo">
+            <label for="floatingInput">Tipo de usuario</label>
+            <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
+                id="usuarioTipo" placeholder="{{tipoUsuario(usuario.usuarioTipo)}}" name="usuarioNombre"
+                required disabled>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Nombre de Usuario</label>
+            <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
+                id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuario.usuarioNombre" name="usuarioNombre"
+                required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Contraseña</label>
+            <input class="form-control" type="password" maxlength="16" minlength="5" id="usuario.usuarioContrasenia"
+                placeholder="Contraseña del Usuario" [(ngModel)]="usuario.usuarioContrasenia" name="usuarioContrasenia"
+                required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Confirmar contraseña</label>
+            <input class="form-control" type="password" maxlength="16" minlength="5" id="usuarioConfirContrasenia"
+                placeholder="Contraseña del Usuario" [(ngModel)]="usuarioConfirContrasenia"
+                name="usuarioConfirContrasenia" required>
+        </div>
+        <button pButton pRipple type="button" label="Aceptar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+        style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
+        (click)="Actualizar()"></button>
+    </p-panel>
+</div>
+
+<br>
