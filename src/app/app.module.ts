@@ -56,6 +56,7 @@ import {MenubarModule} from 'primeng/menubar';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
+import { ReportesActividadesComponent } from './components/actividad-persona/reportes-actividades/reportes-actividades.component';
 
 PdfMakeWrapper.setFonts(pdfFonts);
 
@@ -91,7 +92,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     RegistroDonacionComponent,
     ResumenDonacionComponent,
     InicioSuperAdminComponent,
-    EntregarDonacionComponent
+    EntregarDonacionComponent,
+    ReportesActividadesComponent
   ],
   imports: [
     CommonModule,
