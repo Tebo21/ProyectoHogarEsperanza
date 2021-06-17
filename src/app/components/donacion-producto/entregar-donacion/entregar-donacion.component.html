@@ -16,6 +16,13 @@
                         <button pButton pRipple type="button" label="Buscar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                                         style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-search"
                                         (click)="buscarBeneficiario()"></button>
+                        <br>
+                        <br>
+                        <button pButton pRipple type="button" label="Registrar Beneficiario" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                        style="color: #008cff; min-width: 100%; margin-top: 23%;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-user-plus"
+                                        (click)="registrarBeneficiario()"></button>
+                        <br>
+                        <br>
                     </div>
                     <div style="float: right;">
                         <br>
@@ -26,6 +33,10 @@
                         <label style="margin-left: 5%;" for="floatingInput">Apellidos Beneficiario:</label>
                         <div class="form-floating mb-3">
                             <input class="form-control" style="margin-left: 5%;" type="text" id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidosBeneficiario" name="apellidos" required disabled>
+                        </div>
+                        <label style="margin-left: 5%;" for="floatingInput">Dirección Beneficiario:</label>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" style="margin-left: 5%;" type="text" id="direccion" placeholder="Direccion" [(ngModel)]="direccionBeneficiario" name="direccion" required disabled>
                         </div>
                     </div>
                 </div>
@@ -41,7 +52,7 @@
                     <ng-template pTemplate="caption">
                         <div class="table-header">
                             Lista de Donaciones
-                            <span class="p-input-icon-left">
+                            <span class="p-input-icon-right">
                                 <i class="pi pi-search"></i>
                                 <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
                             </span>
@@ -170,9 +181,9 @@
             </div>
         </ng-template>
         <ng-template pTemplate="footer">
-            <p-button icon="pi pi-check" (click)="entregarDonacion()" label="Guardar" styleClass="p-button-text">
+            <p-button icon="pi pi-check" (click)="entregarDonacion()" label="Donar" styleClass="p-button-text">
             </p-button>
-            <p-button icon="pi pi-times" (click)="displayED = false" label="Guardar" styleClass="p-button-text">
+            <p-button icon="pi pi-times" (click)="displayED = false" label="Cancelar" styleClass="p-button-text">
             </p-button>
         </ng-template>
     </p-dialog>
@@ -189,11 +200,7 @@
                     [filterDelay]="0" [globalFilterFields]="['cedulaPersona','nombreDonacion','categoria']">
                         <ng-template pTemplate="caption">
                             <div class="table-header">
-                                Lista de entregas realizadas a esta persona
-                                <span class="p-input-icon-left">
-                                    <i class="pi pi-search"></i>
-                                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
-                                </span>
+                                Lista de donaciones realizadas
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header">
@@ -201,36 +208,36 @@
                                 <th pSortableColumn="nombreDonacion">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Cedula beneficiario
-                                        <p-sortIcon field="nombreDonacion"></p-sortIcon>
-                                        <p-columnFilter type="text" field="nombreDonacion" display="menu" class="p-ml-auto"></p-columnFilter>
+                                        <!-- <p-sortIcon field="nombreDonacion"></p-sortIcon>
+                                        <p-columnFilter type="text" field="nombreDonacion" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 <th pSortableColumn="descripcionDonacion">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Producto entregado
-                                        <p-sortIcon field="descripcionDonacion"></p-sortIcon>
-                                        <p-columnFilter type="text" field="descripcionDonacion" display="menu" class="p-ml-auto"></p-columnFilter>
+                                        <!-- <p-sortIcon field="descripcionDonacion"></p-sortIcon>
+                                        <p-columnFilter type="text" field="descripcionDonacion" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 <th pSortableColumn="cantidad">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Descripcion producto
-                                        <p-sortIcon field="cantidad"></p-sortIcon>
-                                        <p-columnFilter type="numeric" field="cantidad" display="menu" class="p-ml-auto"></p-columnFilter>
+                                        <!-- <p-sortIcon field="cantidad"></p-sortIcon>
+                                        <p-columnFilter type="text" field="cantidad" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 <th pSortableColumn="categoria">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Cantidad producto
-                                        <p-sortIcon field="categoria"></p-sortIcon>
-                                        <p-columnFilter type="text" field="categoria" display="menu" class="p-ml-auto"></p-columnFilter>
+                                        <!-- <p-sortIcon field="categoria"></p-sortIcon>
+                                        <p-columnFilter type="text" field="categoria" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 <th pSortableColumn="fechaDonacion">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Fecha Entrega
-                                        <p-sortIcon field="fechaDonacion"></p-sortIcon>
-                                        <p-columnFilter type="date" field="fechaDonacion" display="menu" class="p-ml-auto"></p-columnFilter>
+                                        <!-- <p-sortIcon field="fechaDonacion"></p-sortIcon>
+                                        <p-columnFilter type="date" field="fechaDonacion" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 

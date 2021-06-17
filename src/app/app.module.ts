@@ -10,7 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
 import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
-import { RegistroProductoComponent } from './components/donacion-producto/registro-producto/registro-producto.component';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
@@ -18,7 +17,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
-import { ControlDonacionesComponent } from './components/donacion-producto/control-donaciones/control-donaciones.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
 import { UsuarioService } from './services/usuarios.service';
@@ -44,9 +42,7 @@ import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
-import { EntregaDonacionComponent } from './components/donacion-producto/entrega-donacion/entrega-donacion.component';
 import { RegistroDonacionComponent } from './components/donacion-producto/registro-donacion/registro-donacion.component';
-import { ResumenDonacionComponent } from './components/donacion-producto/resumen-donacion/resumen-donacion.component';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {MessageService} from 'primeng/api';
@@ -72,9 +68,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     CrearActividadComponent,
     RegistroPersonaComponent,
     RegistroFamiliaresComponent,
-    RegistroProductoComponent,
     FichaSocioeconomicaComponent,
-    ControlDonacionesComponent,
     DasboardvoluntariosComponent,
     VoluntarioCalendarioComponent,
     ListCentroComponent,
@@ -90,9 +84,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     NavbarAdminComponent,
     NavbarVoluntarioComponent,
     VistaFichaComponent,
-    EntregaDonacionComponent,
     RegistroDonacionComponent,
-    ResumenDonacionComponent,
     InicioSuperAdminComponent,
     EntregarDonacionComponent,
     ReportesActividadesComponent,
