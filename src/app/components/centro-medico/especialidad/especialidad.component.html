@@ -1,53 +1,100 @@
 <app-navbar-admin></app-navbar-admin>
-<br>
-<h2 class="title">Gestión de Especialidades</h2>
-  <div class="form-group">
-    <label for="nombreEspecialidad">Nombre de la Especialidad:</label>
-    <input type="text" [(ngModel)]="selectedEspecialidad.nombreEspecialidad" class="form-control" id="nombreEspecialidad" nombre="nombreEspecialidad" placeholder="Nombre">
-  </div>
-  <div class="form-group">
-    <label for="centroMedico">Seleccione el Centro Médico</label>
-    <div class="dropdown show">
-            <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
-              <option *ngFor="let c of centro" class="dropdown-item">
-                 {{c.nombreCentroMedico}}
-             </option>
-            </select>
-    </div>
-<br> 
-   <span class="response" *ngIf="response_condicion == true">{{ response_msg }}</span>
+<br />
+<div _ngcontent-ygo-c128 class="container">
+  <div _ngcontent-ygo-c128 class="modal-body">
+    <div _ngcontent-kqj-c128 class="card-header">
+      <div class="modal-header text-center">
+        <h3 class="text-center"><b>Registro de Especialidades</b></h3>
+      </div>
+      <br />
 
-   <br>
-   <br>
-    <button class="btn btn-primary" (click)="addOrEdit()">
-    Guardar
-    </button>
-<br>
-<br>
+      <div class="form-group">
+        <label for="nombreEspecialidad"><b>Nombre de la Especialidad:</b></label>
+        <input type="text" [(ngModel)]="selectedEspecialidad.nombreEspecialidad" class="form-control"
+          id="nombreEspecialidad" nombre="nombreEspecialidad" placeholder="Nombre"/>
+      </div>
 
-<h2 class="title">Lista de Especialidades</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">ESPECIALIDAD</th>
-      <th scope="col">CENTRO MÉDICO</th>
-      <th scope="col">ACCIONES</th>
-    </tr>
-  </thead>
-  <tbody>
-
-    <tr *ngFor="let e of especialidad" class = "list-group-item-action">
-      <td>{{e.idEspecialidad}}</td>
-      <td>{{e.nombreEspecialidad}}</td>
-      <td>{{e.centroMedico}}</td>
-      <td>
-        <div class="cell" data-title="Acciones">
-            <input class="btn-update" (click)="openForEdit(e)" type="image" src="../../../assets/img/pencil.svg" alt="Delete">
-            <input class="btn-delete" (click)="deleteEspecialidad(e)" type="image" src="../../../assets/img/delete.svg" alt="Delete">
+      <div class="form-group">
+        <label for="centroMedico"><b>Seleccione el Centro Médico:</b></label>
+        <div class="dropdown show">
+          <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
+            <option *ngFor="let c of centro" class="dropdown-item">
+              {{ c.nombreCentroMedico }}
+            </option>
+          </select>
         </div>
-      </td>
-    </tr>
 
-  </tbody>
-</table>
+        <br />
+
+        <div class="container animated d-flex justify-content-center animated fadeIn">
+          <i><span class="response" *ngIf="response_condicion == true">{{response_msg}}</span></i>
+        </div>
+
+        <br />
+        <br />
+      <div class="card-footer">
+        <div class="botones">
+          <div class="row">
+            <div class="col d-grid gap-2">
+              <button class="btn btn-outline-success btnfooter" (click)="addOrEdit()" type="button" style="margin-left: 10px">
+                Guardar <i class="pi pi-check"></i>
+              </button>
+            </div>
+
+            <div class="col d-grid gap-2">
+              <button class="btn btn-outline-danger btnfooter" type="submit" routerLink="/centromedico-listar" style="margin-left: 10px">
+                <i class="pi pi-angle-double-left"></i> Regresar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br />
+
+        <div class="modal-header text-center">
+          <h3 class="text-center"><b>Listado de Especialidades</b></h3>
+        </div>
+        <br />
+
+        <div class="container animated d-flex justify-content-center animated fadeIn">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">ESPECIALIDAD</th>
+                <th scope="col">CENTRO MÉDICO</th>
+                <th scope="col">ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let e of especialidad" class="list-group-item-action">
+                <td>{{ e.idEspecialidad }}</td>
+                <td>{{ e.nombreEspecialidad }}</td>
+                <td>{{ e.centroMedico }}</td>
+                <td>
+                  <div class="cell" data-title="Acciones">
+                    <input
+                      class="btn-update"
+                      (click)="openForEdit(e)"
+                      type="image"
+                      src="../../../assets/img/pencil.svg"
+                      alt="Delete"
+                    />
+                    <input
+                      class="btn-delete"
+                      (click)="deleteEspecialidad(e)"
+                      type="image"
+                      src="../../../assets/img/delete.svg"
+                      alt="Delete"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

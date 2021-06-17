@@ -14,7 +14,7 @@ export class EspecialidadComponent implements OnInit {
   especialidad: Especialidad[] = [];
   centro: CentroMedico[] = [];
   selectedEspecialidad: Especialidad = new Especialidad();
-  nombreSeCe: number;
+  nombreSeCe: string;
 
   response_condicion: boolean = false;
   response_msg: String;
@@ -32,29 +32,24 @@ export class EspecialidadComponent implements OnInit {
   listCentro() {
     this.serviceCentro.listCentro().subscribe((data) => {
       this.centro = data;
-      console.log(data);
-      console.log('CENTRO');
-      console.log(this.centro);
     });
   }
 
   listEspecialidad() {
     this.service.listEspecialidad().subscribe((data) => {
       this.especialidad = data;
-      console.log(data);
-      console.log('ESPECIALIDAD');
-      console.log(this.especialidad);
     });
   }
 
   openForEdit(espe: Especialidad) {
     this.selectedEspecialidad = espe;
+    this.nombreSeCe = espe.centroMedico;
   }
 
   addOrEdit() {
     if (this.selectedEspecialidad.idEspecialidad) {
       if (this.validar_datos(this.selectedEspecialidad) == true) {
-        this.selectedEspecialidad.centroMedico = this.nombreSeCe.toString();
+        this.selectedEspecialidad.centroMedico = this.nombreSeCe;
         this.service
           .updateEspecialidad(
             this.selectedEspecialidad.idEspecialidad,
@@ -69,9 +64,7 @@ export class EspecialidadComponent implements OnInit {
           });
       }
     } else {
-      this.selectedEspecialidad.centroMedico = this.nombreSeCe.toString();
-      console.log(this.selectedEspecialidad.centroMedico);
-      console.log(this.centro);
+      this.selectedEspecialidad.centroMedico = this.nombreSeCe;
       if (this.validar_datos(this.selectedEspecialidad) == true) {
         this.service
           .createEspecialidad(this.selectedEspecialidad)
@@ -79,6 +72,7 @@ export class EspecialidadComponent implements OnInit {
             if (data) {
               alert('Especialidad agregada');
               this.selectedEspecialidad = new Especialidad();
+              this.show_response('');
               this.listEspecialidad();
             }
           });
@@ -88,16 +82,10 @@ export class EspecialidadComponent implements OnInit {
 
   deleteEspecialidad(esp: Especialidad) {
     let response = confirm(`¿Desea eliminar: ${esp.nombreEspecialidad}?`);
-    console.log('RESPONSE:');
-    console.log(response);
     if (response == true) {
-      console.log('Eliminar 1');
       this.service.deleteEspecialidad(esp.idEspecialidad).subscribe((data) => {
-        console.log('Eliminar 2');
         alert(`${esp.nombreEspecialidad} fue eliminado`);
-        console.log('Eliminar 3');
         this.listEspecialidad();
-        console.log('Eliminar 4');
       });
     }
   }
