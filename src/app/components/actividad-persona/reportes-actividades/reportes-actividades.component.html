@@ -11,7 +11,7 @@
                     <label class="visually-hidden">Buscar por:</label>
                 </div>
                 <div class="col-md-3 position-relative">
-                    <select class="form-select" [(ngModel)]="busquedaSeleccion" aria-label="Default select example">
+                    <select class="form-select" [(ngModel)]="busquedaSeleccion" (change)="validarVista()" aria-label="Default select example">
                 <option value="1">Cedula</option>
                 <option value="2">Fecha</option>
                 <option value="3">Tipo de actividad</option>
