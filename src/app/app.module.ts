@@ -57,6 +57,8 @@ import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
 import { ReportesActividadesComponent } from './components/actividad-persona/reportes-actividades/reportes-actividades.component';
+import flatpickr from 'flatpickr';
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 PdfMakeWrapper.setFonts(pdfFonts);
 
@@ -120,6 +122,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ConfirmDialogModule,
     ToastModule,
     MenubarModule,
+    FlatpickrModule.forRoot(),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe],
