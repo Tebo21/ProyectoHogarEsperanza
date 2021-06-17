@@ -363,7 +363,7 @@ export class RegistroDonacionComponent implements OnInit {
   }
 
   entregarDonacion() {
-    this.router.navigate(['entrega-donacion']);
+    this.router.navigate(['dar-donacion']);
   }
 
   async generaPdf() {
