@@ -56,6 +56,7 @@ import { ReportesActividadesComponent } from './components/actividad-persona/rep
 import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
 import { PaginatorModule } from 'primeng/paginator';
 import {TooltipModule} from 'primeng/tooltip';
+import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -88,7 +89,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     InicioSuperAdminComponent,
     EntregarDonacionComponent,
     ReportesActividadesComponent,
-    PerfilUsuarioComponent
+    PerfilUsuarioComponent,
+    BuscarCitaComponent
   ],
   imports: [
     CommonModule,

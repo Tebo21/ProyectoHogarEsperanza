@@ -1,0 +1,59 @@
+<div>
+    <div class="panel-heading ">
+        <h2 class="title ">Lista de las Citas Medicas agendadas</h2>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-body ">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>Descripcion Cita Medica</th>
+                        <th>Fecha Registro</th>
+                        <th>Fecha de la Cita Medica</th>
+                        <th>Paciente</th>
+                        <th>Acompanante</th>
+                        <th>Correo al que se enviara mensaje</th>
+                        <th>Trabajador de la Fundacion</th>
+                        <th>Centro Medico</th>
+                        <th>Especialidad</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let u of citaMedica | async ">
+                        <td>
+                            {{ u.descripcionCitaMedica}}
+                        </td>
+                        <td>
+                            {{ u.fechaRegistro }}
+                        </td>
+                        <td>
+                            {{ u.fechaCitaMedica }}
+                        </td>
+                        <td>
+                            {{ u.paciente }}
+                        </td>
+                        <td>
+                            {{ u.acompaniante }}
+                        </td>
+                        <td>
+                            {{ u.mensaje }}
+                        </td>
+                        <td>
+                            {{ u.trabajadorFundacion }}
+                        </td>
+                        <td>
+                            {{ u.centroMedico }}
+                        </td>
+                        <td>
+                            {{ u.especialidad }}
+                        </td>
+                        <td>
+                            {{ u.nota }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

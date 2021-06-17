@@ -11,6 +11,8 @@ import { PersonasService } from '../../../services/personas.service';
 import { Personas } from '../../../models/personas';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Router } from '@angular/router';
+import { NgbAlert, NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
+import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-cita',
@@ -207,6 +209,7 @@ export class CrearCitaComponent implements OnInit {
           this.nombreper3 = data.nombres + ' ' + data.apellidos;
           this.correoper3 = data.correo;
           this.telefonoper3 = data.celular;
+
         }else{
           alert('No hay resultados'); 
         }
@@ -214,9 +217,14 @@ export class CrearCitaComponent implements OnInit {
     );
   }
 
-  //btn para alerts
+  // btn para alerts
   registrar(){
     this.router.navigate(['/registro-usuario']);
+  }
+
+   // btn para busqueda
+  buscar(){
+    this.router.navigate(['/buscar-citaM']);
   }
 
   // validaciones

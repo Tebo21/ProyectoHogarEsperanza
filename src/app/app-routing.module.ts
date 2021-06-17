@@ -23,6 +23,7 @@ import { InicioSuperAdminComponent } from './components/inicio-super-admin/inici
 import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
 import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
 import { ReportesActividadesComponent } from './components/actividad-persona/reportes-actividades/reportes-actividades.component';
+import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
 
 // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
 // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -76,6 +77,10 @@ const routes: Routes = [
   {
     path: 'crear-citaM',
     component: CrearCitaComponent,
+  },
+  {
+    path: 'buscar-citaM',
+    component: BuscarCitaComponent,
   },
   {
     path: 'vista-ficha',
