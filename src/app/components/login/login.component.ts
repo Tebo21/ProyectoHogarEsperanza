@@ -68,8 +68,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
-
   Logearse() {
     this.loginservce.getLogin(this.user.usuarioCedula, this.user.usuarioContrasenia, this.user.usuarioTipo).subscribe(data => {
       this.userRecibido = data;
@@ -79,6 +77,7 @@ export class LoginComponent implements OnInit {
         this.alerta = 'Bienvendo ' + this.userRecibido.usuarioNombre
         localStorage.setItem('usuarioA', this.userRecibido.usuarioNombre);
         localStorage.setItem('rolUser', this.userRecibido.usuarioTipo.toString());
+        localStorage.setItem('cedUser', this.userRecibido.usuarioCedula.toString());
         this.display = true;
         this.redireccion();
       } else {

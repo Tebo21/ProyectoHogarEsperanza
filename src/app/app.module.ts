@@ -57,7 +57,9 @@ import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
 import { ReportesActividadesComponent } from './components/actividad-persona/reportes-actividades/reportes-actividades.component';
-
+import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
+import { PaginatorModule } from 'primeng/paginator';
+import {TooltipModule} from 'primeng/tooltip';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -93,7 +95,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ResumenDonacionComponent,
     InicioSuperAdminComponent,
     EntregarDonacionComponent,
-    ReportesActividadesComponent
+    ReportesActividadesComponent,
+    PerfilUsuarioComponent
   ],
   imports: [
     CommonModule,
@@ -120,6 +123,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ConfirmDialogModule,
     ToastModule,
     MenubarModule,
+    PaginatorModule,
+    TooltipModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe],

@@ -1,16 +1,41 @@
 <app-navbar-admin></app-navbar-admin>
 
 <br>
+<h2 class="text-center">Listado de Usuarios</h2>
 
 <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
 
-    <p-table [value]="listaUsusarios" styleClass="p-datatable-striped-responsive-demo" [scrollable]="true" scrollHeight="450px">
+    <p-table #dt [value]="listaUsusarios" dataKey="id" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
+        [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,25,50]" [rowHover]="true" selectionMode="multiple" [(selection)]="selectedUsers">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex" align="center"> 
+                <h4 class="text-center">Generar Reportes</h4>
+                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="crearReporte()" class="p-button-danger p-mr-2"  pTooltip="PDF" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+            </div>
+        </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th>Id</th>
-                <th>Cédula</th>
-                <th>Nombre de Usuario</th>
-                <th>Tipo de Usuario</th>
+                <th pSortableColumn="idUsuario">ID
+                    <p-sortIcon field="idUsuario"></p-sortIcon>
+                </th>
+                <th pSortableColumn="usuarioCedula">Cédula
+                    <p-sortIcon field="usuarioCedula"></p-sortIcon>
+                    <p-columnFilter type="text" field="usuarioCedula" display="menu" class="p-ml-auto"></p-columnFilter>
+                </th>
+                <th pSortableColumn="usuarioNombre">Nombre de Usuario
+                    <p-columnFilter type="text" field="usuarioNombre" display="menu" class="p-ml-auto"></p-columnFilter>
+                </th>
+                <th pSortableColumn="usuarioTipo">Tipo de Usuario
+                    <p-sortIcon field="usuarioTipo"></p-sortIcon>
+                </th>
+                <th pSortableColumn="usuarioFechaCreacion">Fecha de Creación
+                    <p-sortIcon field="usuarioFechaCreacion"></p-sortIcon>
+                    <p-columnFilter type="text" field="usuarioFechaCreacion" display="menu" class="p-ml-auto">
+                    </p-columnFilter>
+                </th>
                 <th>Editar / Eliminar</th>
             </tr>
         </ng-template>
@@ -20,15 +45,21 @@
                 <td>{{user.usuarioCedula}}</td>
                 <td>{{user.usuarioNombre}}</td>
                 <td>{{tipoUsuario(user.usuarioTipo)}}</td>
+                <td>{{user.usuarioFechaCreacion}}</td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-user-edit" class="p-button-rounded p-button-outlined" (click)="showDialogEditar(user)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger" (click)="eliminarUsuario(user.idUsuario)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-user-edit"
+                        class="p-button-rounded p-button-outlined" (click)="showDialogEditar(user)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                        (click)="eliminarUsuario(user.idUsuario)"></button>
                 </td>
             </tr>
         </ng-template>
+
     </p-table>
 
 </div>
+<br>
+
 <p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
 </p-confirmDialog>
 <p-dialog header="Editar Usuario" [(visible)]="displayEditar" [style]="{width: '50vw'}" [baseZIndex]="10000">
@@ -38,8 +69,8 @@
         <br>
         <div class="form-floating mb-3">
             <label for="floatingInput">Tipo de Usuario</label>
-            <p-dropdown [options]="listadoTipo" [(ngModel)]="tipo" placeholder="Seleccione un tipo"
-                optionLabel="tip" [style]="{'width': '100%'}" [filter]="true" [showClear]="true" (onChange)="onChange($event)">
+            <p-dropdown [options]="listadoTipo" [(ngModel)]="tipo" placeholder="Seleccione un tipo" optionLabel="tip"
+                [style]="{'width': '100%'}" [filter]="true" [showClear]="true" (onChange)="onChange($event)">
             </p-dropdown>
         </div>
         <br>
