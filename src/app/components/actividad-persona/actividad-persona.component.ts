@@ -94,6 +94,27 @@ export class ActividadPersonaComponent implements OnInit {
       }
     })
   }
+  showConfirmacionPDF(){
+    Swal.fire({
+      title: '¿Estas seguro de descargar este reporte?',
+      text: "Se abrira una visualizacion de su reporte",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí, descargar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.genereport();
+        Swal.fire(
+          'Descargado!',
+          'El registro ha sido descargado',
+          'success'
+        )
+      }
+    })
+  }
 
   editActi(id: any) {
     this.setear();
@@ -113,10 +134,13 @@ export class ActividadPersonaComponent implements OnInit {
     })
   }
 
-  
+
   setear() {
     this.ActividadviewActu = [];
   }
+
+
+
   genereport(action = 'open') {
     var testImageDataUrl = this._actividadservice.img;
     let docDefinition = {
