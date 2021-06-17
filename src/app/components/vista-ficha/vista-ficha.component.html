@@ -1,7 +1,7 @@
 
 <app-navbar-super-admin></app-navbar-super-admin>
 
-<div class="hoja">
+<div class="container hoja">
 
     <div class="titulo" >
       <div class="input-group mb-3">
@@ -12,42 +12,42 @@
   
       <div class="input-group mb-3">
         <label class="fechalabel" for="">Fecha:</label>
-        <input [(ngModel)]="fichaS.fechaRegistro" id="fecha"  class="fecha" type="text"  [ngModel]="this.fichaS.fechaRegistro | date:'yyyy-MM-dd'">
+        <input [(ngModel)]="fichaS.fechaRegistro" id="fecha"  class="fecha" type="text"  [ngModel]="this.fichaS.fechaRegistro | date:'yyyy-MM-dd'" disabled>
       </div>
       <div class="input-group mb-3">
         <label class="labelNombre" for="">Nombres:</label>
-        <input  value="{{nombreCompleto}}" class="Nombres" id="Nombres" type="text">
+        <input  value="{{nombreCompleto}}" class="Nombres" id="Nombres" type="text" disabled>
       </div>
       <div class="input-group mb-3">
         <label class="labelDireccion" for="">Dirección Exacta:</label>
-        <textarea [(ngModel)]="persona.direccion" class="Direccion" id="Direccion" type="text"></textarea>
+        <textarea [(ngModel)]="persona.direccion" class="Direccion" id="Direccion" type="text" disabled></textarea>
       </div>
       <div class="input-group mb-3">
         <label class="labelTelefono" for="">Telefono:</label>
-        <input [(ngModel)]="persona.celular" class="Telefono" id="Telefono" type="text">
+        <input [(ngModel)]="persona.celular" class="Telefono" id="Telefono" type="text" disabled>
         <label class="labelNacionalidad" for="">Nacionalidad:</label>
-        <input [(ngModel)]="persona.nacionalidad" class="Nacionalidad" id="Nacionalidad" type="text">
+        <input [(ngModel)]="persona.nacionalidad" class="Nacionalidad" id="Nacionalidad" type="text" disabled>
       </div>
       <div class="input-group mb-3">
         <label class="labelDiscapacidad" for="">Discapacidad:</label>
-        <input  class="Discapacidad" id="Discapacidad" type="text" value="{{discapacidad}}">
+        <input  class="Discapacidad" id="Discapacidad" type="text" value="{{discapacidad}}" disabled>
         <label class="labelAdultosM" for="">Adultos Mayores:</label>
-        <input  class="AdultosM" id="AdultosM" type="text" value="{{adultoMayor}}">
+        <input  class="AdultosM" id="AdultosM" type="text" value="{{adultoMayor}}" disabled>
         <label  class="labelEstadoC" for="">Estado Civil:</label>
-        <input [(ngModel)]="persona.estado_civil" class="EstadoC" id="EstadoC" type="text">  
+        <input [(ngModel)]="persona.estado_civil" class="EstadoC" id="EstadoC" type="text" disabled>  
       </div>
       <div class="input-group mb-3">
         <label class="labelNoIntegrantes" for="">Nro. Integrantes de Familia:</label>
-        <input [(ngModel)]="familiares.numHijos" class="NoIntegrantes" id="NoIntegrantes" type="text">
+        <input [(ngModel)]="familiares.numHijos" class="NoIntegrantes" id="NoIntegrantes" type="text" disabled>
         <label class="labelNomP" for="">Nombre de la pareja o Esposo/a:</label>
-        <input class="NomPareja" id="NomPareja" type="text" value="{{NomPareja}}">
+        <input class="NomPareja" id="NomPareja" type="text" value="{{NomPareja}}" disabled>
       </div>
       <div class="input-group mb-3">
         <label class="labelNacionalidad" for="">Nombre y edad de los familiares:</label>
       </div>
       
       <div class="input-group mb-3">
-      <table class="table">
+      <table class="table table-responsive">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -75,19 +75,19 @@
       <label class="labelViveFami" for="">Vive con otros familiares:</label>
     </div>
     <div class="input-group mb-3">
-        <input  class="ViveFami" id="ViveFami" type="text" value="{{viveConOtros}}">
+        <input  class="ViveFami" id="ViveFami" type="text" value="{{viveConOtros}}" disabled>
     </div>
     <div class="input-group mb-1">
       <label  class="labelSituEcono" for="">Situación Economica:</label>
     </div>
     <div class="input-group mb-3">
-      <textarea [(ngModel)]="fichaS.situacionEconomica" class="SituEcono" id="SituEcono" type="text"></textarea>
+      <textarea [(ngModel)]="fichaS.situacionEconomica" class="SituEcono" id="SituEcono" type="text" disabled></textarea>
     </div>
     <div class="input-group mb-1">
       <label  class="labelViviPro" for="">Posee vivienda Propia:</label>
     </div>
     <div class="input-group mb-3">
-        <input [(ngModel)]="fichaS.tipoVivienda" class="ViviPro" id="ViviPro" type="text">
+        <input [(ngModel)]="fichaS.tipoVivienda" class="ViviPro" id="ViviPro" type="text" disabled>
     </div>
     <div class="input-group mb-1">
       <label class="labelNotas" for="">Notas:</label>
@@ -112,9 +112,14 @@
       <label style="margin-left: 25%;margin-right: 10%;" for="">Entrevistado/Usuario</label>
       <label style="margin-right: 20%;" for="">entrevistado/representante de la organización</label>
     </div>
+    <br><br>
+    <div class="input-group mb-1">
+      <label class="labelNotas" for="">NOTAS EXTRAS</label>
     </div>
-  </div>
-  <br>
+    <div class="input-group mb-3">
+      <textarea class="NotasExtras" name="NotasExtras" id="NotasExtras" style="margin-left: 1%;margin-right: 5%;width: 12cm;height: 2cm;"type="text" class="form-control"></textarea>
+    </div>
+
     <button type="button" style="margin: 10px;" class="btn btn-primary" (click)="generarPDF()" >Generar Ficha</button>
-  
-             
+  </div>
+  </div> 

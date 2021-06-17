@@ -30,7 +30,6 @@ export class RegistroPersonaComponent implements OnInit {
   ngOnInit(): void {
     this.ComprobarLogin();
   }
-
   ComprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
     if (this.tipoUser == '1' || this.tipoUser == 2) {
@@ -38,11 +37,47 @@ export class RegistroPersonaComponent implements OnInit {
       alert('No tiene permisos para registrar beneficiarios')
       this.router.navigateByUrl('inicio-super-admin');
     }
-  }
-
-
+  } 
+  validarDatos(){
+    var cedulaPer=this.Personas.cedula
+    var nombrePer=this.Personas.nombres
+    var apellPer=this.Personas.apellidos
+    var ConfirmaValida=0
+    if(cedulaPer == null){
+      var cedul = document.getElementById("cedula")
+      cedul.style.backgroundColor = "#FF0000"
+    }else{
+      if(cedulaPer.length==10){
+        var cedul = document.getElementById("cedula")
+        cedul.style.backgroundColor = "#FFFEFE"
+        ConfirmaValida = ConfirmaValida + 1 
+      }else{
+        alert("cedula incorrecta")
+      } 
+    }
+     if(nombrePer == null){
+      var nom = document.getElementById("nombre")
+      nom.style.backgroundColor = "#FF0000"
+    }else{
+      var nom = document.getElementById("nombre")
+      nom.style.backgroundColor = "#FFFEFE"
+      ConfirmaValida = ConfirmaValida + 1
+    }
+     if(apellPer == null){
+      var ape = document.getElementById("apellido")
+      ape.style.backgroundColor = "#FF0000"
+    } else {
+        var ape = document.getElementById("apellido")
+        ape.style.backgroundColor = "#FFFEFE"
+        ConfirmaValida = ConfirmaValida + 1  
+    }
+    return ConfirmaValida;
+    ConfirmaValida = 0;
+  } 
   addPersona() {
-    var cedulalocalstorage = this.Personas.cedula
+    var confiVali=this.validarDatos()
+    if(confiVali==3){
+        var cedulalocalstorage = this.Personas.cedula
     localStorage.setItem("cedulalocalstorage", cedulalocalstorage)
     this.PersonasService.postPersona(this.Personas)
       .subscribe(data => {
@@ -50,42 +85,14 @@ export class RegistroPersonaComponent implements OnInit {
       },
         error => console.log(error));
     this.router.navigate(['registro-familiares'])
+    }else{
+      alert("Complete los campos en rojo")
+    }
   }
-
-  validar() {
-    if (this.Personas.cedula.length == 10) {
-      this.mensaje = true;
-    } else {
-      var cedul = document.getElementById("cedula")
-      cedul.style.backgroundColor = "#FF5733"
-      this.mensaje = false
-      console.log("cedula")
-    }
-    if (this.Personas.nombres.length == 0) {
-      var nom = document.getElementById("nombres")
-      nom.style.backgroundColor = "#FF5733"
-      this.mensaje = false
-      console.log("asd")
-    } else {
-      this.mensaje = true;
-      console.log("asd")
-    }
-
-    if (this.Personas.apellidos.length <= 0) {
-      this.mensaje = true;
-    } else {
-      var ape = document.getElementById("apellidos")
-      ape.style.backgroundColor = "#FF5733"
-      this.mensaje = false
-    }
-    return this.mensaje
-  }
-
   calcularedad(event: any) {
     let fecha = new Date(event.target.value);
     let fechactual = new Date();
     var f1 = fechactual.getFullYear() - fecha.getFullYear();
     this.Personas.edad = f1
   }
-
 }

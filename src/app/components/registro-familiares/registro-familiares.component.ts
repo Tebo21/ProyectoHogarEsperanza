@@ -3,6 +3,7 @@ import { Personas } from 'src/app/models/personas';
 import { RegistroFamiliaresService } from 'src/app/services/registro-familiares.service';
 import { RegistroFamiliares } from '../../models/registro-familiares';
 import { Router } from '@angular/router';
+import { PersonasService } from 'src/app/services/personas.service';
 
 @Component({
   selector: 'app-registro-familiares',
@@ -15,11 +16,88 @@ export class RegistroFamiliaresComponent implements OnInit {
   PersonasFami: Personas = new Personas();
   public hijosArray:any = [];
   parentesco_familiar:string;
-  constructor(private famipersonaserve:RegistroFamiliaresService, private router:Router) { }
+  cedula_persona:string=localStorage.getItem('cedulalocalstorage');
+  persona: Personas = new Personas();
+  nombreCompleto:string;
+  constructor(private famipersonaserve:RegistroFamiliaresService, private personaService:PersonasService, private router:Router) { }
 
   ngOnInit(): void {
+    this.cargarDatos()
   }
 
+  validarDatos(){
+    var cedulaPer=this.PersonasFami.cedula
+    var nombrePer=this.PersonasFami.nombres
+    var apellPer=this.PersonasFami.apellidos
+    var fechaNac=this.PersonasFami.fechaNacimiento
+    var edaPer=this.PersonasFami.edad
+    var gener=this.PersonasFami.genero
+    var parentes=this.parentesco_familiar
+    var ConfirmaValida=0
+    if(cedulaPer == null){
+      var cedul = document.getElementById("cedula")
+      cedul.style.backgroundColor = "#FF0000"
+    }else{
+      if(cedulaPer.length==10){
+        var cedul = document.getElementById("cedula")
+        cedul.style.backgroundColor = "#FFFEFE"
+        ConfirmaValida = ConfirmaValida + 1 
+      }else{
+        alert("cedula incorrecta")
+      } 
+    }
+     if(nombrePer == null){
+      var nom = document.getElementById("nombre")
+      nom.style.backgroundColor = "#FF0000"
+    }else{
+      var nom = document.getElementById("nombre")
+      nom.style.backgroundColor = "#FFFEFE"
+      ConfirmaValida = ConfirmaValida + 1
+    }
+     if(apellPer == null){
+      var ape = document.getElementById("apellido")
+      ape.style.backgroundColor = "#FF0000"
+    } else {
+        var ape = document.getElementById("apellido")
+        ape.style.backgroundColor = "#FFFEFE"
+        ConfirmaValida = ConfirmaValida + 1  
+    }
+    if(fechaNac==null){
+      var feN = document.getElementById("fechaNacimiento")
+      feN.style.backgroundColor = "#FF0000"
+    }else{
+      var feN = document.getElementById("fechaNacimiento")
+      feN.style.backgroundColor = "#FFFEFE"
+      ConfirmaValida = ConfirmaValida + 1
+    }
+    if(edaPer=null){
+      var eda = document.getElementById("edad")
+      eda.style.backgroundColor = "#FF0000"
+    }else{
+      var eda = document.getElementById("edad")
+      eda.style.backgroundColor = "#FFFEFE"
+      ConfirmaValida = ConfirmaValida + 1
+    }
+    if(gener==null){
+      var gen = document.getElementById("genero")
+      gen.style.backgroundColor = "#FF0000"
+    }else{
+      var gen = document.getElementById("genero")
+      gen.style.backgroundColor = "#FFFEFE"
+      ConfirmaValida = ConfirmaValida + 1
+    }
+    if(parentes==null){
+      var gen = document.getElementById("parentesco")
+      gen.style.backgroundColor = "#FF0000"
+    }else{
+      var gen = document.getElementById("parentesco")
+      gen.style.backgroundColor = "#FFFEFE"
+      ConfirmaValida = ConfirmaValida + 1
+    }
+    return ConfirmaValida;
+    ConfirmaValida = 0;
+  }
+ 
   addArray(){
     var cedula_hijo = this.PersonasFami.cedula;
     var nombre_hijo = this.PersonasFami.nombres;
@@ -30,15 +108,22 @@ export class RegistroFamiliaresComponent implements OnInit {
     var edad_hijo = this.PersonasFami.edad;
     var genero_hijo= this.PersonasFami.genero;
     var parentesco = this.parentesco_familiar;
-    if(cedula_hijo==null || nombre_hijo==null || fecha_nacimiento_hijo==null || edad_hijo==null || genero_hijo==null ){
-       confirm("Complete los campos vacios para poder continuar")
+    if(this.validarDatos()!=7){
+       confirm("Complete los campos en rojo")
     }else{
      this.hijosArray.push([cedula_hijo,nombre_hijo,apellido_hijo,celular_hijo,
        correo_hijo,fecha_nacimiento_hijo,edad_hijo,genero_hijo,parentesco]);
        this.nuevo()
     }
    }
-
+   cargarDatos(){
+    //datos persona
+   console.log(this.cedula_persona)
+    this.personaService.getPorCedula(this.cedula_persona).subscribe(data =>{
+      this.persona=data
+      this.nombreCompleto = this.persona.nombres+" "+this.persona.apellidos
+    })
+  }
    nuevo(){
     this.PersonasFami.cedula=null;
     this.PersonasFami.nombres=null;
@@ -72,7 +157,6 @@ export class RegistroFamiliaresComponent implements OnInit {
      this.hijosArray.pop(i)
     }
   }
-
   calcularedad(event:any){
     let fecha=new Date(event.target.value);
     let fechactual=new Date();
@@ -81,9 +165,9 @@ export class RegistroFamiliaresComponent implements OnInit {
   }
 
   addPerFami(){
-    var cedula_persona=localStorage.getItem('cedulalocalstorage');
+    this.cedula_persona=localStorage.getItem('cedulalocalstorage')
     var cantidad_hijos=this.hijosArray.length;
-    this.famipersona.cedulaPersona=cedula_persona;
+    this.famipersona.cedulaPersona=this.cedula_persona;
     this.famipersona.numHijos=cantidad_hijos;
     this.famipersona.hijos=this.hijosArray
     console.log(this.famipersona)
