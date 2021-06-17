@@ -17,7 +17,17 @@ export class NavbarAdminComponent implements OnInit {
       {
         label: 'Actividades',
         icon: 'pi pi-calendar-times',
-        routerLink: ['/dashboard']
+        items: [{
+
+            label: 'Mis Actividades',
+            icon: 'pi pi-fw pi-user-plus',
+            routerLink: ['/dashboard']
+        },{
+
+          label: 'Reporte de actividades',
+          icon: 'pi pi-fw pi-user-plus',
+          routerLink: ['/reportes-actividades']
+      }]
       },
       {
         label: 'Centro Médico',

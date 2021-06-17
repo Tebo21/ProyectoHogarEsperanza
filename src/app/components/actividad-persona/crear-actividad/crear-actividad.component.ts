@@ -19,13 +19,10 @@ import { DatePipe, formatDate } from '@angular/common';
 export class CrearActividadComponent implements OnInit {
   @Input() public modal: NgbModalWindow;
   @Input() Person: Personas = new Personas();
-  public fecha: Date = new Date();
   @Input() fechaT: string="";
-
+  @Input() ActividadviewActu: Actividades[] = [];
   public fecha1 = formatDate(new Date(), 'HH:mm', 'EN');
   public fecha2 = formatDate(new Date(), 'HH:mm', 'EN');
-  public tipo: string;
-  public descripcionAc : string;
   _tipoactividadCreate: TipoActividad = new TipoActividad(0, '', '');
   _tipoactividad: TipoActividad[] = [];
   _tipoactividad1: TipoActividad = new TipoActividad(0, '', '');
@@ -39,7 +36,6 @@ export class CrearActividadComponent implements OnInit {
     '',
     this._tipoactividadCreate
   );
-  public id: number;
   constructor(
     private router: Router,
     public _actividadservice: ActividadesService,
@@ -48,27 +44,19 @@ export class CrearActividadComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.mostrarTipoActividades();
-    console.log(this._actividadservice.actividades);
-    console.log(this.Person);
-    //this.getOneTipoAct();
-    console.log(this.tipo);
-
   }
 
   getOneTipoAct(): void {
     this._actividadservice.getOneByNameTipo('Limpiar').subscribe((response) => {
       this._tipoactividad1 = response;
-      console.log('esta es la actividad' + response);
     });
   }
 
   addActividad(): void {
+    if (this.ActividadviewActu.length==0) {
     this.actividadCreate.fechaActividad= this.fechaT;
     this.actividadCreate.cedulaPersona = this.Person;
     this.actividadCreate.tipoActividad= this._tipoactividad1;
-   
-    console.log(this.actividadCreate);
-
     if( this.actividadCreate.cedulaPersona.cedula != "" && this.actividadCreate.cedulaPersona.nombres != "" && this.actividadCreate.cedulaPersona.apellidos != "" &&  this.actividadCreate.tipoActividad.nombreActividad != "" && this.actividadCreate.horaFin != "" && this.actividadCreate.horaInicio != ""  && this.actividadCreate.descripcionActividad != ""){
       this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
         window.location.reload();
@@ -79,9 +67,27 @@ export class CrearActividadComponent implements OnInit {
     else{
       this.showError();
     }
+    }else{
+    this.actividadCreate.fechaActividad= this.fechaT;
+    this.actividadCreate.cedulaPersona = this.Person;
+    this.actividadCreate.tipoActividad= this._tipoactividad1;
+    let id=0;
+    this.ActividadviewActu.forEach((res)=>{ id = res.idActividadPersona})
+      this._actividadservice.updateUser(id,this.actividadCreate).subscribe(
+        (res)=>{
+          window.location.reload();
+        this.showExitoso();
+        this.modalService.dismissAll();
+        }
+      )
+    }
     }
 
-   
+    setear(){
+      this.ActividadviewActu=[];
+    }
+
+
   gotoList() {
     this.router.navigate(['/actividades']);
     this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
@@ -93,7 +99,6 @@ export class CrearActividadComponent implements OnInit {
   }
 
   crearTipoActividad() {
-    console.log(this.tipoActCreate)
 
     if(this.tipoActCreate.descripcionActividad != "" && this.tipoActCreate.descripcionActividad != ""){
       this._actividadservice.createTipoAct(this.tipoActCreate).subscribe((res)=>{
@@ -104,25 +109,27 @@ export class CrearActividadComponent implements OnInit {
     }else{
      this.showError();
     }
-   
+
   }
 
   mostrarTipoActividades(): void {
     this._actividadservice.getAllTipos().subscribe(
       (response) => {
         this._tipoactividad = response;
-        console.log(response);
         this._actividadservice.open.subscribe(
           (data) => {
-            console.log('Datos cargado');
           },
-          (error) => console.log('No se cargaron los datos')
+          (error) => console.log(error)
         );
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  editActi(){
+    this._actividadservice.updateUser(this.actividadCreate.idActividadPersona,this.actividadCreate);
   }
 
   showExitoso(){
@@ -140,7 +147,6 @@ export class CrearActividadComponent implements OnInit {
       text: 'Existen campos vacios.'
     })
   }
-
 }
 
 

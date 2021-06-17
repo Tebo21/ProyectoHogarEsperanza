@@ -12,7 +12,7 @@
             <label for="staticEmail2 " class="visually-hidden">Cedula</label>
           </div>
           <div class="col-md-3 position-relative">
-            <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId">
+            <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId" readonly>
           </div>
           <a class="col-md-4 position-relative"></a>
           <div>
@@ -57,7 +57,7 @@
             <h5>Actividades diarias:</h5>
           </div>
           <div>
-            <button type="submit " class="btn btn-outline-info" (click)="modalService.open(modalForm)"><i
+            <button type="submit " class="btn btn-outline-info" (click)="modalService.open(modalForm); setear()"><i
                 class="pi pi-pencil"></i> <br>Añadir
               actividad</button>
             <button class="btn btn-outline-info" (click)="genereport()"><i
@@ -74,7 +74,8 @@
             <th scope="col">Fecha</th>
             <th scope="col">Persona</th>
             <th scope="col">Observaciones</th>
-            <th scope="col">Acciones</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
           </thead>
           <tbody>
             <tr *ngFor="let x of Actividadview">
@@ -85,7 +86,9 @@
               <td>{{ x.cedulaPersona.nombres}}</td>
               <td>{{ x.descripcionActividad}}</td>
               <td>
-                <button type="button" class="btn btn-outline-warning"> <i class="pi pi-user-edit"></i>Editar</button>
+                <button type="button" class="btn btn-outline-warning" (click)="editActi(x.idActividadPersona); modalService.open(modalForm)"> <i class="pi pi-user-edit" ></i>Editar</button>
+              </td>
+              <td>
                 <button type="button" class="btn btn-outline-danger" (click)="trashActiv(x.idActividadPersona)"> <i
                     class="pi pi-trash"></i>Eliminar</button>
               </td>
@@ -103,6 +106,6 @@
 
 <ng-template #modalForm let-modal>
   <div class="modal-body">
-    <app-crear-actividad [modal]=modal [Person]="Person" [fechaT]="fecha2"></app-crear-actividad>
+    <app-crear-actividad [modal]=modal [Person]="Person" [fechaT]="fecha2" [ActividadviewActu]="ActividadviewActu"></app-crear-actividad>
   </div>
 </ng-template>
