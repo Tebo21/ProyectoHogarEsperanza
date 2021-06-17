@@ -6,6 +6,19 @@ import { DonaProductoService } from 'src/app/services/dona-producto.service';
 import { EntregarDonacionService } from 'src/app/services/entregar-donacion.service';
 import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomica.service';
 import { PersonasService } from 'src/app/services/personas.service';
+import { PdfMakeWrapper, Txt, Img, Table } from 'pdfmake-wrapper';
+import { ITable } from 'pdfmake-wrapper/lib/interfaces';
+
+interface DataResponse {
+  idEntregaDonacion: number;
+  cedulaBeneficiario: string;
+  productoEntregado: string;
+  descripcionProducto: string;
+  cantidadEntregada: number;
+  fechaEntrega: Date ;
+}
+type TableRow = [number, string,string, string, number, Date];
+
 
 @Component({
   selector: 'app-entregar-donacion',
@@ -175,4 +188,57 @@ export class EntregarDonacionComponent implements OnInit {
     this.displayED = false;
     this.displayPE = false;
   }
+  async generaPdf() {
+    const pdf = new PdfMakeWrapper();
+    const data = await this.fetchData();
+
+    pdf.info({
+      title: 'Reporte de productos entregados a los beneficiarios',
+    });
+
+    pdf.add(
+      new Txt('Lista de los productos entregados a los beneficiarios').alignment('center').bold()
+        .end
+    );
+    pdf.add(this.creaTabla(data));
+    pdf.create().open();
+  }
+  creaTabla(data: DataResponse[]): ITable {
+    [{}];
+
+    return new Table([
+      ['#', 'Cedula Beneficiario', 'Producto Entregado', 'Descripcion del producto', 'Cantidad Entregada','Fecha Entrega'],
+      ...this.extraerDatos(data),
+    ])
+   
+      .heights((rowIndex) => {
+        return rowIndex === 0 ? 20 : 0;
+      })
+      .layout({
+        /**% 2 */
+        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
+          return rowIndex === 0 ? '#CCCCCC' : '';
+        },
+      }).end;
+  }
+
+  extraerDatos(data: DataResponse[]): TableRow[] {
+    return data.map((row) => [
+      row.idEntregaDonacion,
+      row.cedulaBeneficiario,
+      row.productoEntregado,
+      row.descripcionProducto,
+      row.cantidadEntregada,
+      row.fechaEntrega,
+    ]);
+  }
+  
+
+  async fetchData(): Promise<DataResponse[]> {
+    return fetch('http://localhost:3000/entregaDonacion/lista').then(
+      (response) => response.json()
+    );
+    
+  }
+
 }

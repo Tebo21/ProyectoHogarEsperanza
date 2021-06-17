@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CentroMedicoService } from '../../../services/centro-medico.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CentroMedico } from '../../../models/centro-medico';
+import { ActividadesService } from '../../../services/actividades.service';
+import { DatePipe } from '@angular/common';
+import pdfMake from 'pdfmake/build/pdfmake';
 
 @Component({
   selector: 'app-list-centro',
@@ -15,7 +19,10 @@ export class ListCentroComponent implements OnInit {
   response_msg: String;
 
   constructor(
-    private service: CentroMedicoService
+    private service: CentroMedicoService,
+    public _actividadservice: ActividadesService,
+    public modalService: NgbModal,
+    public datapipe: DatePipe
   ){
     
   }
@@ -27,16 +34,11 @@ export class ListCentroComponent implements OnInit {
   listCentro() {
     this.service.listCentro().subscribe((data) => {
       this.centro = data;
-      console.log(data);
-      console.log('CENTRO');
-      console.log(this.centro);
     });
   }
 
   deleteCentro(centro: CentroMedico) {
     let response = confirm(`¿Desea eliminar: ${centro.nombreCentroMedico}?`);
-    console.log('RESPONSE:');
-    console.log(response);
     if (response == true) {
       this.service.deletCentro(centro.idCentroMedico).subscribe((data) => {
         alert(`${centro.nombreCentroMedico} fue eliminado`);
@@ -69,6 +71,7 @@ export class ListCentroComponent implements OnInit {
             this.listCentro();
             alert('Centro medico agregado');
             this.selectedCentro = new CentroMedico();
+            this.show_response('');
             this.listCentro();
           }
         });
@@ -124,5 +127,70 @@ export class ListCentroComponent implements OnInit {
   show_response(msg: String) {
     this.response_condicion = true;
     this.response_msg = msg;
+  }
+
+
+  /*GENERACION DE REPORTES */
+  genereport(action = 'open') {
+    var testImageDataUrl = this._actividadservice.img;
+    let docDefinition = {
+      content: [
+        {
+          columns: [
+            {
+              image: testImageDataUrl,
+              width: 100,
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: 'CENTROS MÉDICOS',
+              fontSize: 17,
+              bold: true,
+              margin: [100, 0, 0, 0],
+              color: '#047886',
+            },
+          ],
+        },
+        {
+          text: '',
+          style: 'sectionHeader',
+        },
+        {
+          table: {
+            headerRows: 3,
+            body: [
+              [
+                'NOMBRE',
+                'DIRECCIÓN',
+                'TELÉFONO',
+              ],
+              ...this.centro.map((row) => [
+                row.nombreCentroMedico,
+                row.direccionCentroMedico,
+                row.telefonoCentroMedico,
+              ]),
+            ],
+          },
+          alignment: 'center',
+          margin: [135, 0, 0, 0],
+        },
+      ],
+      styles: {
+        sectionHeader: {
+          bold: true,
+          decoration: 'underline',
+          fontSize: 14,
+          margin: [0, 15, 0, 15],
+        },
+      },
+    };
+
+    if (action === 'download') {
+      pdfMake.createPdf(docDefinition).download();
+    } else if (action === 'print') {
+      pdfMake.createPdf(docDefinition).print();
+    } else {
+      pdfMake.createPdf(docDefinition).open();
+    }
   }
 }
