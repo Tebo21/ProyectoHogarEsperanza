@@ -4,8 +4,8 @@
 <h2 class="text-center">Listado de Usuarios</h2>
 
 <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-
-    <p-table #dt [value]="listaUsusarios" dataKey="id" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
+<p-panel class="card">
+<p-table #dt [value]="listaUsusarios" dataKey="id" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
         [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10,25,50]" [rowHover]="true" selectionMode="multiple" [(selection)]="selectedUsers">
         <ng-template pTemplate="caption">
@@ -57,8 +57,10 @@
 
     </p-table>
 
+</p-panel>
+  <br>
+  
 </div>
-<br>
 
 <p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
 </p-confirmDialog>

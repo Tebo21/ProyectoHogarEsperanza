@@ -176,7 +176,7 @@ export class ListadoUsuariosComponent implements OnInit {
 
   exportExcel() {
     import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.selectedUsers);
+      const worksheet = xlsx.utils.json_to_sheet(this.listaUsusarios);
       const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
       const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
       this.saveAsExcelFile(excelBuffer, "Usuarios");
