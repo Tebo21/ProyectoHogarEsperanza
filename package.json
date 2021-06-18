@@ -27,8 +27,10 @@
     "angularx-flatpickr": "^6.5.2",
     "bootstrap": "^4.6.0",
     "date-fns": "^2.22.1",
+    "file-saver": "^2.0.5",
     "flatpickr": "^4.6.9",
     "jquery": "^3.6.0",
+    "jspdf": "^2.3.1",
     "pdfmake": "^0.1.71",
     "pdfmake-wrapper": "^2.1.1",
     "primeicons": "^4.1.0",
@@ -36,6 +38,7 @@
     "rxjs": "~6.5.4",
     "sweetalert2": "^11.0.17",
     "tslib": "^1.10.0",
+    "xlsx": "^0.17.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

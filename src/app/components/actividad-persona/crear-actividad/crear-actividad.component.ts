@@ -130,8 +130,44 @@ export class CrearActividadComponent implements OnInit {
 
   editActi(){
     this._actividadservice.updateUser(this.actividadCreate.idActividadPersona,this.actividadCreate);
+    this.showActualizacion();
+  }
+  showActualizacion(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos Actualizados',
+      showConfirmButton: false,
+      timer: 2000
+    })
   }
 
+  trashActiv(id: number) {
+    this._actividadservice.trahsTipoActi(id).subscribe((res) => {
+      this.showExitoso();
+      window.location.reload();
+    });
+  }
+  showConfirmacion(id:number){
+    Swal.fire({
+      title: '¿Estas seguro de eliminar esta actividad?',
+      text: "Si eliminas no podras revertir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí,eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.trashActiv(id)
+        Swal.fire(
+          'Eliminado!',
+          'La actividad ha sido eliminado',
+          'success'
+        )
+      }
+    })
+  }
   showExitoso(){
     Swal.fire({
       icon: 'success',

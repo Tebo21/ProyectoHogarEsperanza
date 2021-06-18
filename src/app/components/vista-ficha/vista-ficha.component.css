@@ -1,22 +1,13 @@
 h4{
     align-items: center;
 }
-
-.hoja{
-    background-color:#FFFFFF;
-    height: 30cm;
-    width: 30cm;
-}
 .hoja{
     background-color:#f4fafe;
 }
-
 .fechalabel{
     margin-right: 4%;
     margin-left: 1%;
 }
-
-
 .labelNombre{
     margin-left: 1%;
 }
@@ -34,18 +25,14 @@ h4{
     width: 22cm;
     height: 2cm;
 }
-
-
 .labelTelefono{
     margin-left: 1%;
     margin-right: 1%;
 }
-
 .labelNacionalidad{
     margin-left: 1%;
     margin-right: 1%;
 }
-
 .labelDiscapacidad{
     margin-left: 1%;
     margin-right: 1%;
@@ -54,50 +41,42 @@ h4{
     margin-left: 1%;
     margin-right: 1%;
 }
-
 .labelEstadoC{
     margin-left: 1%;
     margin-right: 1%;
 }
-
 .labelViveFami{
     margin-left: 1%;
 }
-
 .ViveFami{
     margin-left: 1%;
 }
-
 .labelSituEcono{
     margin-left: 1%;
 }
-
 .SituEcono{
     margin-left: 1%;
     width: 25.5cm;
     height: 2cm;
 }
-
 .labelViviPro{
     margin-left: 1%;
 }
-
 .ViviPro{
     margin-left: 1%;
 }
-
 .labelNotas{
     margin-left: 1%;
 }
-
 .Notas1{
     margin-left: 1%;
 }
-
 .Notas2{
     margin-left: 1%;
 }
-
 .lblACP{
     margin-left: 1%;
+}
+table{
+    margin-left: 10%;
 }

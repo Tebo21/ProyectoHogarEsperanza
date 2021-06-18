@@ -5,5 +5,7 @@ export class Usuarios{
     usuarioNombre?: string;
     usuarioContrasenia?: string;
     usuarioTipo?: number;
+    usuarioEstado?: boolean;
+    usuarioFechaCreacion?: string;
 
 }

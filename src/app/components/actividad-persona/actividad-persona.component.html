@@ -1,111 +1,110 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
 <div class="container">
-  <div class="modal-body ">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="card-tittle">Registro de actividades </h5>
-      </div>
-      <div class="card-body">
-        <form class="row g-3 ">
-          <div class="col-md-1 position-relative ">
-            <label for="staticEmail2 " class="visually-hidden">Cedula</label>
-          </div>
-          <div class="col-md-3 position-relative">
-            <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId" readonly>
-          </div>
-          <a class="col-md-4 position-relative"></a>
-          <div>
-            <input type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel"
-              [(ngModel)]="fecha2">
-          </div>
-          <button class="btn btn-outline-info" (click)="getCedulaAndFecha()"><i class="pi pi-search"></i>
-            Buscar</button>
-        </form>
-        <br>
-        <form class="row g-3 needs-validation " novalidate>
-          <div class="col-md-4 position-relative ">
-            <label for="validationTooltip01 " class="form-label ">Nombre</label>
-            <input type="text " class="form-control" value="{{Person.nombres}}" readonly>
-          </div>
-          <div class="col-md-4 position-relative ">
-            <label for="validationTooltip02 " class="form-label ">Apellido</label>
-            <input type="text " class="form-control " id="apellido" value="{{Person.apellidos}}" readonly>
-
-          </div>
-          <div class="col-md-4 position-relative ">
-            <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
-            <div class="input-group has-validation ">
-              <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
-              <input type="email " class="form-control " id="correo" value="{{Person.correo}}" readonly>
+    <div class="modal-body ">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-tittle">Registro de actividades </h5>
             </div>
-          </div>
-          <div class="col-md-3 position-relative ">
-            <label for="validationTooltip03 " class="form-label ">Telefono</label>
-            <input type="text " class="form-control " id="telefono" value="{{Person.celular}}" readonly>
+            <div class="card-body">
+                <form class="row g-3 ">
+                    <div class="col-md-1 position-relative ">
+                        <label for="staticEmail2 " class="visually-hidden">Cedula</label>
+                    </div>
+                    <div class="col-md-3 position-relative">
+                        <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId" readonly>
+                    </div>
+                    <a class="col-md-4 position-relative"></a>
+                    <div>
+                        <input type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel" [(ngModel)]="fecha2">
+                    </div>
+                    <button class="btn btn-outline-info" (click)="getCedulaAndFecha()"><i class="pi pi-search"></i>
+            Buscar</button>
+                </form>
+                <br>
+                <form class="row g-3 needs-validation " novalidate>
+                    <div class="col-md-4 position-relative ">
+                        <label for="validationTooltip01 " class="form-label ">Nombre</label>
+                        <input type="text " class="form-control" value="{{Person.nombres}}" readonly>
+                    </div>
+                    <div class="col-md-4 position-relative ">
+                        <label for="validationTooltip02 " class="form-label ">Apellido</label>
+                        <input type="text " class="form-control " id="apellido" value="{{Person.apellidos}}" readonly>
 
-          </div>
-          <div class="col-md-6 position-relative ">
-            <label for="validationTooltip04 " class="form-label ">Direccion</label>
-            <input type="text " class="form-control " id="direccion" value="{{Person.direccion}}" readonly>
-          </div>
-        </form>
-      </div>
-      <div class="card-header">
-        <form class="row">
-          <div class="col-md-9">
-            <h5>Actividades diarias:</h5>
-          </div>
-          <div>
-            <button type="submit " class="btn btn-outline-info" (click)="modalService.open(modalForm); setear()"><i
+                    </div>
+                    <div class="col-md-4 position-relative ">
+                        <label for="validationTooltipUsername " class="form-label ">Correo electronico</label>
+                        <div class="input-group has-validation ">
+                            <span class="input-group-text " id="validationTooltipUsernamePrepend ">@</span>
+                            <input type="email " class="form-control " id="correo" value="{{Person.correo}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-3 position-relative ">
+                        <label for="validationTooltip03 " class="form-label ">Telefono</label>
+                        <input type="text " class="form-control " id="telefono" value="{{Person.celular}}" readonly>
+
+                    </div>
+                    <div class="col-md-6 position-relative ">
+                        <label for="validationTooltip04 " class="form-label ">Direccion</label>
+                        <input type="text " class="form-control " id="direccion" value="{{Person.direccion}}" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="card-header">
+                <form class="row">
+                    <div class="col-md-9">
+                        <h5>Actividades diarias:</h5>
+                    </div>
+                    <div>
+                        <button type="submit " class="btn btn-outline-info" (click)="modalService.open(modalForm); setear()"><i
                 class="pi pi-pencil"></i> <br>Añadir
               actividad</button>
-            <button class="btn btn-outline-info" (click)="genereport()"><i
+                        <button class="btn btn-outline-info" (click)=" showConfirmacionPDF()"><i
               class="pi pi-file-pdf"></i> <br>Reporte</button>
-          </div>
-        </form>
-      </div>
-      <div class="card-body">
-        <table class="table ">
-          <thead class="table">
-            <th scope="col">Hora de Inicio</th>
-            <th scope="col">Hora Fin</th>
-            <th scope="col">Actividad Realizada</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Persona</th>
-            <th scope="col">Observaciones</th>
-            <th scope="col">Editar</th>
-            <th scope="col">Eliminar</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let x of Actividadview">
-              <td>{{ x.horaInicio}}</td>
-              <td>{{ x.horaFin}}</td>
-              <td>{{ x.tipoActividad.nombreActividad}}</td>
-              <td>{{ x.fechaActividad}}</td>
-              <td>{{ x.cedulaPersona.nombres}}</td>
-              <td>{{ x.descripcionActividad}}</td>
-              <td>
-                <button type="button" class="btn btn-outline-warning" (click)="editActi(x.idActividadPersona); modalService.open(modalForm)"> <i class="pi pi-user-edit" ></i>Editar</button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-outline-danger" (click)="trashActiv(x.idActividadPersona)"> <i
+                    </div>
+                </form>
+            </div>
+            <div class="card-body">
+                <table class="table ">
+                    <thead class="table">
+                        <th scope="col">Hora de Inicio</th>
+                        <th scope="col">Hora Fin</th>
+                        <th scope="col">Actividad Realizada</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Persona</th>
+                        <th scope="col">Observaciones</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let x of Actividadview">
+                            <td>{{ x.horaInicio}}</td>
+                            <td>{{ x.horaFin}}</td>
+                            <td>{{ x.tipoActividad.nombreActividad}}</td>
+                            <td>{{ x.fechaActividad}}</td>
+                            <td>{{ x.cedulaPersona.nombres}}</td>
+                            <td>{{ x.descripcionActividad}}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-warning" (click)="editActi(x.idActividadPersona); modalService.open(modalForm)"> <i class="pi pi-user-edit" ></i>Editar</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger" (click)="showConfirmacion(x.idActividadPersona)"> <i
                     class="pi pi-trash"></i>Eliminar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <br>
+        </div>
     </div>
-    <div>
-      <br>
-    </div>
-  </div>
 </div>
 
 
 <ng-template #modalForm let-modal>
-  <div class="modal-body">
-    <app-crear-actividad [modal]=modal [Person]="Person" [fechaT]="fecha2" [ActividadviewActu]="ActividadviewActu"></app-crear-actividad>
-  </div>
+    <div class="modal-body">
+        <app-crear-actividad [modal]=modal [Person]="Person" [fechaT]="fecha2" [ActividadviewActu]="ActividadviewActu"></app-crear-actividad>
+    </div>
 </ng-template>

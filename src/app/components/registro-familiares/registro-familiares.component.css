@@ -1,14 +1,22 @@
-
 .active{
     background-color:aquamarine;
 }
-.panelFamilia{
-    margin-right: 10%;
-    margin-left: 5%;
-    width: 100%;
-    height: 100%;
+table{
+    margin-left: 3%;
+    margin-right: auto;
 }
-
-.table{
-    width: 50%;
+label{
+    border-style: groove;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 35px;
+    width: 970px;
+}
+.btn-success{
+    height: 35px;
+    width: 95px;
+}
+.btn-danger{
+    height: 35px;
+    width: 95px;
 }

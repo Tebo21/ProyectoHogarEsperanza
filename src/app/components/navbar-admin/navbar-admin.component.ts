@@ -8,11 +8,20 @@ import { MenuItem } from 'primeng/api';
 })
 export class NavbarAdminComponent implements OnInit {
 
+  nombreUsuario: any;
+
   constructor() { }
 
   items: MenuItem[];
 
   ngOnInit() {
+    this.nombreUsuario = localStorage.getItem('usuarioA')    
+    if(this.nombreUsuario == null){
+      this.nombreUsuario = 'Usuario'
+    } else {
+      this.nombreUsuario = localStorage.getItem('usuarioA')    
+    }
+    
     this.items = [
       {
         label: 'Actividades',

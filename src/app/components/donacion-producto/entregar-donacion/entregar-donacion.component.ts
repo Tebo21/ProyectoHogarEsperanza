@@ -35,6 +35,7 @@ export class EntregarDonacionComponent implements OnInit {
   cedulaBeneficiario: string;
   nombresBeneficiario: string;
   apellidosBeneficiario: string;
+  direccionBeneficiario: string;
 
   valBeneficiario: boolean = false;
   today: Date;
@@ -85,6 +86,7 @@ export class EntregarDonacionComponent implements OnInit {
         if (data!=null){
           this.nombresBeneficiario = data.nombres;
           this.apellidosBeneficiario = data.apellidos;
+          this.direccionBeneficiario = data.direccion;
 
           this.fichaSocioeconomicaService.getfichacedula(data.cedula).subscribe(
             data => {
@@ -179,14 +181,20 @@ export class EntregarDonacionComponent implements OnInit {
     }
   }
 
+  registrarBeneficiario(){
+    this.router.navigate(['/registro-persona'])
+  }
+
   reiniciar(){
     this.obtenerDonaciones();
     this.valBeneficiario = false;
     this.cedulaBeneficiario = '';
     this.nombresBeneficiario = '';
     this.apellidosBeneficiario = '';
+    this.direccionBeneficiario = '';
     this.displayED = false;
     this.displayPE = false;
+    this.cantidadEntrega = 0;
   }
   async generaPdf() {
     const pdf = new PdfMakeWrapper();

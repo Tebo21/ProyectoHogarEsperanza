@@ -65,28 +65,82 @@ export class ActividadPersonaComponent implements OnInit {
   showExitoso() {
     Swal.fire({
       icon: 'success',
-      title: 'Se elimino con exito!',
-      showConfirmButton: false,
-      timer: 2000,
+      title: 'Se elimino con exito!'
     });
   }
   trashActiv(id: number) {
     this._actividadservice.trahsActi(id).subscribe((res) => {
-      this.showExitoso();
       window.location.reload();
     });
   }
+  showConfirmacion(id:number){
+    Swal.fire({
+      title: '¿Estas seguro de eliminar este registro?',
+      text: "Si eliminas no podras revertir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí,eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.trashActiv(id)
+        Swal.fire(
+          'Eliminado!',
+          'El registro ha sido eliminado',
+          'success'
+        )
+      }
+    })
+  }
+  showConfirmacionPDF(){
+    Swal.fire({
+      title: '¿Estas seguro de descargar este reporte?',
+      text: "Se abrira una visualizacion de su reporte",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí, descargar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.genereport();
+        Swal.fire(
+          'Descargado!',
+          'El registro ha sido descargado',
+          'success'
+        )
+      }
+    })
+  }
+
   editActi(id: any) {
     this.setear();
     this.Actividadview.forEach((act) => {
       if (act.idActividadPersona == id) {
         this.ActividadviewActu.push(act);
+        this.showActualizacion();
       }
     });
   }
+  showActualizacion(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos Actualizados',
+      showConfirmButton: false,
+      timer: 2000
+    })
+  }
+
+
   setear() {
     this.ActividadviewActu = [];
   }
+
+
+
   genereport(action = 'open') {
     var testImageDataUrl = this._actividadservice.img;
     let docDefinition = {
