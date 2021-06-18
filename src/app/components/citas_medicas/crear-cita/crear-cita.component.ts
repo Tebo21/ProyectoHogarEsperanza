@@ -13,6 +13,9 @@ import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Router } from '@angular/router';
 import { NgbAlert, NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlertOptions } from 'sweetalert2';
+import { ActividadesService } from 'src/app/services/actividades.service';
+import pdfMake from 'pdfmake/build/pdfmake';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-crear-cita',
@@ -23,6 +26,7 @@ export class CrearCitaComponent implements OnInit {
 
   cita: CitasMedicas = new CitasMedicas();
   citaMedica!: Observable<CitasMedicas[]>;
+  citaM: CitasMedicas[] = [];
   centro: CentroMedico[] = [];
   especialidad: Especialidad[] = [];
   nombreSeCe: string;
@@ -49,14 +53,21 @@ export class CrearCitaComponent implements OnInit {
   correoper3: string;
   telefonoper3: string;
 
+  //valida
+  valida = false;
+  valida2 = false;
+  valida3 = false;
+
   // validaciones
   response_condicion: boolean = false;
   response_msg: string;
+
 
   constructor(private citaMedicaService: CitaMedicaService,
               private serviCentro: CentroMedicoService,
               private serviceEspecialidad: EspecialidadService,
               private personaService: PersonasService,
+              public _actividadservice: ActividadesService,
               private router: Router) { }
 
   // tslint:disable-next-line: typedef
@@ -64,6 +75,7 @@ export class CrearCitaComponent implements OnInit {
     this.reloadData();
     this.listCentro();
     this.listEspecialidad();
+    this.listCita();
   }
 
 
@@ -72,6 +84,12 @@ export class CrearCitaComponent implements OnInit {
     this.citaMedica = this.citaMedicaService.listCitas();
     console.log('Si lista');
     console.log(this.citaMedica);
+  }
+
+  listCita() {
+    this.citaMedicaService.listCitas().subscribe((data) => {
+      this.citaM = data;
+    });
   }
 
   listCentro(){
@@ -170,6 +188,7 @@ export class CrearCitaComponent implements OnInit {
     this.personaService.getPorCedula(this.cedulaPaciente).subscribe(
       data => {
         if (data != null){
+          this.valida = true;
           this.nombreper = data.nombres + ' ' + data.apellidos;
           this.correoper = data.correo;
           this.telefonoper = data.celular;
@@ -180,18 +199,11 @@ export class CrearCitaComponent implements OnInit {
     );
   }
 
-  limpiarCampo(){
-    this.cedulaPaciente = '';
-    this.cedulaAcom = '';
-    this.cedulaTra = '';
-    this.nombreSeCe = '';
-    this.nombreSeEspecialidad = '';
-  }
-
   buscarAcompa(){
     this.personaService.getPorCedula(this.cedulaAcom).subscribe(
       data => {
         if (data != null){
+          this.valida2 = true;
           this.nombreper2 = data.nombres + ' ' + data.apellidos;
           this.correoper2 = data.correo;
           this.telefonoper2 = data.celular;
@@ -206,6 +218,7 @@ export class CrearCitaComponent implements OnInit {
     this.personaService.getPorCedula(this.cedulaTra).subscribe(
       data => {
         if (data != null){
+          this.valida3 = true;
           this.nombreper3 = data.nombres + ' ' + data.apellidos;
           this.correoper3 = data.correo;
           this.telefonoper3 = data.celular;
@@ -215,6 +228,15 @@ export class CrearCitaComponent implements OnInit {
         }
       }
     );
+  }
+
+  
+  limpiarCampo(){
+    this.cedulaPaciente = '';
+    this.cedulaAcom = '';
+    this.cedulaTra = '';
+    this.nombreSeCe = '';
+    this.nombreSeEspecialidad = '';
   }
 
   // btn para alerts
@@ -321,8 +343,83 @@ export class CrearCitaComponent implements OnInit {
     this.response_msg = msg;
   }
 
-}
-function subscribe(arg0: (data: any) => void, arg1: (error: any) => void) {
-  throw new Error('Function not implemented.');
-}
+    /*GENERACION DE REPORTES */
+  genereport(action = 'open') {
+      var testImageDataUrl = this._actividadservice.img;
+      let docDefinition = {
+        pageSize: 'A4',
+        pageOrientation: 'landscape',
+        pageMargins: [ 40, 60, 40, 60 ],
+        content: [
+          {
+            columns: [
+              {
+                image: testImageDataUrl,
+                width: 100,
+                margin: [0, 0, 0, 0],
+              },
+              {
+                text: 'CITAS MEDICAS',
+                fontSize: 27,
+                bold: true,
+                margin: [100, 0, 0, 0],
+                color: '#047886',
+              },
+            ],
+          },
+          {
+            text: '',
+            style: 'sectionHeader',
+          },
+          {
+            layout: 'lightHorizontalLines',
+            table: {
+              headerRows: 1,
+              body: [
+                [
+                  'DESCRIPCION',
+                  'CEDULA DEL PACIENTE',
+                  'CEDULA DEL ACOMPAÑANTE',
+                  'CORREO DEL MENSAJE',
+                  'CEDULA DEL DE LA FUNDACIÓN',
+                  'CENTRO MEDICO',
+                  'ESPECIALIDAD',
+                  'OBSERVACIONES',
 
+                ],
+                ...this.citaM.map((row) => [
+                  row.descripcionCitaMedica,
+                  row.paciente,
+                  row.acompaniante,
+                  row.mensaje,
+                  row.trabajadorFundacion,
+                  row.centroMedico,
+                  row.especialidad,
+                  row.nota,
+                ]),
+              ],
+            },
+            alignment: 'center',
+            margin: [20, 0, 0, 0],
+          },
+        ],
+        styles: {
+          sectionHeader: {
+            bold: true,
+            decoration: 'underline',
+            fontSize: 14,
+            margin: [0, 15, 0, 15],
+            pageOrientation: 'landscape',
+          },
+        },
+      };
+      if (action === 'download') {
+        pdfMake.createPdf(docDefinition).download();
+      } else if (action === 'print') {
+        pdfMake.createPdf(docDefinition).print();
+      } else {
+        pdfMake.createPdf(docDefinition).open();
+      }
+    }
+
+}
