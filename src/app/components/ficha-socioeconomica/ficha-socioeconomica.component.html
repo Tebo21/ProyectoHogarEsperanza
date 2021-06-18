@@ -54,7 +54,7 @@
               </div>
               <div class="input-group mb-3">
                 <p style="margin-left: 5%;"> </p>
-                <select [(ngModel)]="fichasocieconomicaModel.discapacidad" name="Discapacidad" id="Discapacidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Discapacidad">
+                <select [(ngModel)]="fichasocieconomicaModel.discapacidad" name="Discapacidad" id="Discapacidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Discapacidad" (change)="validarDisca($event)">
                   <option selected disabled="disabled">Discapacidad</option>  
                   <option value="true">Si</option>
                     <option value="false">No</option>
