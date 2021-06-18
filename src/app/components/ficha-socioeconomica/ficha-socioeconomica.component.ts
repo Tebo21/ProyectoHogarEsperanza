@@ -48,7 +48,6 @@ export class FichaSocioeconomicaComponent implements OnInit {
     var Nacionalidad=this.fichasocieconomicaModel.nacionalidad;
     var estadoCivi=this.fichasocieconomicaModel.estadoCivil;
     var discapa=this.fichasocieconomicaModel.discapacidad;
-    var descripcioDisc=this.fichasocieconomicaModel.descripcionVivienda;
     var adulMay=this.fichasocieconomicaModel.adultoMayor;
     var VivCotr=this.fichasocieconomicaModel.viveConOtros;
     var ConfirmaValida=0
@@ -116,14 +115,6 @@ export class FichaSocioeconomicaComponent implements OnInit {
       disca.style.backgroundColor = "#FFFEFE"
       ConfirmaValida = ConfirmaValida + 1
     }
-    if(descripcioDisc==null){
-      var desDis = document.getElementById("descripcionDiscapacidad")
-      desDis.style.backgroundColor = "#FF0000"
-    }else{
-      var gen = document.getElementById("descripcionDiscapacidad")
-      gen.style.backgroundColor = "#FFFEFE"
-      ConfirmaValida = ConfirmaValida + 1
-    }
     if(adulMay==null){
       var gen = document.getElementById("AdultoMayor")
       gen.style.backgroundColor = "#FF0000"
@@ -146,10 +137,17 @@ export class FichaSocioeconomicaComponent implements OnInit {
   validarDisca(event:any){
     let desDisc=event.target.value;
     var f1 = desDisc;
-    this.fichasocieconomicaModel.discapacidadDescipcion=f1
+    if(f1=="false"){
+      var descDisca = document.getElementById("descripcionDiscapacidad");
+      descDisca.style.display = "none"
+      this.fichasocieconomicaModel.discapacidadDescipcion="Descripción Discapacidad"
+    }else if(f1=="true"){
+      var descDisca = document.getElementById("descripcionDiscapacidad");
+      descDisca.style.display = ""
+    }
   }
   addFicha(){
-    if(this.validarDatos()!=11){
+    if(this.validarDatos()!=10){
       confirm("Complete los campos en rojo")
    }else{
     var cedula_persona=localStorage.getItem('cedulalocalstorage');
