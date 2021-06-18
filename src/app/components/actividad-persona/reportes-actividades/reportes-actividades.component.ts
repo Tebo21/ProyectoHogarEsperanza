@@ -1,13 +1,19 @@
+import { Component, OnInit, Output } from '@angular/core';
 import { TipoActividad } from '../../../models/TipoActividad';
 import { Router } from '@angular/router';
 import { ActividadesService } from '../../../services/actividades.service';
+import { Actividades } from '../../../models/Actividades';
+import { Pipe, PipeTransform } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { FilterPipe } from './pipe/filter.pipe';
+import pdfMake from 'pdfmake/build/pdfmake';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-reportes-actividades',
   templateUrl: './reportes-actividades.component.html',
   styleUrls: ['./reportes-actividades.component.css']
 })
-export class ReportesActividadesComponent implements OnInit {
 
 export class ReportesActividadesComponent implements PipeTransform,OnInit {
 
