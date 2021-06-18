@@ -232,7 +232,6 @@ export class EntregarDonacionComponent implements OnInit {
       row.fechaEntrega,
     ]);
   }
-  
 
   async fetchData(): Promise<DataResponse[]> {
     return fetch('http://localhost:3000/entregaDonacion/lista').then(
