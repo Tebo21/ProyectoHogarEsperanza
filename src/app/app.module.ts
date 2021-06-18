@@ -59,6 +59,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
 import { PaginatorModule } from 'primeng/paginator';
 import {TooltipModule} from 'primeng/tooltip';
+import { FilterPipe } from './components/actividad-persona/reportes-actividades/pipe/filter.pipe';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -91,7 +92,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     InicioSuperAdminComponent,
     EntregarDonacionComponent,
     ReportesActividadesComponent,
-    PerfilUsuarioComponent
+    PerfilUsuarioComponent,
+    FilterPipe,
   ],
   imports: [
     CommonModule,
