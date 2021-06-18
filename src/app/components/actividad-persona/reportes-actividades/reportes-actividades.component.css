@@ -4,3 +4,10 @@
     border: 2px solid #221f1f;
     border-radius: 15px
 }
+
+.container1 {
+  margin-top: 50rem;
+  width: 90%;
+  max-width: 2000px;
+  margin: 0 auto;
+}
