@@ -104,7 +104,7 @@ export class ListadoUsuariosComponent implements OnInit {
       usuarioContrasenia: this.usuarioA.usuarioContrasenia,
       usuarioNombre: this.usuarioA.usuarioNombre,
       usuarioTipo: this.usuarioT,
-      usuarioEstado: true,
+      usuarioEstado: this.usuarioA.usuarioEstado,
       usuarioFechaCreacion: this.usuarioA.usuarioFechaCreacion
     }
     this.usuarioService.updateUser(nu).subscribe(data => {
