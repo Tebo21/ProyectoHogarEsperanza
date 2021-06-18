@@ -5,7 +5,7 @@ import { FichaSocioeconomica } from '../../models/ficha-socioeconomica';
 import { PersonasService } from '../../services/personas.service';
 import { RegistroFamiliaresService } from '../../services/registro-familiares.service';
 import { FichaSocioeconomicaService } from '../../services/ficha-socioeconomica.service';
-import { Columns, DocumentDefinition, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
+import { Columns, DocumentDefinition, PdfMakeWrapper, Table, Txt, Img } from 'pdfmake-wrapper';
 
 @Component({
   selector: 'app-vista-ficha',
@@ -23,7 +23,7 @@ export class VistaFichaComponent implements OnInit {
   viveConOtros:String;
   NomParejaArray:any=[];
   NomPareja:string;
-  cedula_persona:String = localStorage.getItem('cedulalocalstorage');
+  cedula_persona:string = localStorage.getItem('cedulalocalstorage');
   public listaFamiliares:any = [];
   
   constructor(private personService:PersonasService, private famiservice:RegistroFamiliaresService, private fichaservice:FichaSocioeconomicaService){}
@@ -62,7 +62,7 @@ export class VistaFichaComponent implements OnInit {
     this.famiservice.getfamicedula(this.cedula_persona).subscribe(data =>{
       this.familiares=data
       this.listaFamiliares=this.familiares.hijos;
-      var index2 = this.listaFamiliares.indexOf(this.listaFamiliares.find(x => x[8] == "Tía"));
+      var index2 = this.listaFamiliares.indexOf(this.listaFamiliares.find(x => x[8] == "Esposo/a"));
       this.NomParejaArray = this.listaFamiliares[index2]
       this.NomPareja=this.NomParejaArray[1]+" "+this.NomParejaArray[2]
     });
@@ -87,8 +87,9 @@ export class VistaFichaComponent implements OnInit {
   extractData(){
     return this.listaFamiliares.map(row =>[row[0],row[1]+" "+row[2],row[6],row[7],row[8]])
   }
-  generarPDF(){
+  async generarPDF(){
     const pdf = new PdfMakeWrapper();
+    pdf.add(await new Img('../../assets/img/logo.png').build());
     pdf.add(new Txt("Hoja de Registro").bold().italics().alignment('center').end);
     pdf.add(pdf.ln(3))
     pdf.add(new Txt("FECHA: "+((document.getElementById("fecha") as HTMLInputElement).value)).italics().end);
@@ -146,7 +147,7 @@ export class VistaFichaComponent implements OnInit {
     pdf.add(pdf.ln())
     pdf.add(new Txt("3.OTRAS NOTAS").italics().end);   
     pdf.add(pdf.ln())
-    pdf.add(new Txt("......................................................................................................................................................................").italics().end);    
+    pdf.add(new Txt(((document.getElementById("NotasExtras") as HTMLInputElement).value)).italics().end);
     pdf.add(pdf.ln())
     pdf.add(new Txt("4.FECHA DE ENTREGA DE AYUDA").italics().end);
     pdf.add(pdf.ln())

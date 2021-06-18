@@ -7,6 +7,7 @@ import { PersonasService } from 'src/app/services/personas.service';
 import { PdfMakeWrapper, Txt, Img, Table } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import { type } from 'node:os';
+import Swal from 'sweetalert2';
 
 interface DataResponse {
   idDonacion: number;
@@ -85,7 +86,7 @@ export class RegistroDonacionComponent implements OnInit {
         this.buscar = false;
         this.nombres = 'Anónimo';
         this.apellidos = 'Anónimo';
-        this.fecha_nac = '9999-99-99';
+        this.fecha_nac = '9999/99/99';
       } else if (this.tipo.don == 'Cédula') {
         this.buscar = true;
       }
@@ -113,11 +114,17 @@ export class RegistroDonacionComponent implements OnInit {
           this.apellidos = data.apellidos;
           this.fecha_nac = data.fechaNacimiento;
         } else {
-          alert('No se encontraron resultados');
+          Swal.fire({
+            title: 'No se encontraron resultados!',
+            icon: 'warning'
+          });
         }
       });
     } else {
-      alert('Campo de la cedula vacio');
+      Swal.fire({
+        title: 'Campo de la cedula vacio!',
+        icon: 'warning'
+      });
     }
   }
 
@@ -144,7 +151,10 @@ export class RegistroDonacionComponent implements OnInit {
 
           this.listaDonadores.push(persona);
         } else {
-          alert('Persona no encontrada');
+          Swal.fire({
+            title: 'Persona no encontrada!',
+            icon: 'warning'
+          });
         }
       });
     } else {
@@ -154,7 +164,6 @@ export class RegistroDonacionComponent implements OnInit {
       persona.apellidos = 'Anónimo';
 
       this.listaDonadores.push(persona);
-      console.log('METODO BUSCARDONADOR 115 CEDULA ANONIMO');
     }
   }
 
@@ -198,7 +207,7 @@ export class RegistroDonacionComponent implements OnInit {
 
   agregarDonacion() {
     //this.displayAP = false;
-    if (this.cedula == 'Anónimo' || this.cedula.length >= 10) {
+    if ((this.cedula == 'Anónimo' || this.cedula.length >= 10) && this.addCantidad >0) {
       this.addProducto.cedulaPersona.push(this.cedula);
       this.addProducto.fechaDonacion.push(this.today);
 
@@ -208,14 +217,23 @@ export class RegistroDonacionComponent implements OnInit {
         .updateDonacionProd(this.addProducto.idDonacion, this.addProducto)
         .subscribe((data) => {
           this.addProducto = new Donaciones();
+          this.addCantidad = 0
           this.displayAP = false;
           this.donaciones = [];
           this.obtenerDonaciones();
           console.log(data);
+          Swal.fire({
+            title: 'Agregado!',
+            text: 'Producto ' + data.nombreDonacion + ' agregado correctamente!',
+            icon: 'success'
+          });
         });
     } else {
-      console.log('Error en la cedula');
-      alert('Elija el tipo de donador');
+      this.displayAP = false;
+      Swal.fire({
+        title: 'Error! elija el donador o ingrese una cantidad superior a 0!',
+        icon: 'warning'
+      });
     }
     this.listaDonadores = [];
   }
@@ -238,7 +256,10 @@ export class RegistroDonacionComponent implements OnInit {
         this.buscarDonador(prod.cedulaPersona[index]);
       }
     } else {
-      alert('No se puede leer las cedulas del donador ya que es menor a 1');
+      Swal.fire({
+        title: 'No se puede leer las cedulas del donador ya que es menor a 1!',
+        icon: 'warning'
+      });
     }
 
     this.mostrarDonadores = true;
@@ -276,31 +297,43 @@ export class RegistroDonacionComponent implements OnInit {
         }
       }
     } else {
-      alert('No se a elejido el tipo de donador');
+      Swal.fire({
+        title: 'No se a elejido el tipo de donador!',
+        icon: 'warning'
+      });
     }
   }
 
   quitarDonador(i: number) {
-    var verificacion = confirm('Seguro de eliminar al donador');
-    if (verificacion) {
-      console.log('eliminar indice ' + i);
-      delete this.editProducto.cedulaPersona[i];
-      delete this.editProducto.fechaDonacion[i];
-      this.cedulasDonadores = [];
-      this.fechaDonaciones = [];
-      this.listaDonadores = [];
-      for (
-        let index = 0;
-        index < this.editProducto.cedulaPersona.length;
-        index++
-      ) {
-        if (this.editProducto.cedulaPersona[index] != null) {
-          this.cedulasDonadores.push(this.editProducto.cedulaPersona[index]);
-          this.fechaDonaciones.push(this.editProducto.fechaDonacion[index]);
-          this.buscarDonador(this.editProducto.cedulaPersona[index]);
-        }
+    this.displayEP = false;
+    Swal.fire({
+      title: '¿Seguro de eliminar?',
+      text: "Se eliminara al donador seleccionado!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('eliminar indice ' + i);
+        delete this.editProducto.cedulaPersona[i];
+        delete this.editProducto.fechaDonacion[i];
+        this.cedulasDonadores = [];
+        this.fechaDonaciones = [];
+        this.listaDonadores = [];
+        for ( let index = 0; index < this.editProducto.cedulaPersona.length; index++) {
+          if (this.editProducto.cedulaPersona[index] != null) {
+            this.cedulasDonadores.push(this.editProducto.cedulaPersona[index]);
+            this.fechaDonaciones.push(this.editProducto.fechaDonacion[index]);
+            this.buscarDonador(this.editProducto.cedulaPersona[index]);
+          }
+        }  
       }
-    }
+
+      this.displayEP = true;
+    })
   }
 
   editarDonacion() {
@@ -314,8 +347,13 @@ export class RegistroDonacionComponent implements OnInit {
         this.donaciones = [];
         this.obtenerDonaciones();
         this.displayEP = false;
-        alert('Producto ' + data.nombreDonacion + ' Actualizado');
-        this.displayEP = false;
+
+        Swal.fire({
+          title: 'Actualizado!',
+          text: 'Producto ' + data.nombreDonacion + ' actualizado correctamente!',
+          icon: 'success'
+        });
+
       });
   }
 
@@ -330,32 +368,58 @@ export class RegistroDonacionComponent implements OnInit {
     this.donacion.fechaDonacion = this.fechaDonaciones;
 
     console.log(this.donacion);
-    this.donacionService.postDonacionProd(this.donacion).subscribe((data) => {
-      console.log(data);
-      this.donacion = new Donaciones();
-      alert('Producto ' + data.nombreDonacion + ' agregado correctamente');
-      this.donaciones = [];
-      this.obtenerDonaciones();
+    if (this.donacion.nombreDonacion != null && this.donacion.descripcionDonacion != null && this.donacion.categoria != null && this.donacion.cantidad > 0){
+      this.donacionService.postDonacionProd(this.donacion).subscribe((data) => {
+        console.log(data);
+
+        this.donacion = new Donaciones();        
+        this.donaciones = [];
+        this.obtenerDonaciones();
+        this.displayRP = false;
+
+        Swal.fire({
+          title: 'Registrado!',
+          text: 'Producto ' + data.nombreDonacion + ' registrado correctamente',
+          icon: 'success'
+        });
+      });
+    }else{
       this.displayRP = false;
-    });
+      Swal.fire({
+        title: 'Datos vacios o incorrectos!',
+        icon: 'warning'
+      });
+    }
+    
   }
 
   eliminar(prod: Donaciones) {
-    var verificacion = confirm(
-      'Seguro de eliminar al producto ' + prod.nombreDonacion
-    );
-    if (verificacion) {
-      this.donacionService
-        .deleteDonacionProd(prod.idDonacion)
-        .subscribe((data) => {
-          if (data == true) {
-            location.reload();
-            alert('Producto eliminado');
-          } else {
-            alert('Error al eliminar');
-          }
+    Swal.fire({
+      title: '¿Seguro de eliminar?',
+      text: 'Seguro de eliminar el producto ' + prod.nombreDonacion,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.donacionService.deleteDonacionProd(prod.idDonacion).subscribe(
+          (data) => {
+            if (data == true) {
+              Swal.fire({
+                title: 'Producto eliminado!',
+                icon: 'success'
+              });
+              this.donaciones = [];
+              this.obtenerDonaciones();
+            } else {
+              location.reload();
+            }
         });
-    }
+      }
+    })
   }
 
   registrarDonador() {

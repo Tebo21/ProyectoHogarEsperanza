@@ -307,9 +307,6 @@
                                 <br>
                                 <p-dropdown [options]="categoriasDonacion" [(ngModel)]="categoria" placeholder="{{categoria}}" optionLabel="cat" [filter]="true" [showClear]="true" (onChange)="onChangeC($event)" [disabled]="displayAP"></p-dropdown>
                             </div>
-                            <div class="form-floating mb-3" [hidden]="!otraCategoria">
-                                <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="addProducto.categoria" name="otraCategoria" required [disabled]="displayAP">
-                            </div>
                         </div>
                         <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">

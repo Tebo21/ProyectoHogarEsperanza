@@ -8,6 +8,7 @@ import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomic
 import { PersonasService } from 'src/app/services/personas.service';
 import { PdfMakeWrapper, Txt, Img, Table } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
+import Swal from 'sweetalert2';
 
 interface DataResponse {
   idEntregaDonacion: number;
@@ -30,7 +31,7 @@ export class EntregarDonacionComponent implements OnInit {
   listaDonaciones: Array<Donaciones>;
   listaEntregaDonaciones: Array<EntregaDonacion>;
 
-  loading: boolean;
+  loading: boolean = true;;
 
   cedulaBeneficiario: string;
   nombresBeneficiario: string;
@@ -39,7 +40,6 @@ export class EntregarDonacionComponent implements OnInit {
 
   valBeneficiario: boolean = false;
   today: Date;
-  alerta: string;
   displayPE: boolean = false;
 
   entregaDonacion: EntregaDonacion;
@@ -53,7 +53,7 @@ export class EntregarDonacionComponent implements OnInit {
     private personaService: PersonasService, private router: Router) { }
 
   ngOnInit(): void {
-    this.loading = true;
+    
     this.obtenerDonaciones();
   }
 
@@ -95,12 +95,21 @@ export class EntregarDonacionComponent implements OnInit {
                 this.valBeneficiario = true;
                 this.obtenerEntregas(this.cedulaBeneficiario);
               }else{
-                alert('No existe Ficha Socioeconómica relacionada con esta cédula: '+this.cedulaBeneficiario);
+                this.valBeneficiario = false;
+                Swal.fire({
+                  title: 'No hay Ficha Socioeconómica relacionada con la cédula:',
+                  text: this.cedulaBeneficiario,
+                  icon: 'warning',
+                });
               }
             }
           )
         }else{
-          alert('Persona no encontrada en el sistema')
+          this.valBeneficiario = false;
+          Swal.fire({
+            title: 'Persona no registrada en el sistema!',
+            icon: 'warning'
+          });
         }
       }
     )
@@ -125,7 +134,7 @@ export class EntregarDonacionComponent implements OnInit {
             }
           )
         }else{
-          this.alerta = 'No tiene entregas registradas';
+          console.log('No se encontraron donaciones')
         }
       }
     )
@@ -146,39 +155,62 @@ export class EntregarDonacionComponent implements OnInit {
       this.productoEntrega.nombreDonacion = producto.nombreDonacion;
 
     }else{
-      alert('No ha elegido un beneficiario aún!')
+      Swal.fire({
+        title: 'No ha elegido un beneficiario aún!',
+        icon: 'warning'
+      });
     }
   }
 
   entregarDonacion(){
-    var verificacion = confirm('Seguro de donar ' + this.cantidadEntrega + ' unidades de ' + this.productoEntrega.nombreDonacion + "\n"
-                                  + 'Al señor/a ' + this.nombresBeneficiario + ' ' + this.apellidosBeneficiario);
-    if (verificacion){
-      if (this.productoEntrega.cantidad > 0 && this.productoEntrega.cantidad > this.cantidadEntrega){
-        this.entregaDonacion = new EntregaDonacion;
-        this.entregaDonacion.cantidadEntregada = this.cantidadEntrega;
-        this.entregaDonacion.cedulaBeneficiario = this.cedulaBeneficiario;
-        this.entregaDonacion.descripcionProducto = this.productoEntrega.descripcionDonacion;
-        this.entregaDonacion.fechaEntrega = this.today = new Date;
-        this.entregaDonacion.productoEntregado = this.productoEntrega.nombreDonacion;
-
-        this.entregarDonacionService.postEntrega(this.entregaDonacion).subscribe(
-          data => {
-            console.log(data);
-            this.productoEntrega.cantidad = this.productoEntrega.cantidad - this.cantidadEntrega;
-            this.donacionService.updateDonacionProd(this.productoEntrega.idDonacion, this.productoEntrega).subscribe(
-              result => {
-                console.log(result);
-                alert('Entrega registrada!')
-                this.reiniciar();
-              }
-            )
-          }
-        )
+    this.displayED = false;
+    Swal.fire({
+      title: '¿Seguro de donar?',
+      text: "Se le hará la entrega de " + this.cantidadEntrega + ' unidades de ' + this.productoEntrega.nombreDonacion,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí, donar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        if (this.productoEntrega.cantidad > 0 && this.productoEntrega.cantidad > this.cantidadEntrega){
+          this.entregaDonacion = new EntregaDonacion;
+          this.entregaDonacion.cantidadEntregada = this.cantidadEntrega;
+          this.entregaDonacion.cedulaBeneficiario = this.cedulaBeneficiario;
+          this.entregaDonacion.descripcionProducto = this.productoEntrega.descripcionDonacion;
+          this.entregaDonacion.fechaEntrega = this.today = new Date;
+          this.entregaDonacion.productoEntregado = this.productoEntrega.nombreDonacion;
+  
+          this.entregarDonacionService.postEntrega(this.entregaDonacion).subscribe(
+            data => {
+              console.log(data);
+              this.productoEntrega.cantidad = this.productoEntrega.cantidad - this.cantidadEntrega;
+              this.donacionService.updateDonacionProd(this.productoEntrega.idDonacion, this.productoEntrega).subscribe(
+                result => {
+                  console.log(result);
+                  Swal.fire({
+                    title: 'Entrega registrada!',
+                    icon: 'success'
+                  });
+                  this.reiniciar();
+                }
+              )
+            }
+          )
+        }else{
+          Swal.fire({
+            title: 'Donacion insuficiente!',
+            icon: 'warning'
+          });
+  
+        }
       }else{
-        alert("Donacion insuficiente");
-      }        
-    }
+        this.displayED = true;
+      }
+    })
   }
 
   registrarBeneficiario(){
@@ -240,7 +272,6 @@ export class EntregarDonacionComponent implements OnInit {
       row.fechaEntrega,
     ]);
   }
-  
 
   async fetchData(): Promise<DataResponse[]> {
     return fetch('http://localhost:3000/entregaDonacion/lista').then(
