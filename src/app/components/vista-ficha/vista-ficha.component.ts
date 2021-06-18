@@ -5,7 +5,7 @@ import { FichaSocioeconomica } from '../../models/ficha-socioeconomica';
 import { PersonasService } from '../../services/personas.service';
 import { RegistroFamiliaresService } from '../../services/registro-familiares.service';
 import { FichaSocioeconomicaService } from '../../services/ficha-socioeconomica.service';
-import { Columns, DocumentDefinition, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
+import { Columns, DocumentDefinition, PdfMakeWrapper, Table, Txt, Img } from 'pdfmake-wrapper';
 
 @Component({
   selector: 'app-vista-ficha',
@@ -87,8 +87,9 @@ export class VistaFichaComponent implements OnInit {
   extractData(){
     return this.listaFamiliares.map(row =>[row[0],row[1]+" "+row[2],row[6],row[7],row[8]])
   }
-  generarPDF(){
+  async generarPDF(){
     const pdf = new PdfMakeWrapper();
+    pdf.add(await new Img('../../assets/img/logo.png').build());
     pdf.add(new Txt("Hoja de Registro").bold().italics().alignment('center').end);
     pdf.add(pdf.ln(3))
     pdf.add(new Txt("FECHA: "+((document.getElementById("fecha") as HTMLInputElement).value)).italics().end);
