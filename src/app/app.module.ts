@@ -60,6 +60,7 @@ import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuar
 import { PaginatorModule } from 'primeng/paginator';
 import {TooltipModule} from 'primeng/tooltip';
 import { FilterPipe } from './components/actividad-persona/reportes-actividades/pipe/filter.pipe';
+import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -94,6 +95,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ReportesActividadesComponent,
     PerfilUsuarioComponent,
     FilterPipe,
+    BuscarCitaComponent
   ],
   imports: [
     CommonModule,

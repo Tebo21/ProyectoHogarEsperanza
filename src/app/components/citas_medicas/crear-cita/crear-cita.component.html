@@ -1,6 +1,6 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
-<div class="container1">
+<div class="container center-h center-v">
     <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
         <div class="card card0 border-0">
             <div class="panel-heading">
@@ -89,10 +89,11 @@
                         <input type="text" style="margin-left: 5%;" class="form-control" id="trabajador" [formControl]="cedulatra" required [(ngModel)]="cedulaTra" name="trabajador">
 
                         <p style="margin-left: 5%;"></p>
-                        <button type="button" class="btn btn-secondary" (click)="buscarTraba()" [disabled]="cedulatra.invalid">Verificar informacion</button>
+                        <button type="button" class="btn btn-secondary" id="btn3" (click)="buscarTraba()" [disabled]="cedulatra.invalid">Verificar informacion</button>
 
-                        <p style="margin-left: 25%;"></p>
-                        <div id="alert3" class="alert alert-info alert-dismissible fade show" role="alert">
+                        <p style="margin-left: 5%;"></p>
+                        <div id="alert3" class="alert alert-info alert-dismissible fade show" role="alert" align-items="center;" justify-content="center;">
+                            <p style="margin-left: 25%;"></p>
                             <div>
                                 <label for="nombre" class="form-label"><b>Nombre</b></label>
                                 <input type="text" class="form-control" [(ngModel)]="nombreper3" disabled>
@@ -120,10 +121,10 @@
                         <p style="margin-left: 5%;"></p>
                         <div class="dropdown show">
                             <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
-                  <option *ngFor="let c of centro" class="dropdown-item">
-                     {{c.nombreCentroMedico}}
-                 </option>
-                </select>
+                             <option *ngFor="let c of centro" class="dropdown-item">
+                             {{c.nombreCentroMedico}}
+                             </option>
+                            </select>
                         </div>
                     </div>
 
@@ -133,10 +134,10 @@
                         <p style="margin-left: 5%;"></p>
                         <div class="dropdown show">
                             <select [(ngModel)]="nombreSeEspecialidad" class="btn btn-secondary dropdown-toggle" id="nomespecialidad" forControlName="nomespecialidad">
-                  <option *ngFor="let e of especialidad" class="dropdown-item">
-                     {{e.nombreEspecialidad}}
-                 </option>
-                </select>
+                                <option *ngFor="let e of especialidad" class="dropdown-item">
+                                    {{e.nombreEspecialidad}}
+                                 </option>
+                            </select>
                         </div>
                     </div>
 
@@ -161,6 +162,9 @@
 <div>
     <div class="panel-heading ">
         <h2 class="title ">Lista de las Citas Medicas agendadas</h2>
+        <div class="form-group mb-3 " style="margin-left: 85%; ">
+            <button type="button" class="btn btn-secondary btn-lg" (click)="buscar()">Realizar busquedas</button>
+        </div>
     </div>
     <div class="panel panel-primary">
         <div class="panel-body ">
