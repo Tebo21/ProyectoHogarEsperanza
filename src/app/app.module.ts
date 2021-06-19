@@ -17,7 +17,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
-import { LayoutComponent } from './components/layout/layout.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
 import { UsuarioService } from './services/usuarios.service';
 import { PanelModule } from 'primeng/panel';
@@ -67,7 +66,6 @@ PdfMakeWrapper.setFonts(pdfFonts);
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent,
     LoginComponent,
     ActividadPersonaComponent,
     CrearActividadComponent,
