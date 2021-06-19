@@ -373,11 +373,12 @@ export class RegistroDonacionComponent implements OnInit {
     pdf.info({
       title: 'Reporte de productos disponibles',
     });
-
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+  
     pdf.add(
-      new Txt('Lista de los productos disponibles').alignment('center').bold()
-        .end
+      new Txt('Lista de los productos disponibles').alignment('center').bold().end
     );
+    pdf.add(new Txt('   ').end);
     pdf.add(this.creaTabla(data));
     pdf.create().open();
   }

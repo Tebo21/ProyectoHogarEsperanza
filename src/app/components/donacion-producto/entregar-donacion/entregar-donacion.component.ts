@@ -203,11 +203,13 @@ export class EntregarDonacionComponent implements OnInit {
     pdf.info({
       title: 'Reporte de productos entregados a los beneficiarios',
     });
-
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+    pdf.add(new Txt('   ').end);
     pdf.add(
       new Txt('Lista de los productos entregados a los beneficiarios').alignment('center').bold()
         .end
     );
+    pdf.add(new Txt('   ').end);
     pdf.add(this.creaTabla(data));
     pdf.create().open();
   }
