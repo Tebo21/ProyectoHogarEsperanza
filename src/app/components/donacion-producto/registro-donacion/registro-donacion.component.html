@@ -20,10 +20,10 @@
                                         (click)="entregarDonacion()"></button>
                     <button  pButton pRipple type="button" label="Generar reporte" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                                         style="color: #008cff;"class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf"
-                                        (click)="generaPdf()"></button>
+                                        (click)="showConfirmacionPDF()"></button>
                 </div>
             </div>
-<br>
+            <br>
 
             <!--TABLA PARA CONTROLAR TODAS LAS DONACIONES-->
             <div class="container animated d-flex justify-content-center animated fadeIn">
@@ -142,7 +142,7 @@
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Tipo Donador:</label>
                                 <br>
-                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" [filter]="true" [showClear]="true" (onChange)="onChangeT($event)"></p-dropdown>
+                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" (onChange)="onChangeT($event)"></p-dropdown>
                             </div>
                             <div class="form-floating mb-3" [hidden]="!buscar">
                                 <label for="floatingInput">Cédula:</label>
@@ -171,6 +171,9 @@
                                 <label for="floatingInput">Fecha Nacimiento:</label>
                                 <input class="form-control" type="date" placeholder="Fecha Nacimiento" [(ngModel)]="fecha_nac" name="fechaNacimiento" required disabled>
                             </div>
+                            <button pButton pRipple type="button" label="Registrar Donador" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                                            style="color: #008cff; min-width: 100%;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-user-plus"
+                                            (click)="registrarDonador()"></button>
                         </div>
                     </div>
                 </p-panel>
@@ -211,7 +214,7 @@
                         <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Cantidad:</label>
-                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="donacion.cantidad" name="cantidad" required>
+                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="donacion.cantidad" name="cantidad" min="1" pattern="^[0-9]+" required>
                             </div>
                         </div>
                     </div>
@@ -225,7 +228,7 @@
         <ng-template pTemplate="footer">
             <p-button icon="pi pi-check" (click)="registrarNuevoProducto()" label="Guardar" styleClass="p-button-text">
             </p-button>
-            <p-button icon="pi pi-times" (click)="displayRP=false" label="Cancelar" styleClass="p-button-text">
+            <p-button icon="pi pi-times" (click)="reiniciar()" label="Cancelar" styleClass="p-button-text">
             </p-button>
         </ng-template>
     </p-dialog>
@@ -240,7 +243,7 @@
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Tipo Donador:</label>
                                 <br>
-                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" [filter]="true" [showClear]="true" (onChange)="onChangeT($event)"></p-dropdown>
+                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" (onChange)="onChangeT($event)"></p-dropdown>
                             </div>
                             <div class="form-floating mb-3" [hidden]="!buscar">
                                 <label for="floatingInput">Cédula:</label>
@@ -311,11 +314,11 @@
                         <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Cantidad Actual:</label>
-                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="addProducto.cantidad" name="cantidad" required [disabled]="displayAP">
+                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="addProducto.cantidad" name="cantidad" min="0" pattern="^[0-9]+" required [disabled]="displayAP">
                             </div>
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Cantidad a agregar:</label>
-                                <input class="form-control" type="number" id="cantidad2" placeholder="Cantidad del producto" [(ngModel)]="addCantidad" name="cantidad" required>
+                                <input class="form-control" type="number" id="cantidad2" placeholder="Cantidad del producto" [(ngModel)]="addCantidad" name="cantidad" min="1" pattern="^[0-9]+" required>
                             </div>
                         </div>
                     </div>
@@ -335,7 +338,7 @@
                 <p-panel class="card" [hidden]="!mostrarDonadores">
                     <p-table #dt2 [value]="listaDonadores" dataKey="id2" [rowHover]="true"
                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-                        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                        [paginator]="true">
                         <ng-template pTemplate="caption">
                             <div class="table-header">
                                 Lista de Donadores
@@ -404,7 +407,7 @@
         <ng-template pTemplate="footer">
             <p-button icon="pi pi-plus" (click)="agregarDonacion()" label="Agregar" styleClass="p-button-text">
             </p-button>
-            <p-button icon="pi pi-times" (click)="cancelarAgregar()" label="Cancelar" styleClass="p-button-text">
+            <p-button icon="pi pi-times" (click)="reiniciar()" label="Cancelar" styleClass="p-button-text">
             </p-button>
         </ng-template>
     </p-dialog>
@@ -418,7 +421,7 @@
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Tipo Donador:</label>
                                 <br>
-                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" [filter]="true" [showClear]="true" (onChange)="onChangeT($event)"></p-dropdown>
+                                <p-dropdown [options]="tipoDonador" [(ngModel)]="tipo" placeholder="Seleccione" optionLabel="don" (onChange)="onChangeT($event)"></p-dropdown>
                             </div>
                             <div class="form-floating mb-3" [hidden]="!buscar">
                                 <label for="floatingInput">Cédula:</label>
@@ -493,7 +496,7 @@
                         <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Cantidad:</label>
-                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="editProducto.cantidad" name="cantidad" required>
+                                <input class="form-control" type="number" id="cantidad" placeholder="Cantidad del producto" [(ngModel)]="editProducto.cantidad" name="cantidad" min="0" pattern="^[0-9]+" required>
                             </div>
                         </div>
                     </div>
@@ -509,7 +512,7 @@
                 <p-panel class="card" [hidden]="!mostrarDonadores">
                     <p-table #dt2 [value]="listaDonadores" dataKey="id2" [rowHover]="true"
                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-                        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                        [paginator]="true">
                         <ng-template pTemplate="caption">
                             <div class="table-header">
                                 Lista de Donadores
@@ -524,20 +527,16 @@
                                         <p-columnFilter type="text" field="cedulaEdit" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
-                                <th pSortableColumn="nombresEdit">
+                                <!-- <th pSortableColumn="nombresEdit">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Nombres
-                                        <!-- <p-sortIcon field="nombresEdit"></p-sortIcon>
-                                        <p-columnFilter type="text" field="nombresEdit" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
-                                </th>
-                                <th pSortableColumn="apellidosEdit">
+                                </th> -->
+                                <!-- <th pSortableColumn="apellidosEdit">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Apellidos
-                                        <!-- <p-sortIcon field="apellidosEdit"></p-sortIcon>
-                                        <p-columnFilter type="text" field="apellidosEdit" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
-                                </th>
+                                </th> -->
                                 <th pSortableColumn="fechaEdit">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Fecha Donacion
@@ -551,14 +550,15 @@
                         <ng-template pTemplate="body" let-donador let-i="rowIndex">
                             <tr class="p-selectable-row">
                                 <td>
-                                    {{donador.cedula}}
+                                    <!-- {{donador.cedula}} -->
+                                    {{editProducto.cedulaPersona[i]}}
                                 </td>
-                                <td>
+                                <!-- <td>
                                     {{donador.nombres}}
                                 </td>
                                 <td>
                                     {{donador.apellidos}}
-                                </td>
+                                </td> -->
                                 <td>
                                     {{editProducto.fechaDonacion[i] | date:'yyyy-MM-dd'}}
                                 </td>
@@ -582,7 +582,7 @@
         <ng-template pTemplate="footer">
             <p-button icon="pi pi-pencil" (click)="editarDonacion()" label="Editar" styleClass="p-button-text">
             </p-button>
-            <p-button icon="pi pi-times" (click)="cancelar()" label="Cancelar" styleClass="p-button-text">
+            <p-button icon="pi pi-times" (click)="reiniciar()" label="Cancelar" styleClass="p-button-text">
             </p-button>
         </ng-template>
     </p-dialog>

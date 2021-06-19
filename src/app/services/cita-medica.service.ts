@@ -32,8 +32,23 @@ export class CitaMedicaService {
     return this.httpClient.delete(`${this.url}/eliminar/${id}`);
   }
 
-  // tslint:disable-next-line: ban-types
   updateCita(id: number, cita: CitasMedicas): Observable<any>{
     return this.httpClient.put(`${this.url}/editar/${id}`, cita);
+  }
+
+  getPorNombre(nombre: any): Observable<CitasMedicas>{
+    return this.httpClient.get<CitasMedicas>(`${this.url}/porNombre/${nombre}`);
+  }
+
+  getPorCedulaPa(cedula: any): Observable<CitasMedicas>{
+    return this.httpClient.get<CitasMedicas>(`${this.url}/bycedulapa/${cedula}`);
+  }
+
+  getPorCedulaAco(cedula: any): Observable<CitasMedicas>{
+    return this.httpClient.get<CitasMedicas>(`${this.url}/bycedulaac/${cedula}`);
+  }
+
+  getPorCedulaTra(cedula: any): Observable<CitasMedicas>{
+    return this.httpClient.get<CitasMedicas>(`${this.url}/bycedulatra/${cedula}`);
   }
 }

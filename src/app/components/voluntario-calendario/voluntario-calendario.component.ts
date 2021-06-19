@@ -4,6 +4,11 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OnInit } from '@angular/core';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView,} from 'angular-calendar';
+import { ActividadesService } from '../../services/actividades.service';
+import { Actividades } from '../../models/Actividades';
+import { PersonasService } from '../../services/personas.service';
+import { Personas } from '../../models/personas';
+import { DatePipe } from '@angular/common';
 
 const colors: any = {
   red: {
@@ -60,10 +65,13 @@ export class VoluntarioCalendarioComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
 
+  actividadView: Actividades[]=[];
+
+
   events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
+    /*{
+      start: subDays(startOfDay(new Date('2021-05-18T03:24:00')), 1),
+      end: addDays(new Date('2021-06-18T03:25:00'), 2),
       title: 'A 3 day event',
       color: colors.red,
       actions: this.actions,
@@ -75,7 +83,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
       draggable: true,
     },
     {
-      start: startOfDay(new Date()),
+      start: startOfDay(new Date('2021-05-18T15:24:00')),
       title: 'An event with no end date',
       color: colors.yellow,
       actions: this.actions,
@@ -98,14 +106,62 @@ export class VoluntarioCalendarioComponent implements OnInit {
         afterEnd: true,
       },
       draggable: true,
-    },
+    },*/
   ];
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  PersonId: string;
+  Person: Personas = new Personas();
+  Actividadview: Actividades[] = [];
+  fecha1: Date = new Date();
+  fecha2: string = this.datapipe.transform(this.fecha1, 'yyyy-MM-dd');
+  fecha:Date;
+
+  constructor(private modal: NgbModal, public actividadService: ActividadesService,
+    public personaService: PersonasService,public _actividadservice: ActividadesService,public datapipe: DatePipe) {}
+
+
   ngOnInit(): void {
-    
+    this.PersonId = localStorage.getItem('carisma');
+    this.mostrarTipoActividades();
+    console.log(this.Actividadview);
+    console.log(this.fecha)
+  }
+
+  mostrarTipoActividades(): void {
+    this._actividadservice.getAll().subscribe(
+      (response) => {
+        response.forEach((res) => {
+          if (res.cedulaPersona.cedula==this.PersonId) {
+            console.log(res.cedulaPersona.nombres)
+
+            this.Actividadview.push(res);
+            const f=res.fechaActividad+"T"+res.horaFin+":00";
+            const f1=res.fechaActividad+"T"+res.horaFin+":00";
+            this.events=[
+              ...this.events,
+              {
+                title: res.descripcionActividad,
+                start: startOfDay(new Date(f)),
+                end: endOfDay(new Date(f1)),
+                color: colors.red,
+                draggable: true,
+                resizable: {
+                  beforeStart: true,
+                  afterEnd: true,
+                },
+              },
+            ];
+
+
+          }
+
+        });
+        this.Actividadview=response
+        console.log(this.Actividadview)
+      }
+  );
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -160,6 +216,8 @@ export class VoluntarioCalendarioComponent implements OnInit {
         },
       },
     ];
+
+    console.log(this.events.map((res)=>{res.start.getTime}))
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

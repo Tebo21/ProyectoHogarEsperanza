@@ -1,4 +1,7 @@
 export class CitasMedicas {
+    map(arg0: (row: any) => any[]) {
+      throw new Error('Method not implemented.');
+    }
     idCitasMedicas: number;
     descripcionCitaMedica: string;
     fechaRegistro: Date;
