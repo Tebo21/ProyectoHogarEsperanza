@@ -4,8 +4,8 @@ export class CitasMedicas {
     }
     idCitasMedicas: number;
     descripcionCitaMedica: string;
-    fechaRegistro: Date;
-    fechaCitaMedica: Date;
+    fechaRegistro: string;
+    fechaCitaMedica: string;
     paciente: string;
     acompaniante: string;
     mensaje: string;

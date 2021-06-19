@@ -9,6 +9,7 @@ import { Actividades } from '../../models/Actividades';
 import { PersonasService } from '../../services/personas.service';
 import { Personas } from '../../models/personas';
 import { DatePipe } from '@angular/common';
+import { CitaMedicaService } from '../../services/cita-medica.service';
 
 const colors: any = {
   red: {
@@ -119,14 +120,16 @@ export class VoluntarioCalendarioComponent implements OnInit {
   fecha:Date;
 
   constructor(private modal: NgbModal, public actividadService: ActividadesService,
-    public personaService: PersonasService,public _actividadservice: ActividadesService,public datapipe: DatePipe) {}
+    public personaService: PersonasService, public _actividadservice: ActividadesService,
+    public datapipe: DatePipe, public citaService: CitaMedicaService) {}
 
 
   ngOnInit(): void {
     this.PersonId = localStorage.getItem('carisma');
     this.mostrarTipoActividades();
     console.log(this.Actividadview);
-    console.log(this.fecha)
+    console.log(this.fecha);
+    this.mostrarCitasMedicas();
   }
 
   mostrarTipoActividades(): void {
@@ -156,6 +159,38 @@ export class VoluntarioCalendarioComponent implements OnInit {
 
 
           }
+
+        });
+        this.Actividadview=response
+        console.log(this.Actividadview)
+      }
+  );
+  }
+
+  mostrarCitasMedicas(): void {
+    this.citaService.listCitas().subscribe(
+      (response) => {
+        response.forEach((res) => {
+            this.Actividadview.push(res);
+            const f=res.fechaCitaMedica;
+            const f1=res.fechaCitaMedica;
+            this.events=[
+              ...this.events,
+              {
+                title: res.descripcionCitaMedica,
+                start: startOfDay(new Date(f)),
+                end: endOfDay(new Date(f1)),
+                color: colors.blue,
+                draggable: true,
+                resizable: {
+                  beforeStart: true,
+                  afterEnd: true,
+                },
+              },
+            ];
+
+
+          
 
         });
         this.Actividadview=response

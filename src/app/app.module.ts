@@ -93,7 +93,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ReportesActividadesComponent,
     PerfilUsuarioComponent,
     FilterPipe,
-    BuscarCitaComponent
+    BuscarCitaComponent,
   ],
   imports: [
     CommonModule,

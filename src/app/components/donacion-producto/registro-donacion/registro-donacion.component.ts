@@ -436,7 +436,27 @@ export class RegistroDonacionComponent implements OnInit {
     this.obtenerDonaciones();
   }
 
-
+  showConfirmacionPDF(){
+    Swal.fire({
+      title: '¿Estas seguro de descargar este reporte?',
+      text: "Se abrira una visualizacion de su reporte",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí, descargar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.generaPdf();
+        Swal.fire(
+          'Descargado!',
+          'El registro ha sido descargado',
+          'success'
+        )
+      }
+    })
+  }
   async generaPdf() {
     const pdf = new PdfMakeWrapper();
     const data = await this.fetchData();
@@ -444,11 +464,12 @@ export class RegistroDonacionComponent implements OnInit {
     pdf.info({
       title: 'Reporte de productos disponibles',
     });
-
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+  
     pdf.add(
-      new Txt('Lista de los productos disponibles').alignment('center').bold()
-        .end
+      new Txt('Lista de los productos disponibles').alignment('center').bold().end
     );
+    pdf.add(new Txt('   ').end);
     pdf.add(this.creaTabla(data));
     pdf.create().open();
   }
