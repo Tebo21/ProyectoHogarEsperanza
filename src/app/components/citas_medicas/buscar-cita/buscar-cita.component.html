@@ -1,3 +1,14 @@
+<app-navbar-admin></app-navbar-admin>
+<br>
+
+<!--Busqueda por fecha mediante un calendario
+<div class="input-group">
+    <label for="name">Seleccione una fecha:</label>
+    <input type="date" class="form-control" [(ngModel)]="selectedFecha">
+    <button (click)="listCentro()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+</div>-->
+
+
 <div>
     <div class="panel-heading ">
         <h2 class="title ">Lista de las Citas Medicas agendadas</h2>
@@ -20,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let u of citaMedica | async ">
+                    <tr *ngFor="let u of citaMedica | async">
                         <td>
                             {{ u.descripcionCitaMedica}}
                         </td>

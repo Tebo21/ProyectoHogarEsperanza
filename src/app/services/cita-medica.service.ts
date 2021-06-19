@@ -23,6 +23,11 @@ export class CitaMedicaService {
   }
 
 
+  listCitasFechas(fecha: string): Observable<any>{
+    return this.httpClient.get(`${this.url}/listadoId/${fecha}`);
+  }
+
+
   deletCita( id: number): Observable<any>{
     return this.httpClient.delete(`${this.url}/eliminar/${id}`);
   }
