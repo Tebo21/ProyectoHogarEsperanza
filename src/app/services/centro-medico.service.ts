@@ -28,4 +28,5 @@ export class CentroMedicoService {
   deletCentro(id: number): Observable<any>{
     return this.http.delete(`${this.conexion}/eliminar/${id}`, { responseType: 'text' });
   }
+
 }
