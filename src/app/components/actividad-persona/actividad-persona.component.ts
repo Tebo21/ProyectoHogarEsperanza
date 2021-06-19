@@ -42,7 +42,6 @@ export class ActividadPersonaComponent implements OnInit {
     this.personaService.getPorCedula(this.PersonId).subscribe(
       (response) => {
         this.Person = response;
-        this._actividadservice.open.emit();
       },
       (error) => {
         console.log(error);
