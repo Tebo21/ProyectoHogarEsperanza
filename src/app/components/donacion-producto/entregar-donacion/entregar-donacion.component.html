@@ -56,6 +56,9 @@
                                 <i class="pi pi-search"></i>
                                 <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
                             </span>
+                            <!--<span class="p-input-icon-right">                              
+                                    <input  style="margin-left: 10%; " type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel" [(ngModel)]="fecha2">
+                            </span>-->
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
@@ -145,7 +148,7 @@
                 </p-table>
                 <br>
                 <button  pButton pRipple type="button" label="Generar reporte" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                style="color: #008cff;"class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf" (click)="generaPdf()" 
+                style="color: #008cff;"class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf" (click)="showConfirmacionPDF()" 
                ></button>
             </p-panel>
         </div>
