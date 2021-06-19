@@ -24,7 +24,6 @@ import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuar
 import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
 import { ReportesActividadesComponent } from './components/actividad-persona/reportes-actividades/reportes-actividades.component';
 import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
-import { CalendarPruebaComponent } from './components/calendar-prueba/calendar-prueba.component';
 
 // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
 // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -106,10 +105,6 @@ const routes: Routes = [
   {
     path: 'calendario',
     component: VoluntarioCalendarioComponent,
-  },
-  {
-    path: 'calendarp',
-    component: CalendarPruebaComponent,
   },
   {
     path: 'perfil-usuario',

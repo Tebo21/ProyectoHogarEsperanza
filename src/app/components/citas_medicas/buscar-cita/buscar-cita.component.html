@@ -1,72 +1,6 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
 
-<<<<<<< HEAD
-<!--Busqueda por fecha mediante un calendario
-<div class="input-group">
-    <label for="name">Seleccione una fecha:</label>
-    <input type="date" class="form-control" [(ngModel)]="selectedFecha">
-    <button (click)="listCentro()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-</div>-->
-
-
-<div>
-    <div class="panel-heading ">
-        <h2 class="title ">Lista de las Citas Medicas agendadas</h2>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-body ">
-            <table class="table table-bordered ">
-                <thead>
-                    <tr>
-                        <th>Descripcion Cita Medica</th>
-                        <th>Fecha Registro</th>
-                        <th>Fecha de la Cita Medica</th>
-                        <th>Paciente</th>
-                        <th>Acompanante</th>
-                        <th>Correo al que se enviara mensaje</th>
-                        <th>Trabajador de la Fundacion</th>
-                        <th>Centro Medico</th>
-                        <th>Especialidad</th>
-                        <th>Nota</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let u of citaMedica | async">
-                        <td>
-                            {{ u.descripcionCitaMedica}}
-                        </td>
-                        <td>
-                            {{ u.fechaRegistro }}
-                        </td>
-                        <td>
-                            {{ u.fechaCitaMedica }}
-                        </td>
-                        <td>
-                            {{ u.paciente }}
-                        </td>
-                        <td>
-                            {{ u.acompaniante }}
-                        </td>
-                        <td>
-                            {{ u.mensaje }}
-                        </td>
-                        <td>
-                            {{ u.trabajadorFundacion }}
-                        </td>
-                        <td>
-                            {{ u.centroMedico }}
-                        </td>
-                        <td>
-                            {{ u.especialidad }}
-                        </td>
-                        <td>
-                            {{ u.nota }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-=======
 
 <div class="container animated d-flex justify-content-center animated fadeIn">
     <p-panel class="card">
@@ -87,7 +21,6 @@
                     </div>
                 </div>
             </div>
->>>>>>> fc7c1a39d4625a0f2f35692764268f82f94282b7
         </div>
 
         <br/>

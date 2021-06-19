@@ -61,7 +61,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import {TooltipModule} from 'primeng/tooltip';
 import { FilterPipe } from './components/actividad-persona/reportes-actividades/pipe/filter.pipe';
 import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
-import { CalendarPruebaComponent } from './components/calendar-prueba/calendar-prueba.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -97,7 +96,6 @@ PdfMakeWrapper.setFonts(pdfFonts);
     PerfilUsuarioComponent,
     FilterPipe,
     BuscarCitaComponent,
-    CalendarPruebaComponent
   ],
   imports: [
     CommonModule,
