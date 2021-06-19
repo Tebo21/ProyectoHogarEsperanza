@@ -41,6 +41,7 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
   mostrarTipoActividades(): void {
     this._actividadservice.getAll().subscribe(
       (response) => {
+
         this.Actividadview=response
         console.log(this.Actividadview)
       }
