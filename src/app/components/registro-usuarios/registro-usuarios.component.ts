@@ -220,8 +220,8 @@ export class RegistroUsuariosComponent implements OnInit {
           usuarioNombre: this.usuarioNombre,
           usuarioTipo: this.tipoUsuario,
           usuarioEstado: true,
-          usuarioFechaCreacion: +'Fecha:' + this.usuarioFechaCreacion.getDate().toString() + '-' + this.usuarioFechaCreacion.getMonth().toString() + '-' +
-            this.usuarioFechaCreacion.getFullYear().toString() + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
+          usuarioFechaCreacion: +'Fecha:' +((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear() 
+          + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
         }
         this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
           this.usuarioCreado = data;

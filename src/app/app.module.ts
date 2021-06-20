@@ -60,6 +60,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import {TooltipModule} from 'primeng/tooltip';
 import { FilterPipe } from './components/actividad-persona/reportes-actividades/pipe/filter.pipe';
 import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
+import {DividerModule} from 'primeng/divider';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -123,6 +124,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     FlatpickrModule.forRoot(),
     PaginatorModule,
     TooltipModule,
+    DividerModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe],
