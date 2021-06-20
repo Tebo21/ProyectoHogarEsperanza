@@ -8,7 +8,7 @@ import { ActividadesService } from '../../services/actividades.service';
 import { Actividades } from '../../models/Actividades';
 import { PersonasService } from '../../services/personas.service';
 import { Personas } from '../../models/personas';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { CitaMedicaService } from '../../services/cita-medica.service';
 
 const colors: any = {
@@ -166,6 +166,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
       }
   );
   }
+  a: number;
 
   mostrarCitasMedicas(): void {
     this.citaService.listCitas().subscribe(
@@ -187,11 +188,9 @@ export class VoluntarioCalendarioComponent implements OnInit {
                   afterEnd: true,
                 },
               },
-            ];
 
-
-          
-
+              
+            ]; 
         });
         this.Actividadview=response
         console.log(this.Actividadview)
