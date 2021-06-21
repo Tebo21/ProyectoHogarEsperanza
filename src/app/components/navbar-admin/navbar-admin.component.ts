@@ -82,6 +82,11 @@ export class NavbarAdminComponent implements OnInit {
                 label: 'Registrar Beneficiario',
                 icon: 'pi pi-fw pi-user-plus',
                 routerLink: ['/registro-persona']
+              },
+              {
+                label: 'Listar Beneficiario',
+                icon: 'pi pi-fw pi-users',
+                routerLink: ['/lista-beneficiarios']
               }
             ]
           }
