@@ -1,6 +1,5 @@
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LayoutComponent } from './components/layout/layout.component';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
 import { LoginComponent } from './components/login/login.component';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
@@ -24,6 +23,7 @@ import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuar
 import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
 import { ReportesActividadesComponent } from './components/actividad-persona/reportes-actividades/reportes-actividades.component';
 import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
+import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/lista-beneficiarios.component';
 
 // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
 // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -69,6 +69,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DasboardvoluntariosComponent,
+  },
+  {
+    path: 'lista-beneficiarios',
+    component: ListaBeneficiariosComponent,
   },
   {
     path: 'listado-usuarios',

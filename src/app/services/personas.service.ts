@@ -17,4 +17,7 @@ export class PersonasService {
   getPorCedula(cedula: any): Observable<Personas>{
     return this.http.get<Personas>(this.URL+`/bycedula/${cedula}`);
   }
+  getPersona():Observable<any>{
+    return this.http.get(`${this.URL}/listadoPersonas`);
+  }
 }

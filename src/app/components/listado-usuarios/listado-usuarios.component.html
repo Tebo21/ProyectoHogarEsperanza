@@ -5,19 +5,35 @@
 
 <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
 
-    <p-table #dt [value]="listaUsusarios" dataKey="id" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
-        [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10,25,50]" [rowHover]="true" selectionMode="multiple" [(selection)]="selectedUsers">
+    <p-table #dt [value]="listaUsuarios" [rows]="10" styleClass="p-datatable-responsive-demo" [scrollable]="true"
+        scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+        [(selection)]="selected" [rowHover]="true"
+        [globalFilterFields]="['usuarioCedula','usuarioNombre','usuarioFechaCreacion']">
         <ng-template pTemplate="caption">
-            <div class="p-d-flex" align="center"> 
-                <h4 class="text-center">Generar Reportes</h4>
-                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="crearReporte()" class="p-button-danger p-mr-2"  pTooltip="PDF" tooltipPosition="bottom"></button>
-                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
-                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+            <div class="container" style="display: grid;">
+                <div align="right">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            placeholder="Cédula, Nombre, Fecha" />
+                    </span>
+                </div>
+                <div align="left">
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="crearReporte()"
+                        class="p-button-danger p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                        class="p-button-success p-mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-filter"
+                        (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-mr-2"
+                        pTooltip="Seleccionados" tooltipPosition="bottom"></button>
+                </div>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
                 <th pSortableColumn="idUsuario">ID
                     <p-sortIcon field="idUsuario"></p-sortIcon>
                 </th>
@@ -37,10 +53,14 @@
                     </p-columnFilter>
                 </th>
                 <th>Editar / Eliminar</th>
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
-            <tr>
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="user"></p-tableCheckbox>
+                </td>
                 <td>{{user.idUsuario}}</td>
                 <td>{{user.usuarioCedula}}</td>
                 <td>{{user.usuarioNombre}}</td>
@@ -54,9 +74,12 @@
                 </td>
             </tr>
         </ng-template>
-
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No se encontraron usuarios.</td>
+            </tr>
+        </ng-template>
     </p-table>
-
 </div>
 <br>
 

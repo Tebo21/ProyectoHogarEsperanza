@@ -16,6 +16,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import pdfMake from 'pdfmake/build/pdfmake';
 import jsPDF from 'jspdf';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-crear-cita',
@@ -37,8 +38,11 @@ export class CrearCitaComponent implements OnInit {
   cedulaac = new FormControl('', [Validators.required]);
   cedulatra = new FormControl('', [Validators.required]);
 
-  fechaRegistro: Date = new Date();
-  fechaCita: Date ;
+  today= new Date();
+  fCitaMedica: Date;
+  
+  fechaRegistro = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-ECU', '+0593');
+  fechaCita: string;
   cedulaPaciente: string;
   cedulaAcom: string;
   cedulaTra: string;
@@ -113,6 +117,7 @@ export class CrearCitaComponent implements OnInit {
     this.nombreSeEspecialidad = citan.especialidad;
     this.fechaRegistro = citan.fechaRegistro;
     this.fechaCita = citan.fechaCitaMedica;
+    //this.today.
   }
 
   // tslint:disable-next-line: typedef

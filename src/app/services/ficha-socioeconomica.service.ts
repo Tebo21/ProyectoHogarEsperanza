@@ -16,4 +16,7 @@ export class FichaSocioeconomicaService {
   getfichacedula(cedula: any): Observable<any>{
     return this.http.get<any>(this.URL+`/bycedula/${cedula}`);
   }
+  getficha():Observable<any>{
+    return this.http.get(`${this.URL}/listadoFichas`); 
+  }
 }

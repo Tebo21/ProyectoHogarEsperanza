@@ -5,6 +5,7 @@
 <div class="container animated  d-flex justify-content-center fadeIn">
 
     <p-dialog header="Datos del Voluntario" [(visible)]="displayV" [style]="{width: '70vw'}" [baseZIndex]="10000">
+        <p-messages [(value)]="msgs"></p-messages>
         <p-panel class="card">
             <div class="form-floating mb-3">
                 <label for="floatingInput">Cédula</label>

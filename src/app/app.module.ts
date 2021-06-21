@@ -17,7 +17,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
-import { LayoutComponent } from './components/layout/layout.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
 import { UsuarioService } from './services/usuarios.service';
 import { PanelModule } from 'primeng/panel';
@@ -61,13 +60,14 @@ import { PaginatorModule } from 'primeng/paginator';
 import {TooltipModule} from 'primeng/tooltip';
 import { FilterPipe } from './components/actividad-persona/reportes-actividades/pipe/filter.pipe';
 import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
+import {DividerModule} from 'primeng/divider';
+import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/lista-beneficiarios.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent,
     LoginComponent,
     ActividadPersonaComponent,
     CrearActividadComponent,
@@ -95,7 +95,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ReportesActividadesComponent,
     PerfilUsuarioComponent,
     FilterPipe,
-    BuscarCitaComponent
+    BuscarCitaComponent,
+    ListaBeneficiariosComponent,
   ],
   imports: [
     CommonModule,
@@ -125,6 +126,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     FlatpickrModule.forRoot(),
     PaginatorModule,
     TooltipModule,
+    DividerModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe],

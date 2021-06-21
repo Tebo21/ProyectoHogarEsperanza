@@ -24,7 +24,7 @@ export class RegistroUsuariosComponent implements OnInit {
   persona: Personas = {};
   usuario: Usuarios = {};
   //Variables
-  ficha: FichaSocioeconomica [];
+  ficha: FichaSocioeconomica[];
   personaCreada: Personas = {};
   usuarioCreado: Usuarios = {};
   listadoTipo: any[];
@@ -69,12 +69,10 @@ export class RegistroUsuariosComponent implements OnInit {
   usuarioNombre: string = '';
   usuarioContrasenia: string = '';
   usuarioConfirContrasenia: string = '';
-
+  usuarioFechaCreacion: Date;
 
   constructor(private router: Router, private personaservice: PersonasService,
-    private usuarioservice: UsuarioService,
-    private fichaServicio: FichaSocioeconomicaService,
-    private messageService: MessageService) {
+    private usuarioservice: UsuarioService) {
 
     this.listadoTipo = [
       { top: 'Administrador' },
@@ -158,6 +156,7 @@ export class RegistroUsuariosComponent implements OnInit {
       }
     }
   }
+
   onChangeEstado(event: any) {
     this.Validacion();
   }
@@ -170,6 +169,7 @@ export class RegistroUsuariosComponent implements OnInit {
       this.router.navigateByUrl('inicio-super-admin');
     }
   }
+
   Validacion() {
     if (this.cedula != '' &&
       this.nombres != '' &&
@@ -218,7 +218,10 @@ export class RegistroUsuariosComponent implements OnInit {
           usuarioCedula: this.cedula,
           usuarioContrasenia: this.usuarioContrasenia,
           usuarioNombre: this.usuarioNombre,
-          usuarioTipo: this.tipoUsuario
+          usuarioTipo: this.tipoUsuario,
+          usuarioEstado: true,
+          usuarioFechaCreacion: +'Fecha:' +((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear() 
+          + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
         }
         this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
           this.usuarioCreado = data;
@@ -227,15 +230,24 @@ export class RegistroUsuariosComponent implements OnInit {
           const contador = timer(2000);
           contador.subscribe((n) => {
             this.clear();
+            window.location.reload();
           })
         });
         this.displayV = false
       } else {
         this.addMultiple('error', 'Error', 'Las contraseñas no coinciden');
+        const contador = timer(2000);
+        contador.subscribe((n) => {
+          this.clear();
+        })
       }
     } else {
-        this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
-      }
+      this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
+      const contador = timer(2000);
+      contador.subscribe((n) => {
+        this.clear();
+      })
+    }
   }
 
   addMultiple(severity1: string, sumary1: string, detail1: string) {
@@ -250,7 +262,6 @@ export class RegistroUsuariosComponent implements OnInit {
     });
 
   }
-
 
   clear() {
     this.msgs = [];
