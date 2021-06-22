@@ -128,6 +128,7 @@ export class RegistroUsuariosComponent implements OnInit {
     this.displayV = false;
     this.displayB = false;
     this.adminActivar = true;
+    this.usuarioFechaCreacion = new Date;
   }
 
   onChange(event: any) {
@@ -230,14 +231,14 @@ export class RegistroUsuariosComponent implements OnInit {
           usuarioNombre: this.usuarioNombre,
           usuarioTipo: this.tipoUsuario,
           usuarioEstado: true,
-          usuarioFechaCreacion: +'Fecha:' +((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear() 
+          usuarioFechaCreacion: 'Fecha:' +((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear() 
           + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
         }
         this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
           this.usuarioCreado = data;
           this.GurdarPersona();
           this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
-          const contador = timer(2000);
+          const contador = timer(1000);
           contador.subscribe((n) => {
             this.clear();
             window.location.reload();
