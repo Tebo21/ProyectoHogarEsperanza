@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Personas } from '../../models/personas';
 import { PersonasService } from '../../services/personas.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 
 @Component({
@@ -34,7 +35,10 @@ export class RegistroPersonaComponent implements OnInit {
     this.tipoUser = localStorage.getItem('rolUser');
     if (this.tipoUser == '1' || this.tipoUser == 2) {
     } else if (this.tipoUser == '3' || this.tipoUser == '4') {
-      alert('No tiene permisos para registrar beneficiarios')
+      Swal.fire({
+        title: 'No tiene permisos para registrar beneficiarios',
+        icon: 'warning',
+      });
       this.router.navigateByUrl('inicio-super-admin');
     }
   } 
@@ -45,19 +49,22 @@ export class RegistroPersonaComponent implements OnInit {
     var ConfirmaValida=0
     if(cedulaPer == null){
       var cedul = document.getElementById("cedula")
-      cedul.style.backgroundColor = "#FF0000"
+      cedul.style.backgroundColor = "#FCAFAF"
     }else{
       if(cedulaPer.length==10){
         var cedul = document.getElementById("cedula")
         cedul.style.backgroundColor = "#FFFEFE"
         ConfirmaValida = ConfirmaValida + 1 
       }else{
-        alert("cedula incorrecta")
+        Swal.fire({
+          title: 'cedula incorrecta',
+          icon: 'warning',
+        });
       } 
     }
      if(nombrePer == null){
       var nom = document.getElementById("nombre")
-      nom.style.backgroundColor = "#FF0000"
+      nom.style.backgroundColor = "#FCAFAF"
     }else{
       var nom = document.getElementById("nombre")
       nom.style.backgroundColor = "#FFFEFE"
@@ -65,7 +72,7 @@ export class RegistroPersonaComponent implements OnInit {
     }
      if(apellPer == null){
       var ape = document.getElementById("apellido")
-      ape.style.backgroundColor = "#FF0000"
+      ape.style.backgroundColor = "#FCAFAF"
     } else {
         var ape = document.getElementById("apellido")
         ape.style.backgroundColor = "#FFFEFE"
@@ -86,7 +93,10 @@ export class RegistroPersonaComponent implements OnInit {
         error => console.log(error));
     this.router.navigate(['registro-familiares'])
     }else{
-      alert("Complete los campos en rojo")
+      Swal.fire({
+        title: 'Verifique los campos en rojo',
+        icon: 'warning',
+      });
     }
   }
   calcularedad(event: any) {

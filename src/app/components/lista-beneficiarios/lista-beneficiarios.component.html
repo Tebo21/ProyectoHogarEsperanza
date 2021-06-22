@@ -17,13 +17,6 @@
             [globalFilterFields]="['usuarioCedula','usuarioNombre','usuarioFechaCreacion']" [value]="personaArray">
             <ng-template pTemplate="caption">
                 <div class="container" style="display: grid;">
-                    <div >
-                        <span class="p-input-icon-right">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" 
-                             placeholder="Cédula, Nombre, Fecha" />
-                        </span>
-                    </div>
                     <div align="left">
                         <button type="button" pButton pRipple icon="pi pi-file-pdf" 
                             class="p-button-danger p-mr-2" tooltipPosition="bottom" (click)="generarPDF()"></button>
