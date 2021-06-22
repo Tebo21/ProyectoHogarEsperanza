@@ -136,7 +136,7 @@ export class EntregarDonacionComponent implements OnInit {
           entrega.cantidadEntregada = result.cantidadEntregada;
           entrega.cedulaBeneficiario = result.cedulaBeneficiario;
           entrega.descripcionProducto = result.descripcionProducto;
-          entrega.fechaEntrega = result.fechaEntrega.substring(0,10);
+          entrega.fechaEntrega = result.fechaEntrega;
           entrega.idEntregaDonacion = result.idEntregaDonacion;
           entrega.productoEntregado = result.productoEntregado;
 
