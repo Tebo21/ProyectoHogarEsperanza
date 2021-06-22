@@ -14,8 +14,9 @@
                 <div align="right">
                     <span class="p-input-icon-right">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Cédula, Nombre, Fecha" />
+                           
                     </span>
                 </div>
                 <div align="left">

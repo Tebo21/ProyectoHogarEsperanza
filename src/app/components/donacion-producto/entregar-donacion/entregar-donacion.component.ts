@@ -31,6 +31,11 @@ type TableRow = [number, string, string, string, number, Date];
 })
 export class EntregarDonacionComponent implements OnInit {
   
+  public personaArray:any = [];
+  public entregaDona:any = [];
+  public cedulaArray:any = [];
+  persona: Personas = new Personas();
+  listaEntrega: EntregaDonacion = new EntregaDonacion();
 
   listaDonaciones: Array<Donaciones>;
   listaEntregaDonaciones: Array<EntregaDonacion>;
@@ -252,7 +257,7 @@ export class EntregarDonacionComponent implements OnInit {
       confirmButtonText: 'Sí, descargar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.generaPdf();
+        this.generarPDF();
         Swal.fire(
           'Descargado!',
           'El registro ha sido descargado',
@@ -261,7 +266,55 @@ export class EntregarDonacionComponent implements OnInit {
       }
     })
   }
-  async generaPdf() {
+
+  listaBeneficiariosPdf(){
+    this.entregarDonacionService.getEntregas().subscribe(data =>{
+      for(let i in data){
+        this.listaEntrega=data[i]; 
+        this.cedulaArray.push(this.listaEntrega.cedulaBeneficiario)
+        this.entregaDona.push(this.listaEntrega.productoEntregado)
+        this.entregaDona.push(this.listaEntrega.descripcionProducto)
+        this.entregaDona.push(this.listaEntrega.cantidadEntregada)      
+        this.entregaDona.push([this.listaEntrega.fechaEntrega.substring(0,10)])
+        
+      }    
+      });
+    this.personaService.getPersona().subscribe(data =>{
+      for(let i in this.cedulaArray){
+        for(let j in data){
+          this.persona=data[j];
+          if(this.cedulaArray[i]==this.persona.cedula){
+            this.personaArray.push([this.persona.cedula,this.persona.nombres+" "+this.persona.apellidos, this.entregaDona[i]])
+          }
+        }
+      }
+    });
+  }
+
+  extractData(){
+    console.log(this.personaArray)
+    return this.personaArray.map(row =>[row[0],row[1],row[2],row[3],row[4],row[5]])
+  }
+
+  async generarPDF(){
+    const pdf = new PdfMakeWrapper();
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+    pdf.add(new Txt("Reporte de productos entregados a los beneficiarios").bold().alignment('center').end);
+    pdf.add(pdf.ln(3))
+    pdf.add(new Table([
+      ['Cedula','Nombres','Producto','Descripcion producto','Cantidad','Fecha',],
+      ...this.extractData()
+    ]).widths('*').layout({
+      fillColor:(rowIndex:number, node:any, columnIndex:number)=>{
+        return rowIndex === 0 ? '#CCCCCC': '';
+      }
+    }).end)
+    pdf.create().open();   
+  }
+
+
+
+  /*async generaPdf() {
     const pdf = new PdfMakeWrapper();
     const data = await this.fetchData();
 
@@ -298,7 +351,7 @@ export class EntregarDonacionComponent implements OnInit {
         return rowIndex === 0 ? 20 : 0;
       })
       .layout({
-        /**% 2 */
+        /**% 2 
         fillColor: (rowIndex: number, node: any, columnIndex: number) => {
           return rowIndex === 0 ? '#CCCCCC' : '';
         },
@@ -322,7 +375,7 @@ export class EntregarDonacionComponent implements OnInit {
     return fetch('http://localhost:3000/entregaDonacion/lista').then(
       (response) => response.json()
     );
-  }
+  }*/
 
  
   
