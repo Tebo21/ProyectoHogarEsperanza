@@ -5,6 +5,7 @@ import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomic
 import { Router } from '@angular/router';
 import { Personas } from 'src/app/models/personas';
 import { PersonasService } from 'src/app/services/personas.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-ficha-socioeconomica',
@@ -148,7 +149,10 @@ export class FichaSocioeconomicaComponent implements OnInit {
   }
   addFicha(){
     if(this.validarDatos()!=10){
-      confirm("Complete los campos en rojo")
+      Swal.fire({
+        title: 'Complete los campos en rojo',
+        icon: 'warning',
+      });
    }else{
     var cedula_persona=localStorage.getItem('cedulalocalstorage');
     this.fichasocieconomicaModel.cedulaPersona=cedula_persona;
