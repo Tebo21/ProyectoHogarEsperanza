@@ -13,16 +13,19 @@ import { Personas } from 'src/app/models/personas';
 import pdfMake from 'pdfmake/build/pdfmake';
 import { DatePipe, formatDate } from '@angular/common';
 
-/*interface DataResponse {
+
+interface DataResponse {
+
   idEntregaDonacion: number;
   cedulaBeneficiario: string;
   productoEntregado: string;
   descripcionProducto: string;
   cantidadEntregada: number;
   fechaEntrega: Date ;  
-}*/
+}
 
-type TableRow = [string, string, string, number, Date];
+type TableRow = [number,string, string, string, number, Date];
+type TableRow2 = [string, string, string, number, Date];
 
 @Component({
   selector: 'app-entregar-donacion',
@@ -57,6 +60,8 @@ export class EntregarDonacionComponent implements OnInit {
   displayED: boolean = false;
 
   productoEntrega: Donaciones;
+
+  datepipe: any;
 
 
   constructor(
@@ -128,6 +133,7 @@ export class EntregarDonacionComponent implements OnInit {
   }
 
   obtenerEntregas(cedula: string) {
+    
     this.listaEntregaDonaciones = [];
     this.entregarDonacionService.getPorCedula(cedula).subscribe((data) => {
       if (data != null) {
@@ -137,9 +143,9 @@ export class EntregarDonacionComponent implements OnInit {
           entrega.cedulaBeneficiario = result.cedulaBeneficiario;
           entrega.descripcionProducto = result.descripcionProducto;
           entrega.fechaEntrega = result.fechaEntrega;
-          entrega.idEntregaDonacion = result.idEntregaDonacion;
-          entrega.productoEntregado = result.productoEntregado;
-
+          entrega.idEntregaDonacion = result.idEntregaDonacion;         
+          entrega.productoEntregado = result.productoEntregado; 
+          
           return entrega;
          
 
@@ -260,7 +266,7 @@ export class EntregarDonacionComponent implements OnInit {
       confirmButtonText: 'Sí, descargar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.generarPDF();
+        this.generaPdfBeneficiarios();
         Swal.fire(
           'Descargado!',
           'El registro ha sido descargado',
@@ -270,54 +276,9 @@ export class EntregarDonacionComponent implements OnInit {
     })
   }
 
-  listaBeneficiariosPdf(){
-    this.entregarDonacionService.getEntregas().subscribe(data =>{
-      for(let i in data){
-        this.listaEntrega=data[i]; 
-        this.cedulaArray.push(this.listaEntrega.cedulaBeneficiario)
-        this.entregaDona.push(this.listaEntrega.productoEntregado)
-        this.entregaDona.push(this.listaEntrega.descripcionProducto)
-        this.entregaDona.push(this.listaEntrega.cantidadEntregada)      
-        //this.entregaDona.push([this.listaEntrega.fechaEntrega.substring(0,10)])
-        
-      }    
-      });
-    this.personaService.getPersona().subscribe(data =>{
-      for(let i in this.cedulaArray){
-        for(let j in data){
-          this.persona=data[j];
-          if(this.cedulaArray[i]==this.persona.cedula){
-            this.personaArray.push([this.persona.cedula,this.persona.nombres+" "+this.persona.apellidos, this.entregaDona[i]])
-          }
-        }
-      }
-    });
-  }
-
-  extractData(){
-    console.log(this.personaArray)
-    return this.personaArray.map(row =>[row[0],row[1],row[2],row[3],row[4],row[5]])
-  }
-
-  async generarPDF(){
-    const pdf = new PdfMakeWrapper();
-    pdf.add(await new Img('../../assets/img/logo.png').build());
-    pdf.add(new Txt("Reporte de productos entregados a los beneficiarios").bold().alignment('center').end);
-    pdf.add(pdf.ln(3))
-    pdf.add(new Table([
-      ['Cedula','Nombres','Producto','Descripcion producto','Cantidad','Fecha',],
-      ...this.extractData()
-    ]).widths('*').layout({
-      fillColor:(rowIndex:number, node:any, columnIndex:number)=>{
-        return rowIndex === 0 ? '#CCCCCC': '';
-      }
-    }).end)
-    pdf.create().open();   
-  }
 
 
-
-  /*async generaPdf() {
+ async generaPdfBeneficiarios() {
     const pdf = new PdfMakeWrapper();
     const data = await this.fetchData();
 
@@ -332,10 +293,10 @@ export class EntregarDonacionComponent implements OnInit {
         .bold().end
     );
     pdf.add(new Txt('   ').end);
-    pdf.add(this.creaTabla(data));
+    pdf.add(this.creaTablabenefi(data));
     pdf.create().open();
   }
-  creaTabla(data: DataResponse[]): ITable {
+  creaTablabenefi(data: DataResponse[]): ITable {
     [{}];
 
     return new Table([
@@ -347,14 +308,14 @@ export class EntregarDonacionComponent implements OnInit {
         'Cantidad Entregada',
         'Fecha Entrega',
       ],
-      ...this.extraerDatos(data),
+      ...this.extraerDatosBenefi(data),
     ])
 
       .heights((rowIndex) => {
         return rowIndex === 0 ? 20 : 0;
       })
       .layout({
-        /**% 2 
+        /**% 2 */
         fillColor: (rowIndex: number, node: any, columnIndex: number) => {
           return rowIndex === 0 ? '#CCCCCC' : '';
         },
@@ -362,8 +323,7 @@ export class EntregarDonacionComponent implements OnInit {
   }
 
 
-  extraerDatos(data: DataResponse[]): TableRow[] {
-    
+  extraerDatosBenefi(data: DataResponse[]): TableRow[] {
     return data.map((row) => [
       row.idEntregaDonacion,
       row.cedulaBeneficiario,
@@ -378,13 +338,11 @@ export class EntregarDonacionComponent implements OnInit {
     return fetch('http://localhost:3000/entregaDonacion/lista').then(
       (response) => response.json()
     );
-  }*/
+  }
   
 
   async generaPdf() {
     const pdf = new PdfMakeWrapper();
-    
-
     pdf.info({
       title: 'Reporte de productos entregados ',
     });
@@ -397,16 +355,16 @@ export class EntregarDonacionComponent implements OnInit {
       new Txt('Lista de los productos entregados ').alignment('center').bold().fontSize(16).end
     );
     pdf.add(new Txt('   ').end);
-    pdf.add(this.creaTabla(this.listaEntregaDonaciones));
+    pdf.add(this.creaTabla2(this.listaEntregaDonaciones));
     pdf.create().open();
   }
-  creaTabla(data: EntregaDonacion[]): ITable {
+  creaTabla2(data: EntregaDonacion[]): ITable {
     [{}];
     return new Table([
       ['Cédula', 'Producto Entregado', 'Descripcion','Cantidad', 'Fecha entrega'],
-      ...this.extraerDatos(data),
+      ...this.extraerDatos2(data),
     ])
-    .widths('*')
+    
       .heights((rowIndex) => {
         return rowIndex === 0 ? 20 : 0;
       })
@@ -416,7 +374,7 @@ export class EntregarDonacionComponent implements OnInit {
         },
       }).end;
   }
-  extraerDatos(data: EntregaDonacion[]): TableRow[] {
+  extraerDatos2(data: EntregaDonacion[]): TableRow2[] {
     return data.map((row) => [
       row.cedulaBeneficiario,
       row.productoEntregado,
@@ -427,5 +385,4 @@ export class EntregarDonacionComponent implements OnInit {
 
   }
  
-  
 }

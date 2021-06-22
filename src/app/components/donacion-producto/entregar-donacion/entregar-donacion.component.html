@@ -53,6 +53,12 @@
         </p-panel>
     </div>
     <br>
+    <button pButton pRipple type="button" label="Reporte productos entregados"
+    [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff; margin-left: 10%;"
+    class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf"
+    (click)="showConfirmacionPDF()"></button>
+    <br>
+    <br>
     <div class="container animated d-flex justify-content-center animated fadeIn">
         <p-panel class="card">
             <p-table #dt [value]="listaDonaciones" dataKey="id" [rowHover]="true" [rows]="10"
@@ -68,10 +74,7 @@
                                 (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                                 placeholder="Global search" />
                         </span>
-                        <button pButton pRipple type="button" label="Generar reporte"
-                            [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff; margin-left: 5%;"
-                            class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf"
-                            (click)="showConfirmacionPDF()"></button>
+                      
 
                     </div>
                 </ng-template>
