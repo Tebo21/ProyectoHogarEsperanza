@@ -46,6 +46,10 @@
                 <i class="pi pi-angle-double-left"></i> Regresar
               </button>
             </div>
+
+            <button class="btn btn-outline-primary btnfooter" (click)="genereport()" type="button" style="margin-left: 10px">
+              Reporte <i class="pi pi-file-pdf"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -57,19 +61,44 @@
         </div>
         <br />
 
-        <div class="container animated d-flex justify-content-center animated fadeIn">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">ESPECIALIDAD</th>
-                <th scope="col">CENTRO MÉDICO</th>
-                <th scope="col">ACCIONES</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let e of especialidad" class="list-group-item-action">
-                <td>{{ e.idEspecialidad }}</td>
+        <p-table #dt [value]="esp" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,60]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [filterDelay]="0" [globalFilterFields]="['centroMedico']">
+            <ng-template pTemplate="caption">
+                <span class="buscar" style="margin-left: 50%">
+                    <i class="pi pi-search"></i> 
+                    <input class="btnn" type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar por centro médico" />
+                </span>
+                <br />
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="idEspecialidad">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            ID
+                            <p-sortIcon field="idEspecialidad"></p-sortIcon>
+                            <p-columnFilter type="text" field="idEspecialidad" display="menu" class="p-ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="nombreEspecialidad">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            ESPECIALIDAD
+                            <p-sortIcon field="nombreEspecialidad"></p-sortIcon>
+                            <p-columnFilter type="text" field="nombreEspecialidad" display="menu" class="p-ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="centroMedico">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            CENTRO MEDICO
+                            <p-sortIcon field="centroMedico"></p-sortIcon>
+                            <p-columnFilter type="text" field="centroMedico" display="menu" class="p-ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th scope="col">ACCIONES</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-e>
+                <tr class="p-selectable-row">
+                   <td>{{ e.idEspecialidad }}</td>
                 <td>{{ e.nombreEspecialidad }}</td>
                 <td>{{ e.centroMedico }}</td>
                 <td>
@@ -90,10 +119,11 @@
                     />
                   </div>
                 </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                </tr>
+              </ng-template>
+          </p-table>
+
+
       </div>
     </div>
   </div>
