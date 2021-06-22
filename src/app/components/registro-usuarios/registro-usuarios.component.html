@@ -4,38 +4,53 @@
 
 <div class="container animated  d-flex justify-content-center fadeIn">
 
-    <p-dialog header="Datos del Voluntario" [(visible)]="displayV" [style]="{width: '70vw'}" [baseZIndex]="10000">
+    <p-dialog header="Datos del Voluntario" [(visible)]="displayV" [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000">
         <p-messages [(value)]="msgs"></p-messages>
         <p-panel class="card">
             <div class="form-floating mb-3">
-                <label for="floatingInput">Cédula</label>
+                <label class="mb-0"><h6 class="mb-0 text-sm">Cédula</h6></label>
                 <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10"
                     id="usuarioCedula" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required disabled>
             </div>
             <div class="form-floating mb-3" *ngIf="adminActivar">
-                <label for="floatingInput">Tipo de voluntario</label>
+                <label class="mb-0"><h6 class="mb-0 text-sm">Tipo de voluntario</h6></label>
                 <p-dropdown [options]="usuarios" [(ngModel)]="usv" placeholder="Seleccione el tipo de voluntario"
                     optionLabel="uop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
                     (onChange)="onChangeV($event)">
                 </p-dropdown>
             </div>
             <div class="form-floating mb-3">
-                <label for="floatingInput">Nombre de Usuario</label>
+                <label class="mb-0"><h6 class="mb-0 text-sm">Nombre de Usuario</h6></label>
                 <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
                     id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuarioNombre" name="usuarioNombre"
                     required>
             </div>
             <div class="form-floating mb-3">
-                <label for="floatingInput">Contraseña</label>
-                <input class="form-control" type="password" maxlength="16" minlength="5" id="usuario.usuarioContrasenia"
-                    placeholder="Contraseña del Usuario" [(ngModel)]="usuarioContrasenia" name="usuarioContrasenia"
-                    required>
+                <label class="mb-0"><h6 class="mb-0 text-sm">Contraseña</h6></label>
+                <br>
+                <p-password [(ngModel)]="usuarioContrasenia" name="usuarioContrasenia" [toggleMask]="true" 
+                placeholder="Contraseña del Usuario" maxlength="16" minlength="8" required>
+                    <ng-template pTemplate="header">
+                        <h6>Introduzca una contraseña</h6>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="p-mt-2">Sugerencia</p>
+                        <ul class="p-pl-2 p-ml-2 p-mt-0" style="line-height: 1.5">
+                            <li>Al menos una minúscula</li>
+                            <li>Al menos una mayúscula</li>
+                            <li>Al menos un número</li>
+                            <li>Mínimo 8 caracteres</li>
+                        </ul>
+                    </ng-template>
+                </p-password>
             </div>
+
             <div class="form-floating mb-3">
-                <label for="floatingInput">Confirmar contraseña</label>
-                <input class="form-control" type="password" maxlength="16" minlength="5" id="usuarioConfirContrasenia"
-                    placeholder="Contraseña del Usuario" [(ngModel)]="usuarioConfirContrasenia"
-                    name="usuarioConfirContrasenia" required>
+                <label class="mb-0"><h6 class="mb-0 text-sm">Confirmar Contraseña</h6></label>
+                <br>
+                 <p-password  [(ngModel)]="usuarioConfirContrasenia" name="usuarioContrasenia" [toggleMask]="true" 
+                 placeholder="Confirmar contraseña" maxlength="16" minlength="8" required></p-password>  
             </div>
         </p-panel>
         <ng-template pTemplate="footer">
@@ -62,8 +77,8 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Apellido</label>
-            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3" id="apellidos"
-                placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
+                id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Direccion</label>
@@ -90,7 +105,13 @@
         <div class="form-floating mb-3">
             <label for="floatingInput">Fecha de nacimiento</label>
             <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
-                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" maxlength="10" required>
+                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" maxlength="10"
+                (change)="calcularedad($event)" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Edad</label>
+            <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
+                placeholder="Edad" [(ngModel)]="edadC" name="edad" required disabled>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nacionalidad</label>

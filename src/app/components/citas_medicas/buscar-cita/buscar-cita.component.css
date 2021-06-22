@@ -53,19 +53,16 @@
 
 .buscar {
     position: absolute;
-    padding: 5px;
+    padding: 15px;
 }
 
 .buscar input {
     width: 240 px;
     height: 40px;
-    padding: 0 20px;
+    padding: 0 8px;
     font-size: 18 px;
     color: #000;
-    outline: none;
-    border: 1px solid silver;
     border-radius: 30px;
-    transition: all 0.6s ease;
 }
 
 .btnn {
@@ -73,20 +70,11 @@
     top: 0;
     right: 0;
     background: #79aedf;
-    width: 55px;
+    width: 300px;
     height: 55px;
     line-height: 55px;
     text-align: center;
     color: white;
     font-size: 20px;
     border-radius: 50%;
-    cursor: pointer;
-}
-
-.buscar:hover input {
-    width: 240px;
-}
-
-.buscar input:focus {
-    width: 240 px;
 }
