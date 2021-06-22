@@ -7,31 +7,32 @@
 
     <p-table #dt [value]="listaUsuarios" [rows]="10" styleClass="p-datatable-responsive-demo" [scrollable]="true"
         scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-        [(selection)]="selected" [rowHover]="true"
+        [(selection)]="selected" dataKey="idUsuario" [rowHover]="true"
         [globalFilterFields]="['usuarioCedula','usuarioNombre','usuarioFechaCreacion']">
         <ng-template pTemplate="caption">
             <div class="container" style="display: grid;">
                 <div align="right">
                     <span class="p-input-icon-right">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Cédula, Nombre, Fecha" />
                     </span>
                 </div>
                 <div align="left">
                     <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="crearReporte()"
                         class="p-button-danger p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelected()"
+                        class="p-button-info p-mr-2" pTooltip="Seleccionados PDF" tooltipPosition="bottom"></button>
                     <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
                         class="p-button-success p-mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
-                    <button type="button" pButton pRipple icon="pi pi-filter"
-                        (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-mr-2"
-                        pTooltip="Seleccionados" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelectedX()"
+                        class="p-button-info p-mr-2" pTooltip="Seleccionados XLS" tooltipPosition="bottom"></button>
                 </div>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 3rem">
+                <th>
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
                 <th pSortableColumn="idUsuario">ID
@@ -82,10 +83,9 @@
     </p-table>
 </div>
 <br>
-
-<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}"  [style]="{width: '50vw'}">
 </p-confirmDialog>
-<p-dialog header="Editar Usuario" [(visible)]="displayEditar" [style]="{width: '50vw'}" [baseZIndex]="10000">
+<p-dialog header="Editar Usuario" [(visible)]="displayEditar"  [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000">
     <div class="card">
         <label for="float-input">Cedula</label>
         <input id="float-input" type="text" pInputText [(ngModel)]="usuarioA.usuarioCedula" disabled>

@@ -31,10 +31,10 @@
                                 <input class="mb-4" type="text" [(ngModel)]="user.usuarioCedula"
                                     name="user.usuarioCedula" placeholder="Número de cédula de identidad">
                             </div>
-                            <div class="row px-3">
+                            <div class="row px-1">
                                 <label class="mb-0"><h6 class="mb-0 text-sm">Contraseña</h6></label>
-                                <input class="mb-4" type="password" [(ngModel)]="user.usuarioContrasenia"
-                                    name="user.usuarioContrasenia" placeholder="Contraseña">
+                                <p-password class="mb-4" [(ngModel)]="user.usuarioContrasenia" [toggleMask]="true"
+                                name="user.usuarioContrasenia" placeholder="Contraseña"></p-password>
                             </div>
                             <div class="row px-1">
                                 <h4 class="mb-0 text-sm">Selecciona un tipo de usuario</h4>

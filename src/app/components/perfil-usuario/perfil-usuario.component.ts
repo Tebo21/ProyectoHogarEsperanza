@@ -31,6 +31,12 @@ export class PerfilUsuarioComponent implements OnInit {
   generos: any[];
   genero: any;
   discap = false;
+  //Campos
+  edadC:number;
+  usuarioContraseniaAnterior:any;
+  usuarioContrasenia:any;
+  displayContra: boolean = false;
+  
   constructor(private userService: UsuarioService, private personaService: PersonasService) {  }
 
   ngOnInit(): void {
@@ -78,6 +84,7 @@ export class PerfilUsuarioComponent implements OnInit {
     this.personaService.getPorCedula(this.cedUser).subscribe(data2 => {
       this.persona = data2;
       this.discap = this.persona.discapacidad;
+      this.genero.gop = this.persona.genero;
       this.nacio = this.persona.nacionalidad;
     });
   }
@@ -99,6 +106,12 @@ export class PerfilUsuarioComponent implements OnInit {
     }
   }
 
+  calcularedad(event: any) {
+    let fecha = new Date(event.target.value);
+    let fechactual = new Date();
+    var f1 = fechactual.getFullYear() - fecha.getFullYear();
+    this.edadC = f1
+  }
   
   tipoUsuario(usuarioTipo: number): string {
     if (usuarioTipo == 1) {
@@ -115,4 +128,5 @@ export class PerfilUsuarioComponent implements OnInit {
   Actualizar(){
     alert('Funciona')
   }
+
 }

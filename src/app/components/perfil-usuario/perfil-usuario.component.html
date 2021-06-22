@@ -7,13 +7,13 @@
         <h2 class="text-center">Datos Personales</h2>
         <div class="form-floating mb-3">
             <label for="floatingInput">Cédula</label>
-            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10"
-                id="usuarioCedula" placeholder="Cédula" [(ngModel)]="usuario.usuarioCedula" name="cedula" required disabled>
+            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="usuarioCedula"
+                placeholder="Cédula" [(ngModel)]="usuario.usuarioCedula" name="cedula" required disabled>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nombres</label>
-            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="20" minlength="3"
-                id="personaNombre" placeholder="Nombres" [(ngModel)]="persona.nombres" name="nombres" required>
+            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="20" minlength="3" id="personaNombre"
+                placeholder="Nombres" [(ngModel)]="persona.nombres" name="nombres" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Apellidos</label>
@@ -27,29 +27,36 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Celular</label>
-            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="13" minlength="7"
-                id="personaCelular" placeholder="Celular" [(ngModel)]="persona.celular" name="direccion" required>
+            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="13" minlength="7" id="personaCelular"
+                placeholder="Celular" [(ngModel)]="persona.celular" name="direccion" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Correo Electrónico</label>
-            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="20" minlength="10"
-                id="personaCorreo" placeholder="Correo" [(ngModel)]="persona.correo" name="correo" required>
+            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="20" minlength="10" id="personaCorreo"
+                placeholder="Correo" [(ngModel)]="persona.correo" name="correo" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Género</label>
-            <p-dropdown [options]="generos" [(ngModel)]="genero" optionLabel="gop" placeholder="Seleccione su género" 
-                [style]="{'width': '100%'}" [showClear]="true" >
+            <p-dropdown [options]="generos" [(ngModel)]="genero" optionLabel="gop" placeholder="Seleccione su género"
+                [style]="{'width': '100%'}" [showClear]="true" pTooltip="{{persona.genero}}">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Fecha de nacimiento</label>
             <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
-                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" maxlength="10" required>
+                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" (change)="calcularedad($event)"
+                maxlength="10" required pTooltip="{{persona.fechaNacimiento}}">
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput">Edad</label>
+            <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
+                placeholder="Edad" [(ngModel)]="edadC" name="edad" required disabled>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nacionalidad</label>
             <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="Seleccione su nacionalidad"
-                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true">
+                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
+                pTooltip="{{persona.nacionalidad}}">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
@@ -60,45 +67,71 @@
         <div class="form-floating mb-3">
             <label for="floatingInput">Estado Civil</label>
             <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
-                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true">
+                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" pTooltip="{{persona.estado_civil}}">
             </p-dropdown>
         </div>
         <hr>
         <h2 class="text-center">Mi Cuenta</h2>
         <div class="form-floating mb-3" *ngIf="drop">
             <label for="floatingInput">Tipo de usuario</label>
-            <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario"
-                optionLabel="string" [style]="{'width': '100%'}" [showClear]="true"
-                (onChange)="onChange($event)">
+            <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario" optionLabel="string"
+                [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChange($event)"
+                pTooltip="{{tipoUsuario(usuario.usuarioTipo)}}">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3" *ngIf="vistaTipo">
             <label for="floatingInput">Tipo de usuario</label>
-            <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
-                id="usuarioTipo" placeholder="{{tipoUsuario(usuario.usuarioTipo)}}" name="usuarioNombre"
-                required disabled>
+            <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3" id="usuarioTipo"
+                placeholder="{{tipoUsuario(usuario.usuarioTipo)}}" name="usuarioNombre" required disabled>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nombre de Usuario</label>
             <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
-                id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuario.usuarioNombre" name="usuarioNombre"
-                required>
+                id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuario.usuarioNombre"
+                name="usuarioNombre" required>
         </div>
-        <div class="form-floating mb-3">
-            <label for="floatingInput">Contraseña</label>
-            <input class="form-control" type="password" maxlength="16" minlength="5" id="usuario.usuarioContrasenia"
-                placeholder="Contraseña del Usuario" [(ngModel)]="usuario.usuarioContrasenia" name="usuarioContrasenia"
-                required>
+        <div>
+            <button pButton pRipple type="button" label="Cambiar Contraseña" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
+                (click)="displayContra=true"></button>
         </div>
-        <div class="form-floating mb-3">
-            <label for="floatingInput">Confirmar contraseña</label>
-            <input class="form-control" type="password" maxlength="16" minlength="5" id="usuarioConfirContrasenia"
-                placeholder="Contraseña del Usuario" [(ngModel)]="usuarioConfirContrasenia"
-                name="usuarioConfirContrasenia" required>
-        </div>
+
+
+        <p-dialog header="Cambio de contraseña" [(visible)]="displayContra" [modal]="true" [style]="{width: '19vw'}"
+            [baseZIndex]="10000">
+            <div class="form-floating mb-3">
+                <label for="floatingInput">Contraseña anterior</label>
+                <br>
+                <p-password [(ngModel)]="usuarioContraseniaAnterior" name="usuarioContraseniaAnterior"
+                    [toggleMask]="true" placeholder="Contraseña" maxlength="16" minlength="8" required></p-password>
+            </div>
+            <div class="form-floating mb-3">
+                <label for="floatingInput">Nueva contraseña</label>
+                <br>
+                <p-password [(ngModel)]="usuarioContrasenia" name="usuarioContrasenia" [toggleMask]="true"
+                    placeholder="Contraseña" maxlength="16" minlength="8" required></p-password>
+            </div>
+            <div class="form-floating mb-6">
+                <label for="floatingInput">Confirmar contraseña</label>
+                <br>
+                <p-password [(ngModel)]="usuarioConfirContrasenia" name="usuarioContrasenia" [toggleMask]="true"
+                    placeholder="Confirmar contraseña" maxlength="16" minlength="8" required></p-password>
+            </div>
+            <br>
+            <button pButton pRipple type="button" label="Guardar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
+            (click)="Actualizar()"></button>
+            <button pButton pRipple type="button" label="Cancelar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+            style="color: #fa0f07;" class="p-button-raised p-button-danger p-button-text" icon="pi pi-send"
+            (click)="displayContra=false"></button>
+        <br>
+        </p-dialog>
+
+        <br>
         <button pButton pRipple type="button" label="Aceptar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-        style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
-        (click)="Actualizar()"></button>
+            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
+            (click)="Actualizar()"></button>
+        <br>
     </p-panel>
 </div>
 

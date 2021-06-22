@@ -323,3 +323,7 @@ a {
         margin: 0px 15px
     }
 }
+
+:host ::ng-deep .p-password input {
+  width: 19rem
+}
