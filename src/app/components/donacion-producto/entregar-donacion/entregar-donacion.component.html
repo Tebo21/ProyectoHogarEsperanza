@@ -56,9 +56,10 @@
                                 <i class="pi pi-search"></i>
                                 <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
                             </span>
-                            <!--<span class="p-input-icon-right">                              
-                                    <input  style="margin-left: 10%; " type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel" [(ngModel)]="fecha2">
-                            </span>-->
+                            <button  pButton pRipple type="button" label="Generar reporte" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+                            style="color: #008cff; margin-left: 5%;"class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf" (click)="showConfirmacionPDF()" 
+                           ></button>
+                           
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">
@@ -146,10 +147,7 @@
                         </tr>
                     </ng-template>
                 </p-table>
-                <br>
-                <button  pButton pRipple type="button" label="Generar reporte" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                style="color: #008cff;"class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf" (click)="showConfirmacionPDF()" 
-               ></button>
+               
             </p-panel>
         </div>
     </body>
@@ -192,6 +190,9 @@
     </p-dialog>
 
     <p-dialog header="Listado de donaciones realizadas" [(visible)]="displayPE" [modal]="true" [style]="{width: '75vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <!-- <span class="p-input-icon-right">                              
+                                    <input  style="margin-left: 10%; " type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel" [(ngModel)]="fecha2">
+                            </span> -->
         <ng-template pTemplate="body">
             <p-panel header='Beneficiario: {{nombresBeneficiario}} {{apellidosBeneficiario}}'>
                 <div class="container animated d-flex justify-content-center animated fadeIn">
