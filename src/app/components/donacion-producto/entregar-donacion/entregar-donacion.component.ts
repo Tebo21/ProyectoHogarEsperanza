@@ -406,6 +406,7 @@ export class EntregarDonacionComponent implements OnInit {
       ['Cédula', 'Producto Entregado', 'Descripcion','Cantidad', 'Fecha entrega'],
       ...this.extraerDatos(data),
     ])
+    .widths('*')
       .heights((rowIndex) => {
         return rowIndex === 0 ? 20 : 0;
       })
