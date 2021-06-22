@@ -13,16 +13,16 @@ import { Personas } from 'src/app/models/personas';
 import pdfMake from 'pdfmake/build/pdfmake';
 import { DatePipe, formatDate } from '@angular/common';
 
-interface DataResponse {
+/*interface DataResponse {
   idEntregaDonacion: number;
   cedulaBeneficiario: string;
   productoEntregado: string;
   descripcionProducto: string;
   cantidadEntregada: number;
   fechaEntrega: Date ;  
-}
+}*/
 
-type TableRow = [number, string, string, string, number, Date];
+type TableRow = [string, string, string, number, Date];
 
 @Component({
   selector: 'app-entregar-donacion',
@@ -57,6 +57,7 @@ export class EntregarDonacionComponent implements OnInit {
   displayED: boolean = false;
 
   productoEntrega: Donaciones;
+
 
   constructor(
     private donacionService: DonaProductoService,
@@ -135,11 +136,13 @@ export class EntregarDonacionComponent implements OnInit {
           entrega.cantidadEntregada = result.cantidadEntregada;
           entrega.cedulaBeneficiario = result.cedulaBeneficiario;
           entrega.descripcionProducto = result.descripcionProducto;
-          entrega.fechaEntrega = result.fechaEntrega;
+          entrega.fechaEntrega = result.fechaEntrega.substring(0,10);
           entrega.idEntregaDonacion = result.idEntregaDonacion;
           entrega.productoEntregado = result.productoEntregado;
 
           return entrega;
+         
+
         });
       } else {
         console.log('No se encontraron donaciones');
@@ -275,7 +278,7 @@ export class EntregarDonacionComponent implements OnInit {
         this.entregaDona.push(this.listaEntrega.productoEntregado)
         this.entregaDona.push(this.listaEntrega.descripcionProducto)
         this.entregaDona.push(this.listaEntrega.cantidadEntregada)      
-        this.entregaDona.push([this.listaEntrega.fechaEntrega.substring(0,10)])
+        //this.entregaDona.push([this.listaEntrega.fechaEntrega.substring(0,10)])
         
       }    
       });
@@ -376,7 +379,52 @@ export class EntregarDonacionComponent implements OnInit {
       (response) => response.json()
     );
   }*/
+  
 
+  async generaPdf() {
+    const pdf = new PdfMakeWrapper();
+    
+
+    pdf.info({
+      title: 'Reporte de productos entregados ',
+    });
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+    pdf.add(    
+      new Txt('Usuario: ' + (this.nombresBeneficiario +' '+this.apellidosBeneficiario)).alignment('right').end
+      );
+    pdf.add(new Txt('   ').end);
+    pdf.add(
+      new Txt('Lista de los productos entregados ').alignment('center').bold().fontSize(16).end
+    );
+    pdf.add(new Txt('   ').end);
+    pdf.add(this.creaTabla(this.listaEntregaDonaciones));
+    pdf.create().open();
+  }
+  creaTabla(data: EntregaDonacion[]): ITable {
+    [{}];
+    return new Table([
+      ['Cédula', 'Producto Entregado', 'Descripcion','Cantidad', 'Fecha entrega'],
+      ...this.extraerDatos(data),
+    ])
+      .heights((rowIndex) => {
+        return rowIndex === 0 ? 20 : 0;
+      })
+      .layout({
+        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
+          return rowIndex === 0 ? '#CCCCCC' : '';
+        },
+      }).end;
+  }
+  extraerDatos(data: EntregaDonacion[]): TableRow[] {
+    return data.map((row) => [
+      row.cedulaBeneficiario,
+      row.productoEntregado,
+      row.descripcionProducto,
+      row.cantidadEntregada,     
+      row.fechaEntrega,
+    ]);
+
+  }
  
   
 }
