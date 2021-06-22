@@ -129,8 +129,9 @@ export class CrearActividadComponent implements OnInit {
   }
 
   editActi(){
-    this._actividadservice.updateUser(this.actividadCreate.idActividadPersona,this.actividadCreate);
-    this.showActualizacion();
+    this._actividadservice.updateUser(this.actividadCreate.idActividadPersona,this.actividadCreate).subscribe(data =>{
+      this.showActualizacion();
+    })  
   }
   showActualizacion(){
     Swal.fire({

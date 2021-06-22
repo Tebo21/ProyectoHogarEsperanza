@@ -3,7 +3,10 @@ import { CitasMedicas } from 'src/app/models/citas-medicas';
 import { CitaMedicaService } from 'src/app/services/cita-medica.service';
 import { Router } from '@angular/router';
 import { ActividadesService } from 'src/app/services/actividades.service';
-import pdfMake from 'pdfmake/build/pdfmake';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as faker from 'faker';
+
 
 @Component({
   selector: 'app-buscar-cita',
@@ -13,7 +16,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 export class BuscarCitaComponent implements OnInit {
 
   citaMedica: any;
-  
+
   // centro medico
   nombre: string;
 
@@ -23,7 +26,7 @@ export class BuscarCitaComponent implements OnInit {
   // filtrar
   u: CitasMedicas = new CitasMedicas();
   citas: Array<CitasMedicas> = [];
-  loading: boolean = true;
+  loading = true;
 
   constructor(private citaMedicaService: CitaMedicaService,
               private route: Router,
@@ -37,7 +40,7 @@ export class BuscarCitaComponent implements OnInit {
   obtenerCitas() {
     this.citaMedicaService.listCitas().subscribe((data) => {
       this.citas = data.map((result) => {
-        let u = new CitasMedicas();
+        const u = new CitasMedicas();
         u.descripcionCitaMedica = result.descripcionCitaMedica;
         u.fechaRegistro = result.fechaRegistro;
         u.fechaCitaMedica = result.fechaCitaMedica;
@@ -61,82 +64,31 @@ export class BuscarCitaComponent implements OnInit {
   }
 
   /*GENERACION DE REPORTES */
-  genereport(action = 'open') {
-    var testImageDataUrl = this._actividadservice.img;
-    let docDefinition = {
-      pageSize: 'A4',
-      pageOrientation: 'landscape',
-      pageMargins: [ 40, 60, 40, 60 ],
-      content: [
-        {
-          columns: [
-            {
-              image: testImageDataUrl,
-              width: 100,
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: 'CITAS MEDICAS',
-              fontSize: 27,
-              bold: true,
-              margin: [100, 0, 0, 0],
-              color: '#047886',
-            },
-          ],
-        },
-        {
-          text: '',
-          style: 'sectionHeader',
-        },
-        {
-          layout: 'lightHorizontalLines',
-          table: {
-            headerRows: 1,
-            body: [
-              [
-                'DESCRIPCION',
-                'CEDULA DEL PACIENTE',
-                'CEDULA DEL ACOMPAÑANTE',
-                'CORREO DEL MENSAJE',
-                'CEDULA DEL DE LA FUNDACIÓN',
-                'CENTRO MEDICO',
-                'ESPECIALIDAD',
-                'OBSERVACIONES',
-
-              ],
-              ...this.citas.map((row) => [
-                row.descripcionCitaMedica,
-                row.paciente,
-                row.acompaniante,
-                row.mensaje,
-                row.trabajadorFundacion,
-                row.centroMedico,
-                row.especialidad,
-                row.nota,
-              ]),
-            ],
-          },
-          alignment: 'center',
-          margin: [20, 0, 0, 0],
-        },
-      ],
-      styles: {
-        sectionHeader: {
-          bold: true,
-          decoration: 'underline',
-          fontSize: 14,
-          margin: [0, 15, 0, 15],
-          pageOrientation: 'landscape',
-        },
-      },
+  genereport(): void {
+    const DATA = document.getElementById('TABLA');
+    const doc = new jsPDF('l', 'mm', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3
     };
-    if (action === 'download') {
-      pdfMake.createPdf(docDefinition).download();
-    } else if (action === 'print') {
-      pdfMake.createPdf(docDefinition).print();
-    } else {
-      pdfMake.createPdf(docDefinition).open();
-    }
+    html2canvas(DATA, options).then((canvas) => {
+
+      /*  let img = this._actividadservice.img;
+
+       // Add image Canvas to PDF
+        const bufferX = 3;
+        const bufferY = 3;
+        const imgProps = (doc as any).getImageProperties(img);
+        const pdfWidth = doc.internal.pageSize.getWidth() - 1 * bufferX;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');*/
+        doc.text('CITAS MEDICAS', 10, 10);
+        return doc;
+    }).then((docResult) => {
+      docResult.output('dataurlnewwindow');
+      docResult.save(`${new Date().toISOString()}_CITASMEDICAS.pdf`);
+    });
+
   }
 
   buscarNombre(){

@@ -10,12 +10,12 @@ import { type } from 'node:os';
 import Swal from 'sweetalert2';
 
 interface DataResponse {
-  idDonacion: number;
+ 
   nombreDonacion: string;
   cantidad: number;
   categoria: string;
 }
-type TableRow = [number, string, number, string];
+type TableRow = [string, number, string];
 
 @Component({
   selector: 'app-registro-donacion',
@@ -476,7 +476,7 @@ export class RegistroDonacionComponent implements OnInit {
   creaTabla(data: DataResponse[]): ITable {
     [{}];
     return new Table([
-      ['#', 'Nombre Producto', 'Cantidad', 'Categoria'],
+      ['Nombre Producto', 'Cantidad', 'Categoria'],
       ...this.extraerDatos(data),
     ])
       .widths('*')
@@ -493,7 +493,6 @@ export class RegistroDonacionComponent implements OnInit {
 
   extraerDatos(data: DataResponse[]): TableRow[] {
     return data.map((row) => [
-      row.idDonacion,
       row.nombreDonacion,
       row.cantidad,
       row.categoria,
