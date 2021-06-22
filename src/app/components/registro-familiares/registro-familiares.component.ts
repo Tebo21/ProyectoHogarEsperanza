@@ -37,7 +37,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     var ConfirmaValida=0
     if(cedulaPer == null){
       var cedul = document.getElementById("cedula")
-      cedul.style.backgroundColor = "#FF0000"
+      cedul.style.backgroundColor = "#FCAFAF"
     }else{
       if(cedulaPer.length==10){
         var cedul = document.getElementById("cedula")
@@ -52,7 +52,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
      if(nombrePer == null){
       var nom = document.getElementById("nombre")
-      nom.style.backgroundColor = "#FF0000"
+      nom.style.backgroundColor = "#FCAFAF"
     }else{
       var nom = document.getElementById("nombre")
       nom.style.backgroundColor = "#FFFEFE"
@@ -60,7 +60,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
      if(apellPer == null){
       var ape = document.getElementById("apellido")
-      ape.style.backgroundColor = "#FF0000"
+      ape.style.backgroundColor = "#FCAFAF"
     } else {
         var ape = document.getElementById("apellido")
         ape.style.backgroundColor = "#FFFEFE"
@@ -68,7 +68,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(fechaNac==null){
       var feN = document.getElementById("fechaNacimiento")
-      feN.style.backgroundColor = "#FF0000"
+      feN.style.backgroundColor = "#FCAFAF"
     }else{
       var feN = document.getElementById("fechaNacimiento")
       feN.style.backgroundColor = "#FFFEFE"
@@ -76,7 +76,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(edaPer=null){
       var eda = document.getElementById("edad")
-      eda.style.backgroundColor = "#FF0000"
+      eda.style.backgroundColor = "#FCAFAF"
     }else{
       var eda = document.getElementById("edad")
       eda.style.backgroundColor = "#FFFEFE"
@@ -84,7 +84,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(gener==null){
       var gen = document.getElementById("genero")
-      gen.style.backgroundColor = "#FF0000"
+      gen.style.backgroundColor = "#FCAFAF"
     }else{
       var gen = document.getElementById("genero")
       gen.style.backgroundColor = "#FFFEFE"
@@ -92,7 +92,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(parentes==null){
       var gen = document.getElementById("parentesco")
-      gen.style.backgroundColor = "#FF0000"
+      gen.style.backgroundColor = "#FCAFAF"
     }else{
       var gen = document.getElementById("parentesco")
       gen.style.backgroundColor = "#FFFEFE"
@@ -114,7 +114,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     var parentesco = this.parentesco_familiar;
     if(this.validarDatos()!=7){
       Swal.fire({
-        title: 'Complete los campos en rojo',
+        title: 'Verifique los campos en rojo',
         icon: 'warning',
       });
       if(cedula_hijo.length!=10){

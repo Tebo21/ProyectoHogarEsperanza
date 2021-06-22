@@ -49,7 +49,7 @@ export class RegistroPersonaComponent implements OnInit {
     var ConfirmaValida=0
     if(cedulaPer == null){
       var cedul = document.getElementById("cedula")
-      cedul.style.backgroundColor = "#FF0000"
+      cedul.style.backgroundColor = "#FCAFAF"
     }else{
       if(cedulaPer.length==10){
         var cedul = document.getElementById("cedula")
@@ -64,7 +64,7 @@ export class RegistroPersonaComponent implements OnInit {
     }
      if(nombrePer == null){
       var nom = document.getElementById("nombre")
-      nom.style.backgroundColor = "#FF0000"
+      nom.style.backgroundColor = "#FCAFAF"
     }else{
       var nom = document.getElementById("nombre")
       nom.style.backgroundColor = "#FFFEFE"
@@ -72,7 +72,7 @@ export class RegistroPersonaComponent implements OnInit {
     }
      if(apellPer == null){
       var ape = document.getElementById("apellido")
-      ape.style.backgroundColor = "#FF0000"
+      ape.style.backgroundColor = "#FCAFAF"
     } else {
         var ape = document.getElementById("apellido")
         ape.style.backgroundColor = "#FFFEFE"
@@ -94,7 +94,7 @@ export class RegistroPersonaComponent implements OnInit {
     this.router.navigate(['registro-familiares'])
     }else{
       Swal.fire({
-        title: 'Complete los campos en rojo',
+        title: 'Verifique los campos en rojo',
         icon: 'warning',
       });
     }

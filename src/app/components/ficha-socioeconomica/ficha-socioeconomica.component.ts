@@ -54,7 +54,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     var ConfirmaValida=0
     if(SituacEco == null){
       var situeco = document.getElementById("situacionEconomica")
-      situeco.style.backgroundColor = "#FF0000"
+      situeco.style.backgroundColor = "#FCAFAF"
     }else{
         var situeco = document.getElementById("situacionEconomica")
         situeco.style.backgroundColor = "#FFFEFE"
@@ -62,7 +62,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
      if(TipoVivi == null){
       var tipviv = document.getElementById("tipoVivienda")
-      tipviv.style.backgroundColor = "#FF0000"
+      tipviv.style.backgroundColor = "#FCAFAF"
     }else{
       var tipviv = document.getElementById("tipoVivienda")
       tipviv.style.backgroundColor = "#FFFEFE"
@@ -70,7 +70,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
      if(DescrVivi == null){
       var desviv = document.getElementById("descripcionVivienda")
-      desviv.style.backgroundColor = "#FF0000"
+      desviv.style.backgroundColor = "#FCAFAF"
     } else {
         var desviv = document.getElementById("descripcionVivienda")
         desviv.style.backgroundColor = "#FFFEFE"
@@ -78,7 +78,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
     if(CuSeguro==null){
       var conseg = document.getElementById("Seguro")
-      conseg.style.backgroundColor = "#FF0000"
+      conseg.style.backgroundColor = "#FCAFAF"
     }else{
       var conseg = document.getElementById("Seguro")
       conseg.style.backgroundColor = "#FFFEFE"
@@ -86,7 +86,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
     if(salario==null){
       var sala = document.getElementById("Salario")
-      sala.style.backgroundColor = "#FF0000"
+      sala.style.backgroundColor = "#FCAFAF"
     }else{
       var sala = document.getElementById("Salario")
       sala.style.backgroundColor = "#FFFEFE"
@@ -94,7 +94,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
     if(Nacionalidad==null){
       var nacio = document.getElementById("Nacionalidad")
-      nacio.style.backgroundColor = "#FF0000"
+      nacio.style.backgroundColor = "#FCAFAF"
     }else{
       var nacio = document.getElementById("Nacionalidad")
       nacio.style.backgroundColor = "#FFFEFE"
@@ -102,7 +102,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
     if(estadoCivi==null){
       var estCv = document.getElementById("EstadoCivil")
-      estCv.style.backgroundColor = "#FF0000"
+      estCv.style.backgroundColor = "#FCAFAF"
     }else{
       var estCv = document.getElementById("EstadoCivil")
       estCv.style.backgroundColor = "#FFFEFE"
@@ -110,7 +110,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
     if(discapa==null){
       var disca = document.getElementById("Discapacidad")
-      disca.style.backgroundColor = "#FF0000"
+      disca.style.backgroundColor = "#FCAFAF"
     }else{
       var disca = document.getElementById("Discapacidad")
       disca.style.backgroundColor = "#FFFEFE"
@@ -118,7 +118,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
     if(adulMay==null){
       var gen = document.getElementById("AdultoMayor")
-      gen.style.backgroundColor = "#FF0000"
+      gen.style.backgroundColor = "#FCAFAF"
     }else{
       var gen = document.getElementById("AdultoMayor")
       gen.style.backgroundColor = "#FFFEFE"
@@ -126,7 +126,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }
     if(VivCotr==null){
       var gen = document.getElementById("viveOtros")
-      gen.style.backgroundColor = "#FF0000"
+      gen.style.backgroundColor = "#FCAFAF"
     }else{
       var gen = document.getElementById("viveOtros")
       gen.style.backgroundColor = "#FFFEFE"
@@ -145,12 +145,13 @@ export class FichaSocioeconomicaComponent implements OnInit {
     }else if(f1=="true"){
       var descDisca = document.getElementById("descripcionDiscapacidad");
       descDisca.style.display = ""
+      this.fichasocieconomicaModel.discapacidadDescipcion=""
     }
   }
   addFicha(){
     if(this.validarDatos()!=10){
       Swal.fire({
-        title: 'Complete los campos en rojo',
+        title: 'Verifique los campos en rojo',
         icon: 'warning',
       });
    }else{
