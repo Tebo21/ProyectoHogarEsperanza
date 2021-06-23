@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import { Img, ITable, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
 import { ConfirmationService } from 'primeng/api';
+import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
+import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
-type TableRow = [string, string, string, string];
+type TableRow = [string, string, string, string, string, string];
 
 @Component({
   selector: 'app-listado-usuarios',
@@ -13,26 +16,29 @@ type TableRow = [string, string, string, string];
   providers: [ConfirmationService]
 })
 export class ListadoUsuariosComponent implements OnInit {
+  //Usuario
+  usuario: Usuarios = {};
   listaUsuarios: Usuarios[];
-  selected: Usuarios[];
+  //Usuarios DTO
+  selected: Usuarios2[];
   selectedUsers: Usuarios2[];
   selectedUsersE: Usuarios2[];
-  usuario: Usuarios = {};
-  usuarioA: Usuarios = {};
-  nuevoUser: Usuarios = {};
-  nuevoUserE: Usuarios = {};
-  nuevoUserSelected: Usuarios2 = {};
-  displayEditar: boolean = false;
-  usuarioEdit: Usuarios = {};
+  nuevoUserE: Usuarios2 = {};
+  //Persona
+  Persona: Personas = {};
+  //Listas de DropDown
   listadoTipo: any[];
   tipo: any;
   valido: boolean;
+  //Validacion de tipo de usuario
   usuarioT: number;
   usuarioFechaCreacion: Date = new Date;
-  value: any;
+  ListadoPersonas: Personas[];
 
   constructor(private usuarioService: UsuarioService,
-    private confirmationService: ConfirmationService,) {
+    private confirmationService: ConfirmationService,
+    private personaService: PersonasService,
+    private router: Router) {
     this.listadoTipo = [
       { tip: 'SuperAdministrador' },
       { tip: 'Administrador' },
@@ -45,6 +51,7 @@ export class ListadoUsuariosComponent implements OnInit {
     this.selectedUsers = [];
     this.selected = [];
     this.selectedUsersE = [];
+    this.ListadoPersonas = [];
     this.listarUsuarios();
   }
 
@@ -82,40 +89,21 @@ export class ListadoUsuariosComponent implements OnInit {
     this.usuarioService.getAll().subscribe(data => {
       this.listaUsuarios = data;
       for (let i = 0; i < this.listaUsuarios.length; i++) {
-        this.nuevoUser = this.listaUsuarios[i];
-        const usuarioImprimir: Usuarios2 = {
-          ID: this.nuevoUser.idUsuario,
-          Cédula: this.nuevoUser.usuarioCedula,
-          FechaCreacion: this.nuevoUser.usuarioFechaCreacion,
-          NombreDeUsuario: this.nuevoUser.usuarioNombre,
-          Tipo: this.tipoUsuario(this.nuevoUser.usuarioTipo).toString()
-        }
-        this.selectedUsers.push(usuarioImprimir);
+        this.personaService.getPorCedula(this.listaUsuarios[i].usuarioCedula).subscribe(data2 => {
+          this.Persona = data2
+          this.ListadoPersonas.push(this.Persona)
+          const usuarioImprimir: Usuarios2 = {
+            cedula: this.Persona.cedula,
+            nombres: this.Persona.nombres + ' ' + this.Persona.apellidos,
+            direccion: this.Persona.direccion,
+            telefono: this.Persona.celular,
+            correo: this.Persona.correo,
+            tipousuario: this.tipoUsuario(this.listaUsuarios[i].usuarioTipo).toString()
+          }
+          this.selectedUsers.push(usuarioImprimir);
+        })
       }
     })
-  }
-
-  //Editar
-  showDialogEditar(usu: Usuarios) {
-    this.displayEditar = true;
-    this.usuarioA = usu;
-  }
-
-  actualizarUsuario() {
-    const nu: Usuarios = {
-      idUsuario: this.usuarioA.idUsuario,
-      usuarioCedula: this.usuarioA.usuarioCedula,
-      usuarioContrasenia: this.usuarioA.usuarioContrasenia,
-      usuarioNombre: this.usuarioA.usuarioNombre,
-      usuarioTipo: this.usuarioT,
-      usuarioEstado: true,
-      usuarioFechaCreacion: this.usuarioA.usuarioFechaCreacion
-    }
-    this.usuarioService.updateUser(nu).subscribe(data => {
-      this.usuarioEdit = data;
-      alert('Se ha actualizado exitosamente')
-      window.location.reload();
-    });
   }
 
   eliminarUsuario(id: number) {
@@ -139,8 +127,10 @@ export class ListadoUsuariosComponent implements OnInit {
       alert('Por favor seleccione al menos un usuario')
     } else {
       const pdf = new PdfMakeWrapper();
+      pdf.pageOrientation('landscape');
+      pdf.pageSize('A4');
       pdf.info({
-        title: 'Reporte de productos disponibles',
+        title: 'Reporte de Usuarios',
       });
       pdf.add(await new Img('../../assets/img/logo.png').build());
       pdf.add(
@@ -160,8 +150,10 @@ export class ListadoUsuariosComponent implements OnInit {
 
   async crearReporte() {
     const pdf = new PdfMakeWrapper();
+    pdf.pageOrientation('landscape');
+    pdf.pageSize('A4');
     pdf.info({
-      title: 'Reporte de productos disponibles',
+      title: 'Reporte de Usuarios',
     });
     pdf.add(await new Img('../../assets/img/logo.png').build());
     pdf.add(
@@ -173,17 +165,17 @@ export class ListadoUsuariosComponent implements OnInit {
       new Txt('Lista de usuarios registrados').alignment('center').bold().fontSize(16).end
     );
     pdf.add(new Txt('   ').end);
-    pdf.add(this.creaTabla(this.listaUsuarios));
+    pdf.add(this.creaTabla(this.selectedUsers));
     pdf.create().open();
   }
 
-  creaTabla(data: Usuarios[]): ITable {
+  creaTabla(data: Usuarios2[]): ITable {
     [{}];
     return new Table([
-      ['Cédula', 'Nombre de usuario', 'Tipo', 'Fecha de creación'],
+      ['Cédula', 'Nombres', 'Dirección', 'Teléfono', 'Correo', 'Rol'],
       ...this.extraerDatos(data),
     ])
-      .widths('*')
+      .widths([85, 140, 130, 100, 142, 110])
       .heights((rowIndex) => {
         return rowIndex === 0 ? 20 : 0;
       })
@@ -194,12 +186,14 @@ export class ListadoUsuariosComponent implements OnInit {
       }).end;
   }
 
-  extraerDatos(data: Usuarios[]): TableRow[] {
+  extraerDatos(data: Usuarios2[]): TableRow[] {
     return data.map((row) => [
-      row.usuarioCedula,
-      row.usuarioNombre,
-      this.tipoUsuario(row.usuarioTipo),
-      row.usuarioFechaCreacion,
+      row.cedula,
+      row.nombres,
+      row.direccion,
+      row.telefono,
+      row.correo,
+      row.tipousuario
     ]);
 
   }
@@ -211,11 +205,12 @@ export class ListadoUsuariosComponent implements OnInit {
       for (let i = 0; i < this.selected.length; i++) {
         this.nuevoUserE = this.selected[i];
         const usuarioImprimirSelected: Usuarios2 = {
-          ID: this.nuevoUserE.idUsuario,
-          Cédula: this.nuevoUserE.usuarioCedula,
-          FechaCreacion: this.nuevoUserE.usuarioFechaCreacion,
-          NombreDeUsuario: this.nuevoUserE.usuarioNombre,
-          Tipo: this.tipoUsuario(this.nuevoUserE.usuarioTipo).toString()
+          cedula: this.nuevoUserE.cedula,
+          nombres: this.nuevoUserE.nombres,
+          direccion: this.nuevoUserE.direccion,
+          telefono: this.nuevoUserE.cedula,
+          correo: this.nuevoUserE.correo,
+          tipousuario: this.nuevoUserE.tipousuario
         }
         this.selectedUsersE.push(usuarioImprimirSelected);
       }
@@ -226,6 +221,7 @@ export class ListadoUsuariosComponent implements OnInit {
         this.saveAsExcelFile(excelBuffer, "Usuarios");
       });
     }
+
   }
 
   exportExcel() {
@@ -244,16 +240,22 @@ export class ListadoUsuariosComponent implements OnInit {
       type: EXCEL_TYPE
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    location.reload();
   }
 
+  ActualizarUsuario(cedula: any){
+    localStorage.setItem('cedulaEditar', cedula);
+    this.router.navigateByUrl('editar-usuario');
+  }
 }
 
 export class Usuarios2 {
 
-  ID?: number;
-  Cédula?: string;
-  NombreDeUsuario?: string;
-  Tipo?: string;
-  FechaCreacion?: string;
+  cedula?: string;
+  nombres?: string;
+  direccion?: string;
+  telefono?: string;
+  correo?: string;
+  tipousuario?: string;
 
 }

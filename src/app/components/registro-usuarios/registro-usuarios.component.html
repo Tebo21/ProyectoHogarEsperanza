@@ -105,7 +105,7 @@
         <div class="form-floating mb-3">
             <label for="floatingInput">Fecha de nacimiento</label>
             <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
-                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" maxlength="10"
+                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" dateFormat="yy-mm-dd" maxlength="10"
                 (change)="calcularedad($event)" required>
         </div>
         <div class="form-floating mb-3">
