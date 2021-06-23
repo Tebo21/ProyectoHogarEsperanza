@@ -92,8 +92,6 @@ export class EditarUsuariosComponent implements OnInit {
     this.personaService.getPorCedula(this.cedulaEditar).subscribe(data3 => {
       this.persona = data3;
       this.discap = this.persona.discapacidad;
-      this.genero.gop = this.persona.genero;
-      this.nacio = this.persona.nacionalidad;
     });
   }
 
@@ -127,7 +125,7 @@ export class EditarUsuariosComponent implements OnInit {
     let fecha = new Date(event.target.value);
     let fechactual = new Date();
     var f1 = fechactual.getFullYear() - fecha.getFullYear();
-    this.edadC = f1
+    this.persona.edad = f1
   }
 
   tipoUsuario(usuarioTipo: number): string {
