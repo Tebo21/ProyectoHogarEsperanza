@@ -37,9 +37,10 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Género</label>
-            <p-dropdown [options]="generos" [(ngModel)]="genero" optionLabel="gop" placeholder="Seleccione su género"
+            <p-dropdown #dd [options]="generos"  [(ngModel)]="genero" optionLabel="gop" placeholder="Seleccione su género"
                 [style]="{'width': '100%'}" [showClear]="true" pTooltip="{{persona.genero}}">
             </p-dropdown>
+            
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Fecha de nacimiento</label>

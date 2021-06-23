@@ -92,6 +92,7 @@ export class EditarUsuariosComponent implements OnInit {
     this.personaService.getPorCedula(this.cedulaEditar).subscribe(data3 => {
       this.persona = data3;
       this.discap = this.persona.discapacidad;
+      this.genero = this.persona.genero
     });
   }
 
