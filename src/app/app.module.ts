@@ -62,6 +62,7 @@ import { FilterPipe } from './components/actividad-persona/reportes-actividades/
 import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
 import {DividerModule} from 'primeng/divider';
 import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/lista-beneficiarios.component';
+import { PipePipe } from './components/voluntario-calendario/pipe.pipe';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -97,6 +98,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     FilterPipe,
     BuscarCitaComponent,
     ListaBeneficiariosComponent,
+    PipePipe,
   ],
   imports: [
     CommonModule,
