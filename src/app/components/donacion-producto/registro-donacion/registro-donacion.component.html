@@ -89,7 +89,9 @@
                                         <p-columnFilter type="text" field="cedulaPersona" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
                                 </th>
-                                <th style="width: 8rem"></th>
+                                <th style="width: 8rem">
+                                    <button pButton type="button" class="p-button-secondary" icon="pi pi-file-pdf" (click)="generarPdf()" style="min-width: 100%;"></button>
+                                </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-donacion>
