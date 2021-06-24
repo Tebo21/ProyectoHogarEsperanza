@@ -1,28 +1,36 @@
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
+import { Usuarios2 } from '../listado-usuarios.component';
 
 @Component({
-  selector: 'app-perfil-usuario',
-  templateUrl: './perfil-usuario.component.html',
-  styleUrls: ['./perfil-usuario.component.css']
+  selector: 'app-editar-usuarios',
+  templateUrl: './editar-usuarios.component.html',
+  styleUrls: ['./editar-usuarios.component.css']
 })
-export class PerfilUsuarioComponent implements OnInit {
-
+export class EditarUsuariosComponent implements OnInit {
+  //Comprobacion de Usuario
   cedUser: any;
+  cedulaEditar: any;
+  usuarioT: number;
+  //Mensajes
   msgs: Message[];
+  //Modelos
   usuario: Usuarios = {};
+  usuarioActual: Usuarios = {};
+  usuarioA: Usuarios = {};
+  usuarioEdit: Usuarios = {};
   persona: Personas = {};
-  usuarioConfirContrasenia: any;
+
   //DropDown
   tipos: any[];
   tipo: any;
   valido: boolean = false;
   //Validaciones
-  drop: boolean = false;
   vistaTipo: boolean = true;
   nacionalidades: any[];
   nacio: any;
@@ -31,16 +39,20 @@ export class PerfilUsuarioComponent implements OnInit {
   generos: any[];
   genero: any;
   discap = false;
+  usuarioConfirContrasenia: any;
+  tipoUser: any;
   //Campos
-  edadC:number;
-  usuarioContraseniaAnterior:any;
-  usuarioContrasenia:any;
+  edadC: number;
+  usuarioContraseniaAnterior: any;
+  usuarioContrasenia: any;
   displayContra: boolean = false;
-  
-  constructor(private userService: UsuarioService, private personaService: PersonasService) {  }
+
+  constructor(private usuarioService: UsuarioService, private personaService: PersonasService, private router: Router) { }
 
   ngOnInit(): void {
     this.cedUser = localStorage.getItem('cedUser')
+    this.cedulaEditar = localStorage.getItem('cedulaEditar')
+    this.ComprobarLogin();
     this.tipos = [
       { string: 'SuperAdministrador' },
       { string: 'Administrador' },
@@ -71,22 +83,26 @@ export class PerfilUsuarioComponent implements OnInit {
       { gop: 'Femenino' },
       { gop: 'Otro' }
     ]
-    this.userService.getUserByCedula(this.cedUser).subscribe(data => {
-      this.usuario = data;
-      if(this.usuario.usuarioTipo == 1){
-        this.drop = true;
-        this.vistaTipo = false;
-      } if (this.usuario.usuarioTipo == 2 || this.usuario.usuarioTipo == 3 || this.usuario.usuarioTipo == 4 ){
-        this.drop = false;
-        this.vistaTipo = true;
-      }
+    this.usuarioService.getUserByCedula(this.cedUser).subscribe(data => {
+      this.usuarioActual = data;
     });
-    this.personaService.getPorCedula(this.cedUser).subscribe(data2 => {
-      this.persona = data2;
+    this.usuarioService.getUserByCedula(this.cedulaEditar).subscribe(data2 => {
+      this.usuario = data2;
+    });
+    this.personaService.getPorCedula(this.cedulaEditar).subscribe(data3 => {
+      this.persona = data3;
       this.discap = this.persona.discapacidad;
-      this.genero.gop = this.persona.genero;
-      this.nacio = this.persona.nacionalidad;
+      this.genero = this.persona.genero
     });
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 3 || this.tipoUser == 4 || this.tipoUser == 2) {
+      alert('No tiene permisos para editar usuarios')
+      this.router.navigateByUrl('inicio-super-admin');
+    }
   }
 
   onChange(event: any) {
@@ -95,11 +111,11 @@ export class PerfilUsuarioComponent implements OnInit {
     } else {
       this.valido = true;
       if (this.tipo.string == 'SuperAdministrador') {
-        
+
       } else if (this.tipo.string == 'Administrador') {
-        
+
       } else if (this.tipo.string == 'Voluntario Interno') {
-        
+
       } else if (this.tipo.string == 'Voluntario Externo') {
 
       }
@@ -110,9 +126,9 @@ export class PerfilUsuarioComponent implements OnInit {
     let fecha = new Date(event.target.value);
     let fechactual = new Date();
     var f1 = fechactual.getFullYear() - fecha.getFullYear();
-    this.edadC = f1
+    this.persona.edad = f1
   }
-  
+
   tipoUsuario(usuarioTipo: number): string {
     if (usuarioTipo == 1) {
       return 'SuperAdministrador'
@@ -125,8 +141,21 @@ export class PerfilUsuarioComponent implements OnInit {
     }
   }
 
-  Actualizar(){
-    alert('Funciona')
+  Actualizar() {
+    const nu: Usuarios = {
+      idUsuario: this.usuarioA.idUsuario,
+      usuarioCedula: this.usuarioA.usuarioCedula,
+      usuarioContrasenia: this.usuarioA.usuarioContrasenia,
+      usuarioNombre: this.usuarioA.usuarioNombre,
+      usuarioTipo: this.usuarioT,
+      usuarioEstado: true,
+      usuarioFechaCreacion: this.usuarioA.usuarioFechaCreacion
+    }
+    this.usuarioService.updateUser(nu).subscribe(data => {
+      this.usuarioEdit = data;
+      alert('Se ha actualizado exitosamente')
+      window.location.reload();
+    });
   }
 
 }

@@ -85,7 +85,7 @@ export class VistaFichaComponent implements OnInit {
     })
   }
   extractData(){
-    return this.listaFamiliares.map(row =>[row[0],row[1]+" "+row[2],row[6],row[7],row[8]])
+    return this.listaFamiliares.map(row =>[row[0],row[1]+" "+row[2],row[6],row[7]])
   }
   async generarPDF(){
     const pdf = new PdfMakeWrapper();
@@ -108,7 +108,7 @@ export class VistaFichaComponent implements OnInit {
     pdf.add(pdf.ln())
     pdf.add(new Txt("NOMBRE Y EDAD DE LOS FAMILIARES").bold().italics().end);
     pdf.add(new Table([
-      ['Cedula','Nombres','Edad','Genero','Parentesco'],
+      ['Cedula','Nombres','Edad','Genero'],
       ...this.extractData()
     ]).widths('*').layout({
       fillColor:(rowIndex:number, node:any, columnIndex:number)=>{

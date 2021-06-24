@@ -37,20 +37,21 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Género</label>
-            <p-dropdown [options]="generos" [(ngModel)]="genero" optionLabel="gop" placeholder="Seleccione su género"
+            <p-dropdown #dd [options]="generos"  [(ngModel)]="genero" optionLabel="gop" placeholder="Seleccione su género"
                 [style]="{'width': '100%'}" [showClear]="true" pTooltip="{{persona.genero}}">
             </p-dropdown>
+            
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Fecha de nacimiento</label>
             <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
-                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" (change)="calcularedad($event)"
+                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" dateFormat="yy-mm-dd" (change)="calcularedad($event)"
                 maxlength="10" required pTooltip="{{persona.fechaNacimiento}}">
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Edad</label>
             <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
-                placeholder="Edad" [(ngModel)]="edadC" name="edad" required disabled>
+                placeholder="Edad" [(ngModel)]="persona.edad" name="edad" pTooltip="{{persona.edad}}" required disabled>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nacionalidad</label>
@@ -72,17 +73,12 @@
         </div>
         <hr>
         <h2 class="text-center">Mi Cuenta</h2>
-        <div class="form-floating mb-3" *ngIf="drop">
+        <div class="form-floating mb-3">
             <label for="floatingInput">Tipo de usuario</label>
             <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario" optionLabel="string"
                 [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChange($event)"
                 pTooltip="{{tipoUsuario(usuario.usuarioTipo)}}">
             </p-dropdown>
-        </div>
-        <div class="form-floating mb-3" *ngIf="vistaTipo">
-            <label for="floatingInput">Tipo de usuario</label>
-            <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3" id="usuarioTipo"
-                placeholder="{{tipoUsuario(usuario.usuarioTipo)}}" name="usuarioNombre" required disabled>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nombre de Usuario</label>

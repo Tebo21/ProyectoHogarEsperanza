@@ -13,7 +13,9 @@ import { Personas } from 'src/app/models/personas';
 import pdfMake from 'pdfmake/build/pdfmake';
 import { DatePipe, formatDate } from '@angular/common';
 
+
 interface DataResponse {
+
   idEntregaDonacion: number;
   cedulaBeneficiario: string;
   productoEntregado: string;
@@ -22,7 +24,8 @@ interface DataResponse {
   fechaEntrega: Date ;  
 }
 
-type TableRow = [number, string, string, string, number, Date];
+type TableRow = [number,string, string, string, number, Date];
+type TableRow2 = [string, string, string, number, Date];
 
 @Component({
   selector: 'app-entregar-donacion',
@@ -31,6 +34,11 @@ type TableRow = [number, string, string, string, number, Date];
 })
 export class EntregarDonacionComponent implements OnInit {
   
+  public personaArray:any = [];
+  public entregaDona:any = [];
+  public cedulaArray:any = [];
+  persona: Personas = new Personas();
+  listaEntrega: EntregaDonacion = new EntregaDonacion();
 
   listaDonaciones: Array<Donaciones>;
   listaEntregaDonaciones: Array<EntregaDonacion>;
@@ -52,6 +60,9 @@ export class EntregarDonacionComponent implements OnInit {
   displayED: boolean = false;
 
   productoEntrega: Donaciones;
+
+  datepipe: any;
+
 
   constructor(
     private donacionService: DonaProductoService,
@@ -122,6 +133,7 @@ export class EntregarDonacionComponent implements OnInit {
   }
 
   obtenerEntregas(cedula: string) {
+    
     this.listaEntregaDonaciones = [];
     this.entregarDonacionService.getPorCedula(cedula).subscribe((data) => {
       if (data != null) {
@@ -131,10 +143,12 @@ export class EntregarDonacionComponent implements OnInit {
           entrega.cedulaBeneficiario = result.cedulaBeneficiario;
           entrega.descripcionProducto = result.descripcionProducto;
           entrega.fechaEntrega = result.fechaEntrega;
-          entrega.idEntregaDonacion = result.idEntregaDonacion;
-          entrega.productoEntregado = result.productoEntregado;
-
+          entrega.idEntregaDonacion = result.idEntregaDonacion;         
+          entrega.productoEntregado = result.productoEntregado; 
+          
           return entrega;
+         
+
         });
       } else {
         console.log('No se encontraron donaciones');
@@ -252,7 +266,7 @@ export class EntregarDonacionComponent implements OnInit {
       confirmButtonText: 'Sí, descargar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.generaPdf();
+        this.generaPdfBeneficiarios();
         Swal.fire(
           'Descargado!',
           'El registro ha sido descargado',
@@ -261,7 +275,10 @@ export class EntregarDonacionComponent implements OnInit {
       }
     })
   }
-  async generaPdf() {
+
+
+
+ async generaPdfBeneficiarios() {
     const pdf = new PdfMakeWrapper();
     const data = await this.fetchData();
 
@@ -276,10 +293,10 @@ export class EntregarDonacionComponent implements OnInit {
         .bold().end
     );
     pdf.add(new Txt('   ').end);
-    pdf.add(this.creaTabla(data));
+    pdf.add(this.creaTablabenefi(data));
     pdf.create().open();
   }
-  creaTabla(data: DataResponse[]): ITable {
+  creaTablabenefi(data: DataResponse[]): ITable {
     [{}];
 
     return new Table([
@@ -291,7 +308,7 @@ export class EntregarDonacionComponent implements OnInit {
         'Cantidad Entregada',
         'Fecha Entrega',
       ],
-      ...this.extraerDatos(data),
+      ...this.extraerDatosBenefi(data),
     ])
 
       .heights((rowIndex) => {
@@ -306,8 +323,7 @@ export class EntregarDonacionComponent implements OnInit {
   }
 
 
-  extraerDatos(data: DataResponse[]): TableRow[] {
-    
+  extraerDatosBenefi(data: DataResponse[]): TableRow[] {
     return data.map((row) => [
       row.idEntregaDonacion,
       row.cedulaBeneficiario,
@@ -323,7 +339,50 @@ export class EntregarDonacionComponent implements OnInit {
       (response) => response.json()
     );
   }
-
- 
   
+
+  async generaPdf() {
+    const pdf = new PdfMakeWrapper();
+    pdf.info({
+      title: 'Reporte de productos entregados ',
+    });
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+    pdf.add(    
+      new Txt('Usuario: ' + (this.nombresBeneficiario +' '+this.apellidosBeneficiario)).alignment('right').end
+      );
+    pdf.add(new Txt('   ').end);
+    pdf.add(
+      new Txt('Lista de los productos entregados ').alignment('center').bold().fontSize(16).end
+    );
+    pdf.add(new Txt('   ').end);
+    pdf.add(this.creaTabla2(this.listaEntregaDonaciones));
+    pdf.create().open();
+  }
+  creaTabla2(data: EntregaDonacion[]): ITable {
+    [{}];
+    return new Table([
+      ['Cédula', 'Producto Entregado', 'Descripcion','Cantidad', 'Fecha entrega'],
+      ...this.extraerDatos2(data),
+    ])
+    
+      .heights((rowIndex) => {
+        return rowIndex === 0 ? 20 : 0;
+      })
+      .layout({
+        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
+          return rowIndex === 0 ? '#CCCCCC' : '';
+        },
+      }).end;
+  }
+  extraerDatos2(data: EntregaDonacion[]): TableRow2[] {
+    return data.map((row) => [
+      row.cedulaBeneficiario,
+      row.productoEntregado,
+      row.descripcionProducto,
+      row.cantidadEntregada,     
+      row.fechaEntrega,
+    ]);
+
+  }
+ 
 }

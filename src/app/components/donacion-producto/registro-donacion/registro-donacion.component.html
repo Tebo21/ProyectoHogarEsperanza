@@ -31,7 +31,7 @@
                     <p-table #dt [value]="donaciones" dataKey="id" [rowHover]="true"
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
                     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [filterDelay]="0" [globalFilterFields]="['cedulaPersona','nombreDonacion','categoria']">
+                    [filterDelay]="0" [globalFilterFields]="['cedulaPersona','nombreDonacion','categoria']" (onFilter)="onFilter($event, dt)">
                         <ng-template pTemplate="caption">
                             <div class="table-header">
                                 Lista de Donaciones
@@ -39,6 +39,10 @@
                                     <i class="pi pi-search"></i>
                                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
                                 </span>
+                                <!-- <span class="p-input-icon-right">                              
+                                    <input  style="margin-left: 10%; " type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel" [(ngModel)]="fecha2">
+                            </span> -->
+                           <!--  <button type="button" style="margin-left: 2%;" pButton pRipple icon="pi pi-file-pdf"  class="p-button-danger p-mr-2"  pTooltip="PDF" tooltipPosition="bottom"></button>-->
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header">
@@ -85,7 +89,9 @@
                                         <p-columnFilter type="text" field="cedulaPersona" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
                                 </th>
-                                <th style="width: 8rem"></th>
+                                <th style="width: 8rem">
+                                    <button pButton type="button" class="p-button-secondary" icon="pi pi-file-pdf" (click)="generarPdf()" style="min-width: 100%;"></button>
+                                </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-donacion>
@@ -487,7 +493,7 @@
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Categoria:</label>
                                 <br>
-                                <p-dropdown [options]="categoriasDonacion" [(ngModel)]="editProducto.categoria" placeholder="{{editProducto.categoria}}" optionLabel="cat" [filter]="true" [showClear]="true" (onChange)="onChangeC($event)" [disabled]="displayAP"></p-dropdown>
+                                <p-dropdown [options]="categoriasDonacion" [(ngModel)]="categoria" placeholder="{{editProducto.categoria}}" optionLabel="cat" [filter]="true" [showClear]="true" (onChange)="onChangeC($event)"></p-dropdown>
                             </div>
                             <div class="form-floating mb-3" [hidden]="!otraCategoria">
                                 <input class="form-control" type="text" id="otraCategoria" placeholder="Escriba la categoria" [(ngModel)]="editProducto.categoria" name="otraCategoria" required>

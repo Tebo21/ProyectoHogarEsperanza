@@ -70,6 +70,8 @@ export class RegistroUsuariosComponent implements OnInit {
   usuarioContrasenia: string = '';
   usuarioConfirContrasenia: string = '';
   usuarioFechaCreacion: Date;
+  //Edad
+  edadC:number;
 
   constructor(private router: Router, private personaservice: PersonasService,
     private usuarioservice: UsuarioService) {
@@ -126,6 +128,7 @@ export class RegistroUsuariosComponent implements OnInit {
     this.displayV = false;
     this.displayB = false;
     this.adminActivar = true;
+    this.usuarioFechaCreacion = new Date;
   }
 
   onChange(event: any) {
@@ -163,8 +166,8 @@ export class RegistroUsuariosComponent implements OnInit {
 
   ComprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
-    if (this.tipoUser == '1') {
-    } else if (this.tipoUser == '3' || this.tipoUser == '4' || this.tipoUser == 2) {
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 3 || this.tipoUser == 4 || this.tipoUser == 2) {
       alert('No tiene permisos para registrar beneficiarios')
       this.router.navigateByUrl('inicio-super-admin');
     }
@@ -191,6 +194,13 @@ export class RegistroUsuariosComponent implements OnInit {
     }
   }
 
+  calcularedad(event: any) {
+    let fecha = new Date(event.target.value);
+    let fechactual = new Date();
+    var f1 = fechactual.getFullYear() - fecha.getFullYear();
+    this.edadC = f1
+  }
+
   GurdarPersona() {
     const nuevaPersona: Personas = {
       apellidos: this.apellidos,
@@ -201,6 +211,7 @@ export class RegistroUsuariosComponent implements OnInit {
       discapacidad: this.discap,
       estado_civil: this.estado.eop,
       fechaNacimiento: this.persona.fechaNacimiento,
+      edad: this.edadC,
       genero: this.genero.gop,
       nacionalidad: this.nacio.nop,
       nombres: this.nombres
@@ -220,14 +231,14 @@ export class RegistroUsuariosComponent implements OnInit {
           usuarioNombre: this.usuarioNombre,
           usuarioTipo: this.tipoUsuario,
           usuarioEstado: true,
-          usuarioFechaCreacion: +'Fecha:' +((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear() 
+          usuarioFechaCreacion: 'Fecha:' +((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear() 
           + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
         }
         this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
           this.usuarioCreado = data;
           this.GurdarPersona();
           this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
-          const contador = timer(2000);
+          const contador = timer(1000);
           contador.subscribe((n) => {
             this.clear();
             window.location.reload();

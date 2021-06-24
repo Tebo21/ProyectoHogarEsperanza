@@ -4,6 +4,7 @@ import { RegistroFamiliaresService } from 'src/app/services/registro-familiares.
 import { RegistroFamiliares } from '../../models/registro-familiares';
 import { Router } from '@angular/router';
 import { PersonasService } from 'src/app/services/personas.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-registro-familiares',
@@ -36,19 +37,22 @@ export class RegistroFamiliaresComponent implements OnInit {
     var ConfirmaValida=0
     if(cedulaPer == null){
       var cedul = document.getElementById("cedula")
-      cedul.style.backgroundColor = "#FF0000"
+      cedul.style.backgroundColor = "#FCAFAF"
     }else{
       if(cedulaPer.length==10){
         var cedul = document.getElementById("cedula")
         cedul.style.backgroundColor = "#FFFEFE"
         ConfirmaValida = ConfirmaValida + 1 
       }else{
-        alert("cedula incorrecta")
+        Swal.fire({
+          title: 'Compsad',
+          icon: 'warning',
+        });
       } 
     }
      if(nombrePer == null){
       var nom = document.getElementById("nombre")
-      nom.style.backgroundColor = "#FF0000"
+      nom.style.backgroundColor = "#FCAFAF"
     }else{
       var nom = document.getElementById("nombre")
       nom.style.backgroundColor = "#FFFEFE"
@@ -56,7 +60,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
      if(apellPer == null){
       var ape = document.getElementById("apellido")
-      ape.style.backgroundColor = "#FF0000"
+      ape.style.backgroundColor = "#FCAFAF"
     } else {
         var ape = document.getElementById("apellido")
         ape.style.backgroundColor = "#FFFEFE"
@@ -64,7 +68,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(fechaNac==null){
       var feN = document.getElementById("fechaNacimiento")
-      feN.style.backgroundColor = "#FF0000"
+      feN.style.backgroundColor = "#FCAFAF"
     }else{
       var feN = document.getElementById("fechaNacimiento")
       feN.style.backgroundColor = "#FFFEFE"
@@ -72,7 +76,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(edaPer=null){
       var eda = document.getElementById("edad")
-      eda.style.backgroundColor = "#FF0000"
+      eda.style.backgroundColor = "#FCAFAF"
     }else{
       var eda = document.getElementById("edad")
       eda.style.backgroundColor = "#FFFEFE"
@@ -80,7 +84,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(gener==null){
       var gen = document.getElementById("genero")
-      gen.style.backgroundColor = "#FF0000"
+      gen.style.backgroundColor = "#FCAFAF"
     }else{
       var gen = document.getElementById("genero")
       gen.style.backgroundColor = "#FFFEFE"
@@ -88,7 +92,7 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(parentes==null){
       var gen = document.getElementById("parentesco")
-      gen.style.backgroundColor = "#FF0000"
+      gen.style.backgroundColor = "#FCAFAF"
     }else{
       var gen = document.getElementById("parentesco")
       gen.style.backgroundColor = "#FFFEFE"
@@ -109,7 +113,16 @@ export class RegistroFamiliaresComponent implements OnInit {
     var genero_hijo= this.PersonasFami.genero;
     var parentesco = this.parentesco_familiar;
     if(this.validarDatos()!=7){
-       confirm("Complete los campos en rojo")
+      Swal.fire({
+        title: 'Verifique los campos en rojo',
+        icon: 'warning',
+      });
+      if(cedula_hijo.length!=10){
+        Swal.fire({
+          title: 'Cedula incorrecta',
+          icon: 'warning',
+        });
+      }
     }else{
      this.hijosArray.push([cedula_hijo,nombre_hijo,apellido_hijo,celular_hijo,
        correo_hijo,fecha_nacimiento_hijo,edad_hijo,genero_hijo,parentesco]);
@@ -152,10 +165,29 @@ export class RegistroFamiliaresComponent implements OnInit {
   }
 
   eliminar(i){
-    var verificacion=confirm("Esta seguro de eliminar los datos")
-    if (verificacion==true){
-     this.hijosArray.pop(i)
-    }
+    var elimianar
+    Swal.fire({
+      title: 'Esta seguro de eliminar este usuario',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Eliminado!',
+          'Familiar eliminado',
+          'success'
+        )
+        elimianar=true;
+        console.log(elimianar)
+        var verificacion=elimianar
+        if (verificacion==true){
+         this.hijosArray.pop(i)
+        }
+      }
+    });
   }
   calcularedad(event:any){
     let fecha=new Date(event.target.value);
@@ -170,7 +202,6 @@ export class RegistroFamiliaresComponent implements OnInit {
     this.famipersona.cedulaPersona=this.cedula_persona;
     this.famipersona.numHijos=cantidad_hijos;
     this.famipersona.hijos=this.hijosArray
-    console.log(this.famipersona)
     this.famipersonaserve.postRegistFami(this.famipersona).subscribe
     (data=>{
       console.log("hijos registrados")

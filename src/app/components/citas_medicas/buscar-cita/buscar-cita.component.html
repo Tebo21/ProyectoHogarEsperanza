@@ -3,7 +3,7 @@
 
 
 <div class="container animated d-flex justify-content-center animated fadeIn">
-    <p-panel class="card">
+    <p-panel id="TABLA" class="card">
 
         <div class="card-footer">
             <div class="botones">
@@ -30,11 +30,11 @@
         <br />
 
         <p-table #dt [value]="citas" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,30]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [filterDelay]="0" [globalFilterFields]="['paciente','acompaniante','trabajadorFundacion','centroMedico']">
+            [filterDelay]="0" [globalFilterFields]="['paciente','acompaniante','trabajadorFundacion','centroMedico','fechaCitaMedica']">
             <ng-template pTemplate="caption">
-                <span class="buscar" style="margin-left: 50%">
+                <span class="buscar" style="margin-left: 60%">
                     <i class="pi pi-search"></i>
-                    <input class="btnn" type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar por cedula o centromedico" />
+                    <input class="btnn" type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar por: " />
                 </span>
                 <br />
             </ng-template>
@@ -57,6 +57,13 @@
                     <th pSortableColumn="fechaCitaMedica">
                         <div class="p-d-flex p-jc-between p-ai-center">
                             Fecha Cita Medica
+                            <p-sortIcon field="fechaCitaMedica"></p-sortIcon>
+                            <p-columnFilter type="text" field="fechaCitaMedica" display="menu" class="p-ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="fechaCitaMedica">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Hora Cita Medica
                             <p-sortIcon field="fechaCitaMedica"></p-sortIcon>
                             <p-columnFilter type="text" field="fechaCitaMedica" display="menu" class="p-ml-auto"></p-columnFilter>
                         </div>
@@ -118,10 +125,13 @@
                         {{ u.descripcionCitaMedica}}
                     </td>
                     <td>
-                        {{ u.fechaRegistro | date: 'MM/dd/yyyy'}}
+                        {{ u.fechaRegistro.substring(0,10)}}
                     </td>
                     <td>
-                        {{ u.fechaCitaMedica | date: 'MM/dd/yyyyThh: mm'}}
+                        {{ u.fechaCitaMedica.substring(0,10)}}
+                    </td>
+                    <td>
+                        {{ u.fechaCitaMedica.substring(11) }}
                     </td>
                     <td>
                         {{ u.paciente }}

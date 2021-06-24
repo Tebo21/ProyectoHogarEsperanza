@@ -5,6 +5,7 @@ import { Personas } from '../../models/personas';
 import { PersonasService } from '../../services/personas.service';
 import { FichaSocioeconomicaService } from '../../services/ficha-socioeconomica.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-lista-beneficiarios',

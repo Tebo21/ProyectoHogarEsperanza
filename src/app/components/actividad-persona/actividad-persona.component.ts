@@ -36,6 +36,8 @@ export class ActividadPersonaComponent implements OnInit {
   ngOnInit(): void {
     this.PersonId = localStorage.getItem('carisma');
     this.getPersonsById();
+    this.PersonId = localStorage.getItem('cedUser');
+    this.getCedulaAndFecha();
   }
 
   getPersonsById() {

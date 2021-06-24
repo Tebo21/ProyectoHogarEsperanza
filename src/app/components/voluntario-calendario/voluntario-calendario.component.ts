@@ -142,7 +142,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.PersonId = localStorage.getItem('carisma');
+    this.PersonId = localStorage.getItem('cedUser');
     this.mostrarTipoActividades();
     this.mostrarCitasMedicas();
     this.addEvent();

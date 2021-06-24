@@ -4,7 +4,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CentroMedico } from '../../../models/centro-medico';
 import { ActividadesService } from '../../../services/actividades.service';
 import { DatePipe } from '@angular/common';
-import pdfMake from 'pdfmake/build/pdfmake';
+import { PdfMakeWrapper, Img, Txt, Table } from 'pdfmake-wrapper';
+import { ITable } from 'pdfmake-wrapper/lib/interfaces';
+
+interface DataResponse {
+  idCentroMedico: number;
+  nombreCentroMedico: string;
+  direccionCentroMedico: string;
+  telefonoCentroMedico: string;
+}
+type TableRow = [number, string, string, string];
 
 @Component({
   selector: 'app-list-centro',
@@ -12,8 +21,9 @@ import pdfMake from 'pdfmake/build/pdfmake';
   styleUrls: ['./list-centro.component.css'],
 })
 export class ListCentroComponent implements OnInit {
-  centro: CentroMedico[] = [];
+  centro: Array<CentroMedico> = [];
   selectedCentro: CentroMedico = new CentroMedico();
+  loading: boolean = true;
 
   response_condicion: boolean = false;
   response_msg: String;
@@ -33,10 +43,18 @@ export class ListCentroComponent implements OnInit {
 
   listCentro() {
     this.service.listCentro().subscribe((data) => {
-      this.centro = data;
+      this.centro = data.map((result) => {
+        let c = new CentroMedico();
+        c.idCentroMedico = result.idCentroMedico;
+        c.nombreCentroMedico = result.nombreCentroMedico;
+        c.direccionCentroMedico = result.direccionCentroMedico;
+        c.telefonoCentroMedico = result.telefonoCentroMedico;
+
+        return c;
+      });
+      this.loading = false;
     });
   }
-
   deleteCentro(centro: CentroMedico) {
     let response = confirm(`¿Desea eliminar: ${centro.nombreCentroMedico}?`);
     if (response == true) {
@@ -131,66 +149,53 @@ export class ListCentroComponent implements OnInit {
 
 
   /*GENERACION DE REPORTES */
-  genereport(action = 'open') {
-    var testImageDataUrl = this._actividadservice.img;
-    let docDefinition = {
-      content: [
-        {
-          columns: [
-            {
-              image: testImageDataUrl,
-              width: 100,
-              margin: [0, 0, 0, 0],
-            },
-            {
-              text: 'CENTROS MÉDICOS',
-              fontSize: 17,
-              bold: true,
-              margin: [100, 0, 0, 0],
-              color: '#047886',
-            },
-          ],
-        },
-        {
-          text: '',
-          style: 'sectionHeader',
-        },
-        {
-          table: {
-            headerRows: 3,
-            body: [
-              [
-                'NOMBRE',
-                'DIRECCIÓN',
-                'TELÉFONO',
-              ],
-              ...this.centro.map((row) => [
-                row.nombreCentroMedico,
-                row.direccionCentroMedico,
-                row.telefonoCentroMedico,
-              ]),
-            ],
-          },
-          alignment: 'center',
-          margin: [135, 0, 0, 0],
-        },
-      ],
-      styles: {
-        sectionHeader: {
-          bold: true,
-          decoration: 'underline',
-          fontSize: 14,
-          margin: [0, 15, 0, 15],
-        },
-      },
-    };
+  async genereport() {
+    const pdf = new PdfMakeWrapper();
+    const data = await this.fetchData();
 
-    if (action === 'download') {
-      pdfMake.createPdf(docDefinition).download();
-    } else if (action === 'print') {
-      pdfMake.createPdf(docDefinition).print();
-    } else {
-      pdfMake.createPdf(docDefinition).open();
-    }
+    pdf.info({
+      title: 'Reporte de Centros Médicos',
+    });
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+  
+    pdf.add(
+      new Txt('Lista de Centros Médicos').alignment('center').bold().end
+    );
+    pdf.add(new Txt('   ').end);
+    pdf.add(this.creaTabla(data));
+    pdf.create().open();
   }
+  creaTabla(data: DataResponse[]): ITable {
+    [{}];
+    return new Table([
+      ['ID', 'Centro médico', 'Dirección', 'Teléfono'],
+      ...this.extraerDatos(data),
+    ])
+      .widths('*')
+      .heights((rowIndex) => {
+        return rowIndex === 0 ? 20 : 0;
+      })
+      .layout({
+        /**% 2 */
+        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
+          return rowIndex === 0 ? '#CCCCCC' : '';
+        },
+      }).end;
+  }
+
+  extraerDatos(data: DataResponse[]): TableRow[] {
+    return data.map((row) => [
+      row.idCentroMedico,
+      row.nombreCentroMedico,
+      row.direccionCentroMedico,
+      row.telefonoCentroMedico
+    ]);
+  }
+
+  async fetchData(): Promise<DataResponse[]> {
+    return fetch('http://localhost:3000/centroMedico/listado').then(
+      (response) => response.json()
+    );
+  }
+
 }

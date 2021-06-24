@@ -383,10 +383,10 @@ export class CrearCitaComponent implements OnInit {
               body: [
                 [
                   'DESCRIPCION',
+                  'FECHA DE CITA MEDICA',
+                  'HORA DE CITA MEDICA',
                   'CEDULA DEL PACIENTE',
                   'CEDULA DEL ACOMPAÑANTE',
-                  'CORREO DEL MENSAJE',
-                  'CEDULA DEL DE LA FUNDACIÓN',
                   'CENTRO MEDICO',
                   'ESPECIALIDAD',
                   'OBSERVACIONES',
@@ -394,10 +394,10 @@ export class CrearCitaComponent implements OnInit {
                 ],
                 ...this.citaM.map((row) => [
                   row.descripcionCitaMedica,
+                  row.fechaCitaMedica.substring(0, 10),
+                  row.fechaCitaMedica.substring(11),
                   row.paciente,
                   row.acompaniante,
-                  row.mensaje,
-                  row.trabajadorFundacion,
                   row.centroMedico,
                   row.especialidad,
                   row.nota,
