@@ -43,6 +43,7 @@ export class RegistroDonacionComponent implements OnInit {
   fecha_nac: string;
 
   donaciones: Array<Donaciones> = [];
+  donacionesFiltradas: Array<Donaciones> = [];
 
   loading: boolean = true;
 
@@ -80,6 +81,10 @@ export class RegistroDonacionComponent implements OnInit {
       { cat: 'Electronico' },
       { cat: 'Otro' },
     ];
+  }
+
+  onFilter(event, dt) {
+    this.donacionesFiltradas = event.filteredValue;
   }
 
   obtenerDonaciones() {
@@ -123,6 +128,9 @@ export class RegistroDonacionComponent implements OnInit {
         this.donacion.categoria = this.categoria.cat;
       } else {
         this.otraCategoria = true;
+      }
+      if(this.displayEP){
+        this.editProducto.categoria = this.categoria.cat;
       }
     }
   }
