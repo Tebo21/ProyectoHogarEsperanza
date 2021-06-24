@@ -71,8 +71,6 @@ export class LoginComponent implements OnInit {
   Logearse() {
     this.loginservce.getLogin(this.user.usuarioCedula, this.user.usuarioContrasenia, this.user.usuarioTipo).subscribe(data => {
       this.userRecibido = data;
-      this.cedula=data.usuarioCedula;
-      localStorage.setItem("carisma",this.cedula);
       if (this.userRecibido.usuarioCedula != null) {
         this.alerta = 'Bienvendo ' + this.userRecibido.usuarioNombre
         localStorage.setItem('usuarioA', this.userRecibido.usuarioNombre);

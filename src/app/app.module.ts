@@ -63,6 +63,7 @@ import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/busc
 import {DividerModule} from 'primeng/divider';
 import {PasswordModule} from 'primeng/password';
 import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/lista-beneficiarios.component';
+import { EditarUsuariosComponent } from './components/listado-usuarios/editar-usuarios/editar-usuarios.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -98,6 +99,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     FilterPipe,
     BuscarCitaComponent,
     ListaBeneficiariosComponent,
+    EditarUsuariosComponent,
   ],
   imports: [
     CommonModule,
