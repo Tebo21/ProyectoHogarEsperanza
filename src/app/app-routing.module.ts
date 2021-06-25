@@ -25,6 +25,7 @@ import { ReportesActividadesComponent } from './components/actividad-persona/rep
 import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/buscar-cita.component';
 import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/lista-beneficiarios.component';
 import { EditarUsuariosComponent } from './components/listado-usuarios/editar-usuarios/editar-usuarios.component';
+import { ListarProductoDonadoComponent } from './components/donacion-producto/listar-producto-donado/listar-producto-donado.component';
 
 // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
 // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -122,6 +123,10 @@ const routes: Routes = [
   {
     path: 'editar-usuario',
     component: EditarUsuariosComponent
+  },
+  {
+    path: 'lista',
+    component: ListarProductoDonadoComponent
   },
   {
     path: '**',

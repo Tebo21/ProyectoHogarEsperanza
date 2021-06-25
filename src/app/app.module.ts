@@ -64,6 +64,7 @@ import {DividerModule} from 'primeng/divider';
 import {PasswordModule} from 'primeng/password';
 import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/lista-beneficiarios.component';
 import { EditarUsuariosComponent } from './components/listado-usuarios/editar-usuarios/editar-usuarios.component';
+import { ListarProductoDonadoComponent } from './components/donacion-producto/listar-producto-donado/listar-producto-donado.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -100,6 +101,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     BuscarCitaComponent,
     ListaBeneficiariosComponent,
     EditarUsuariosComponent,
+    ListarProductoDonadoComponent,
   ],
   imports: [
     CommonModule,

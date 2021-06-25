@@ -13,6 +13,7 @@ import { Personas } from 'src/app/models/personas';
 import pdfMake from 'pdfmake/build/pdfmake';
 
 import { DatePipe, formatDate, getLocaleDateFormat } from '@angular/common';
+import * as internal from 'node:stream';
 
 
 interface DataResponse {
@@ -28,6 +29,7 @@ interface DataResponse {
 type TableRow = [number,string, string, string, number, Date];
 type TableRow2 = [string, string, string, number, Date];
 
+
 @Component({
   selector: 'app-entregar-donacion',
   templateUrl: './entregar-donacion.component.html',
@@ -36,7 +38,7 @@ type TableRow2 = [string, string, string, number, Date];
 export class EntregarDonacionComponent implements OnInit { 
 
   listaDonaciones: Array<Donaciones>;
-  listaEntregaDonaciones: Array<EntregaDonacion>;
+  listaEntregaDonaciones: Array<EntregaDonacion>; 
 
   loading: boolean = true;
 
@@ -57,6 +59,9 @@ export class EntregarDonacionComponent implements OnInit {
   displayED: boolean = false;
 
   productoEntrega: Donaciones;
+
+
+
 
   constructor(
     private donacionService: DonaProductoService,
@@ -379,5 +384,7 @@ export class EntregarDonacionComponent implements OnInit {
     ]);
 
   }
+
+ 
  
 }
