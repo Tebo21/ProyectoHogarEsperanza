@@ -91,7 +91,8 @@ export class RegistroUsuariosComponent implements OnInit {
       { nop: 'Venezuela' },
       { nop: 'Uruguay' },
       { nop: 'México' },
-      { nop: 'Honduras' }
+      { nop: 'Honduras' },
+      { nop: 'Otro' }
     ]
     this.estadocivil = [
       { eop: 'Casado' },
