@@ -15,18 +15,6 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import { DatePipe, formatDate, getLocaleDateFormat } from '@angular/common';
 import * as internal from 'node:stream';
 
-
-interface DataResponse {
-
-  idEntregaDonacion: number;
-  cedulaBeneficiario: string;
-  productoEntregado: string;
-  descripcionProducto: string;
-  cantidadEntregada: number;
-  fechaEntrega: Date ;  
-}
-
-type TableRow = [number,string, string, string, number, Date];
 type TableRow2 = [string, string, string, number, Date];
 
 
@@ -253,92 +241,10 @@ export class EntregarDonacionComponent implements OnInit {
     this.displayPE = false;
     this.cantidadEntrega = 0;
   }
-   showConfirmacionPDF(){
-    Swal.fire({
-      title: '¿Estas seguro de descargar este reporte?',
-      text: "Se abrira una visualizacion de su reporte",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Sí, descargar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.generaPdfBeneficiarios();
-        Swal.fire(
-          'Descargado!',
-          'El registro ha sido descargado',
-          'success'
-        )
-      }
-    })
-  }
 
-
-
- async generaPdfBeneficiarios() {
-    const pdf = new PdfMakeWrapper();
-    const data = await this.fetchData();
-
-    pdf.info({
-      title: 'Reporte de productos entregados a los beneficiarios',
-    });
-    pdf.add(await new Img('../../assets/img/logo.png').build());
-    pdf.add(new Txt('   ').end);
-    pdf.add(
-      new Txt('Lista de los productos entregados a los beneficiarios')
-        .alignment('center')
-        .bold().end
-    );
-    pdf.add(new Txt('   ').end);
-    pdf.add(this.creaTablabenefi(data));
-    pdf.create().open();
-  }
-  creaTablabenefi(data: DataResponse[]): ITable {
-    [{}];
-
-    return new Table([
-      [
-        '#',
-        'Cedula Beneficiario',
-        'Producto Entregado',
-        'Descripcion del producto',
-        'Cantidad Entregada',
-        'Fecha Entrega',
-      ],
-      ...this.extraerDatosBenefi(data),
-    ])
-
-      .heights((rowIndex) => {
-        return rowIndex === 0 ? 20 : 0;
-      })
-      .layout({
-        /**% 2 */
-        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
-          return rowIndex === 0 ? '#CCCCCC' : '';
-        },
-      }).end;
-  }
-
-
-  extraerDatosBenefi(data: DataResponse[]): TableRow[] {
-    return data.map((row) => [
-      row.idEntregaDonacion,
-      row.cedulaBeneficiario,
-      row.productoEntregado,
-      row.descripcionProducto,
-      row.cantidadEntregada,     
-      row.fechaEntrega,
-    ]);
-  }
-
-  async fetchData(): Promise<DataResponse[]> {
-    return fetch('http://localhost:3000/entregaDonacion/lista').then(
-      (response) => response.json()
-    );
-  }
-  
+  listaEntregaProducto() {
+    this.router.navigate(['lista']);
+  }  
 
   async generaPdf() {
     const pdf = new PdfMakeWrapper();
