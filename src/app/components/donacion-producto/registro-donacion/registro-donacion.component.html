@@ -29,7 +29,7 @@
                     <p-table #dt [value]="donaciones" dataKey="id" [rowHover]="true"
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
                     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [filterDelay]="0" [globalFilterFields]="['cedulaPersona','nombreDonacion','categoria']" (onFilter)="onFilter($event, dt)">
+                    [filterDelay]="0" [globalFilterFields]="['nombreDonacion', 'categoria', 'fechaDonacion', 'cedulaPersona']" (onFilter)="onFilter($event, dt)">
                         <ng-template pTemplate="caption">
                             <div class="table-header">
                                 Lista de Donaciones
@@ -110,7 +110,7 @@
                                 <td>
                                     <!-- {{donacion.fechaDonacion | date: 'MM/dd/yyyy'}} -->
                                     <tr *ngFor="let fech of donacion.fechaDonacion">
-                                        <td>{{fech | date: 'MM/dd/yyyy'}}</td>
+                                        <td>{{fech | date: 'MM-dd-yyyy'}}</td>
                                     </tr>
                                 </td>
                                 <td>
