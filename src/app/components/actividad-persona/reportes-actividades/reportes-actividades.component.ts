@@ -33,16 +33,34 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
   }
   ngOnInit(): void {
     this.mostrarTipoActividades();
-    ;
+    this.ComprobarLogin();
+  }
+  tipoUser: any;
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == '1' || this.tipoUser == 2) {
+    } else if (this.tipoUser == '3' || this.tipoUser == '4') {
+      this.showExitoso();
+      this.router.navigateByUrl('inicio-super-admin');
+    }
   }
 
-
+  showExitoso() {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No tienes permisos de administrador'
+    });
+  }
 
   mostrarTipoActividades(): void {
     this._actividadservice.getAll().subscribe(
       (response) => {
-
         this.Actividadview=response
+
+    this.Actividadview.forEach(res=>{
+      this.Actividadview1.push(res)
+    })
         console.log(this.Actividadview)
       }
   );
@@ -82,7 +100,7 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
     })
   }
   genereport(action = 'open') {
-    console.log(this.Actividadview1)
+    console.log("Esta es la actividad de reporte: "+this.Actividadview1)
     var testImageDataUrl = this._actividadservice.img;
     let docDefinition = {
 
@@ -140,7 +158,6 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
                 'Cédula',
                 'Nombre',
                 'Apellido',
-                'Correo',
                 'Nacionalidad',
                 'Fecha',
                 'Hora Inicio',
@@ -152,7 +169,6 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
                 row.cedulaPersona.cedula,
                 row.cedulaPersona.nombres,
                 row.cedulaPersona.apellidos,
-                row.cedulaPersona.correo,
                 row.cedulaPersona.nacionalidad,
                 row.fechaActividad,
                 row.horaInicio,

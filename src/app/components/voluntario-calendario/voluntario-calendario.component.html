@@ -1,7 +1,7 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
 
-<div class="card-group">
+
   <div class="card">
     <div class="card-header">
 
@@ -74,7 +74,7 @@
           [refresh]="refresh"
           [activeDayIsOpen]="activeDayIsOpen"
           (dayClicked)="dayClicked($event.day)"
-          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventClicked)="handleEvent('Clicked', $event.event, $event.event.title ,$event.event.cssClass)"
           (eventTimesChanged)="eventTimesChanged($event)"
         >
         </mwl-calendar-month-view>
@@ -83,7 +83,7 @@
           [viewDate]="viewDate"
           [events]="events"
           [refresh]="refresh"
-          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventClicked)="handleEvent('Clicked', $event.event, $event.event.title ,$event.event.cssClass)"
           (eventTimesChanged)="eventTimesChanged($event)"
         >
         </mwl-calendar-week-view>
@@ -92,7 +92,7 @@
           [viewDate]="viewDate"
           [events]="events"
           [refresh]="refresh"
-          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventClicked)="handleEvent('Clicked', $event.event, $event.event.title ,$event.event.cssClass)"
           (eventTimesChanged)="eventTimesChanged($event)"
         >
         </mwl-calendar-day-view>
@@ -100,13 +100,69 @@
     </div>
   </div>
 
+  <div class="card-group">
+
+    <div class="card">
+      <div class="card-header text-center">
+        <h3 class="text-center">
+          Citas Medicas
+          <div class="clearfix"></div>
+        </h3>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Actividad Realizada</th>
+                <th scope="col">Fecha de registro</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let event of citas | pipe:'start'">
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="event.title"
+                    (keyup)="refresh.next()"
+                    readonly
+                  />
+                </td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="text"
+                    mwlFlatpickr
+                    [(ngModel)]="event.start"
+                    (ngModelChange)="refresh.next()"
+                    [altInput]="true"
+                    [convertModelValue]="true"
+                    [enableTime]="true"
+                    dateFormat="Y-m-dTH:i"
+                    altFormat="F j, Y H:i"
+                    placeholder="Not set"
+                    readonly
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card-footer">
+
+      </div>
+    </div>
   <div class="card">
-    <div class="card-header">
-      <h3>
-        Edit events
-        <button class="btn btn-primary float-right" (click)="addEvent()">
-          Add new
-        </button>
+
+
+    <div class="card-header text-center">
+      <h3 class="text-center">
+        Actividades
         <div class="clearfix"></div>
       </h3>
     </div>
@@ -123,13 +179,14 @@
           </thead>
 
           <tbody>
-            <tr *ngFor="let event of events">
+            <tr *ngFor="let event of Actividades | pipe:'start'">
               <td>
                 <input
                   type="text"
                   class="form-control"
                   [(ngModel)]="event.title"
                   (keyup)="refresh.next()"
+                  readonly
                 />
               </td>
               <td>
@@ -145,6 +202,7 @@
                   dateFormat="Y-m-dTH:i"
                   altFormat="F j, Y H:i"
                   placeholder="Not set"
+                  readonly
                 />
               </td>
               <td>
@@ -160,6 +218,7 @@
                   dateFormat="Y-m-dTH:i"
                   altFormat="F j, Y H:i"
                   placeholder="Not set"
+                  readonly
                 />
               </td>
 
@@ -175,24 +234,30 @@
         </table>
       </div>
     </div>
+
+    <div class="card-footer">
+
+    </div>
   </div>
+
 </div>
 
 <ng-template #modalContent let-close="close">
   <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
+    <h5 class="modal-title">Detalle</h5>
     <button type="button" class="close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
+      Titulo:
+      <pre>{{ modalData?.title }}</pre>
     </div>
     <div>
-      Event:
-      <pre>{{ modalData?.event  }}</pre>
+      Descripcion:
+      <br>
+      <textarea type="text" rows="10" cols="105" value={{modalData.descrition}}   readonly></textarea>
     </div>
   </div>
   <div class="modal-footer">

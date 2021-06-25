@@ -34,11 +34,13 @@ export class ActividadPersonaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.PersonId = localStorage.getItem('carisma');
+    this.getPersonsById();
     this.PersonId = localStorage.getItem('cedUser');
     this.getCedulaAndFecha();
   }
 
-  async getPersonsById() {
+  getPersonsById() {
     this.personaService.getPorCedula(this.PersonId).subscribe(
       (response) => {
         this.Person = response;
@@ -47,10 +49,10 @@ export class ActividadPersonaComponent implements OnInit {
         console.log(error);
       }
     );
+    this.getCedulaAndFecha();
   }
   getCedulaAndFecha() {
     this.Actividadview = [];
-    this.getPersonsById();
     this._actividadservice
       .getActividadCedulaAndFecha(this.fecha2)
       .subscribe((res) => {
