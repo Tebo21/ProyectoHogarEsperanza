@@ -35,8 +35,10 @@
         </div>
         <br />
 
-        <p-table #dt [value]="citas" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,30]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [filterDelay]="0" [globalFilterFields]="['paciente','acompaniante','trabajadorFundacion','centroMedico','fechaCitaMedica']" (onFilter)="onFilter($event, dt)">
+        <p-table #dt [value]="citas" dataKey="descripcionCitaMedica" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" 
+        [rowsPerPageOptions]="[10,15,30]" [loading]="loading" [paginator]="true" 
+        [filterDelay]="0" [globalFilterFields]="['paciente','acompaniante','trabajadorFundacion','centroMedico','fechaCitaMedica']" 
+        (onFilter)="onFilter($event, dt)" [(selection)]="selected">
             <ng-template pTemplate="caption">
                 <span class="buscar" style="margin-left: 60%">
                     <i class="pi pi-search"></i>
