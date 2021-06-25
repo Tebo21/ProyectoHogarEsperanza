@@ -9,14 +9,8 @@ import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import { type } from 'node:os';
 import Swal from 'sweetalert2';
 
-interface DataResponse {
- 
-  nombreDonacion: string;
-  cantidad: number;
-  categoria: string;
-}
-type TableRow = [string, number, string];
 
+type TableRow = [string, number, string];
 @Component({
   selector: 'app-registro-donacion',
   templateUrl: './registro-donacion.component.html',
@@ -457,7 +451,7 @@ export class RegistroDonacionComponent implements OnInit {
       confirmButtonText: 'Sí, descargar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.generaPdf();
+        this.generarPdf();
         Swal.fire(
           'Descargado!',
           'El registro ha sido descargado',
@@ -466,54 +460,7 @@ export class RegistroDonacionComponent implements OnInit {
       }
     })
   }
-  async generaPdf() {
-    const pdf = new PdfMakeWrapper();
-    const data = await this.fetchData();
 
-    pdf.info({
-      title: 'Reporte de productos disponibles',
-    });
-    pdf.add(await new Img('../../assets/img/logo.png').build());
-  
-    pdf.add(
-      new Txt('Lista de los productos disponibles').alignment('center').bold().end
-    );
-    pdf.add(new Txt('   ').end);
-    pdf.add(this.creaTabla(data));
-    pdf.create().open();
-  }
-  creaTabla(data: DataResponse[]): ITable {
-    [{}];
-    return new Table([
-      ['Nombre Producto', 'Cantidad', 'Categoria'],
-      ...this.extraerDatos(data),
-    ])
-      .widths('*')
-      .heights((rowIndex) => {
-        return rowIndex === 0 ? 20 : 0;
-      })
-      .layout({
-        /**% 2 */
-        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
-          return rowIndex === 0 ? '#CCCCCC' : '';
-        },
-      }).end;
-  }
-
-  extraerDatos(data: DataResponse[]): TableRow[] {
-    return data.map((row) => [
-      row.nombreDonacion,
-      row.cantidad,
-      row.categoria,
-    ]);
-  }
-
-  async fetchData(): Promise<DataResponse[]> {
-    return fetch('http://localhost:3000/donaciones/listadoDonaciones').then(
-      (response) => response.json()
-    );
-    /*.then(data => data.filter((_, index: number)=> index <10));*/
-  }
 
   async generarPdf(){
     const pdf = new PdfMakeWrapper();

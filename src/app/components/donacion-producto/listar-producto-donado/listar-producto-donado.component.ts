@@ -85,7 +85,7 @@ export class ListarProductoDonadoComponent implements OnInit {
         })
       }
 
-
+      this.loading = false;
     })
   }
 

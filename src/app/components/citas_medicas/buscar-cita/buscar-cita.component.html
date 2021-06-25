@@ -15,9 +15,15 @@
                     </div>
 
                     <div class="col d-grid gap-2">
-                        <button class="btn btn-outline-primary btnfooter" (click)="genereport()" type="button" style="margin-left: 10px">
-                    Reporte <i class="pi pi-file-pdf"></i>
-                  </button>
+                        <button class="btn btn-outline-info btnfooter" (click)="exportSelected()" type="button" style="margin-left: 10px">
+                        Reporte  por usuario<i class="pi pi-file-pdf"></i>
+                      </button>
+                    </div>
+
+                    <div class="col d-grid gap-2">
+                        <button class="btn btn-outline-primary btnfooter" (click)="generarPdf()" type="button" style="margin-left: 10px">
+                     Reporte por filtro <i class="pi pi-file-pdf"></i>
+                    </button>
                     </div>
                 </div>
             </div>
@@ -30,7 +36,7 @@
         <br />
 
         <p-table #dt [value]="citas" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,30]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [filterDelay]="0" [globalFilterFields]="['paciente','acompaniante','trabajadorFundacion','centroMedico','fechaCitaMedica']">
+            [filterDelay]="0" [globalFilterFields]="['paciente','acompaniante','trabajadorFundacion','centroMedico','fechaCitaMedica']" (onFilter)="onFilter($event, dt)">
             <ng-template pTemplate="caption">
                 <span class="buscar" style="margin-left: 60%">
                     <i class="pi pi-search"></i>
@@ -40,6 +46,9 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
                     <th pSortableColumn="descripcionCitaMedica">
                         <div class="p-d-flex p-jc-between p-ai-center">
                             Descripcion Cita Medica
@@ -121,6 +130,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-u>
                 <tr class="p-selectable-row">
+                    <td>
+                        <p-tableCheckbox [value]="u"></p-tableCheckbox>
+                    </td>
                     <td>
                         {{ u.descripcionCitaMedica}}
                     </td>
