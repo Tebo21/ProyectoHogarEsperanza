@@ -88,6 +88,7 @@ export class PerfilUsuarioComponent implements OnInit {
     this.personaService.getPorCedula(this.cedUser).subscribe(data2 => {
       this.persona = data2;
       this.discap = this.persona.discapacidad;
+      this.genero = this.persona.genero;
     });
   }
 
@@ -128,6 +129,7 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   Actualizar(){
+    alert(this.genero.gop)
     alert('Funciona')
   }
 
