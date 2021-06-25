@@ -50,7 +50,7 @@
         <div class="form-floating mb-3">
             <label for="floatingInput">Edad</label>
             <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
-                placeholder="Edad" [(ngModel)]="edadC" name="edad" required disabled>
+                placeholder="Edad" [(ngModel)]="persona.edad" name="edad"  pTooltip="{{persona.edad}}" required disabled>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nacionalidad</label>

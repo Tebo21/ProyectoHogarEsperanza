@@ -214,7 +214,9 @@ export class RegistroUsuariosComponent implements OnInit {
       edad: this.edadC,
       genero: this.genero.gop,
       nacionalidad: this.nacio.nop,
-      nombres: this.nombres
+      nombres: this.nombres,
+      beneficiario: false,
+      estadoActivo: true
     }
     this.personaservice.postPersona(nuevaPersona).subscribe(data2 => {
       this.personaCreada = data2;

@@ -21,11 +21,11 @@ export class UsuarioService {
     return this.getQueryLogin(url, usuarioCedula, usuarioContrasenia, usuarioTipo);
   }
 
-  QueryAddUser(query: String, usuario: Usuarios ) {
+  QueryAddUser(query: String, usuario: Usuarios) {
     const url = `http://localhost:3000/${query}`;
-    return this.http.request<Usuarios>('post',url, {
+    return this.http.request<Usuarios>('post', url, {
       body: usuario
-  });
+    });
   }
   addUser(usuario: Usuarios): Observable<any> {
     const url = 'post-usuario';
@@ -37,20 +37,21 @@ export class UsuarioService {
     return this.http.get<Usuarios>(url);
   }
 
-  QueryDeleteUser(query: String, idUsuario: number ) {
+  QueryDeleteUser(query: String, idUsuario: number) {
     const url = `http://localhost:3000/${query}/${idUsuario}`;
-    return this.http.request<Usuarios>('delete',url);
+    return this.http.request<Usuarios>('delete', url);
   }
+
   deleteUser(idUsuario: number): Observable<any> {
     const url = 'delete-usuario';
     return this.QueryDeleteUser(url, idUsuario);
   }
 
-  QueryUpdateUser(query: String, usuario: Usuarios ) {
+  QueryUpdateUser(query: String, usuario: Usuarios) {
     const url = `http://localhost:3000/${query}`;
-    return this.http.request<Usuarios>('put',url, {
+    return this.http.request<Usuarios>('put', url, {
       body: usuario
-  });
+    });
   }
   updateUser(usuario: Usuarios): Observable<any> {
     const url = 'update-usuario';
@@ -67,5 +68,5 @@ export class UsuarioService {
     const url = 'getUsuarioByCedula';
     return this.getQueryUserByCedula(url, usuarioCedula);
   }
- 
+
 }

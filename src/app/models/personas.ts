@@ -1,4 +1,5 @@
 export class Personas {
+    idPersona?: number;
     cedula?: string;
     nombres?: string;
     apellidos?: string;
@@ -7,8 +8,10 @@ export class Personas {
     correo?: string;
     genero?: string;
     fechaNacimiento?: string;
-    edad?: Number;
+    edad?: number;
     nacionalidad?: string;
     discapacidad?: boolean;
     estado_civil?: string;
+    beneficiario?: boolean;
+    estadoActivo?: boolean;
 }

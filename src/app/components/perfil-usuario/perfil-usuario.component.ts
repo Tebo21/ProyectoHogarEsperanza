@@ -110,7 +110,7 @@ export class PerfilUsuarioComponent implements OnInit {
     let fecha = new Date(event.target.value);
     let fechactual = new Date();
     var f1 = fechactual.getFullYear() - fecha.getFullYear();
-    this.edadC = f1
+    this.persona.edad = f1
   }
   
   tipoUsuario(usuarioTipo: number): string {
