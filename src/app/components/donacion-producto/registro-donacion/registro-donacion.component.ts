@@ -493,7 +493,7 @@ export class RegistroDonacionComponent implements OnInit {
       ['Nombre Producto', 'Descripción', 'Cantidad', 'Categoria', 'Fecha Donación', 'Cédula Donador'],
       ...this.extraerDatos2(data),
     ])
-      .widths('*')
+     
       .heights((rowIndex) => {
         return rowIndex === 0 ? 20 : 0;
       })
