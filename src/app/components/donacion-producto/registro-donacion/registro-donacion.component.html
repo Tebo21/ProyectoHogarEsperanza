@@ -37,10 +37,7 @@
                                     <i class="pi pi-search"></i>
                                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
                                 </span>
-                                <!-- <span class="p-input-icon-right">                              
-                                    <input  style="margin-left: 10%; " type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel" [(ngModel)]="fecha2">
-                            </span> -->
-                           <!--  <button type="button" style="margin-left: 2%;" pButton pRipple icon="pi pi-file-pdf"  class="p-button-danger p-mr-2"  pTooltip="PDF" tooltipPosition="bottom"></button>-->
+                                
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header">
@@ -110,7 +107,7 @@
                                 <td>
                                     <!-- {{donacion.fechaDonacion | date: 'MM/dd/yyyy'}} -->
                                     <tr *ngFor="let fech of donacion.fechaDonacion">
-                                        <td>{{fech | date: 'MM-dd-yyyy'}}</td>
+                                        <td>{{fech | date: 'yyyy-MM-dd'}}</td>
                                     </tr>
                                 </td>
                                 <td>

@@ -9,10 +9,11 @@
             <br>    
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel class="card">
-                    <p-table #dt [value]="selectedUsers" dataKey="id" [rowHover]="true"
+                    <p-table #dt [value]="entregas" dataKey="id" [rowHover]="true"
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
                     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [filterDelay]="0" [globalFilterFields]="['cedula','nombres','productoEntregado','descripcionProducto','cantidadEntregada','fechaEntrega']">
+                    [filterDelay]="0" [globalFilterFields]="['cedula','nombres','productoEntregado','descripcionProducto','cantidadEntregada','fechaEntrega']"(onFilter)="onFilter($event, dt)">
+
                         <ng-template pTemplate="caption">
                             <div class="table-header">
                                 Lista de Donaciones Entregados
@@ -24,7 +25,7 @@
                                 <button pButton pRipple type="button" 
                                 [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff; margin-left: 10%;"
                                 class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf"
-                                (click)="showConfirmacionPDF()"></button>
+                                (click)="crearReporte()"></button>
                                
                             </div>
                         </ng-template>
@@ -110,11 +111,5 @@
                 </p-panel>
             </div>
         </div>
-    </body>
- 
-   
-
-         
-
-
+    </body> 
 </html>

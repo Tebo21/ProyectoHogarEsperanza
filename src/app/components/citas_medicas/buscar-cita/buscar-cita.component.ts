@@ -94,7 +94,7 @@ export class BuscarCitaComponent implements OnInit {
       pdf.add(this.creaTabla(this.selected));
       pdf.create().open();
     } else {
-      alert('Por favor seleccione al menos uno');
+      alert('Por favor seleccione solo uno');
     }
   }
 
@@ -103,7 +103,7 @@ export class BuscarCitaComponent implements OnInit {
     [{}];
     return new Table([
       ['DESCRIPCION CITA', 'FEHCA DE LA CITA', 'HORA DE LA CITA', 'CEDUDLA DEL PACIENTE',
-       'CEDULA DEL ACOMPAÑANTE', 'CENTRO MEDICO', 'ESPECIALIDAD', 'OBSERVAIONES'],
+       'CEDULA DEL ACOMPAÑANTE', 'CENTRO MEDICO', 'ESPECIALIDAD', 'OBSERVACIONES'],
       ...this.extraerDatos(data),
     ])
       .widths(['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'])
@@ -160,7 +160,7 @@ export class BuscarCitaComponent implements OnInit {
     [{}];
     return new Table([
       ['DESCRIPCION CITA', 'FEHCA DE LA CITA', 'HORA DE LA CITA', 'CEDUDLA DEL PACIENTE',
-       'CEDULA DEL ACOMPAÑANTE', 'CENTRO MEDICO', 'ESPECIALIDAD', 'OBSERVAIONES'],
+       'CEDULA DEL ACOMPAÑANTE', 'CENTRO MEDICO', 'ESPECIALIDAD', 'OBSERVACIONES'],
       ...this.extraerDatos2(data),
     ])
       .widths(['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'])

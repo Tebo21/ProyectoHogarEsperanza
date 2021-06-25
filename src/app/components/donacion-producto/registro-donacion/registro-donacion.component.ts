@@ -8,9 +8,12 @@ import { PdfMakeWrapper, Txt, Img, Table } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import { type } from 'node:os';
 import Swal from 'sweetalert2';
+import { date } from 'faker';
 
 
 type TableRow = [string, number, string];
+type TableRow2  = [string, string, number, string, string[], string[]]
+
 @Component({
   selector: 'app-registro-donacion',
   templateUrl: './registro-donacion.component.html',
@@ -481,15 +484,16 @@ export class RegistroDonacionComponent implements OnInit {
     }
 
     pdf.create().open();
+    this.reiniciar(); 
   }
 
   creaTabla2(data: Donaciones[]): ITable{
     [{}];
     return new Table([
-      ['Nombre Producto', 'Cantidad', 'Categoria'],
+      ['Nombre Producto', 'Descripción', 'Cantidad', 'Categoria', 'Fecha Donación', 'Cédula Donador'],
       ...this.extraerDatos2(data),
     ])
-      .widths('*')
+     
       .heights((rowIndex) => {
         return rowIndex === 0 ? 20 : 0;
       })
@@ -501,11 +505,50 @@ export class RegistroDonacionComponent implements OnInit {
       }).end;
   }
 
-  extraerDatos2(data: Donaciones[]): TableRow[] {
+  extraerDatos2(data: Donaciones[]): TableRow2[] {
     return data.map((row) => [
       row.nombreDonacion,
+      row.descripcionDonacion,
       row.cantidad,
       row.categoria,
+      this.formatearFechas(row.fechaDonacion),
+      row.cedulaPersona,
     ]);
+  }
+
+  formatearFechas(fechas: Date[]): string[]{
+    
+    let dates: string[] = [];
+
+    fechas.forEach(element => {
+
+      let date: Date = new Date(element);
+
+      let fecha: string;
+
+      let dia = date.getDate();
+      let mes = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      if (dia < 10 && mes < 10){
+        fecha = year+'-0'+mes+'-0'+dia;
+      }
+
+      if (dia > 9  && mes < 10){
+        fecha = year+'-0'+mes+'-'+dia;
+      }
+
+      if (dia < 10  && mes > 9){
+        fecha = year+'-'+mes+'-0'+dia;
+      }
+
+      if (dia > 9 && mes > 9){
+        fecha = year+'-'+mes+'-'+dia;
+      }
+
+      dates.push(fecha);
+    }); 
+
+    return dates;
   }
 }
