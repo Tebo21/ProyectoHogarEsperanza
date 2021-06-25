@@ -19,15 +19,14 @@ export class ListarProductoDonadoComponent implements OnInit {
     Persona: Personas = {};
     ListadoPersonas: Personas[];
 
-   //Beneficiarios DTO
-   selected: Beneficiarios2[];
-   selectedUsers: Beneficiarios2[];
+   //Beneficiarios DTO   
+   entregas: Array<Beneficiarios2>; 
+   entregasFiltradas: Array<Beneficiarios2> = [];
 
+   //Entregas  
    listaEntrega: EntregaDonacion[];
 
-
-   listaEntregaDonaciones: Array<EntregaDonacion>; 
-   
+   //Tabla carga
   loading: boolean = true;
 
 
@@ -38,10 +37,15 @@ export class ListarProductoDonadoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.selectedUsers = [];
+    this.entregas = [];
     this.ListadoPersonas = [];
     this.listarBeneficiarioConNombres();
   }
+  onFilter(event, dt) {
+    this.entregasFiltradas = [];
+    this.entregasFiltradas = event.filteredValue;
+  }
+
   showConfirmacionPDF(){
     Swal.fire({
       title: '¿Estas seguro de descargar este reporte?',
@@ -81,7 +85,7 @@ export class ListarProductoDonadoComponent implements OnInit {
             fechaEntrega: this.listaEntrega[i].fechaEntrega
 
           }
-          this.selectedUsers.push(usuarioImprimir);
+          this.entregas.push(usuarioImprimir);
         })
       }
 
@@ -104,9 +108,16 @@ export class ListarProductoDonadoComponent implements OnInit {
       new Txt('Lista de productos entregados a los beneficiarios').alignment('center').bold().fontSize(16).end
     );
     pdf.add(new Txt('   ').end);
-    pdf.add(this.creaTabla(this.selectedUsers));
+    if(this.entregasFiltradas.length > 0){
+      pdf.add(this.creaTabla(this.entregasFiltradas));
+    }else{
+      pdf.add(this.creaTabla(this.entregas));
+    }
+    
     pdf.create().open();
   }
+
+
 
   creaTabla(data: Beneficiarios2[]): ITable {
     [{}];
