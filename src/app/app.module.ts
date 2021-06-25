@@ -63,7 +63,9 @@ import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/busc
 import {DividerModule} from 'primeng/divider';
 import {PasswordModule} from 'primeng/password';
 import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/lista-beneficiarios.component';
+import { PipePipe } from './components/voluntario-calendario/pipe.pipe';
 import { EditarUsuariosComponent } from './components/listado-usuarios/editar-usuarios/editar-usuarios.component';
+import { ListarProductoDonadoComponent } from './components/donacion-producto/listar-producto-donado/listar-producto-donado.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -99,7 +101,9 @@ PdfMakeWrapper.setFonts(pdfFonts);
     FilterPipe,
     BuscarCitaComponent,
     ListaBeneficiariosComponent,
+    PipePipe,
     EditarUsuariosComponent,
+    ListarProductoDonadoComponent,
   ],
   imports: [
     CommonModule,

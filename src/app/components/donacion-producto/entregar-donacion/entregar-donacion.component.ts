@@ -11,7 +11,9 @@ import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import Swal from 'sweetalert2';
 import { Personas } from 'src/app/models/personas';
 import pdfMake from 'pdfmake/build/pdfmake';
-import { DatePipe, formatDate } from '@angular/common';
+
+import { DatePipe, formatDate, getLocaleDateFormat } from '@angular/common';
+import * as internal from 'node:stream';
 
 
 interface DataResponse {
@@ -27,21 +29,16 @@ interface DataResponse {
 type TableRow = [number,string, string, string, number, Date];
 type TableRow2 = [string, string, string, number, Date];
 
+
 @Component({
   selector: 'app-entregar-donacion',
   templateUrl: './entregar-donacion.component.html',
   styleUrls: ['./entregar-donacion.component.css'],
 })
-export class EntregarDonacionComponent implements OnInit {
-  
-  public personaArray:any = [];
-  public entregaDona:any = [];
-  public cedulaArray:any = [];
-  persona: Personas = new Personas();
-  listaEntrega: EntregaDonacion = new EntregaDonacion();
+export class EntregarDonacionComponent implements OnInit { 
 
   listaDonaciones: Array<Donaciones>;
-  listaEntregaDonaciones: Array<EntregaDonacion>;
+  listaEntregaDonaciones: Array<EntregaDonacion>; 
 
   loading: boolean = true;
 
@@ -52,6 +49,8 @@ export class EntregarDonacionComponent implements OnInit {
 
   valBeneficiario: boolean = false;
   today: Date;
+  
+
   displayPE: boolean = false;
 
   entregaDonacion: EntregaDonacion;
@@ -61,7 +60,7 @@ export class EntregarDonacionComponent implements OnInit {
 
   productoEntrega: Donaciones;
 
-  datepipe: any;
+
 
 
   constructor(
@@ -85,7 +84,7 @@ export class EntregarDonacionComponent implements OnInit {
         donacion.cantidad = result.cantidad;
         donacion.categoria = result.categoria;
         donacion.cedulaPersona = result.cedulaPersona;
-        donacion.descripcionDonacion = result.descripcionDonacion;
+        donacion.descripcionDonacion = result.descripcionDonacion;       
         donacion.fechaDonacion = result.fechaDonacion;
         donacion.idDonacion = result.idDonacion;
         donacion.nombreDonacion = result.nombreDonacion;
@@ -142,7 +141,7 @@ export class EntregarDonacionComponent implements OnInit {
           entrega.cantidadEntregada = result.cantidadEntregada;
           entrega.cedulaBeneficiario = result.cedulaBeneficiario;
           entrega.descripcionProducto = result.descripcionProducto;
-          entrega.fechaEntrega = result.fechaEntrega;
+          entrega.fechaEntrega =result.fechaEntrega;
           entrega.idEntregaDonacion = result.idEntregaDonacion;         
           entrega.productoEntregado = result.productoEntregado; 
           
@@ -202,8 +201,8 @@ export class EntregarDonacionComponent implements OnInit {
           this.entregaDonacion.cantidadEntregada = this.cantidadEntrega;
           this.entregaDonacion.cedulaBeneficiario = this.cedulaBeneficiario;
           this.entregaDonacion.descripcionProducto =
-            this.productoEntrega.descripcionDonacion;
-          this.entregaDonacion.fechaEntrega = this.today = new Date();
+          this.productoEntrega.descripcionDonacion;
+          this.entregaDonacion.fechaEntrega = this.today = new Date;
           this.entregaDonacion.productoEntregado =
             this.productoEntrega.nombreDonacion;
 
@@ -330,7 +329,7 @@ export class EntregarDonacionComponent implements OnInit {
       row.productoEntregado,
       row.descripcionProducto,
       row.cantidadEntregada,     
-    row.fechaEntrega,
+      row.fechaEntrega,
     ]);
   }
 
@@ -374,15 +373,18 @@ export class EntregarDonacionComponent implements OnInit {
         },
       }).end;
   }
+
   extraerDatos2(data: EntregaDonacion[]): TableRow2[] {
     return data.map((row) => [
       row.cedulaBeneficiario,
       row.productoEntregado,
       row.descripcionProducto,
       row.cantidadEntregada,     
-      row.fechaEntrega,
+      row.fechaEntrega,    
     ]);
 
   }
+
+ 
  
 }

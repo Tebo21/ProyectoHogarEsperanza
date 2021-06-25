@@ -10,6 +10,7 @@ import { PersonasService } from '../../services/personas.service';
 import { Personas } from '../../models/personas';
 import { DatePipe, formatDate } from '@angular/common';
 import { CitaMedicaService } from '../../services/cita-medica.service';
+import { TipoActividad } from '../../models/TipoActividad';
 
 const colors: any = {
   red: {
@@ -24,6 +25,11 @@ const colors: any = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  verde: {
+    primary: '#009700',
+    secondary: '#00df00',
+  },
+
 };
 
 @Component({
@@ -35,6 +41,12 @@ export class VoluntarioCalendarioComponent implements OnInit {
 
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
+
+//ACTIVIDADES -------------------------------------
+
+//-----------------------------------------
+
+
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -44,6 +56,8 @@ export class VoluntarioCalendarioComponent implements OnInit {
   modalData: {
     action: string;
     event: CalendarEvent;
+    title: string;
+    descrition: string;
   };
 
   actions: CalendarEventAction[] = [
@@ -51,7 +65,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+        this.handleEvent('Edited', event,'Nuevo',"");
       },
     },
     {
@@ -59,7 +73,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        this.handleEvent('Deleted', event,'Aveces',"");
       },
     },
   ];
@@ -71,8 +85,8 @@ export class VoluntarioCalendarioComponent implements OnInit {
 
   events: CalendarEvent[] = [
     /*{
-      start: subDays(startOfDay(new Date('2021-05-18T03:24:00')), 1),
-      end: addDays(new Date('2021-06-18T03:25:00'), 2),
+      start: subDays(startOfDay(new Date()), 1),
+      end: addDays(new Date(), 2),
       title: 'A 3 day event',
       color: colors.red,
       actions: this.actions,
@@ -83,6 +97,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
       },
       draggable: true,
     },
+
     {
       start: startOfDay(new Date('2021-05-18T15:24:00')),
       title: 'An event with no end date',
@@ -110,8 +125,10 @@ export class VoluntarioCalendarioComponent implements OnInit {
     },*/
   ];
 
-  activeDayIsOpen: boolean = true;
+  citas: CalendarEvent[]=[];
+  Actividades: CalendarEvent[]=[];
 
+  activeDayIsOpen: boolean = true;
   PersonId: string;
   Person: Personas = new Personas();
   Actividadview: Actividades[] = [];
@@ -127,9 +144,8 @@ export class VoluntarioCalendarioComponent implements OnInit {
   ngOnInit(): void {
     this.PersonId = localStorage.getItem('cedUser');
     this.mostrarTipoActividades();
-    console.log(this.Actividadview);
-    console.log(this.fecha);
     this.mostrarCitasMedicas();
+    this.addEvent();
   }
 
   mostrarTipoActividades(): void {
@@ -137,32 +153,41 @@ export class VoluntarioCalendarioComponent implements OnInit {
       (response) => {
         response.forEach((res) => {
           if (res.cedulaPersona.cedula==this.PersonId) {
-            console.log(res.cedulaPersona.nombres)
-
-            this.Actividadview.push(res);
-            const f=res.fechaActividad+"T"+res.horaFin+":00";
+            const f=res.fechaActividad+"T"+res.horaInicio+":00";
             const f1=res.fechaActividad+"T"+res.horaFin+":00";
+            this.Actividades=[
+              ...this.Actividades,
+              {
+                title: res.tipoActividad.nombreActividad,
+                start: addHours((new Date(f)), 2),
+                end: addHours(new Date(f1), 2),
+                color: colors.verde,
+                draggable: false,
+                resizable: {
+                  beforeStart: false,
+                  afterEnd: false,
+                },
+                cssClass: 'Actividad realizada: '+ res.descripcionActividad+' \n'+'Hora de Inicio: '+ res.horaInicio +' \n'+'Hora de Finalizacion: '+ res.horaFin
+              },
+            ];
             this.events=[
               ...this.events,
               {
-                title: res.descripcionActividad,
-                start: startOfDay(new Date(f)),
-                end: endOfDay(new Date(f1)),
-                color: colors.red,
-                draggable: true,
+                title: res.tipoActividad.nombreActividad,
+                start: addHours((new Date(f)), 2),
+                end: addHours(new Date(f1), 2),
+                color: colors.verde,
+                draggable: false,
                 resizable: {
-                  beforeStart: true,
-                  afterEnd: true,
+                  beforeStart: false,
+                  afterEnd: false,
                 },
+                cssClass: 'Actividad realizada: '+ res.descripcionActividad+' \n'+'Hora de Inicio: '+ res.horaInicio +' \n'+'Hora de Finalizacion: '+ res.horaFin
               },
             ];
-
-
           }
 
         });
-        this.Actividadview=response
-        console.log(this.Actividadview)
       }
   );
   }
@@ -172,33 +197,47 @@ export class VoluntarioCalendarioComponent implements OnInit {
     this.citaService.listCitas().subscribe(
       (response) => {
         response.forEach((res) => {
-            this.Actividadview.push(res);
             const f=res.fechaCitaMedica;
             const f1=res.fechaCitaMedica;
+            this.citas=[
+              ...this.citas,
+              {
+                title: res.descripcionCitaMedica,
+                start: startOfDay((new Date(f))),
+                color: colors.blue,
+                draggable: false,
+                resizable: {
+                  beforeStart: false,
+                  afterEnd: false,
+                },
+                cssClass: "Fecha de registro de la cita medica: " + res.fechaRegistro+' \n'+'Fecha asignada: '+res.fechaCitaMedica +' \n'+'PACIENTE: '+ res.paciente +' \n'+'Acompañante: '+ res.acompaniante +' \n'+'Mail: '+ res.mensaje +' \n'+'Trabajador de la fundacion: '+ res.trabajadorFundacion +' \n'+'Centro médico: '+ res.centroMedico +' \n'+'Especialidad: '+ res.especialidad +' \n'+'Observaciones: '+ res.nota
+              },
+
+
+            ];
+
             this.events=[
               ...this.events,
               {
                 title: res.descripcionCitaMedica,
-                start: startOfDay(new Date(f)),
-                end: endOfDay(new Date(f1)),
+                start: startOfDay((new Date(f))),
                 color: colors.blue,
-                draggable: true,
+                draggable: false,
                 resizable: {
-                  beforeStart: true,
-                  afterEnd: true,
+                  beforeStart: false,
+                  afterEnd: false,
                 },
+                cssClass: "Fecha de registro de la cita medica: " + res.fechaRegistro+' \n'+'Fecha asignada: '+res.fechaCitaMedica +' \n'+'PACIENTE: '+ res.paciente +' \n'+'Acompañante: '+ res.acompaniante +' \n'+'Mail: '+ res.mensaje +' \n'+'Trabajador de la fundacion: '+ res.trabajadorFundacion +' \n'+'Centro médico: '+ res.centroMedico +' \n'+'Especialidad: '+ res.especialidad +' \n'+'Observaciones: '+ res.nota
               },
 
-              
-            ]; 
+
+            ];
         });
-        this.Actividadview=response
-        console.log(this.Actividadview)
       }
   );
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[]}): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -211,6 +250,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
       this.viewDate = date;
     }
   }
+
 
   eventTimesChanged({
     event,
@@ -227,31 +267,34 @@ export class VoluntarioCalendarioComponent implements OnInit {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    this.handleEvent('Dropped or resized', event,"","");
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
+  handleEvent(action: string, event: CalendarEvent,title:string ,descrition: string): void {
+    this.modalData = { event, action,title, descrition};
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
+    this.citas.forEach((res)=>{
+      console.log(res)
+      this.citas=this.events;
+      this.events = [
+        ...this.events,
+        {
+          title: res.title,
+          start: res.start,
+          color: res.color,
+          draggable: false,
+          resizable: {
+              beforeStart: false,
+              afterEnd: false,
+          },
+          cssClass: res.cssClass
         },
-      },
-    ];
-
-    console.log(this.events.map((res)=>{res.start.getTime}))
+      ];
+    })
+    console.log(this.events)
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

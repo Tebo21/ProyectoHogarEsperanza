@@ -43,6 +43,7 @@ export class RegistroDonacionComponent implements OnInit {
   fecha_nac: string;
 
   donaciones: Array<Donaciones> = [];
+  donacionesFiltradas: Array<Donaciones> = [];
 
   loading: boolean = true;
 
@@ -80,6 +81,11 @@ export class RegistroDonacionComponent implements OnInit {
       { cat: 'Electronico' },
       { cat: 'Otro' },
     ];
+  }
+
+  onFilter(event, dt) {
+    this.donacionesFiltradas = [];
+    this.donacionesFiltradas = event.filteredValue;
   }
 
   obtenerDonaciones() {
@@ -123,6 +129,9 @@ export class RegistroDonacionComponent implements OnInit {
         this.donacion.categoria = this.categoria.cat;
       } else {
         this.otraCategoria = true;
+      }
+      if(this.displayEP){
+        this.editProducto.categoria = this.categoria.cat;
       }
     }
   }
@@ -504,5 +513,52 @@ export class RegistroDonacionComponent implements OnInit {
       (response) => response.json()
     );
     /*.then(data => data.filter((_, index: number)=> index <10));*/
+  }
+
+  async generarPdf(){
+    const pdf = new PdfMakeWrapper();
+    pdf.info({
+      title: 'Reporte de productos filtrados',
+    });
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+    pdf.add(new Txt('   ').end);
+    pdf.add(
+      new Txt('Lista de productos').alignment('center').bold().fontSize(16).end
+    );
+    pdf.add(new Txt('   ').end);
+
+    if (this.donacionesFiltradas.length > 0){
+      pdf.add(this.creaTabla2(this.donacionesFiltradas));
+    }else{
+      pdf.add(this.creaTabla2(this.donaciones));
+    }
+
+    pdf.create().open();
+  }
+
+  creaTabla2(data: Donaciones[]): ITable{
+    [{}];
+    return new Table([
+      ['Nombre Producto', 'Cantidad', 'Categoria'],
+      ...this.extraerDatos2(data),
+    ])
+      .widths('*')
+      .heights((rowIndex) => {
+        return rowIndex === 0 ? 20 : 0;
+      })
+      .layout({
+        /**% 2 */
+        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
+          return rowIndex === 0 ? '#CCCCCC' : '';
+        },
+      }).end;
+  }
+
+  extraerDatos2(data: Donaciones[]): TableRow[] {
+    return data.map((row) => [
+      row.nombreDonacion,
+      row.cantidad,
+      row.categoria,
+    ]);
   }
 }
