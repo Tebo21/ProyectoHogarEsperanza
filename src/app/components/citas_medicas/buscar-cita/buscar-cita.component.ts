@@ -6,7 +6,9 @@ import { ActividadesService } from 'src/app/services/actividades.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as faker from 'faker';
+import { Img, ITable, PdfMakeWrapper, Table, Txt } from 'pdfmake-wrapper';
 
+type TableRow = [string, string, string, string, string, string, string, string];
 
 @Component({
   selector: 'app-buscar-cita',
@@ -26,13 +28,18 @@ export class BuscarCitaComponent implements OnInit {
   // filtrar
   u: CitasMedicas = new CitasMedicas();
   citas: Array<CitasMedicas> = [];
+  citasFil: Array<CitasMedicas> = [];
   loading = true;
+
+  // pdf
+  selected: CitasMedicas[];
 
   constructor(private citaMedicaService: CitaMedicaService,
               private route: Router,
               public _actividadservice: ActividadesService) { }
 
   ngOnInit(): void {
+    this.selected = [];
     this.obtenerCitas();
   }
 
@@ -63,33 +70,123 @@ export class BuscarCitaComponent implements OnInit {
     this.route.navigate(['/crear-citaM']);
   }
 
-  /*GENERACION DE REPORTES */
-  genereport(): void {
-    const DATA = document.getElementById('TABLA');
-    const doc = new jsPDF('l', 'mm', 'a4');
-    const options = {
-      background: 'white',
-      scale: 3
-    };
-    html2canvas(DATA, options).then((canvas) => {
-
-      /*  let img = this._actividadservice.img;
-
-       // Add image Canvas to PDF
-        const bufferX = 3;
-        const bufferY = 3;
-        const imgProps = (doc as any).getImageProperties(img);
-        const pdfWidth = doc.internal.pageSize.getWidth() - 1 * bufferX;
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');*/
-        doc.text('CITAS MEDICAS', 10, 10);
-        return doc;
-    }).then((docResult) => {
-      docResult.output('dataurlnewwindow');
-      docResult.save(`${new Date().toISOString()}_CITASMEDICAS.pdf`);
-    });
-
+  onFilter(event, dt) {
+    this.citasFil = [];
+    this.citasFil = event.filteredValue;
   }
+
+
+  /*GENERACION DE REPORTES */
+  async exportSelected() {
+    if (this.selected.length == 1) {
+      const pdf = new PdfMakeWrapper();
+      pdf.pageOrientation('landscape');
+      pdf.pageSize('A4');
+      pdf.info({
+        title: 'Reporte de Citas Medicas Por Persona ',
+      });
+      pdf.add(await new Img('../../assets/img/logo.png').build());
+      pdf.add(new Txt('   ').end);
+      pdf.add(
+        new Txt('Reporte de Citas Medicas Por Persona ').alignment('center').bold().fontSize(16).end
+      );
+      pdf.add(new Txt('   ').end);
+      pdf.add(this.creaTabla(this.selected));
+      pdf.create().open();
+    } else {
+      alert('Por favor seleccione al menos uno');
+    }
+  }
+
+  creaTabla(data: CitasMedicas[]): ITable {
+    // tslint:disable-next-line: no-unused-expression
+    [{}];
+    return new Table([
+      ['DESCRIPCION CITA', 'FEHCA DE LA CITA', 'HORA DE LA CITA', 'CEDUDLA DEL PACIENTE',
+       'CEDULA DEL ACOMPAÑANTE', 'CENTRO MEDICO', 'ESPECIALIDAD', 'OBSERVAIONES'],
+      ...this.extraerDatos(data),
+    ])
+      .widths(['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'])
+      .heights((rowIndex) => {
+        return rowIndex === 0 ? 20 : 0;
+      })
+      .layout({
+        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
+          return rowIndex === 0 ? '#CCCCCC' : '';
+        },
+      }).end;
+  }
+
+  extraerDatos(data: CitasMedicas[]): TableRow[] {
+    return data.map((row) => [
+      row.descripcionCitaMedica,
+      row.fechaCitaMedica.substring(0, 10),
+      row.fechaCitaMedica.substring(11),
+      row.paciente,
+      row.acompaniante,
+      row.centroMedico,
+      row.especialidad,
+      row.nota
+    ]);
+  }
+
+
+  // metodo para filtro
+  async generarPdf(){
+    const pdf = new PdfMakeWrapper();
+    pdf.pageOrientation('landscape');
+    pdf.pageSize('A4');
+    pdf.info({
+        title: 'Reporte de Citas Medicas Por filtro ',
+      });
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+    pdf.add(new Txt('   ').end);
+    pdf.add(
+      new Txt('Lista de citas Medicas por Busqueda').alignment('center').bold().fontSize(16).end
+    );
+    pdf.add(new Txt('   ').end);
+
+    if (this.citasFil.length > 0){
+      pdf.add(this.creaTabla2(this.citasFil));
+    }else{
+      pdf.add(this.creaTabla2(this.citas));
+    }
+
+    pdf.create().open();
+  }
+
+  creaTabla2(data: CitasMedicas[]): ITable {
+    // tslint:disable-next-line: no-unused-expression
+    [{}];
+    return new Table([
+      ['DESCRIPCION CITA', 'FEHCA DE LA CITA', 'HORA DE LA CITA', 'CEDUDLA DEL PACIENTE',
+       'CEDULA DEL ACOMPAÑANTE', 'CENTRO MEDICO', 'ESPECIALIDAD', 'OBSERVAIONES'],
+      ...this.extraerDatos2(data),
+    ])
+      .widths(['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'])
+      .heights((rowIndex) => {
+        return rowIndex === 0 ? 20 : 0;
+      })
+      .layout({
+        fillColor: (rowIndex: number, node: any, columnIndex: number) => {
+          return rowIndex === 0 ? '#CCCCCC' : '';
+        },
+      }).end;
+  }
+
+  extraerDatos2(data: CitasMedicas[]): TableRow[] {
+    return data.map((row) => [
+      row.descripcionCitaMedica,
+      row.fechaCitaMedica.substring(0, 10),
+      row.fechaCitaMedica.substring(11),
+      row.paciente,
+      row.acompaniante,
+      row.centroMedico,
+      row.especialidad,
+      row.nota
+    ]);
+  }
+
 
   buscarNombre(){
     this.citaMedicaService.getPorNombre(this.nombre).subscribe(

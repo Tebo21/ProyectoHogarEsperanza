@@ -91,7 +91,7 @@ export class ListadoUsuariosComponent implements OnInit {
       for (let i = 0; i < this.listaUsuarios.length; i++) {
         this.personaService.getPorCedula(this.listaUsuarios[i].usuarioCedula).subscribe(data2 => {
           this.Persona = data2
-          this.ListadoPersonas.push(this.Persona)
+         this.ListadoPersonas.push(this.Persona)
           const usuarioImprimir: Usuarios2 = {
             cedula: this.Persona.cedula,
             nombres: this.Persona.nombres + ' ' + this.Persona.apellidos,
