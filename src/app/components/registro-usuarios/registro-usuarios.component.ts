@@ -91,7 +91,8 @@ export class RegistroUsuariosComponent implements OnInit {
       { nop: 'Venezuela' },
       { nop: 'Uruguay' },
       { nop: 'México' },
-      { nop: 'Honduras' }
+      { nop: 'Honduras' },
+      { nop: 'Otro' }
     ]
     this.estadocivil = [
       { eop: 'Casado' },
@@ -214,7 +215,9 @@ export class RegistroUsuariosComponent implements OnInit {
       edad: this.edadC,
       genero: this.genero.gop,
       nacionalidad: this.nacio.nop,
-      nombres: this.nombres
+      nombres: this.nombres,
+      beneficiario: false,
+      estadoActivo: true
     }
     this.personaservice.postPersona(nuevaPersona).subscribe(data2 => {
       this.personaCreada = data2;

@@ -16,6 +16,8 @@ export class PerfilUsuarioComponent implements OnInit {
   msgs: Message[];
   usuario: Usuarios = {};
   persona: Personas = {};
+  personaE: Personas = {};
+
   usuarioConfirContrasenia: any;
   //DropDown
   tipos: any[];
@@ -36,7 +38,8 @@ export class PerfilUsuarioComponent implements OnInit {
   usuarioContraseniaAnterior:any;
   usuarioContrasenia:any;
   displayContra: boolean = false;
-  
+  otraCategoria: boolean = false;
+  displayEP: boolean = false;
   constructor(private userService: UsuarioService, private personaService: PersonasService) {  }
 
   ngOnInit(): void {
@@ -58,7 +61,8 @@ export class PerfilUsuarioComponent implements OnInit {
       { nop: 'Venezuela' },
       { nop: 'Uruguay' },
       { nop: 'México' },
-      { nop: 'Honduras' }
+      { nop: 'Honduras' },
+      { nop: 'Otro' }
     ]
     this.estadocivil = [
       { eop: 'Casado' },
@@ -84,8 +88,7 @@ export class PerfilUsuarioComponent implements OnInit {
     this.personaService.getPorCedula(this.cedUser).subscribe(data2 => {
       this.persona = data2;
       this.discap = this.persona.discapacidad;
-      this.genero.gop = this.persona.genero;
-      this.nacio = this.persona.nacionalidad;
+      this.genero = this.persona.genero;
     });
   }
 
@@ -110,7 +113,7 @@ export class PerfilUsuarioComponent implements OnInit {
     let fecha = new Date(event.target.value);
     let fechactual = new Date();
     var f1 = fechactual.getFullYear() - fecha.getFullYear();
-    this.edadC = f1
+    this.persona.edad = f1
   }
   
   tipoUsuario(usuarioTipo: number): string {
@@ -126,6 +129,7 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   Actualizar(){
+    alert(this.genero.gop)
     alert('Funciona')
   }
 

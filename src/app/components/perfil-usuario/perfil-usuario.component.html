@@ -37,7 +37,7 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Género</label>
-            <p-dropdown [options]="generos" [(ngModel)]="genero" optionLabel="gop" placeholder="Seleccione su género"
+            <p-dropdown [options]="generos" [(ngModel)]="genero" optionLabel="gop" placeholder="{{persona.genero}}"
                 [style]="{'width': '100%'}" [showClear]="true" pTooltip="{{persona.genero}}">
             </p-dropdown>
         </div>
@@ -50,13 +50,12 @@
         <div class="form-floating mb-3">
             <label for="floatingInput">Edad</label>
             <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
-                placeholder="Edad" [(ngModel)]="edadC" name="edad" required disabled>
+                placeholder="Edad" [(ngModel)]="persona.edad" name="edad"  pTooltip="{{persona.edad}}" required disabled>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nacionalidad</label>
-            <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="Seleccione su nacionalidad"
-                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
-                pTooltip="{{persona.nacionalidad}}">
+            <p-dropdown [options]="nacionalidades" [(ngModel)]="persona.nacionalidad" placeholder="{{persona.nacionalidad}}"
+                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true" pTooltip="{{persona.nacionalidad}}">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
@@ -66,15 +65,15 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Estado Civil</label>
-            <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
+            <p-dropdown [options]="estadocivil" [(ngModel)]="persona.estado_civil" placeholder="{{persona.estado_civil}}"
                 optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" pTooltip="{{persona.estado_civil}}">
             </p-dropdown>
         </div>
         <hr>
-        <h2 class="text-center">Mi Cuenta</h2>
+        <h2 class="text-center">Datos del usuario</h2>
         <div class="form-floating mb-3" *ngIf="drop">
             <label for="floatingInput">Tipo de usuario</label>
-            <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario" optionLabel="string"
+            <p-dropdown [options]="tipos" [(ngModel)]="usuario.usuarioTipo" placeholder="{{tipoUsuario(usuario.usuarioTipo)}}" optionLabel="string"
                 [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChange($event)"
                 pTooltip="{{tipoUsuario(usuario.usuarioTipo)}}">
             </p-dropdown>

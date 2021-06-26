@@ -34,6 +34,8 @@ export class ListadoUsuariosComponent implements OnInit {
   usuarioT: number;
   usuarioFechaCreacion: Date = new Date;
   ListadoPersonas: Personas[];
+  ListadoInactivos: Personas[] = [];
+  personaEliminar: Personas = {};
 
   constructor(private usuarioService: UsuarioService,
     private confirmationService: ConfirmationService,
@@ -91,31 +93,46 @@ export class ListadoUsuariosComponent implements OnInit {
       for (let i = 0; i < this.listaUsuarios.length; i++) {
         this.personaService.getPorCedula(this.listaUsuarios[i].usuarioCedula).subscribe(data2 => {
           this.Persona = data2
-         this.ListadoPersonas.push(this.Persona)
-          const usuarioImprimir: Usuarios2 = {
-            cedula: this.Persona.cedula,
-            nombres: this.Persona.nombres + ' ' + this.Persona.apellidos,
-            direccion: this.Persona.direccion,
-            telefono: this.Persona.celular,
-            correo: this.Persona.correo,
-            tipousuario: this.tipoUsuario(this.listaUsuarios[i].usuarioTipo).toString()
+          if (this.Persona.estadoActivo == true) {
+            this.ListadoPersonas.push(this.Persona)
+            const usuarioImprimir: Usuarios2 = {
+              cedula: this.Persona.cedula,
+              nombres: this.Persona.nombres + ' ' + this.Persona.apellidos,
+              direccion: this.Persona.direccion,
+              telefono: this.Persona.celular,
+              correo: this.Persona.correo,
+              tipousuario: this.tipoUsuario(this.listaUsuarios[i].usuarioTipo).toString()
+            }
+            this.selectedUsers.push(usuarioImprimir);
           }
-          this.selectedUsers.push(usuarioImprimir);
+          else if (this.Persona.estadoActivo == false) {
+            this.ListadoInactivos.push(this.Persona)
+          }
         })
       }
     })
   }
 
-  eliminarUsuario(id: number) {
+  eliminarUsuario(cedula: string) {
     this.confirmationService.confirm({
       target: event.target,
-      message: `Está seguro de eliminar este usuario?`,
+      message: `¿Está seguro de eliminar este usuario?`,
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.usuarioService.deleteUser(id).subscribe(data => {
-          this.usuario = data;
-          window.location.reload();
-        });
+        this.personaService.getPorCedula(cedula).subscribe(data2 => {
+          this.personaEliminar = data2;
+          this.personaEliminar.estadoActivo = false;
+          this.personaService.updatePersona(this.personaEliminar).subscribe(data => {
+          });
+        })
+        this.usuarioService.getUserByCedula(cedula).subscribe(data3 => {
+          this.usuario = data3;
+          this.usuario.usuarioEstado = false;
+          this.usuarioService.updateUser(this.usuario).subscribe(data => {
+            alert('Se ha eliminado a '+this.personaEliminar.nombres+' ('+this.usuario.usuarioNombre+')')
+            window.location.reload();
+          });
+        })
       },
       reject: () => {
       }
@@ -243,7 +260,7 @@ export class ListadoUsuariosComponent implements OnInit {
     location.reload();
   }
 
-  ActualizarUsuario(cedula: any){
+  ActualizarUsuario(cedula: any) {
     localStorage.setItem('cedulaEditar', cedula);
     this.router.navigateByUrl('editar-usuario');
   }
