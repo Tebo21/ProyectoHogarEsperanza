@@ -21,12 +21,13 @@ export class LoginComponent implements OnInit {
   userRecibido: Usuarios = {}
   //Modals
   display: boolean;
-  displayF: boolean;
   alerta: string;
+  displayPass: boolean = true;
   //DropDown
   tipos: any[];
   tipo: any;
   valido: boolean = false;
+  correo: any;
 
   constructor(private loginservce: UsuarioService, private router: Router) { }
 
@@ -119,6 +120,9 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('actividades');
       })();
     }
+  }
 
+  Recuperar(){
+    
   }
 }
