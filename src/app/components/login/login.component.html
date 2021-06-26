@@ -45,8 +45,7 @@
                             </div>
                             <br>
                             <div class="row px-0 mb-4">
-                                <a href="https://www.facebook.com/" class="ml-auto mb-0 text-sm">¿Olvidaste tu
-                                    contraseña?</a>
+                                <a (click)="displayPass=true" class="ml-auto mb-0 text-sm">¿Olvidaste tu contraseña?</a>
                             </div>
                             <div class="row mb-3 px-3">
                                 <button pButton pRipple type="button" label="Iniciar
@@ -72,7 +71,7 @@
     </div>
 
 </body>
-<p-dialog header="Hoger Esperanza" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+<p-dialog header="Hogar Esperanza" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
     <p class="p-m-0">{{alerta}}</p>
     <ng-template pTemplate="footer">
@@ -81,5 +80,17 @@
     </ng-template>
 </p-dialog>
 
-
-
+<p-dialog header="Recuperar tu cuenta" [(visible)]="displayPass" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+    <div class="row px-3">
+        <label class="mb-1"><h6 class="mb-0 text-sm">Ingrese su dirección de correo electrónico</h6></label>
+        <input class="mb-4" type="email" [(ngModel)]="correo" type="email" maxlength="40" minlength="12" id="correo"
+            name="correo" placeholder="Correo electrónico" required>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="Recuperar()" label="Enviar" styleClass="p-button-text">
+        </p-button>
+        <p-button icon="pi pi-times" class="p-button-danger" (click)="displayPass=false" label="Cancelar" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>
