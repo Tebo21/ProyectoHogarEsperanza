@@ -76,7 +76,7 @@ export class ListCentroComponent implements OnInit {
           .updateCentro(this.selectedCentro.idCentroMedico, this.selectedCentro)
           .subscribe((data) => {
             if (data) {
-              alert('Centro medico editado');
+              alert('Centro médico editado');
               this.listCentro();
               this.selectedCentro = new CentroMedico();
             }
@@ -87,7 +87,7 @@ export class ListCentroComponent implements OnInit {
         this.service.createCentro(this.selectedCentro).subscribe((data) => {
           if (data) {
             this.listCentro();
-            alert('Centro medico agregado');
+            alert('Centro médico agregado');
             this.selectedCentro = new CentroMedico();
             this.show_response('');
             this.listCentro();

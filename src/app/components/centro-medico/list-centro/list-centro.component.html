@@ -79,7 +79,7 @@
       <br />
 
       <div class="modal-header text-center">
-        <h3 class="text-center"><b>Listado de Centros Medicos</b></h3>
+        <h3 class="text-center"><b>Listado de Centros Médicos</b></h3>
       </div>
       <br />
 
@@ -124,22 +124,11 @@
               <td>{{ c.direccionCentroMedico }}</td>
               <td>{{ c.telefonoCentroMedico }}</td>
                 <td>
-                  <div class="cell" data-title="Acciones">
-                    <input
-                      class="btn-update"
-                      (click)="openForEdit(c)"
-                      type="image"
-                      src="../../../assets/img/pencil.svg"
-                      alt="Delete"
-                    />
-                    <input
-                      class="btn-delete"
-                      (click)="deleteCentro(c)"
-                      type="image"
-                      src="../../../assets/img/delete.svg"
-                      alt="Delete"
-                    />
-                  </div>
+                  <button (click)="openForEdit(c)" pButton pRipple type="button" icon="pi pi-pencil"
+                  class="p-button-rounded p-button-warning p-button-outlined p-button p-component p-button-icon-only"></button>
+
+                  <button (click)="deleteCentro(c)" pButton pRipple type="button" icon="pi pi-trash" 
+                  class="p-button-rounded p-button-danger p-button-outlined p-button p-component p-button-icon-only"></button>
                 </td>
                 </tr>
               </ng-template>
