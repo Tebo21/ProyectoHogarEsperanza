@@ -97,7 +97,7 @@ export class NavbarAdminComponent implements OnInit {
               {
                 label: 'Listar Observaciones',
                 icon: 'pi pi-fw pi-users',
-                routerLink: ['/observaciones-personas']
+                routerLink: ['/lista-observaciones-personas']
               }
             ]
           }
