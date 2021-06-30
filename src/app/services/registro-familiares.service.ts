@@ -17,4 +17,7 @@ export class RegistroFamiliaresService {
   getfamicedula(cedula: any): Observable<any>{
     return this.http.get<any>(this.URL+`/bycedula/${cedula}`);
   }
+  getFami():Observable<any>{
+    return this.http.get(`${this.URL}/listadoRegistroFamiliares`)
+  }
 }

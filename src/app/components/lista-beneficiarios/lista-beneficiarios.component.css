@@ -1,0 +1,6 @@
+th, td, input {
+    border: 1px solid blue;
+    width: 100px;
+    word-wrap: break-word;
+    
+}
