@@ -1,0 +1,47 @@
+<html>
+<app-navbar-admin></app-navbar-admin>
+    <head>
+    <br><br><br><br>
+    </head>
+    <body>
+            <div class="container">
+        <div class="card">
+
+        <div class="card-header mb-3">
+                <h4>Observaciones</h4>
+                </div>
+         <form action="">       
+            <div class="input-group mb-3">
+              <textarea [(ngModel)]="notasObservaciones.descripcionobservacion" name="situacionEconomica" id="situacionEconomica"
+               style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control"
+                placeholder="Situación Economica"></textarea>
+            </div>
+            <div class="btn_guardar mb-2">
+                <button (click)="guardarObservaciones()" class="guardar1"  style="margin-left: 30%;" type="submit">Guardar y Continuar</button>
+            </div>
+         </form>
+        </div>
+        <div class="card">
+            <h1>Observaciones</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+              Featured
+            </div>
+            <div class="card-body">
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </body>
+</html>

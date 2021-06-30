@@ -89,6 +89,17 @@ export class NavbarAdminComponent implements OnInit {
                 routerLink: ['/lista-beneficiarios']
               }
             ]
+          },
+          {
+            label: 'Observaciones',
+            icon: 'pi pi-fw pi-users',
+            items: [
+              {
+                label: 'Listar Observaciones',
+                icon: 'pi pi-fw pi-users',
+                routerLink: ['/observaciones-personas']
+              }
+            ]
           }
         ]
       },
