@@ -5,7 +5,9 @@
   "projects": {
     "ProyectoHogarEsperanza": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "strict": true
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
