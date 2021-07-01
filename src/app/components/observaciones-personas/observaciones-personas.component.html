@@ -4,7 +4,7 @@
     <br><br><br><br>
     </head>
     <body>
-            <div class="container">
+      <div class="container">
         <div class="card">
 
         <div class="card-header mb-3">
@@ -21,27 +21,66 @@
             </div>
          </form>
         </div>
+      
+
         <div class="card">
-            <h1>Observaciones</h1>
-        </div>
-        <div class="card">
-            <div class="card-header">
-              Featured
-            </div>
-            <div class="card-body">
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            </div>
-          </div>
+          <div class="card-header mb-3">
+           <h4>Lista Beneficiarios</h4>
+           </div>
+       <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
+         <p-table #dt [rows]="10"  [scrollable]="true" class="table table-responsive" 
+             scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+             [rowHover]="true" [autoLayout]="true" [responsive]="true"
+             [globalFilterFields]="['#','fechaRegistro','descripcionobservacion']" 
+             [value]="datos">
+             <ng-template pTemplate="caption">
+                    <div style="margin-left: 70%;">
+                          </div>
+                             <div class="container" style="display: grid;">
+                                <div align="left">
+                                    <button type="button" pButton pRipple icon="pi pi-file-pdf" 
+                                        class="p-button-danger p-mr-2" tooltipPosition="bottom" (click)="generarPDF()"></button>
+                                 </div>
+                 <div align="right">
+                     <span class="p-input-icon-right">
+                         <i class="pi pi-search"></i>
+                         <div style="margin-left: 70%;">
+                            <button type="button" pButton pRipple icon="pi pi-refresh" 
+                                class="p-mr-2" tooltipPosition="bottom" (click)="actualizar()"></button>
+                         </div>
+                         <input pInputText type="date" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                             placeholder="Buscar"/>
+                         <button type="button" pButton pRipple icon="pi pi-refresh" 
+                         class="p-mr-2" tooltipPosition="bottom" ></button> 
+                     </span>
+                 </div>
+             </div>         
+             </ng-template>
+             <ng-template pTemplate="header">
+                 <tr >
+                    <th pSortableColumn="idObservacionesPersona">#
+                        <p-sortIcon field="idObservacionesPersona"></p-sortIcon>
+                        </th>
+                     <th pSortableColumn="fechaRegistro">Fecha Registro
+                     <p-sortIcon field="fechaRegistro"></p-sortIcon>
+                     </th>
+                     <th pSortableColumn="descripcionobservacion">Observaciones
+                     <p-sortIcon field="descripcionobservacion"></p-sortIcon>
+                     </th>
+                 </tr>
+             </ng-template>
+             <ng-template pTemplate="body" let-user>
+                 <tr  class="p-selectable-row">
+                     <td>{{user.idObservacionesPersona}}</td>
+                     <td>{{user.fechaRegistro}}</td>
+                     <td>{{user.descripcionobservacion}}</td>
+                 </tr>
+             </ng-template>
+         </p-table>
+     </div>
+    </div>
+        
 
-
-
-
-
-
-
-
-
-
-        </div>
+      </div>
     </body>
 </html>
