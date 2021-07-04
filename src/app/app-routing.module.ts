@@ -27,6 +27,8 @@ import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/li
 import { EditarUsuariosComponent } from './components/listado-usuarios/editar-usuarios/editar-usuarios.component';
 import { ListarProductoDonadoComponent } from './components/donacion-producto/listar-producto-donado/listar-producto-donado.component';
 import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
+import { ObservacionesPersonasComponent } from './components/observaciones-personas/observaciones-personas.component';
+import { ListaObservacionesPersonasComponent } from './components/lista-observaciones-personas/lista-observaciones-personas.component';
 
 // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
 // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -50,6 +52,10 @@ const routes: Routes = [
     component: ActividadPersonaComponent,
   },
   {
+    path: 'observaciones-personas',
+    component: ObservacionesPersonasComponent
+  },
+  {
     path: 'crear-actividad',
     component: CrearActividadComponent,
   },
@@ -64,6 +70,10 @@ const routes: Routes = [
   {
     path: 'ficha-socioeconomica',
     component: FichaSocioeconomicaComponent,
+  },
+  {
+    path: 'lista-observaciones-personas',
+    component: ListaObservacionesPersonasComponent,
   },
   {
     path: 'registro-usuario',

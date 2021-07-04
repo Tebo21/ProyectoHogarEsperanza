@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html>
-<body>
 
-<h1>My First JavaScript</h1>
+<form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
+    <input type="text" placeholder="Name" name="name" ngModel required #name="ngModel">
+    <br>
+    <input type="text" placeholder="Email" email name="email" ngModel required #email="ngModel">
+    <br>
+    <textarea placeholder="Messages" name="messages" ngModel required #messages="ngModel"></textarea>
+    <br>
+    <input type="submit" value="Send">
+</form>
 
-<p>JavaScript can change the content of an HTML element:</p>
-
-<button type="button" onclick="myFunction()">Click Me!</button>
-
-
-<p id="demo">This is a demonstration.</p>
-
-<script type="text/javascript">
-function myFunction() { 
-  document.getElementById("demo").innerHTML = "Hello JavaScript!";
-}
-</script>
-
-</body>
-</html>
+<!-- 123Password@ -->

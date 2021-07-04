@@ -27,14 +27,18 @@
                             <h3 align="center">Inicio de Sesión</h3>
                             <br>
                             <div class="row px-3">
-                                <label class="mb-0"><h6 class="mb-0 text-sm">Cédula de Identidad</h6></label>
+                                <label class="mb-0">
+                                    <h6 class="mb-0 text-sm">Cédula de Identidad</h6>
+                                </label>
                                 <input class="mb-4" type="text" [(ngModel)]="user.usuarioCedula"
                                     name="user.usuarioCedula" placeholder="Número de cédula de identidad">
                             </div>
                             <div class="row px-1">
-                                <label class="mb-0"><h6 class="mb-0 text-sm">Contraseña</h6></label>
+                                <label class="mb-0">
+                                    <h6 class="mb-0 text-sm">Contraseña</h6>
+                                </label>
                                 <p-password class="mb-4" [(ngModel)]="user.usuarioContrasenia" [toggleMask]="true"
-                                name="user.usuarioContrasenia" placeholder="Contraseña"></p-password>
+                                    name="user.usuarioContrasenia" placeholder="Contraseña"></p-password>
                             </div>
                             <div class="row px-1">
                                 <h4 class="mb-0 text-sm">Selecciona un tipo de usuario</h4>
@@ -56,8 +60,9 @@
 
                 </div>
                 <div class="bg-blue py-1" style="background-color:  #e3f2fd;">
-                    <div class="row px-3"> <small class="ml-4 ml-sm-0 mb-2" style="color: black;"> &copy; <b>Hogar Esperanza 2021.</b></small>
-                        <div class="social-contact ml-4 ml-sm-auto" id="as"  style="color: black;">
+                    <div class="row px-3"> <small class="ml-4 ml-sm-0 mb-2" style="color: black;"> &copy; <b>Hogar
+                                Esperanza 2021.</b></small>
+                        <div class="social-contact ml-4 ml-sm-auto" id="as" style="color: black;">
                             <a href="https://www.facebook.com/HogardeEsperanzaEcuador/"><span
                                     class="fa fa-facebook mr-4 text-sm"></span></a>
                             <a
@@ -69,8 +74,8 @@
             </div>
         </div>
     </div>
-
 </body>
+
 <p-dialog header="Hogar Esperanza" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
     <p class="p-m-0">{{alerta}}</p>
@@ -80,17 +85,20 @@
     </ng-template>
 </p-dialog>
 
-<p-dialog header="Recuperar tu cuenta" [(visible)]="displayPass" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000"
-    [draggable]="false" [resizable]="false">
+<p-dialog header="Recuperar tu cuenta" [(visible)]="displayPass" [modal]="true" [style]="{width: '35vw'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
     <div class="row px-3">
-        <label class="mb-1"><h6 class="mb-0 text-sm">Ingrese su dirección de correo electrónico</h6></label>
+        <label class="mb-1">
+            <h6 class="mb-0 text-sm">Ingrese su dirección de correo electrónico</h6>
+        </label>
         <input class="mb-4" type="email" [(ngModel)]="correo" type="email" maxlength="40" minlength="12" id="correo"
             name="correo" placeholder="Correo electrónico" required>
     </div>
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="Recuperar()" label="Enviar" styleClass="p-button-text">
+        <p-button icon="pi pi-check" onclick="Principal(correo.value)" label="Enviar" styleClass="p-button-text">
         </p-button>
-        <p-button icon="pi pi-times" class="p-button-danger" (click)="displayPass=false" label="Cancelar" styleClass="p-button-text">
+        <p-button icon="pi pi-times" class="p-button-danger" (click)="displayPass=false" label="Cancelar"
+            styleClass="p-button-text">
         </p-button>
     </ng-template>
 </p-dialog>

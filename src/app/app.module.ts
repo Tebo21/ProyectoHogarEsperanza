@@ -66,6 +66,8 @@ import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/li
 import { PipePipe } from './components/voluntario-calendario/pipe.pipe';
 import { EditarUsuariosComponent } from './components/listado-usuarios/editar-usuarios/editar-usuarios.component';
 import { ListarProductoDonadoComponent } from './components/donacion-producto/listar-producto-donado/listar-producto-donado.component';
+import { ObservacionesPersonasComponent } from './components/observaciones-personas/observaciones-personas.component';
+import { ListaObservacionesPersonasComponent } from './components/lista-observaciones-personas/lista-observaciones-personas.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -104,6 +106,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     PipePipe,
     EditarUsuariosComponent,
     ListarProductoDonadoComponent,
+    ObservacionesPersonasComponent,
+    ListaObservacionesPersonasComponent,
   ],
   imports: [
     CommonModule,

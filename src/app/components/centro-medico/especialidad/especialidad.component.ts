@@ -22,7 +22,8 @@ type TableRow = [number, string, string];
 })
 export class EspecialidadComponent implements OnInit {
 
-  esp: Array<Especialidad> = [];
+  esp: Array<Especialidad>;
+  espFiltradas: Array<Especialidad> = [];
   loading: boolean = true;
   centro: CentroMedico[] = [];
   selectedEspecialidad: Especialidad = new Especialidad();
@@ -39,6 +40,11 @@ export class EspecialidadComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerEspecialidad();
     this.listCentro();
+  }
+
+  onFilter(event, dt) {
+    this.espFiltradas = [];
+    this.espFiltradas = event.filteredValue;
   }
 
   listCentro() {
@@ -104,8 +110,8 @@ export class EspecialidadComponent implements OnInit {
     let response = confirm(`¿Desea eliminar: ${esp.nombreEspecialidad}?`);
     if (response == true) {
       this.service.deleteEspecialidad(esp.idEspecialidad).subscribe((data) => {
-        alert(`${esp.nombreEspecialidad} fue eliminado`);
         this.obtenerEspecialidad();
+        alert(`${esp.nombreEspecialidad} fue eliminado`);
       });
     }
   }
@@ -136,22 +142,28 @@ export class EspecialidadComponent implements OnInit {
 
 
   /* GENERAR REPORTE EN PDF */
-  async genereport() {
+  async crearReporte() {
     const pdf = new PdfMakeWrapper();
-    const data = await this.fetchData();
-
+    pdf.pageOrientation('landscape');
+    pdf.pageSize('A4');
     pdf.info({
       title: 'Reporte de Especialidades',
     });
-    pdf.add(await new Img('../../assets/img/logo.png').build());
-  
+    pdf.add(await new Img('../../assets/img/logo.png').build());   
+    pdf.add(new Txt('   ').end);
     pdf.add(
-      new Txt('Lista de Especialidades').alignment('center').bold().end
+      new Txt('Lista de especialidades').alignment('center').bold().fontSize(16).end
     );
     pdf.add(new Txt('   ').end);
-    pdf.add(this.creaTabla(data));
+    if(this.espFiltradas.length > 0){
+      pdf.add(this.creaTabla(this.espFiltradas));
+    }else{
+      pdf.add(this.creaTabla(this.esp));
+    }
+    
     pdf.create().open();
   }
+
   creaTabla(data: DataResponse[]): ITable {
     [{}];
     return new Table([
@@ -178,9 +190,4 @@ export class EspecialidadComponent implements OnInit {
     ]);
   }
 
-  async fetchData(): Promise<DataResponse[]> {
-    return fetch('http://localhost:3000/especialidad/listado').then(
-      (response) => response.json()
-    );
-  }
 }

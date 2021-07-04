@@ -46,10 +46,6 @@
                 <i class="pi pi-angle-double-left"></i> Regresar
               </button>
             </div>
-
-            <button class="btn btn-outline-primary btnfooter" (click)="genereport()" type="button" style="margin-left: 10px">
-              Reporte <i class="pi pi-file-pdf"></i>
-            </button>
           </div>
         </div>
       </div>
@@ -62,14 +58,21 @@
         <br />
 
         <p-table #dt [value]="esp" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,60]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [filterDelay]="0" [globalFilterFields]="['centroMedico']">
+            [filterDelay]="0" [globalFilterFields]="['centroMedico']" (onFilter)="onFilter($event, dt)">
+            
             <ng-template pTemplate="caption">
-                <span class="buscar" style="margin-left: 50%">
-                    <i class="pi pi-search"></i> 
-                    <input class="btnn" type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar por centro médico" />
+              <div class="table-header">
+                <span class="buscar" style="margin-left: 60%">
+                  <i class="pi pi-search"></i>
+                  <input class="btnn" type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar por centro médico:" />
                 </span>
-                <br />
+                <br>
+                <br>
+                
+                               
+              </div>
             </ng-template>
+
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="idEspecialidad">
@@ -93,7 +96,11 @@
                             <p-columnFilter type="text" field="centroMedico" display="menu" class="p-ml-auto"></p-columnFilter>
                         </div>
                     </th>
-                    <th scope="col">ACCIONES</th>
+                    <th>
+                      <button class="btn btn-outline-primary btnfooter" (click)="crearReporte()" type="button">
+                      Reporte <i class="pi pi-file-pdf"></i>
+                      </button>
+                    </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-e>
@@ -102,23 +109,19 @@
                 <td>{{ e.nombreEspecialidad }}</td>
                 <td>{{ e.centroMedico }}</td>
                 <td>
-                  <div class="cell" data-title="Acciones">
-                    <input
-                      class="btn-update"
-                      (click)="openForEdit(e)"
-                      type="image"
-                      src="../../../assets/img/pencil.svg"
-                      alt="Delete"
-                    />
-                    <input
-                      class="btn-delete"
-                      (click)="deleteEspecialidad(e)"
-                      type="image"
-                      src="../../../assets/img/delete.svg"
-                      alt="Delete"
-                    />
+                  <div style="margin-left: 15px">
+                  <button (click)="openForEdit(e)" pButton pRipple type="button" icon="pi pi-pencil"
+                        class="p-button-rounded p-button-warning p-button-outlined p-button p-component p-button-icon-only"></button>
+
+                    <button (click)="deleteEspecialidad(e)" pButton pRipple type="button" icon="pi pi-trash" 
+                    class="p-button-rounded p-button-danger p-button-outlined p-button p-component p-button-icon-only"></button>
                   </div>
                 </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="8">No se encontro donaciones</td>
                 </tr>
               </ng-template>
           </p-table>
