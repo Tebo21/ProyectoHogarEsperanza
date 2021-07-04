@@ -17,8 +17,6 @@ export class PerfilUsuarioComponent implements OnInit {
   usuario: Usuarios = {};
   persona: Personas = {};
   personaE: Personas = {};
-
-  usuarioConfirContrasenia: any;
   //DropDown
   tipos: any[];
   tipo: any;
@@ -33,14 +31,16 @@ export class PerfilUsuarioComponent implements OnInit {
   generos: any[];
   genero: any;
   discap = false;
+  usuarioContraseniaAnterior: any;
+  usuarioContrasenia: any;
+  usuarioConfirContrasenia: any;
   //Campos
-  edadC:number;
-  usuarioContraseniaAnterior:any;
-  usuarioContrasenia:any;
+  edadC: number;
   displayContra: boolean = false;
   otraCategoria: boolean = false;
   displayEP: boolean = false;
-  constructor(private userService: UsuarioService, private personaService: PersonasService) {  }
+
+  constructor(private userService: UsuarioService, private personaService: PersonasService) { }
 
   ngOnInit(): void {
     this.cedUser = localStorage.getItem('cedUser')
@@ -51,18 +51,13 @@ export class PerfilUsuarioComponent implements OnInit {
       { string: 'Voluntario Externo' }
     ];
     this.nacionalidades = [
-      { nop: 'Ecuatoriano' },
-      { nop: 'Afganistán' },
-      { nop: 'Alemania' },
-      { nop: 'Canadá' },
-      { nop: 'China' },
-      { nop: 'Perú' },
-      { nop: 'Colombia' },
-      { nop: 'Venezuela' },
-      { nop: 'Uruguay' },
-      { nop: 'México' },
-      { nop: 'Honduras' },
-      { nop: 'Otro' }
+      { nop: 'Afganistán' }, { nop: 'Alemania' }, { nop: 'Arabia Saudita' }, { nop: 'Argentina' }, { nop: 'Australia' }, { nop: 'Bélgica' }, { nop: 'Bolivia' }, { nop: 'Brasil' },
+      { nop: 'Camboya' }, { nop: 'Canadá' }, { nop: 'Chile' }, { nop: 'China' }, { nop: 'Colombia' }, { nop: 'Corea' }, { nop: 'Costa Rica' }, { nop: 'Cuba' }, { nop: 'Dinamarca' }, { nop: 'Ecuador' }, { nop: 'Egipto' }, { nop: 'El Salvador' },
+      { nop: 'Escocia' }, { nop: 'España' }, { nop: 'Estados Unidos' }, { nop: 'Estonia' }, { nop: 'Etiopia' }, { nop: 'Filipinas' }, { nop: 'Finlandia' }, { nop: 'Francia' }, { nop: 'Gales' }, { nop: 'Grecia' }, { nop: 'Guatemala' },
+      { nop: 'Haití' }, { nop: 'Holanda' }, { nop: 'Honduras' }, { nop: 'Indonesia' }, { nop: 'Inglaterra' }, { nop: 'Irak' }, { nop: 'Irán' }, { nop: 'Irlanda' }, { nop: 'Israel' }, { nop: 'Italia' }, { nop: 'Japón' }, { nop: 'Jordania' },
+      { nop: 'Laos' }, { nop: 'Letonia' }, { nop: 'Lituania' }, { nop: 'Malasia' }, { nop: 'Marruecos' }, { nop: 'México' }, { nop: 'Nicaragua' }, { nop: 'Noruega' }, { nop: 'Nueva Zelanda' }, { nop: 'Panamá' }, { nop: 'Paraguay' },
+      { nop: 'Perú' }, { nop: 'Polonia' }, { nop: 'Portugal' }, { nop: 'Puerto Rico' }, { nop: 'Republica Dominicana' }, { nop: 'Rumania' }, { nop: 'Rusia' }, { nop: 'Suecia' }, { nop: 'Suiza' }, { nop: 'Tailandia' }, { nop: 'Taiwán' },
+      { nop: 'Turquía' }, { nop: 'Ucrania' }, { nop: 'Uruguay' }, { nop: 'Venezuela' }, { nop: 'Vietnam' }, { nop: 'Otro' }
     ]
     this.estadocivil = [
       { eop: 'Casado' },
@@ -77,10 +72,10 @@ export class PerfilUsuarioComponent implements OnInit {
     ]
     this.userService.getUserByCedula(this.cedUser).subscribe(data => {
       this.usuario = data;
-      if(this.usuario.usuarioTipo == 1){
+      if (this.usuario.usuarioTipo == 1) {
         this.drop = true;
         this.vistaTipo = false;
-      } if (this.usuario.usuarioTipo == 2 || this.usuario.usuarioTipo == 3 || this.usuario.usuarioTipo == 4 ){
+      } if (this.usuario.usuarioTipo == 2 || this.usuario.usuarioTipo == 3 || this.usuario.usuarioTipo == 4) {
         this.drop = false;
         this.vistaTipo = true;
       }
@@ -89,6 +84,8 @@ export class PerfilUsuarioComponent implements OnInit {
       this.persona = data2;
       this.discap = this.persona.discapacidad;
       this.genero = this.persona.genero;
+      this.nacio = this.persona.nacionalidad;
+      this.estado = this.persona.estado_civil;
     });
   }
 
@@ -98,11 +95,11 @@ export class PerfilUsuarioComponent implements OnInit {
     } else {
       this.valido = true;
       if (this.tipo.string == 'SuperAdministrador') {
-        
+
       } else if (this.tipo.string == 'Administrador') {
-        
+
       } else if (this.tipo.string == 'Voluntario Interno') {
-        
+
       } else if (this.tipo.string == 'Voluntario Externo') {
 
       }
@@ -115,7 +112,7 @@ export class PerfilUsuarioComponent implements OnInit {
     var f1 = fechactual.getFullYear() - fecha.getFullYear();
     this.persona.edad = f1
   }
-  
+
   tipoUsuario(usuarioTipo: number): string {
     if (usuarioTipo == 1) {
       return 'SuperAdministrador'
@@ -128,7 +125,7 @@ export class PerfilUsuarioComponent implements OnInit {
     }
   }
 
-  Actualizar(){
+  Actualizar() {
     alert(this.genero.gop)
     alert('Funciona')
   }

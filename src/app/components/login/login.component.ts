@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
-        await delay(2000);
+        await delay(900);
         this.router.navigateByUrl('registro-usuario');
       })();
     } else if (this.tipo.string == 'Administrador') {
@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
-        await delay(2000);
+        await delay(900);
         this.router.navigateByUrl('dashboard');
       })();
     } else if (this.tipo.string == 'Voluntario Interno') {
@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
-        await delay(2000);
+        await delay(900);
         this.router.navigateByUrl('actividades');
       })();
     } else if (this.tipo.string == 'Voluntario Externo') {
@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
-        await delay(2000);
+        await delay(900);
         this.router.navigateByUrl('actividades');
       })();
     }

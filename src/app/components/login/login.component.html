@@ -38,12 +38,12 @@
                                     <h6 class="mb-0 text-sm">Contraseña</h6>
                                 </label>
                                 <p-password class="mb-4" [(ngModel)]="user.usuarioContrasenia" [toggleMask]="true"
-                                    name="user.usuarioContrasenia" placeholder="Contraseña"></p-password>
+                                    name="user.usuarioContrasenia" placeholder="Contraseña" [feedback]="false"></p-password>
                             </div>
                             <div class="row px-1">
                                 <h4 class="mb-0 text-sm">Selecciona un tipo de usuario</h4>
                                 <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario"
-                                    optionLabel="string" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
+                                    optionLabel="string" [style]="{'width': '100%'}" [showClear]="true"
                                     (onChange)="onChange($event)">
                                 </p-dropdown>
                             </div>
