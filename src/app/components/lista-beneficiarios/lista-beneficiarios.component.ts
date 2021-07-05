@@ -36,6 +36,7 @@ export class ListaBeneficiariosComponent implements OnInit {
   }
 
   actualizar(){
+    this.datos=[]
   this.listaPersona();
   this.listaFamiliares();
   }
@@ -111,8 +112,6 @@ export class ListaBeneficiariosComponent implements OnInit {
          this.personaArray[c].push(this.fichaArray[c][0],this.fichaArray[c][1],
          this.fichaArray[c][2],this.fichaArray[c][3],this.fichaArray[c][4],
          this.fichaArray[c][5],this.fichaArray[c][6],this.fichaArray[c][7],this.fichaArray[c][8])
-         //this.datos.push(this.personaArray[c])
-         console.log()
          const datosLista={
            cedula:this.personaArray[c][0], 
            nombres:this.personaArray[c][1],
@@ -144,10 +143,15 @@ export class ListaBeneficiariosComponent implements OnInit {
       }
     });
   } 
-
+  
   ingresoFicha(i){
     localStorage.setItem("cedulalocalstorage", i)
     this.root.navigate(['vista-ficha']);
+  }
+
+    ingresoeditar(i){
+    localStorage.setItem("cedulalocalstorage", i)
+    this.root.navigate(['editar-beneficiarios']);
   }
 
   extractData(){
@@ -173,5 +177,19 @@ export class ListaBeneficiariosComponent implements OnInit {
     }).end)
     pdf.create().open();   
   }
-
+  eliminarPersonaBeneficiario(i){
+   this.personaService.getPorCedula(i).subscribe( data => {
+     this.persona=data
+     this.persona.beneficiario=false;
+     this.persona.estadoActivo=false;
+     console.log(this.persona)
+     this.personaService.updatePersona(this.persona).subscribe( data => {
+                 Swal.fire(
+        'Eliminado!',
+        'Registro eliminado',
+        'success'
+      )
+     })
+   }) 
+  }  
 }

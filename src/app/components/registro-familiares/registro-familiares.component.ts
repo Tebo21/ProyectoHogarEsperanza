@@ -160,8 +160,8 @@ export class RegistroFamiliaresComponent implements OnInit {
     this.PersonasFami.edad=arrayactualizacion[6];
     this.PersonasFami.genero=arrayactualizacion[7];
     this.parentesco_familiar=arrayactualizacion[8];
-    this.hijosArray.pop(i)
-    arrayactualizacion.pop(i)
+    this.hijosArray.splice(i,1)
+    arrayactualizacion.splice(i,1)
   }
 
   eliminar(i){
@@ -184,7 +184,7 @@ export class RegistroFamiliaresComponent implements OnInit {
         console.log(elimianar)
         var verificacion=elimianar
         if (verificacion==true){
-         this.hijosArray.pop(i)
+         this.hijosArray.splice(i,1)
         }
       }
     });
