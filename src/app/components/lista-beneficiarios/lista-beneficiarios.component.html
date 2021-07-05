@@ -11,10 +11,11 @@
           <h4>Lista Beneficiarios</h4>
           </div>
       <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-        <p-table #dt  [rows]="10" styleClass="p-datatable-responsive-demo" [scrollable]="true"
+        <p-table #dt [rows]="10"  [scrollable]="true" class="table table-responsive" 
             scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-            [rowHover]="true"
-            [globalFilterFields]="['usuarioCedula','usuarioNombre','usuarioFechaCreacion']" [value]="personaArray">
+            [rowHover]="true" [autoLayout]="true" [responsive]="true"
+            [globalFilterFields]="['cedula','nombres','apellidos','direccion','celular','correo','fechaNacimiento','edad','numHijos','totalHijos','tipoVivienda','seguro','discapacidad','nacionalidad','estadoCivil','salario','fechaRegistro','adultoMayor','ViveOtros']" 
+            [value]="datos">
             <ng-template pTemplate="caption">
                 <div class="container" style="display: grid;">
                     <div align="left">
@@ -22,39 +23,113 @@
                             class="p-button-danger p-mr-2" tooltipPosition="bottom" (click)="generarPDF()"></button>
                      </div>
                 </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="usuarioCedula">Cédula
-                        <p-sortIcon field="usuarioCedula"></p-sortIcon>
-                        <p-columnFilter type="text" field="usuarioCedula" display="menu" class="p-ml-auto"></p-columnFilter>
-                    </th>
-                    <th pSortableColumn="usuarioNombre">Nombre de Usuario
-                        <p-columnFilter type="text" field="usuarioNombre" display="menu" class="p-ml-auto"></p-columnFilter>
-                    </th>
-                    <th pSortableColumn="generoUsuario">Genero
-                        <p-columnFilter type="text" field="usuarioNombre" display="menu" class="p-ml-auto"></p-columnFilter>
-                    </th>
-                    <th pSortableColumn="usuarioFechaCreacion">Fecha de Creación
-                        <p-sortIcon field="usuarioFechaCreacion"></p-sortIcon>
-                        <p-columnFilter type="text" field="usuarioFechaCreacion" display="menu" class="p-ml-auto">
-                        </p-columnFilter>
-                    </th>
-                    <th>
-                        <div style="margin-left: 70%;">
+                   <div style="margin-left: 70%;">
                             <button type="button" pButton pRipple icon="pi pi-refresh" 
                                 class="p-mr-2" tooltipPosition="bottom" (click)="actualizar()"></button>
                          </div>
+
+                            <div class="container" style="display: grid;">
+               
+                <div align="right">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Buscar" />
+                    </span>
+                </div>
+            </div>         
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr >
+                    <th pSortableColumn="cedula">Cédula
+                        <p-sortIcon field="cedula"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="nombres">Nombre de Usuario
+                    <p-sortIcon field="nombres"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="apellidos">Apellido
+                    <p-sortIcon field="apellidos"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="direccion">Dirección
+                    <p-sortIcon field="direccion"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="celular">Celular
+                    <p-sortIcon field="celular"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="correo">Correo
+                    <p-sortIcon field="correo"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fechaNacimiento">Fecha Nacimiento
+                    <p-sortIcon field="fechaNacimiento"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="edad">Edad
+                    <p-sortIcon field="edad"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="numHijos">Numero Familires
+                   <p-sortIcon field="numHijos"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="totalHijos">Numero Hijos
+                   <p-sortIcon field="totalHijos"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="tipoVivienda">Tipo de Vivienda
+                   <p-sortIcon field="tipoVivienda"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="seguro">Seguro
+                    <p-sortIcon field="seguro"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="discapacidad">Discapacidad
+                    <p-sortIcon field="discapacidad"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="nacionalidad">Nacionalidad
+                    <p-sortIcon field="nacionalidad"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="estadoCivil">Estado Civil
+                    <p-sortIcon field="estadoCivil"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="salario">Salario
+                    <p-sortIcon field="salario"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="fechaRegistro">Fecha de Registro
+                    <p-sortIcon field="fechaRegistro"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="adultoMayor">Adulto Mayor
+                    <p-sortIcon field="adultoMayor"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="ViveOtros">Vive con Otros
+                    <p-sortIcon field="ViveOtros"></p-sortIcon>
+                   </th>
+                    <th pSortableColumn="ficha">Ficha
+                    </th>
+                    <th pSortableColumn="editar/eliminar">Editar/Eliminar
                     </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-user>
                 <tr  class="p-selectable-row">
-                    <td>{{user[0]}}</td>
-                    <td>{{user[1]}}</td>
-                    <td>{{user[2]}}</td>
-                    <td>{{user[3]}}</td>
-                    <td><button class="p-button-danger" (click)="ingresoFicha(user[0])">Ficha</button></td>
+                    <td>{{user.cedula}}</td>
+                    <td>{{user.nombres}}</td>
+                    <td>{{user.apellidos}}</td>
+                    <td>{{user.direccion}}</td>
+                    <td>{{user.celular}}</td>
+                    <td>{{user.correo}}</td>
+                    <td>{{user.fechaNacimiento}}</td>
+                    <td>{{user.edad}}</td>
+                    <td>{{user.numeroFamiliares}}</td>
+                    <td>{{user.numeroHijos}}</td>
+                    <td>{{user.tipovivienda}}</td>
+                    <td>{{user.seguro}}</td>
+                    <td>{{user.discapacidad}}</td>
+                    <td>{{user.nacionalidad}}</td>
+                    <td>{{user.estacoCIVIL}}</td>
+                    <td>{{user.salario}}</td>
+                    <td>{{user.fecha}}</td>
+                    <td>{{user.adulto}}</td>
+                    <td>{{user.viveConOTROS}}</td>
+                    <td><button class="p-button-danger" (click)="ingresoFicha(user.cedula)">Ficha</button></td>
+                    <td>
+                    <button class="p-button-danger" (click)="ingresoeditar(user.cedula)">Editar</button>
+                    <button class="p-button-danger" (click)="eliminarPersonaBeneficiario(user.cedula)">Eliminar</button>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
