@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FichaSocioeconomica } from 'src/app/models/ficha-socioeconomica';
 import { Personas } from 'src/app/models/personas';
+import { Router } from '@angular/router';
 import { RegistroFamiliares } from 'src/app/models/registro-familiares';
 import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomica.service';
 import { PersonasService } from 'src/app/services/personas.service';
@@ -27,6 +28,7 @@ export class EditarBeneficiariosComponent implements OnInit {
   genero_hijo : string;
   parentesco_familiar:string;
   public hijosArray:any = [];
+  cedula_persona:string = localStorage.getItem('cedulalocalstorage');
   catalogoNacionalidad = ["Afganistán", "Alemania", "Arabia Saudita", "Argentina", "Australia", "Bélgica", "Bolivia",
     "Brasil", "Camboya", "Canadá", "Chile", "China", "Colombia", "Corea", "Costa Rica", "Cuba", "Dinamarca", "Ecuador",
     "Egipto", "El Salvador", "Escocia", "España", "Estados Unidos", "Estonia", "Etiopia", "Filipinas", "Finlandia",
@@ -37,21 +39,21 @@ export class EditarBeneficiariosComponent implements OnInit {
     "Ucrania", "Uruguay", "Venezuela", "Vietnam"];
   catalogoEstadoCivil = ["Soltero/a", "Casado/a", "Divorciado/a", "Viudo/a"];
 
-  constructor(private personaService: PersonasService, private familiaService: RegistroFamiliaresService, private fichaServices: FichaSocioeconomicaService) { }
+  constructor(private personaService: PersonasService, private familiaService: RegistroFamiliaresService, private fichaServices: FichaSocioeconomicaService,private root:Router) { }
 
   ngOnInit(): void {
     this.datosPersona();
   }
 
   datosPersona(){
-    this.personaService.getPorCedula("0106771165").subscribe(data =>{
+    this.personaService.getPorCedula(this.cedula_persona).subscribe(data =>{
       this.persona=data;
       this.datosFamiliares();
       this.datosFicha();
     })
   }
   datosFamiliares(){
-    this.familiaService.getfamicedula("0106771165").subscribe(data => {
+    this.familiaService.getfamicedula(this.cedula_persona).subscribe(data => {
       this.familia.hijos=data.hijos;
       for(let i in data.hijos){
         this.hijosArray.push(this.familia.hijos[i])
@@ -60,10 +62,9 @@ export class EditarBeneficiariosComponent implements OnInit {
     })
   }
   datosFicha(){
-    this.fichaServices.getfichacedula("0106771165").subscribe(data =>{
+    this.fichaServices.getfichacedula(this.cedula_persona).subscribe(data =>{
       this.ficha=data;
     })
-    console.log(this.ficha)
   }
   calcularedad(event: any) {
     let fecha = new Date(event.target.value);
@@ -104,10 +105,10 @@ actualiza(i){
   this.edad_hijo=arrayactualizacion[6];
   this.genero_hijo=arrayactualizacion[7];
   this.parentesco_familiar=arrayactualizacion[8];
-  this.hijosArray.pop(i)
-  arrayactualizacion.pop(i)
+  this.hijosArray.splice(i,1)
+  arrayactualizacion.splice(i,1)
 }
-eliminar(i){
+eliminar(j){
   var elimianar
   Swal.fire({
     title: 'Esta seguro de eliminar este usuario',
@@ -124,12 +125,37 @@ eliminar(i){
         'success'
       )
       elimianar=true;
-      console.log(elimianar)
       var verificacion=elimianar
       if (verificacion==true){
-       this.hijosArray.pop(i)
+       this.hijosArray.splice(j,1)
       }
     }
   });
 }
+ actualizarRegistro(){
+   this.persona.beneficiario=true;
+   this.persona.estadoActivo=true;
+   this.personaService.updatePersona(this.persona).subscribe( data=> {
+   });
+   this.actualizarFamilia();
+   this.actualizarFicha();
+ }
+ actualizarFamilia(){
+   this.familia.cedulaPersona=this.cedula_persona
+   this.familia.numHijos=this.hijosArray.length;
+   this.familia.hijos=this.hijosArray;
+   this.familiaService.updateFamiliares(this.familia).subscribe(data => {
+   });
+ }
+ actualizarFicha(){
+   this.ficha.cedulaPersona=this.cedula_persona
+   this.fichaServices.updateFicha(this.ficha).subscribe( data => {
+   });
+          Swal.fire(
+        'Actualizado!',
+        'Registro actualizado',
+        'success'
+      )
+      this.root.navigate(['lista-beneficiarios']);
+ }
 }

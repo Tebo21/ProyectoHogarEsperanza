@@ -127,8 +127,8 @@
                     <td>{{user.viveConOTROS}}</td>
                     <td><button class="p-button-danger" (click)="ingresoFicha(user.cedula)">Ficha</button></td>
                     <td>
-                    <button class="p-button-danger">Editar</button>
-                    <button class="p-button-danger">Eliminar</button>
+                    <button class="p-button-danger" (click)="ingresoeditar(user.cedula)">Editar</button>
+                    <button class="p-button-danger" (click)="eliminarPersonaBeneficiario(user.cedula)">Eliminar</button>
                     </td>
                 </tr>
             </ng-template>

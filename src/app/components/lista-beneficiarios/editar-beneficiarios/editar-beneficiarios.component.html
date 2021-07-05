@@ -116,8 +116,8 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor = "let hijos of hijosArray;let i= index">
-                          <td>{{i}}</td> 
+                        <tr *ngFor = "let hijos of hijosArray;let j= index">
+                          <td>{{j}}</td> 
                           <td>{{hijos[0]}}</td>
                           <td>{{hijos[1]}}</td>
                           <td>{{hijos[2]}}</td>
@@ -128,8 +128,8 @@
                           <td>{{hijos[7]}}</td>
                           <td>{{hijos[8]}}</td>
                           <td>
-                            <button type="button" class="btn btn-success" (click)="actualiza(i)">Actualizar</button>
-                            <button type="button" class="btn btn-danger" (click)="eliminar(i)" >Eliminar</button>  
+                            <button type="button" class="btn btn-success" (click)="actualiza(j)">Actualizar</button>
+                            <button type="button" class="btn btn-danger" (click)="eliminar(j)" >Eliminar</button>  
                           </td>
                         </tr>
                       </tbody>
@@ -142,66 +142,64 @@
                   <div class="input-group mb-3">
                   <p style="margin-left: 70%;"></p>
                   <input 
+                  [(ngModel)]="this.ficha.fechaRegistro"
                   name="fechaRegistro" id="fechaRegistro"  style="margin-right: 5%;"
-                  type="date" class="form-control" >
+                  type="date" class="form-control" [ngModel]="this.ficha.fechaRegistro | date:'yyyy-MM-dd'" disabled>
                 </div>
                 <div class="input-group mb-3">
-                <textarea  name="situacionEconomica" id="situacionEconomica" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Situación Economica"></textarea>
+                <textarea [(ngModel)]="this.ficha.situacionEconomica" name="situacionEconomica" id="situacionEconomica" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Situación Economica"></textarea>
               </div>
                 <div class="input-group mb-3">
                   <p style="margin-left: 5%;"> </p>
-                  <select   name="tipoVivienda" id="tipoVivienda" style="margin-right: 2%;" type="text" class="form-control" placeholder="tipoVivienda">
-                    <option selected disabled="disabled">Tipo de Vivienda</option>  
+                  <select  [(ngModel)]="this.ficha.tipoVivienda" name="tipoVivienda" id="tipoVivienda" style="margin-right: 2%;" type="text" class="form-control" placeholder="tipoVivienda">
+                    <option  selected disabled="disabled">Tipo de Vivienda</option>  
                     <option value="Propia">Propia</option>
                       <option value="Arrienda">Arrienda</option>
                     </select>
-                    <textarea  name="descripcionVivienda" id="descripcionVivienda" style="margin-right: 5%;width: 300px;height: 37px;"type="text" class="form-control" placeholder="Descripción de la Vivienda"></textarea>
+                    <textarea [(ngModel)]="this.ficha.descripcionVivienda" name="descripcionVivienda" id="descripcionVivienda" style="margin-right: 5%;width: 300px;height: 37px;"type="text" class="form-control" placeholder="Descripción de la Vivienda"></textarea>
                 </div>
                 <div class="input-group mb-3">
                   <p style="margin-left: 5%;"> </p>
-                  <select  name="Seguro" id="Seguro" style="margin-right: 2%;" type="text" class="form-control" placeholder="Seguro">
+                  <select [(ngModel)]="this.ficha.seguro" name="Seguro" id="Seguro" style="margin-right: 2%;" type="text" class="form-control" placeholder="Seguro">
                     <option selected disabled="disabled">Cuenta con Seguro</option>  
                     <option value="Si">Si</option>
                     <option value="No">No</option>
                   </select>
-                  <input  name="Salario" id="Salario" style="margin-right: 2%;"type="text" class="form-control" placeholder="Salario">
-                  <select  name="Nacionalidad" id="Nacionalidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Nacionalidad">
+                  <input [(ngModel)]="this.ficha.salario" name="Salario" id="Salario" style="margin-right: 2%;"type="text" class="form-control" placeholder="Salario">
+                  <select [(ngModel)]="this.ficha.nacionalidad" name="Nacionalidad" id="Nacionalidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Nacionalidad">
                     <option selected disabled="disabled">Nacionalidad</option>  
-                    <option ></option>
+                    <option *ngFor="let nac of catalogoNacionalidad" value="{{nac}}">{{nac}}</option>
                     </select>
-                    <select  name="EstadoCivil" id="EstadoCivil" style="margin-right: 5%;" type="text" class="form-control" placeholder="EstadoCivil">
-                      <option selected disabled="disabled">Estado Civil</option>
-                      <option  ></option>
+                    <select [(ngModel)]="this.ficha.estadoCivil" name="EstadoCivil" id="EstadoCivil" style="margin-right: 5%;" type="text" class="form-control" placeholder="EstadoCivil">
+                      <option  selected disabled="disabled">Estado Civil</option>
+                      <option  *ngFor="let estc of catalogoEstadoCivil" value="{{estc}}">{{estc}}</option>
                     </select>
                 </div>
                 <div class="input-group mb-3">
                   <p style="margin-left: 5%;"> </p>
-                  <select  name="Discapacidad" id="Discapacidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Discapacidad">
+                  <select [(ngModel)]="this.ficha.discapacidad" name="Discapacidad" id="Discapacidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Discapacidad">
                     <option selected disabled="disabled">Discapacidad</option>  
                     <option value="true">Si</option>
                       <option value="false">No</option>
                     </select>
-                  <textarea  name="descripcionDiscapacidad" id="descripcionDiscapacidad" style="margin-right: 5%;width: 300px;height: 37px;"type="text" class="form-control" placeholder="Descripción de la Discapacidad"></textarea>
+                  <textarea [(ngModel)]="this.ficha.discapacidadDescipcion" name="descripcionDiscapacidad" id="descripcionDiscapacidad" style="margin-right: 5%;width: 300px;height: 37px;"type="text" class="form-control" placeholder="Descripción de la Discapacidad"></textarea>
                 </div>
                 <div class="input-group mb-3">
                   <p style="margin-left: 5%;"> </p>
-                  <select  name="AdultoMayor" id="AdultoMayor" style="margin-right: 2%;" type="text" class="form-control" placeholder="AdultoMayor">
+                  <select [(ngModel)]="this.ficha.adultoMayor" name="AdultoMayor" id="AdultoMayor" style="margin-right: 2%;" type="text" class="form-control" placeholder="AdultoMayor">
                     <option selected disabled="disabled">Adulto Mayor</option>  
                     <option value="true">Si</option>
                       <option value="false">No</option>
                     </select>
-                    <select  name="viveOtros" id="viveOtros" style="margin-right: 5%;" type="text" class="form-control" placeholder="viveOtros">
+                    <select [(ngModel)]="this.ficha.viveConOtros" name="viveOtros" id="viveOtros" style="margin-right: 5%;" type="text" class="form-control" placeholder="viveOtros">
                       <option selected disabled="disabled">Vive con otras personas</option>
                       <option value="true">Si</option>
                       <option value="false">No</option>
                     </select>
                 </div>
-                <div class="input-group mb-3">
-                  <button  style="margin-left: 40%;" type="submit">Guardar y Continuar</button>
-                </div> 
                 <hr>  
                    <div class="btn_guardar mb-2">
-                     <button class="guardar1" style="margin-left: 30%;" type="submit">Guardar y Continuar</button>
+                     <button class="guardar1" style="margin-left: 30%;" (click)="actualizarRegistro()" type="submit">Guardar y Continuar</button>
                  </div>
                </div>   
              </div>
