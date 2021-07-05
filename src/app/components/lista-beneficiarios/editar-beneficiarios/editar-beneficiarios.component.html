@@ -1,0 +1,211 @@
+<HTML>
+    <app-navbar-admin></app-navbar-admin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">	 	 
+    <HEAD>	 
+         <TITLE> Título de la página </TITLE>
+    </HEAD>	 
+    <BODY>	 
+         <form action="">
+            <div class="container">
+                <div class="modal-body ">  
+                <div class="card">
+                      <div class="card-header mb-3">
+                       <h4>Actualizar Información</h4>
+                       </div>
+                 <div style="margin-right: 5%;" class="input-group mb-3">
+                     <input [(ngModel)]="this.persona.cedula"  name="cedula" id="cedula" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Numero de cedula" disabled>
+                   </div>
+                   <div class="input-group mb-3">
+                     <input [(ngModel)]="this.persona.nombres" name="nombre" id="nombre" style="margin-left: 5%;" type="text" class="form-control" placeholder="Nombre">
+                     <p style="margin-left: 2%;"> </p>
+                     <input [(ngModel)]="this.persona.apellidos" name="apellido" id="apellido" style="margin-right: 5%;" type="text" class="form-control" placeholder="apellido">
+                   </div>
+                   <div class="input-group mb-3">
+                     <input [(ngModel)]="this.persona.direccion" name="direccion" id="direccion" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Direccion">
+                   </div>
+                   <div class="input-group mb-3">
+                     <input [(ngModel)]="this.persona.celular" name="celular" id="celular" style="margin-left: 5%;" type="text" class="form-control" placeholder="Celular">
+                     <p style="margin-left: 2%;"> </p>
+                     <input [(ngModel)]="this.persona.correo" name="correo" id="correo" style="margin-right: 5%;" type="text" class="form-control" placeholder="Correo">
+                   </div>
+                   <div class="input-group mb-3">
+                     <input  [(ngModel)]="this.persona.fechaNacimiento" (change)="calcularedad($event)" name="fechaNacimiento" id="fechaNacimiento" style="margin-left: 5%;" type="date" class="form-control" placeholder="Fecha nacimiento">
+                     <p style="margin-left: 2%;"> </p>
+                     <input  [(ngModel)]="this.persona.edad" name="edad" id="edad" style="margin-right: 5%;" type="number" class="form-control" placeholder="Edad">
+                     <select [(ngModel)]="this.persona.genero" name="genero" id="genero" style="margin-right: 5%;" type="text" class="form-select" aria-label="Default select example">
+                       <option selected disabled="disabled">Genero</option>
+                       <option value="Masculino">Masculino</option>
+                       <option value="Femenino">Femenino</option>
+                     </select>  
+                   </div>
+                   <div class="input-group mb-2">
+                     <select [(ngModel)]="this.persona.nacionalidad" name="nacionalidad" id="nacionalidad" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="nacionalidad">
+                       <option selected disabled="disabled">Nacionalidad</option>
+                       <option *ngFor="let nac of catalogoNacionalidad" value="{{nac}}">{{nac}}</option>
+                     </select>
+                     <select [(ngModel)]="this.persona.discapacidad" name="discapacidad" id="discapacidad" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="discapacidad">
+                       <option selected disabled="disabled">Discapacidad</option>
+                       <option value="false">No</option>
+                       <option value="true">Si</option>
+                     </select>
+                     <select [(ngModel)]="this.persona.estado_civil" name="estado_civil" id="estado_civil" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="estado_civil">
+                       <option selected disabled="disabled">Estado civil</option>
+                       <option *ngFor="let estc of catalogoEstadoCivil" value="{{estc}}">{{estc}}</option> 
+                     </select>
+                   </div>
+                   <hr>
+                   <div class="card-header mb-3">
+                    <h5>Información Familiares</h5>
+                    </div>
+                   <div class="input-group mb-3">
+                      <p style="margin-left: 5%;"></p>
+                      <input [(ngModel)]="cedula_hijo" name="cedulafamilia" id="cedulafamilia" style="margin-right: 5%;" type="text" class="form-control" placeholder="cedula">
+                    </div>
+                    <div class="input-group mb-3">
+                      <input [(ngModel)]="nombre_hijo" name="nombrefamilia" id="nombrefamilia" style="margin-left: 5%;" type="text" class="form-control" placeholder="Nombre">
+                      <p style="margin-left: 2%;"> </p>
+                      <input [(ngModel)]="this.apellido_hijo" name="apellidofamilia" id="apellidofamilia" style="margin-right: 5%;" type="text" class="form-control" placeholder="apellido">
+                    </div>
+                    <div class="input-group mb-3">
+                      <input [(ngModel)]="celular_hijo" name="celularfamilia" id="celularfamilia" style="margin-left: 5%;" type="text" class="form-control" placeholder="Celular">
+                      <p style="margin-left: 2%;"> </p>
+                      <input [(ngModel)]="correo_hijo" name="Correofamilia" id="Correofamilia" style="margin-right: 5%;" type="text" class="form-control" placeholder="Correo">
+                    </div>
+                    <div class="input-group mb-3">
+                      <input [(ngModel)]="fecha_nacimiento_hijo" (change)="calcularedad2($event)" name="fechaNacimientofamilia" id="fechaNacimientofamilia" style="margin-left: 5%;" type="date" class="form-control" placeholder="Fecha nacimiento">
+                      <p style="margin-left: 2%;"> </p>
+                      <input [(ngModel)]="edad_hijo" name="edadfamilia" id="edadfamilia" style="margin-right: 2%;" type="number" class="form-control" placeholder="Edad">
+                      <select [(ngModel)]="genero_hijo" name="generofamilia" id="generofamilia" style="margin-right: 2%;" type="text" class="form-control" placeholder="Genero">
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                      </select>
+                      <select [(ngModel)]="parentesco_familiar" name="parentescofamilia" id="parentescofamilia" style="margin-right: 5%;" type="text" class="form-control" placeholder="parentesco">
+                        <option value="Hijo">Hijo</option>
+                        <option value="Hija">Hija</option>
+                        <option value="Hermano">Hermano</option>
+                        <option value="Hermana">Hermana</option>
+                        <option value="Padre">Padre</option>
+                        <option value="Madre">Madre</option>
+                        <option value="Tío">Tío</option>
+                        <option value="Tía">Tía</option>
+                        <option value="Primo">Primo</option>
+                        <option value="Prima">Prima</option>
+                        <option value="Abuelo">Abuelo</option>
+                        <option value="Abuela">Abuela</option>
+                        <option value="Esposo/a">Esposo/a</option>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <p style="margin-left: 5%;"></p>
+                     <button (click)="addArray()" type="submit" name="Agregar" id="Agregar" style="margin-right: 5%; background-color: chartreuse;" class="form-control">agregar</button>
+                    </div>
+                  <div class="input-group">
+                    <table class="table table-responsive">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">CEDULA</th>
+                          <th scope="col">NOMBRES</th>
+                          <th scope="col">APELLIDOS</th>
+                          <th scope="col">CELULAR</th>
+                          <th scope="col">CORREO</th>
+                          <th scope="col">FECHA N.</th>
+                          <th scope="col">EDAD</th>
+                          <th scope="col">GENERO</th>
+                          <th scope="col">PARENTESCO</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor = "let hijos of hijosArray;let i= index">
+                          <td>{{i}}</td> 
+                          <td>{{hijos[0]}}</td>
+                          <td>{{hijos[1]}}</td>
+                          <td>{{hijos[2]}}</td>
+                          <td>{{hijos[3]}}</td>
+                          <td>{{hijos[4]}}</td>
+                          <td>{{hijos[5]}}</td>
+                          <td>{{hijos[6]}}</td>
+                          <td>{{hijos[7]}}</td>
+                          <td>{{hijos[8]}}</td>
+                          <td>
+                            <button type="button" class="btn btn-success" (click)="actualiza(i)">Actualizar</button>
+                            <button type="button" class="btn btn-danger" (click)="eliminar(i)" >Eliminar</button>  
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <hr>
+                  <div class="card-header mb-3">
+                    <h5>Información Ficha</h5>
+                    </div>
+                  <div class="input-group mb-3">
+                  <p style="margin-left: 70%;"></p>
+                  <input 
+                  name="fechaRegistro" id="fechaRegistro"  style="margin-right: 5%;"
+                  type="date" class="form-control" >
+                </div>
+                <div class="input-group mb-3">
+                <textarea  name="situacionEconomica" id="situacionEconomica" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Situación Economica"></textarea>
+              </div>
+                <div class="input-group mb-3">
+                  <p style="margin-left: 5%;"> </p>
+                  <select   name="tipoVivienda" id="tipoVivienda" style="margin-right: 2%;" type="text" class="form-control" placeholder="tipoVivienda">
+                    <option selected disabled="disabled">Tipo de Vivienda</option>  
+                    <option value="Propia">Propia</option>
+                      <option value="Arrienda">Arrienda</option>
+                    </select>
+                    <textarea  name="descripcionVivienda" id="descripcionVivienda" style="margin-right: 5%;width: 300px;height: 37px;"type="text" class="form-control" placeholder="Descripción de la Vivienda"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                  <p style="margin-left: 5%;"> </p>
+                  <select  name="Seguro" id="Seguro" style="margin-right: 2%;" type="text" class="form-control" placeholder="Seguro">
+                    <option selected disabled="disabled">Cuenta con Seguro</option>  
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                  </select>
+                  <input  name="Salario" id="Salario" style="margin-right: 2%;"type="text" class="form-control" placeholder="Salario">
+                  <select  name="Nacionalidad" id="Nacionalidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Nacionalidad">
+                    <option selected disabled="disabled">Nacionalidad</option>  
+                    <option ></option>
+                    </select>
+                    <select  name="EstadoCivil" id="EstadoCivil" style="margin-right: 5%;" type="text" class="form-control" placeholder="EstadoCivil">
+                      <option selected disabled="disabled">Estado Civil</option>
+                      <option  ></option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                  <p style="margin-left: 5%;"> </p>
+                  <select  name="Discapacidad" id="Discapacidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Discapacidad">
+                    <option selected disabled="disabled">Discapacidad</option>  
+                    <option value="true">Si</option>
+                      <option value="false">No</option>
+                    </select>
+                  <textarea  name="descripcionDiscapacidad" id="descripcionDiscapacidad" style="margin-right: 5%;width: 300px;height: 37px;"type="text" class="form-control" placeholder="Descripción de la Discapacidad"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                  <p style="margin-left: 5%;"> </p>
+                  <select  name="AdultoMayor" id="AdultoMayor" style="margin-right: 2%;" type="text" class="form-control" placeholder="AdultoMayor">
+                    <option selected disabled="disabled">Adulto Mayor</option>  
+                    <option value="true">Si</option>
+                      <option value="false">No</option>
+                    </select>
+                    <select  name="viveOtros" id="viveOtros" style="margin-right: 5%;" type="text" class="form-control" placeholder="viveOtros">
+                      <option selected disabled="disabled">Vive con otras personas</option>
+                      <option value="true">Si</option>
+                      <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                  <button  style="margin-left: 40%;" type="submit">Guardar y Continuar</button>
+                </div> 
+                <hr>  
+                   <div class="btn_guardar mb-2">
+                     <button class="guardar1" style="margin-left: 30%;" type="submit">Guardar y Continuar</button>
+                 </div>
+               </div>   
+             </div>
+             </div>             
+         </form>
+    </BODY>	 
+</HTML>
