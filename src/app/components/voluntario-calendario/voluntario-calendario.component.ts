@@ -155,12 +155,17 @@ export class VoluntarioCalendarioComponent implements OnInit {
           if (res.cedulaPersona.cedula==this.PersonId) {
             const f=res.fechaActividad+"T"+res.horaInicio+":00";
             const f1=res.fechaActividad+"T"+res.horaFin+":00";
+            const prueba=new Date(f);
+            prueba.setHours(prueba.getHours() - 2)
+
+            const prueba1=new Date(f1);
+            prueba1.setHours(prueba1.getHours() - 2)
             this.Actividades=[
               ...this.Actividades,
               {
                 title: res.tipoActividad.nombreActividad,
-                start: addHours((new Date(f)), 2),
-                end: addHours(new Date(f1), 2),
+                start: addHours(new Date(prueba), 2),
+                end: addHours(new Date(prueba1), 2),
                 color: colors.verde,
                 draggable: false,
                 resizable: {
@@ -170,12 +175,13 @@ export class VoluntarioCalendarioComponent implements OnInit {
                 cssClass: 'Actividad realizada: '+ res.descripcionActividad+' \n'+'Hora de Inicio: '+ res.horaInicio +' \n'+'Hora de Finalizacion: '+ res.horaFin
               },
             ];
+
             this.events=[
               ...this.events,
               {
                 title: res.tipoActividad.nombreActividad,
-                start: addHours((new Date(f)), 2),
-                end: addHours(new Date(f1), 2),
+                start: addHours((new Date(prueba)), 2),
+                end: addHours(new Date(prueba1), 2),
                 color: colors.verde,
                 draggable: false,
                 resizable: {
@@ -186,7 +192,6 @@ export class VoluntarioCalendarioComponent implements OnInit {
               },
             ];
           }
-
         });
       }
   );

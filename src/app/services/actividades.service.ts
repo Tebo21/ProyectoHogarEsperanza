@@ -13,6 +13,7 @@ export class ActividadesService {
   public actividades: Actividades[] = [];
   private _http = 'http://localhost:3000/actividadPersona';
   private _httpTipo = 'http://localhost:3000/tipoactividad';
+  private _smshtrrp = 'http://localhost:3000/sendmessage';
 
   constructor(private http: HttpClient) {}
 
@@ -48,6 +49,10 @@ export class ActividadesService {
 
   trahsTipoActi(id: number):Observable<number>{
     return this.http.delete<number>(this._httpTipo+`/eliminar/${id}`)
+  }
+
+  sendSmS(sms: any){
+    return this.http.post<any>(this._smshtrrp,sms)
   }
 
   public img: string =

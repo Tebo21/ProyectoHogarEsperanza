@@ -34,9 +34,9 @@ export class ActividadPersonaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.PersonId = localStorage.getItem('carisma');
-    this.getPersonsById();
+
     this.PersonId = localStorage.getItem('cedUser');
+    this.getPersonsById();
     this.getCedulaAndFecha();
   }
 
@@ -49,7 +49,6 @@ export class ActividadPersonaComponent implements OnInit {
         console.log(error);
       }
     );
-    this.getCedulaAndFecha();
   }
   getCedulaAndFecha() {
     this.Actividadview = [];
@@ -57,10 +56,14 @@ export class ActividadPersonaComponent implements OnInit {
       .getActividadCedulaAndFecha(this.fecha2)
       .subscribe((res) => {
         res.forEach((act) => {
+          console.log(act)
           if (act.cedulaPersona.cedula == this.Person.cedula) {
             this.Actividadview.push(act);
           }
         });
+      },
+      err=>{
+        console.log("No carga los datos")
       });
   }
   showExitoso() {
@@ -135,12 +138,9 @@ export class ActividadPersonaComponent implements OnInit {
     })
   }
 
-
   setear() {
     this.ActividadviewActu = [];
   }
-
-
 
   genereport(action = 'open') {
     var testImageDataUrl = this._actividadservice.img;
@@ -233,5 +233,9 @@ export class ActividadPersonaComponent implements OnInit {
     } else {
       pdfMake.createPdf(docDefinition).open();
     }
+  }
+
+  enviarsms(){
+    this._actividadservice.sendSmS
   }
 }
