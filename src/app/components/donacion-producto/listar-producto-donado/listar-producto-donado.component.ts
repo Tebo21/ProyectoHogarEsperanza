@@ -109,10 +109,12 @@ export class ListarProductoDonadoComponent implements OnInit {
       pdf.add(this.creaTabla(this.entregasFiltradas));
     }else{
       pdf.add(this.creaTabla(this.entregas));
-    }
-    
+    } 
+    pdf.footer('hola');
+   
     pdf.create().open();
   }
+  
 
 
 
@@ -139,20 +141,18 @@ export class ListarProductoDonadoComponent implements OnInit {
       row.productoEntregado,
       row.descripcionProducto,
       row.cantidadEntregada,
-      row.fechaEntrega 
+      row.fechaEntrega
     ]);
 
-  }
-  
-
+  }      
 }
+
 export class Beneficiarios2 {
   cedula?: string;
   nombres?: string;
   productoEntregado?: string;
   descripcionProducto?: string;
   cantidadEntregada?: number;
-  fechaEntrega?: Date;
-  
+  fechaEntrega?: Date;  
 }
 
