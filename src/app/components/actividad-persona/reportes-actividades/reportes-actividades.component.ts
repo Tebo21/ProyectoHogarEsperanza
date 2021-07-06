@@ -17,8 +17,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 export class ReportesActividadesComponent implements PipeTransform,OnInit {
 
-  filterpost: any ={cedula:"",nombre:"",apellido:"",correo:"",nacionalidad:"",fecha:"",hinicio:"",hfin:"",actividad:"",Tactividad:""};
-  filterpost1: any ={cedula:"",nombre:"",apellido:"",correo:"",nacionalidad:"",fecha:"",hinicio:"",hfin:"",actividad:"",Tactividad:""};
+  filterpost: any ={cedula:"",nombre:"",apellido:"",correo:"",fecha:"",hinicio:"",hfin:"",actividad:"",Tactividad:""};
+  filterpost1: any ={cedula:"",nombre:"",apellido:"",correo:"",fecha:"",hinicio:"",hfin:"",actividad:"",Tactividad:""};
 
   Actividadview: Actividades[] = [];
 
@@ -61,7 +61,6 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
     this.Actividadview.forEach(res=>{
       this.Actividadview1.push(res)
     })
-        console.log(this.Actividadview)
       }
   );
   }
@@ -69,12 +68,11 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
   updateFilters(): void {
     this.filterpost = Object.assign({}, this.filterpost1);
     this.Actividadview1=this.transform(this.Actividadview,this.filterpost1);
-    console.log(this.Actividadview1)
     }
 
   transform(members: any, filters: any): any {
     return members.filter(item => {
-    return (item.cedulaPersona.cedula.toLowerCase().indexOf(filters.cedula.toLowerCase()) >= 0 && item.cedulaPersona.nombres.toLowerCase().indexOf(filters.nombre.toLowerCase()) >= 0  && item.cedulaPersona.apellidos.toLowerCase().indexOf(filters.apellido.toLowerCase()) >= 0 && item.cedulaPersona.correo.toLowerCase().indexOf(filters.correo.toLowerCase()) >= 0 && item.cedulaPersona.nacionalidad.toLowerCase().indexOf(filters.nacionalidad.toLowerCase()) >= 0 && item.fechaActividad.toLowerCase().indexOf(filters.fecha.toLowerCase()) >= 0 && item.horaInicio.toLowerCase().indexOf(filters.hinicio.toLowerCase()) >= 0 && item.horaFin.toLowerCase().indexOf(filters.hfin.toLowerCase()) >= 0  && item.descripcionActividad.toLowerCase().indexOf(filters.actividad.toLowerCase()) >= 0 && item.tipoActividad.nombreActividad.toLowerCase().indexOf(filters.Tactividad.toLowerCase()) >= 0);
+    return (item.cedulaPersona.cedula.toLowerCase().indexOf(filters.cedula.toLowerCase()) >= 0 && item.cedulaPersona.nombres.toLowerCase().indexOf(filters.nombre.toLowerCase()) >= 0  && item.cedulaPersona.apellidos.toLowerCase().indexOf(filters.apellido.toLowerCase()) >= 0 && item.cedulaPersona.correo.toLowerCase().indexOf(filters.correo.toLowerCase()) >= 0 && item.fechaActividad.toLowerCase().indexOf(filters.fecha.toLowerCase()) >= 0 && item.horaInicio.toLowerCase().indexOf(filters.hinicio.toLowerCase()) >= 0 && item.horaFin.toLowerCase().indexOf(filters.hfin.toLowerCase()) >= 0  && item.descripcionActividad.toLowerCase().indexOf(filters.actividad.toLowerCase()) >= 0 && item.tipoActividad.nombreActividad.toLowerCase().indexOf(filters.Tactividad.toLowerCase()) >= 0);
     });
   }
 
@@ -100,7 +98,6 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
     })
   }
   genereport(action = 'open') {
-    console.log("Esta es la actividad de reporte: "+this.Actividadview1)
     var testImageDataUrl = this._actividadservice.img;
     let docDefinition = {
 
@@ -158,7 +155,6 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
                 'Cédula',
                 'Nombre',
                 'Apellido',
-                'Nacionalidad',
                 'Fecha',
                 'Hora Inicio',
                 'Hora Fin',
@@ -169,7 +165,6 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
                 row.cedulaPersona.cedula,
                 row.cedulaPersona.nombres,
                 row.cedulaPersona.apellidos,
-                row.cedulaPersona.nacionalidad,
                 row.fechaActividad,
                 row.horaInicio,
                 row.horaFin,
