@@ -19,4 +19,14 @@ export class FichaSocioeconomicaService {
   getficha():Observable<any>{
     return this.http.get(`${this.URL}/listadoFichas`); 
   }
+  getQueryUpdateFicha(query: String, ficha:FichaSocioeconomica){
+    const url = `${this.URL}/${query}`;
+    return this.http.request<FichaSocioeconomica>('put',url, {
+      body: ficha
+    });
+  }
+  updateFicha(ficha:FichaSocioeconomica):Observable<any>{
+    const url = 'update-ficha';
+    return this.getQueryUpdateFicha(url, ficha);
+  }
 }
