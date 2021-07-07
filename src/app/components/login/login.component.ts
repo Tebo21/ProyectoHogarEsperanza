@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   //Modals
   display: boolean;
   alerta: string;
-  displayPass: boolean = true;
+  displayPass: boolean = false;
   //DropDown
   tipos: any[];
   tipo: any;
