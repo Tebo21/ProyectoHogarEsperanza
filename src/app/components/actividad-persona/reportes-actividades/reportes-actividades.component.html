@@ -28,9 +28,6 @@
               <label for="validationTooltip01 " class="form-label text-center">Correo:  <input type="text " class="form-control" placeholder="Buscar.."  [(ngModel)]="filterpost1.correo" (ngModelChange)="updateFilters()"></label>
             </div>
             <div class="col">
-              <label for="validationTooltip01 " class="form-label text-center">Nacionalidad:  <input type="text " class="form-control" placeholder="Buscar.."  [(ngModel)]="filterpost1.nacionalidad" (ngModelChange)="updateFilters()"></label>
-            </div>
-            <div class="col">
               <label for="staticEmail2 " class="visually-hidden text-center">Fecha:
                 <input type="date" id="start" class="form-control" name="fecha" [(ngModel)]="filterpost1.fecha" (ngModelChange)="updateFilters()">
               </label>
@@ -64,7 +61,6 @@
           <th scope="col ">NOMBRES</th>
           <th scope="col ">APELLIDOS</th>
           <th scope="col ">CORREO</th>
-          <th scope="col ">NACIONALIDAD</th>
           <th scope="col ">FECHA DE REALIZACION</th>
           <th scope="col ">HORA DE INICIO</th>
           <th scope="col ">HORA DE FINALIZACION</th>
@@ -77,7 +73,6 @@
             <td>{{item.cedulaPersona.nombres}}</td>
             <td>{{item.cedulaPersona.apellidos}}</td>
             <td>{{item.cedulaPersona.correo}}</td>
-            <td>{{item.cedulaPersona.nacionalidad}}</td>
             <td>{{item.fechaActividad}}</td>
             <td>{{item.horaInicio}}</td>
             <td>{{item.horaFin}}</td>
