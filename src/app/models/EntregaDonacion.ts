@@ -5,5 +5,5 @@ export class EntregaDonacion{
     productoEntregado!: string;
     descripcionProducto!: string;
     cantidadEntregada!: number;
-    fechaEntrega!: Date ;
+    fechaEntrega!: Date  ;
 }

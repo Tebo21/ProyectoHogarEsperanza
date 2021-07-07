@@ -11,7 +11,6 @@ import Swal from 'sweetalert2';
 import { date } from 'faker';
 
 
-type TableRow = [string, number, string];
 type TableRow2  = [string, string, number, string, string[], string[]]
 
 @Component({
