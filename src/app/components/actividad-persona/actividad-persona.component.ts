@@ -56,7 +56,6 @@ export class ActividadPersonaComponent implements OnInit {
       .getActividadCedulaAndFecha(this.fecha2)
       .subscribe((res) => {
         res.forEach((act) => {
-          console.log(act)
           if (act.cedulaPersona.cedula == this.Person.cedula) {
             this.Actividadview.push(act);
           }
@@ -235,7 +234,5 @@ export class ActividadPersonaComponent implements OnInit {
     }
   }
 
-  enviarsms(){
-    this._actividadservice.sendSmS
-  }
+
 }

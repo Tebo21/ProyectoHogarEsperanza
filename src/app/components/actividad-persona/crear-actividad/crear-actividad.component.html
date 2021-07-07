@@ -17,7 +17,7 @@
                 <label>Hora de inicio :</label>
             </div>
             <div class=" col-sm-6 ">
-                <input type="time" step="3600" id="start" name="horaInicio" #horaInicio="ngModel" [(ngModel)]="actividadCreate.horaInicio">
+                <input type="time" step="1800" id="start" name="horaInicio" #horaInicio="ngModel" [(ngModel)]="actividadCreate.horaInicio">
                 <p style="margin-left: 2%;">
                 </p>
             </div>
@@ -27,7 +27,7 @@
                 <label>Hora de finalización:</label>
             </div>
             <div class=" col-sm-6 ">
-                <input type="time" step="3600:3600" id="end" name="horaFin" #horaFin="ngModel" [(ngModel)]="actividadCreate.horaFin">
+                <input type="time" step="1800" id="end" name="horaFin" #horaFin="ngModel" [(ngModel)]="actividadCreate.horaFin">
                 <p style="margin-left: 2%;"> </p>
             </div>
         </div>
