@@ -1,5 +1,6 @@
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
 import { PersonasService } from 'src/app/services/personas.service';
@@ -11,12 +12,14 @@ import { UsuarioService } from 'src/app/services/usuarios.service';
   styleUrls: ['./perfil-usuario.component.css']
 })
 export class PerfilUsuarioComponent implements OnInit {
-
+  //Comprobacion de Usuario
   cedUser: any;
   msgs: Message[];
   usuario: Usuarios = {};
+  usuarioEdit: Usuarios = {};
   persona: Personas = {};
   personaE: Personas = {};
+  usuarioT: any;
   //DropDown
   tipos: any[];
   tipo: any;
@@ -39,8 +42,12 @@ export class PerfilUsuarioComponent implements OnInit {
   displayContra: boolean = false;
   otraCategoria: boolean = false;
   displayEP: boolean = false;
+  //Validaciones
+  estadoFinal: any;
+  generoFinal: any;
+  nacioFinal: any;
 
-  constructor(private userService: UsuarioService, private personaService: PersonasService) { }
+  constructor(private usuarioService: UsuarioService, private personaService: PersonasService, private router: Router) { }
 
   ngOnInit(): void {
     this.cedUser = localStorage.getItem('cedUser')
@@ -70,7 +77,7 @@ export class PerfilUsuarioComponent implements OnInit {
       { gop: 'Femenino' },
       { gop: 'Otro' }
     ]
-    this.userService.getUserByCedula(this.cedUser).subscribe(data => {
+    this.usuarioService.getUserByCedula(this.cedUser).subscribe(data => {
       this.usuario = data;
       if (this.usuario.usuarioTipo == 1) {
         this.drop = true;
@@ -125,9 +132,91 @@ export class PerfilUsuarioComponent implements OnInit {
     }
   }
 
+  Validacion() {
+    if (this.estado == undefined || this.estado == null) {
+      this.estadoFinal = this.persona.estado_civil
+    } else {
+      this.estadoFinal = this.estado.eop
+    }
+    if (this.nacio == undefined || this.nacio == null) {
+      this.nacioFinal = this.persona.nacionalidad
+    } else {
+      this.nacioFinal = this.nacio.nop
+    }
+    if (this.genero == undefined || this.genero == null) {
+      this.generoFinal = this.persona.genero
+    } else {
+      this.generoFinal = this.genero.gop
+    }
+    if (this.usuarioT == undefined || this.usuarioT == null) {
+      this.usuarioT = this.usuarioEdit.usuarioTipo;
+    } else {
+      this.usuarioT = this.usuarioT;
+    }
+    console.log(this.usuarioT);
+    this.Actualizar();
+  }
+
+
   Actualizar() {
-    alert(this.genero.gop)
-    alert('Funciona')
+    const PersonaNueva: Personas = {
+      apellidos: this.persona.apellidos,
+      beneficiario: this.persona.beneficiario,
+      cedula: this.persona.cedula,
+      celular: this.persona.celular,
+      correo: this.persona.correo,
+      direccion: this.persona.direccion,
+      discapacidad: this.discap,
+      edad: this.persona.edad,
+      estadoActivo: this.persona.estadoActivo,
+      estado_civil: this.estadoFinal,
+      fechaNacimiento: this.persona.fechaNacimiento,
+      genero: this.generoFinal,
+      idPersona: this.persona.idPersona,
+      nacionalidad: this.nacioFinal,
+      nombres: this.persona.nombres
+    }
+    this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+    });
+    const UsuarioNuevo: Usuarios = {
+      idUsuario: this.usuarioEdit.idUsuario,
+      usuarioCedula: this.usuarioEdit.usuarioCedula,
+      usuarioContrasenia: this.usuarioEdit.usuarioContrasenia,
+      usuarioNombre: this.usuarioEdit.usuarioNombre,
+      usuarioTipo: this.usuarioT,
+      usuarioEstado: true,
+      usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+    }
+    this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+      alert('Se ha actualizado exitosamente')
+      this.router.navigateByUrl('listado-usuarios');
+    });
+  }
+
+  CambiarContra() {
+    if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
+      alert('Las contraseñas no coinciden')
+    } else {
+      const UsuarioNuevo: Usuarios = {
+        idUsuario: this.usuarioEdit.idUsuario,
+        usuarioCedula: this.usuarioEdit.usuarioCedula,
+        usuarioContrasenia: this.usuarioContrasenia,
+        usuarioNombre: this.usuarioEdit.usuarioNombre,
+        usuarioTipo: this.usuarioT,
+        usuarioEstado: true,
+        usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+      }
+      this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+        alert('Se ha actualizado exitosamente su contraseña')
+        this.displayContra = false;
+        window.location.reload();
+      });
+
+    }
+  }
+
+  Cancelar() {
+    this.router.navigateByUrl('listado-usuarios');
   }
 
 }

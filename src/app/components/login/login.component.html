@@ -95,10 +95,7 @@
             name="correo" placeholder="Correo electrónico" required>
     </div>
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" onclick="Principal(correo.value)" label="Enviar" styleClass="p-button-text">
-        </p-button>
-        <p-button icon="pi pi-times" class="p-button-danger" (click)="displayPass=false" label="Cancelar"
-            styleClass="p-button-text">
-        </p-button>
+        <button pButton pRipple type="button" label="Enviar" (click)='Recuperar(correo)' icon="pi pi-check" class="p-button-outlined p-button-info"></button>
+        <button pButton pRipple type="button" label="Cancelar"  (click)="displayPass=false" icon="pi pi-times" class="p-button-outlined p-button-info"></button>
     </ng-template>
 </p-dialog>

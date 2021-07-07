@@ -40,7 +40,7 @@ export class EditarUsuariosComponent implements OnInit {
   usuarioContraseniaAnterior: any;
   usuarioConfirContrasenia: any;
   displayContra: boolean = false;
-//a
+  //Validaciones
   estadoFinal: any;
   generoFinal: any;
   nacioFinal: any;
