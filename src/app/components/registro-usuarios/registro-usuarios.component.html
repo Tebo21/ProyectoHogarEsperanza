@@ -72,7 +72,7 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nombre</label>
-            <input class="form-control" type="text" pKeyFilter="alpha" maxlength="30" minlength="3" id="nombres"
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3" id="nombres"
                 placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required>
         </div>
         <div class="form-floating mb-3">
@@ -92,7 +92,7 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Correo Electrónico</label>
-            <input class="form-control" type="email" maxlength="40" minlength="12" id="correo"
+            <input class="form-control" type="email" maxlength="40" [pKeyFilter]="valCorreo" minlength="12" id="correo"
                 placeholder="Correo Electrónico" [(ngModel)]="correo" name="correo" required>
         </div>
         <div class="form-floating mb-3">

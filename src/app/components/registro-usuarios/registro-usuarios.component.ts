@@ -16,8 +16,9 @@ import { timer } from 'rxjs';
   styleUrls: ['./registro-usuarios.component.css']
 })
 export class RegistroUsuariosComponent implements OnInit {
-  blockSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"'/]+$/
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[~"'/]+$/
   noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"']+$/
+  valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
   //Comprobacion
   nombredeUsuario: any;
   //Modelos
@@ -81,18 +82,13 @@ export class RegistroUsuariosComponent implements OnInit {
       { top: 'Voluntario' }
     ]
     this.nacionalidades = [
-      { nop: 'Ecuatoriano' },
-      { nop: 'Afganistán' },
-      { nop: 'Alemania' },
-      { nop: 'Canadá' },
-      { nop: 'China' },
-      { nop: 'Perú' },
-      { nop: 'Colombia' },
-      { nop: 'Venezuela' },
-      { nop: 'Uruguay' },
-      { nop: 'México' },
-      { nop: 'Honduras' },
-      { nop: 'Otro' }
+      { nop: 'Afganistán'},{ nop: 'Alemania'},{ nop: 'Arabia Saudita'},{ nop: 'Argentina'},{ nop: 'Australia'},{ nop: 'Bélgica'},{ nop: 'Bolivia'},{ nop: 'Brasil'},
+      { nop: 'Camboya'},{ nop: 'Canadá'},{ nop: 'Chile'}, { nop: 'China'},{ nop: 'Colombia'},{ nop: 'Corea'},{ nop: 'Costa Rica'},{ nop: 'Cuba'},{ nop: 'Dinamarca'},{ nop: 'Ecuador'},{ nop: 'Egipto'},{ nop: 'El Salvador'},
+      { nop: 'Escocia'},{ nop: 'España'},{ nop: 'Estados Unidos'},{ nop: 'Estonia'},{ nop: 'Etiopia'},{ nop: 'Filipinas'},{ nop: 'Finlandia'},{ nop: 'Francia'},{ nop: 'Gales'},{ nop: 'Grecia'},{ nop: 'Guatemala'},
+      { nop: 'Haití'},{ nop: 'Holanda'},{ nop: 'Honduras'},{ nop: 'Indonesia'},{ nop: 'Inglaterra'},{ nop: 'Irak'},{ nop: 'Irán'},{ nop: 'Irlanda'},{ nop: 'Israel'},{ nop: 'Italia'},{ nop: 'Japón'},{ nop: 'Jordania'},
+      { nop: 'Laos'},{ nop: 'Letonia'},{ nop: 'Lituania'},{ nop: 'Malasia'},{ nop: 'Marruecos'},{ nop: 'México'},{ nop: 'Nicaragua'},{ nop: 'Noruega'},{ nop: 'Nueva Zelanda'},{ nop: 'Panamá'},{ nop: 'Paraguay'},
+      { nop: 'Perú'},{ nop: 'Polonia'},{ nop: 'Portugal'},{ nop: 'Puerto Rico'},{ nop: 'Republica Dominicana'},{ nop: 'Rumania'},{ nop: 'Rusia'},{ nop: 'Suecia'},{ nop: 'Suiza'},{ nop: 'Tailandia'},{ nop: 'Taiwán'},
+      { nop: 'Turquía'},{ nop: 'Ucrania'},{ nop: 'Uruguay'},{ nop: 'Venezuela'},{ nop: 'Vietnam'},{ nop: 'Otro' }
     ]
     this.estadocivil = [
       { eop: 'Casado' },

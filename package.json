@@ -25,7 +25,7 @@
     "@popperjs/core": "^2.9.2",
     "angular-calendar": "^0.28.24",
     "angularx-flatpickr": "^6.5.1",
-    "aws-sdk": "^2.939.0",
+    "aws-sdk": "^2.941.0",
     "bootstrap": "^4.6.0",
     "date-fns": "^2.22.1",
     "faker": "^5.5.3",
