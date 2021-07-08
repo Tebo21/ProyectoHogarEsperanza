@@ -16,8 +16,9 @@ import { timer } from 'rxjs';
   styleUrls: ['./registro-usuarios.component.css']
 })
 export class RegistroUsuariosComponent implements OnInit {
-  blockSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"'/]+$/
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[~"'/]+$/
   noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"']+$/
+  valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
   //Comprobacion
   nombredeUsuario: any;
   //Modelos
