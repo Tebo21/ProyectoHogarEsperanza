@@ -28,6 +28,7 @@ export class ListaObservacionesPersonasComponent implements OnInit {
   }
 
   actualizar(){
+    this.datos=[]
   this.listaPersona();
   this.listaFamiliares();
   }
@@ -63,8 +64,9 @@ export class ListaObservacionesPersonasComponent implements OnInit {
            fechaNacimiento:this.personaArray[c][6],
            edad:this.personaArray[c][7]
          }
-         console.log(datosLista)
-         this.datos.push(datosLista)
+         if(this.datos.length<this.cedulaArray.length){
+          this.datos.push(datosLista)
+         }
      }
   } 
 

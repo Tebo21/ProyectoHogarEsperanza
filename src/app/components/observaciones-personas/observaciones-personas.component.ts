@@ -57,6 +57,7 @@ export class ObservacionesPersonasComponent implements OnInit {
     })
   }
   actualizar(){
+    this.datos=[]
     this.listaObservaciones();
   }
 

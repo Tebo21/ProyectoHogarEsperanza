@@ -36,7 +36,6 @@ export class ListaBeneficiariosComponent implements OnInit {
   }
 
   actualizar(){
-    this.datos=[]
   this.listaPersona();
   this.listaFamiliares();
   }
@@ -133,15 +132,18 @@ export class ListaBeneficiariosComponent implements OnInit {
            adulto:this.personaArray[c][17],
            viveConOTROS:this.personaArray[c][18]
          }
-         this.datos.push(datosLista)
+         if(this.datos.length<this.cedulaArray.length){
+          this.datos.push(datosLista)
+         }
         }
        }
-     }
+      }
     });
           }
         }
       }
     });
+    console.log("listo")
   } 
   
   ingresoFicha(i){
