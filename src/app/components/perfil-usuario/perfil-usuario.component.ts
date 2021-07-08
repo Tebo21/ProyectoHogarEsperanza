@@ -35,7 +35,7 @@ export class PerfilUsuarioComponent implements OnInit {
   estado: any;
   generos: any[];
   genero: any;
-  discap : boolean;
+  discap: boolean;
   usuarioContraseniaAnterior: any;
   usuarioContrasenia: any;
   usuarioConfirContrasenia: any;
@@ -48,6 +48,9 @@ export class PerfilUsuarioComponent implements OnInit {
   estadoFinal: any;
   generoFinal: any;
   nacioFinal: any;
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
+  noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
+  valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
 
   constructor(private usuarioService: UsuarioService, private personaService: PersonasService, private router: Router) { }
 
@@ -84,7 +87,6 @@ export class PerfilUsuarioComponent implements OnInit {
       if (this.usuario.usuarioTipo == 1) {
         this.drop = true;
         this.vistaTipo = false;
-        this.usuarioContraseniaAnterior = this.usuario.usuarioContrasenia
       } if (this.usuario.usuarioTipo == 2 || this.usuario.usuarioTipo == 3 || this.usuario.usuarioTipo == 4) {
         this.drop = false;
         this.vistaTipo = true;
@@ -158,17 +160,17 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   Validacion() {
-    if (this.estado == undefined || this.estado == null) {
+    if (this.estado == undefined || this.estado == null || this.validoE == false) {
       this.estadoFinal = this.persona.estado_civil
     } else {
       this.estadoFinal = this.estado.eop
     }
-    if (this.nacio == undefined || this.nacio == null) {
+    if (this.nacio == undefined || this.nacio == null || this.validoN == false) {
       this.nacioFinal = this.persona.nacionalidad
     } else {
       this.nacioFinal = this.nacio.nop
     }
-    if (this.genero == undefined || this.genero == null) {
+    if (this.genero == undefined || this.genero == null || this.validoG == false) {
       this.generoFinal = this.persona.genero
     } else {
       this.generoFinal = this.genero.gop
@@ -219,29 +221,33 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   CambiarContra() {
-    if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
-      alert('Las contraseñas no coinciden')
+    if (this.usuario.usuarioContrasenia != this.usuarioContraseniaAnterior) {
+      alert('La contraseña anterior no es correcta')
     } else {
-      const UsuarioNuevo: Usuarios = {
-        idUsuario: this.usuario.idUsuario,
-        usuarioCedula: this.usuario.usuarioCedula,
-        usuarioContrasenia: this.usuarioContrasenia,
-        usuarioNombre: this.usuario.usuarioNombre,
-        usuarioTipo: this.usuarioT,
-        usuarioEstado: true,
-        usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
-      }
-      this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-        alert('Se ha actualizado exitosamente su contraseña')
-        this.displayContra = false;
-        window.location.reload();
-      });
+      if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
+        alert('Las contraseñas no coinciden')
+      } else {
+        const UsuarioNuevo: Usuarios = {
+          idUsuario: this.usuario.idUsuario,
+          usuarioCedula: this.usuario.usuarioCedula,
+          usuarioContrasenia: this.usuarioContrasenia,
+          usuarioNombre: this.usuario.usuarioNombre,
+          usuarioTipo: this.usuario.usuarioTipo,
+          usuarioEstado: true,
+          usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
+        }
+        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+          alert('Se ha actualizado exitosamente su contraseña')
+          this.displayContra = false;
+          window.location.reload();
+        });
 
+      }
     }
   }
 
   Cancelar() {
-    this.router.navigateByUrl('listado-usuarios');
+    this.router.navigateByUrl('inicio-super-admin');
   }
 
 }

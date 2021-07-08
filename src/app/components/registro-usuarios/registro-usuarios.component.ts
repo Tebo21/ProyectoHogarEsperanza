@@ -8,7 +8,7 @@ import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
 import { MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
-import { timer } from 'rxjs';
+import { empty, timer } from 'rxjs';
 
 @Component({
   selector: 'app-registro-usuarios',
@@ -16,14 +16,16 @@ import { timer } from 'rxjs';
   styleUrls: ['./registro-usuarios.component.css']
 })
 export class RegistroUsuariosComponent implements OnInit {
-  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[~"'/]+$/
-  noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"']+$/
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
+  noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
   valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
   //Comprobacion
   nombredeUsuario: any;
   //Modelos
   persona: Personas = {};
+  usuarioValidarCorreo: Personas = {};
   usuario: Usuarios = {};
+  usuarioValidarCedula: Usuarios = {};
   //Variables
   ficha: FichaSocioeconomica[];
   personaCreada: Personas = {};
@@ -72,7 +74,7 @@ export class RegistroUsuariosComponent implements OnInit {
   usuarioConfirContrasenia: string = '';
   usuarioFechaCreacion: Date;
   //Edad
-  edadC:number;
+  edadC: number;
 
   constructor(private router: Router, private personaservice: PersonasService,
     private usuarioservice: UsuarioService) {
@@ -82,13 +84,13 @@ export class RegistroUsuariosComponent implements OnInit {
       { top: 'Voluntario' }
     ]
     this.nacionalidades = [
-      { nop: 'Afganistán'},{ nop: 'Alemania'},{ nop: 'Arabia Saudita'},{ nop: 'Argentina'},{ nop: 'Australia'},{ nop: 'Bélgica'},{ nop: 'Bolivia'},{ nop: 'Brasil'},
-      { nop: 'Camboya'},{ nop: 'Canadá'},{ nop: 'Chile'}, { nop: 'China'},{ nop: 'Colombia'},{ nop: 'Corea'},{ nop: 'Costa Rica'},{ nop: 'Cuba'},{ nop: 'Dinamarca'},{ nop: 'Ecuador'},{ nop: 'Egipto'},{ nop: 'El Salvador'},
-      { nop: 'Escocia'},{ nop: 'España'},{ nop: 'Estados Unidos'},{ nop: 'Estonia'},{ nop: 'Etiopia'},{ nop: 'Filipinas'},{ nop: 'Finlandia'},{ nop: 'Francia'},{ nop: 'Gales'},{ nop: 'Grecia'},{ nop: 'Guatemala'},
-      { nop: 'Haití'},{ nop: 'Holanda'},{ nop: 'Honduras'},{ nop: 'Indonesia'},{ nop: 'Inglaterra'},{ nop: 'Irak'},{ nop: 'Irán'},{ nop: 'Irlanda'},{ nop: 'Israel'},{ nop: 'Italia'},{ nop: 'Japón'},{ nop: 'Jordania'},
-      { nop: 'Laos'},{ nop: 'Letonia'},{ nop: 'Lituania'},{ nop: 'Malasia'},{ nop: 'Marruecos'},{ nop: 'México'},{ nop: 'Nicaragua'},{ nop: 'Noruega'},{ nop: 'Nueva Zelanda'},{ nop: 'Panamá'},{ nop: 'Paraguay'},
-      { nop: 'Perú'},{ nop: 'Polonia'},{ nop: 'Portugal'},{ nop: 'Puerto Rico'},{ nop: 'Republica Dominicana'},{ nop: 'Rumania'},{ nop: 'Rusia'},{ nop: 'Suecia'},{ nop: 'Suiza'},{ nop: 'Tailandia'},{ nop: 'Taiwán'},
-      { nop: 'Turquía'},{ nop: 'Ucrania'},{ nop: 'Uruguay'},{ nop: 'Venezuela'},{ nop: 'Vietnam'},{ nop: 'Otro' }
+      { nop: 'Afganistán' }, { nop: 'Alemania' }, { nop: 'Arabia Saudita' }, { nop: 'Argentina' }, { nop: 'Australia' }, { nop: 'Bélgica' }, { nop: 'Bolivia' }, { nop: 'Brasil' },
+      { nop: 'Camboya' }, { nop: 'Canadá' }, { nop: 'Chile' }, { nop: 'China' }, { nop: 'Colombia' }, { nop: 'Corea' }, { nop: 'Costa Rica' }, { nop: 'Cuba' }, { nop: 'Dinamarca' }, { nop: 'Ecuador' }, { nop: 'Egipto' }, { nop: 'El Salvador' },
+      { nop: 'Escocia' }, { nop: 'España' }, { nop: 'Estados Unidos' }, { nop: 'Estonia' }, { nop: 'Etiopia' }, { nop: 'Filipinas' }, { nop: 'Finlandia' }, { nop: 'Francia' }, { nop: 'Gales' }, { nop: 'Grecia' }, { nop: 'Guatemala' },
+      { nop: 'Haití' }, { nop: 'Holanda' }, { nop: 'Honduras' }, { nop: 'Indonesia' }, { nop: 'Inglaterra' }, { nop: 'Irak' }, { nop: 'Irán' }, { nop: 'Irlanda' }, { nop: 'Israel' }, { nop: 'Italia' }, { nop: 'Japón' }, { nop: 'Jordania' },
+      { nop: 'Laos' }, { nop: 'Letonia' }, { nop: 'Lituania' }, { nop: 'Malasia' }, { nop: 'Marruecos' }, { nop: 'México' }, { nop: 'Nicaragua' }, { nop: 'Noruega' }, { nop: 'Nueva Zelanda' }, { nop: 'Panamá' }, { nop: 'Paraguay' },
+      { nop: 'Perú' }, { nop: 'Polonia' }, { nop: 'Portugal' }, { nop: 'Puerto Rico' }, { nop: 'Republica Dominicana' }, { nop: 'Rumania' }, { nop: 'Rusia' }, { nop: 'Suecia' }, { nop: 'Suiza' }, { nop: 'Tailandia' }, { nop: 'Taiwán' },
+      { nop: 'Turquía' }, { nop: 'Ucrania' }, { nop: 'Uruguay' }, { nop: 'Venezuela' }, { nop: 'Vietnam' }, { nop: 'Otro' }
     ]
     this.estadocivil = [
       { eop: 'Casado' },
@@ -198,6 +200,27 @@ export class RegistroUsuariosComponent implements OnInit {
     this.edadC = f1
   }
 
+
+  ValidacionesExtra() {
+    this.personaservice.getPorCorreo(this.correo).subscribe(da => {
+      this.usuarioValidarCorreo = da;
+    })
+    if (this.usuarioValidarCorreo.cedula == null) {
+      this.GurdarPersona();
+    } else {
+      alert('Esta dirección de correo electrónico ya está en uso')
+    }
+
+    this.usuarioservice.getUserByCedula(this.cedula).subscribe(dat => {
+      this.usuarioValidarCedula = dat;
+    })
+    if (this.usuarioValidarCedula.usuarioCedula == null) {
+      this.GuardarUsuario();
+    } else {
+      alert('El número de cédula ya está en uso')
+    }
+  }
+
   GurdarPersona() {
     const nuevaPersona: Personas = {
       apellidos: this.apellidos,
@@ -221,8 +244,7 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   GuardarUsuario() {
-    if (this.usuarioNombre != '' &&
-      this.usuarioContrasenia != '') {
+    if (this.usuarioNombre != '' && this.usuarioContrasenia != '') {
       if (this.usuarioContrasenia == this.usuarioConfirContrasenia) {
         const nuevoUsuario: Usuarios = {
           usuarioCedula: this.cedula,
@@ -230,12 +252,11 @@ export class RegistroUsuariosComponent implements OnInit {
           usuarioNombre: this.usuarioNombre,
           usuarioTipo: this.tipoUsuario,
           usuarioEstado: true,
-          usuarioFechaCreacion: 'Fecha:' +((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear() 
-          + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
+          usuarioFechaCreacion: 'Fecha:' + ((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear()
+            + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
         }
         this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
           this.usuarioCreado = data;
-          this.GurdarPersona();
           this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
           const contador = timer(1000);
           contador.subscribe((n) => {

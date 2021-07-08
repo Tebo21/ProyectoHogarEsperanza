@@ -48,6 +48,9 @@ export class EditarUsuariosComponent implements OnInit {
   estadoFinal: any;
   generoFinal: any;
   nacioFinal: any;
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
+  noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
+  valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
 
   constructor(private usuarioService: UsuarioService, private personaService: PersonasService, private router: Router) { }
 
@@ -69,7 +72,6 @@ export class EditarUsuariosComponent implements OnInit {
     this.usuarioService.getUserByCedula(this.cedulaEditar).subscribe(data2 => {
       this.usuarioEdit = data2;
       this.tipo = this.usuarioEdit.usuarioTipo;
-      this.usuarioContraseniaAnterior = this.usuarioEdit.usuarioContrasenia;
     });
 
     this.tipos = [
@@ -228,28 +230,32 @@ export class EditarUsuariosComponent implements OnInit {
   }
 
   CambiarContra() {
-    if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
-      alert('Las contraseñas no coinciden')
+    if (this.usuarioEdit.usuarioContrasenia != this.usuarioContraseniaAnterior) {
+      alert('La contraseña anterior no es correcta')
     } else {
-      const UsuarioNuevo: Usuarios = {
-        idUsuario: this.usuarioEdit.idUsuario,
-        usuarioCedula: this.usuarioEdit.usuarioCedula,
-        usuarioContrasenia: this.usuarioContrasenia,
-        usuarioNombre: this.usuarioEdit.usuarioNombre,
-        usuarioTipo: this.usuarioT,
-        usuarioEstado: true,
-        usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+      if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
+        alert('Las contraseñas no coinciden')
+      } else {
+        const UsuarioNuevo: Usuarios = {
+          idUsuario: this.usuarioEdit.idUsuario,
+          usuarioCedula: this.usuarioEdit.usuarioCedula,
+          usuarioContrasenia: this.usuarioContrasenia,
+          usuarioNombre: this.usuarioEdit.usuarioNombre,
+          usuarioTipo: this.usuarioEdit.usuarioTipo,
+          usuarioEstado: true,
+          usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+        }
+        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+          alert('Se ha actualizado exitosamente su contraseña')
+          this.displayContra = false;
+          window.location.reload();
+        });
       }
-      this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-        alert('Se ha actualizado exitosamente su contraseña')
-        this.displayContra = false;
-        window.location.reload();
-      });
-
     }
+
   }
 
   Cancelar() {
-    this.router.navigateByUrl('inicio-super-admin');
+    this.router.navigateByUrl('listado-usuarios');
   }
 }

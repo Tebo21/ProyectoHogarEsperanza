@@ -56,7 +56,7 @@
         <ng-template pTemplate="footer">
             <button pButton pRipple type="button" label="Aceptar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                 style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
-                (click)="GuardarUsuario()"></button>
+                (click)="ValidacionesExtra()"></button>
             <button pButton pRipple type="button" label="Cancelar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                 style="color: #b10000;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-times"
                 (click)="displayV=false"></button>
@@ -64,78 +64,78 @@
     </p-dialog>
 
     <p-panel class="card" id="panel">
-        <h2 class="text-center">Registro de usuarios</h2>
+        <h2 class="text-center">Registro de Usuarios</h2>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Cédula</label>
+            <label for="floatingInput"><b>Cédula</b></label>
             <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula"
                 placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Nombre</label>
+            <label for="floatingInput"><b>Nombres</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3" id="nombres"
                 placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Apellido</label>
+            <label for="floatingInput"><b>Apellidos</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
                 id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Direccion</label>
+            <label for="floatingInput"><b>Direccion</b></label>
             <input class="form-control" type="text" [pKeyFilter]="noSpecial" maxlength="50" minlength="3" id="direccion"
-                placeholder="Direccion" [(ngModel)]="direccion" name="direccion" required>
+                placeholder="Dirección" [(ngModel)]="direccion" name="direccion" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Número de Celular</label>
-            <input class="form-control" type="text" pKeyFilter="int" id="celular" placeholder="Número Celular"
+            <label for="floatingInput"><b>Número celular</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" id="celular" placeholder="Número celular"
                 [(ngModel)]="celular" name="celular" minlength="7" maxlength="13" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Correo Electrónico</label>
+            <label for="floatingInput"><b>Correo electrónico</b></label>
             <input class="form-control" type="email" maxlength="40" [pKeyFilter]="valCorreo" minlength="12" id="correo"
                 placeholder="Correo Electrónico" [(ngModel)]="correo" name="correo" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Género</label>
+            <label for="floatingInput"><b>Género</b></label>
             <p-dropdown [options]="generos" [(ngModel)]="genero" placeholder="Seleccione su género" optionLabel="gop"
-                [style]="{'width': '100%'}" [filter]="true" [showClear]="true">
+                [style]="{'width': '100%'}" [showClear]="true">
             </p-dropdown>
         </div>
 
         <div class="form-floating mb-3">
-            <label for="floatingInput">Fecha de nacimiento</label>
+            <label for="floatingInput"><b>Fecha de nacimiento</b></label>
             <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
                 [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" dateFormat="yy-mm-dd" maxlength="10"
                 (change)="calcularedad($event)" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Edad</label>
+            <label for="floatingInput"><b>Edad</b></label>
             <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
                 placeholder="Edad" [(ngModel)]="edadC" name="edad" required disabled>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Nacionalidad</label>
+            <label for="floatingInput"><b>País de origen</b></label>
             <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="Seleccione su nacionalidad"
                 optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Discapacidad</label>
+            <label for="floatingInput"><b>Discapacidad No | Si</b></label>
             <br>
             <p-inputSwitch [(ngModel)]="discap"></p-inputSwitch>
         </div>
         <p-messages [(value)]="msgs"></p-messages>
         <div class="form-floating mb-3">
-            <label for="floatingInput">Estado Civil</label>
+            <label for="floatingInput"><b>Estado civil</b></label>
             <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
-                optionLabel="eop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
+                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true"
                 (onChange)="onChangeEstado($event)">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3" *ngIf="cb">
-            <label for="floatingInput">Tipo de usuario</label>
+            <label for="floatingInput"><b>Tipo de usuario</b></label>
             <p-dropdown [options]="listadoTipo" [(ngModel)]="tipo" placeholder="Seleccione el tipo de usuario"
-                optionLabel="top" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
+                optionLabel="top" [style]="{'width': '100%'}" [showClear]="true"
                 (onChange)="onChange($event)">
             </p-dropdown>
         </div>
