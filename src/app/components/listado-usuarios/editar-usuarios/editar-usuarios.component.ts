@@ -26,6 +26,10 @@ export class EditarUsuariosComponent implements OnInit {
   tipos: any[];
   tipo: any;
   valido: boolean = false;
+  validoG: boolean = false;
+  validoE: boolean = false;
+  validoN: boolean = false;
+
   //Validaciones
   nacionalidades: any[];
   nacio: any;
@@ -121,6 +125,27 @@ export class EditarUsuariosComponent implements OnInit {
       }
     }
   }
+  onChangeE(event: any) {
+    if (event.value == null) {
+      this.validoE = false;
+    } else {
+      this.validoE = true;
+    }
+  }
+  onChangeN(event: any) {
+    if (event.value == null) {
+      this.validoN = false;
+    } else {
+      this.validoN = true;
+    }
+  }
+  onChangeG(event: any) {
+    if (event.value == null) {
+      this.validoG = false;
+    } else {
+      this.validoG = true;
+    }
+  }
 
   calcularedad(event: any) {
     let fecha = new Date(event.target.value);
@@ -143,17 +168,17 @@ export class EditarUsuariosComponent implements OnInit {
 
 
   Validacion() {
-    if (this.estado == undefined || this.estado == null) {
+    if (this.estado == undefined || this.estado == null || this.validoE == false) {
       this.estadoFinal = this.persona.estado_civil
     } else {
       this.estadoFinal = this.estado.eop
     }
-    if (this.nacio == undefined || this.nacio == null) {
+    if (this.nacio == undefined || this.nacio == null || this.validoN == false) {
       this.nacioFinal = this.persona.nacionalidad
     } else {
       this.nacioFinal = this.nacio.nop
     }
-    if (this.genero == undefined || this.genero == null) {
+    if (this.genero == undefined || this.genero == null || this.validoG == false) {
       this.generoFinal = this.persona.genero
     } else {
       this.generoFinal = this.genero.gop
@@ -163,7 +188,6 @@ export class EditarUsuariosComponent implements OnInit {
     } else {
       this.usuarioT = this.usuarioT;
     }
-    console.log(this.usuarioT);
     this.Actualizar();
   }
 
@@ -226,6 +250,6 @@ export class EditarUsuariosComponent implements OnInit {
   }
 
   Cancelar() {
-    this.router.navigateByUrl('listado-usuarios');
+    this.router.navigateByUrl('inicio-super-admin');
   }
 }

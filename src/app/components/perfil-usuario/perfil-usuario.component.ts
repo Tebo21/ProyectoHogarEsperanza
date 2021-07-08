@@ -16,7 +16,6 @@ export class PerfilUsuarioComponent implements OnInit {
   cedUser: any;
   msgs: Message[];
   usuario: Usuarios = {};
-  usuarioEdit: Usuarios = {};
   persona: Personas = {};
   personaE: Personas = {};
   usuarioT: any;
@@ -24,6 +23,9 @@ export class PerfilUsuarioComponent implements OnInit {
   tipos: any[];
   tipo: any;
   valido: boolean = false;
+  validoG: boolean = false;
+  validoN: boolean = false;
+  validoE: boolean = false;
   //Validaciones
   drop: boolean = false;
   vistaTipo: boolean = true;
@@ -33,7 +35,7 @@ export class PerfilUsuarioComponent implements OnInit {
   estado: any;
   generos: any[];
   genero: any;
-  discap = false;
+  discap : boolean;
   usuarioContraseniaAnterior: any;
   usuarioContrasenia: any;
   usuarioConfirContrasenia: any;
@@ -82,6 +84,7 @@ export class PerfilUsuarioComponent implements OnInit {
       if (this.usuario.usuarioTipo == 1) {
         this.drop = true;
         this.vistaTipo = false;
+        this.usuarioContraseniaAnterior = this.usuario.usuarioContrasenia
       } if (this.usuario.usuarioTipo == 2 || this.usuario.usuarioTipo == 3 || this.usuario.usuarioTipo == 4) {
         this.drop = false;
         this.vistaTipo = true;
@@ -93,7 +96,6 @@ export class PerfilUsuarioComponent implements OnInit {
       this.genero = this.persona.genero;
       this.nacio = this.persona.nacionalidad;
       this.estado = this.persona.estado_civil;
-      this.usuarioContraseniaAnterior = this.usuario.usuarioContrasenia
     });
   }
 
@@ -103,14 +105,36 @@ export class PerfilUsuarioComponent implements OnInit {
     } else {
       this.valido = true;
       if (this.tipo.string == 'SuperAdministrador') {
-
+        this.usuarioT = 1;
       } else if (this.tipo.string == 'Administrador') {
-
+        this.usuarioT = 2;
       } else if (this.tipo.string == 'Voluntario Interno') {
-
+        this.usuarioT = 3;
       } else if (this.tipo.string == 'Voluntario Externo') {
-
+        this.usuarioT = 4;
       }
+    }
+  }
+
+  onChangeE(event: any) {
+    if (event.value == null) {
+      this.validoE = false;
+    } else {
+      this.validoE = true;
+    }
+  }
+  onChangeN(event: any) {
+    if (event.value == null) {
+      this.validoN = false;
+    } else {
+      this.validoN = true;
+    }
+  }
+  onChangeG(event: any) {
+    if (event.value == null) {
+      this.validoG = false;
+    } else {
+      this.validoG = true;
     }
   }
 
@@ -150,11 +174,10 @@ export class PerfilUsuarioComponent implements OnInit {
       this.generoFinal = this.genero.gop
     }
     if (this.usuarioT == undefined || this.usuarioT == null) {
-      this.usuarioT = this.usuarioEdit.usuarioTipo;
+      this.usuarioT = this.usuario.usuarioTipo;
     } else {
       this.usuarioT = this.usuarioT;
     }
-    console.log(this.usuarioT);
     this.Actualizar();
   }
 
@@ -180,14 +203,15 @@ export class PerfilUsuarioComponent implements OnInit {
     this.personaService.updatePersona(PersonaNueva).subscribe(() => {
     });
     const UsuarioNuevo: Usuarios = {
-      idUsuario: this.usuarioEdit.idUsuario,
-      usuarioCedula: this.usuarioEdit.usuarioCedula,
-      usuarioContrasenia: this.usuarioEdit.usuarioContrasenia,
-      usuarioNombre: this.usuarioEdit.usuarioNombre,
+      idUsuario: this.usuario.idUsuario,
+      usuarioCedula: this.usuario.usuarioCedula,
+      usuarioContrasenia: this.usuario.usuarioContrasenia,
+      usuarioNombre: this.usuario.usuarioNombre,
       usuarioTipo: this.usuarioT,
       usuarioEstado: true,
-      usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+      usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
     }
+    console.log(UsuarioNuevo)
     this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
       alert('Se ha actualizado exitosamente')
       this.router.navigateByUrl('listado-usuarios');
@@ -199,13 +223,13 @@ export class PerfilUsuarioComponent implements OnInit {
       alert('Las contraseñas no coinciden')
     } else {
       const UsuarioNuevo: Usuarios = {
-        idUsuario: this.usuarioEdit.idUsuario,
-        usuarioCedula: this.usuarioEdit.usuarioCedula,
+        idUsuario: this.usuario.idUsuario,
+        usuarioCedula: this.usuario.usuarioCedula,
         usuarioContrasenia: this.usuarioContrasenia,
-        usuarioNombre: this.usuarioEdit.usuarioNombre,
+        usuarioNombre: this.usuario.usuarioNombre,
         usuarioTipo: this.usuarioT,
         usuarioEstado: true,
-        usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+        usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
       }
       this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
         alert('Se ha actualizado exitosamente su contraseña')

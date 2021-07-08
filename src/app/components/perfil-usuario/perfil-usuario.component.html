@@ -37,15 +37,16 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Género</label>
-            <p-dropdown [options]="generos" [(ngModel)]="genero" optionLabel="gop" placeholder="{{persona.genero}}"
-                [style]="{'width': '100%'}" [showClear]="true" pTooltip="{{persona.genero}}">
+            <p-dropdown #dd [options]="generos" [(ngModel)]="genero" placeholder="{{persona.genero}}" optionLabel="gop"
+                [style]="{'width': '100%'}" [showClear]="true"
+                pTooltip="{{persona.genero}}" (onChange)="onChangeG($event)">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Fecha de nacimiento</label>
             <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
-                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" (change)="calcularedad($event)"
-                maxlength="10" required pTooltip="{{persona.fechaNacimiento}}">
+                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" dateFormat="yy-mm-dd"
+                (change)="calcularedad($event)" maxlength="10" required pTooltip="{{persona.fechaNacimiento}}">
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Edad</label>
@@ -54,8 +55,9 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Nacionalidad</label>
-            <p-dropdown [options]="nacionalidades" [(ngModel)]="persona.nacionalidad" placeholder="{{persona.nacionalidad}}"
-                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true" pTooltip="{{persona.nacionalidad}}">
+            <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="{{persona.nacionalidad}}"
+                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
+                 pTooltip="{{persona.nacionalidad}}" (onChange)="onChangeN($event)">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
@@ -65,15 +67,16 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput">Estado Civil</label>
-            <p-dropdown [options]="estadocivil" [(ngModel)]="persona.estado_civil" placeholder="{{persona.estado_civil}}"
-                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" pTooltip="{{persona.estado_civil}}">
+            <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="{{persona.estado_civil}}"
+                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" 
+                pTooltip="{{persona.estado_civil}}" (onChange)="onChangeE($event)">
             </p-dropdown>
         </div>
         <hr>
         <h2 class="text-center">Datos del usuario</h2>
         <div class="form-floating mb-3" *ngIf="drop">
             <label for="floatingInput">Tipo de usuario</label>
-            <p-dropdown [options]="tipos" [(ngModel)]="usuario.usuarioTipo" placeholder="{{tipoUsuario(usuario.usuarioTipo)}}" optionLabel="string"
+            <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="{{tipoUsuario(usuario.usuarioTipo)}}" optionLabel="string"
                 [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChange($event)"
                 pTooltip="{{tipoUsuario(usuario.usuarioTipo)}}">
             </p-dropdown>
@@ -129,7 +132,7 @@
         <br>
         <button pButton pRipple type="button" label="Aceptar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
             style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
-            (click)="Actualizar()"></button>
+            (click)="Validacion()"></button>
         <br>
     </p-panel>
 </div>

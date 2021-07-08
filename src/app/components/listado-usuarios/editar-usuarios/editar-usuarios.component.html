@@ -39,7 +39,7 @@
             <label for="floatingInput">Género</label>
             <p-dropdown #dd [options]="generos" [(ngModel)]="genero" placeholder="{{persona.genero}}" optionLabel="gop"
                 [style]="{'width': '100%'}" [showClear]="true"
-                pTooltip="{{persona.genero}}">
+                pTooltip="{{persona.genero}}" (onChange)="onChangeG($event)">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
@@ -57,7 +57,7 @@
             <label for="floatingInput">Nacionalidad</label>
             <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="{{persona.nacionalidad}}"
                 optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
-                 pTooltip="{{persona.nacionalidad}}">
+                 pTooltip="{{persona.nacionalidad}}" (onChange)="onChangeN($event)">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
@@ -69,7 +69,7 @@
             <label for="floatingInput">Estado Civil</label>
             <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="{{persona.estado_civil}}"
                 optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" 
-                pTooltip="{{persona.estado_civil}}">
+                pTooltip="{{persona.estado_civil}}" (onChange)="onChangeE($event)">
             </p-dropdown>
         </div>
         <hr>
