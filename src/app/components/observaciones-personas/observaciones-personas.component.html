@@ -44,36 +44,44 @@
                  <div align="right">
                      <span class="p-input-icon-right">
                          <i class="pi pi-search"></i>
-                         <div style="margin-left: 70%;">
-                            <button type="button" pButton pRipple icon="pi pi-refresh" 
+                             <input pInputText type="date"  style="height: 40px;width: 120px;" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                                placeholder="Buscar"/> 
+                                <button type="button" pButton pRipple icon="pi pi-refresh" 
                                 class="p-mr-2" tooltipPosition="bottom" (click)="actualizar()"></button>
-                         </div>
-                         <input pInputText type="date" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                             placeholder="Buscar"/>
-                         <button type="button" pButton pRipple icon="pi pi-refresh" 
-                         class="p-mr-2" tooltipPosition="bottom" ></button> 
+                            
                      </span>
                  </div>
              </div>         
              </ng-template>
              <ng-template pTemplate="header">
                  <tr >
-                    <th pSortableColumn="idObservacionesPersona">#
+                    <th style="width: 5px;" pSortableColumn="idObservacionesPersona">#
                         <p-sortIcon field="idObservacionesPersona"></p-sortIcon>
                         </th>
-                     <th pSortableColumn="fechaRegistro">Fecha Registro
+                     <th style="width: 10px;" pSortableColumn="fechaRegistro">Fecha Registro
                      <p-sortIcon field="fechaRegistro"></p-sortIcon>
                      </th>
                      <th pSortableColumn="descripcionobservacion">Observaciones
                      <p-sortIcon field="descripcionobservacion"></p-sortIcon>
                      </th>
+                     <th style="width: 10px;" pSortableColumn="Editar">Editar
+                        <p-sortIcon field="Editar"></p-sortIcon>
+                        </th>
                  </tr>
              </ng-template>
              <ng-template pTemplate="body" let-user>
                  <tr  class="p-selectable-row">
-                     <td>{{user.idObservacionesPersona}}</td>
-                     <td>{{user.fechaRegistro}}</td>
-                     <td>{{user.descripcionobservacion}}</td>
+                     <td  style="width: 5px;">{{user.idObservacionesPersona}}</td>
+                     <td style="width: 10px;">{{user.fechaRegistro}}</td>
+                     <td style="width: 200px;">
+                        <textarea  class="Observaciones" name="Observaciones" id="Observaciones"
+                         style="margin-left: 1%;margin-right: 5%;width: 18cm;height: 2cm;"type="text" 
+                         class="form-control" value="{{user.descripcionobservacion}}" ></textarea>       
+                    </td>
+                     <td style="width: 10px;">
+                        <button  pButton pRipple icon="pi pi-user-edit" 
+                        class="p-button-rounded p-button-outlined" ></button>
+                     </td>
                  </tr>
              </ng-template>
          </p-table>
