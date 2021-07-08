@@ -23,7 +23,7 @@
                 <div align="right">
                     <span class="p-input-icon-right">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        <input pInputText type="text" style="height: 40px;width: 120px;" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar"/>
                         <button type="button" pButton pRipple icon="pi pi-refresh" 
                         class="p-mr-2" tooltipPosition="bottom" (click)="actualizar()"></button> 

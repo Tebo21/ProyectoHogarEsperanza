@@ -15,17 +15,21 @@
             scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
             [rowHover]="true" [autoLayout]="true" [responsive]="true"
             [globalFilterFields]="['cedula','nombres','apellidos','direccion','celular','correo','fechaNacimiento','edad','numHijos','totalHijos','tipoVivienda','seguro','discapacidad','nacionalidad','estadoCivil','salario','fechaRegistro','adultoMayor','ViveOtros']" 
-            [value]="datos">
+            [value]="datos" [(selection)]="arraySelected">
             <ng-template pTemplate="caption">
                 <div class="container" style="display: grid;">
                     <div align="left">
                         <button type="button" pButton pRipple icon="pi pi-file-pdf" 
                             class="p-button-danger p-mr-2" tooltipPosition="bottom" (click)="generarPDF()"></button>
+                            <button type="button" pButton pRipple icon="pi pi-filter" (click)="generarPDFSelected()"
+                        class="p-button-info p-mr-2" pTooltip="Seleccionados PDF" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                        class="p-button-success p-mr-2" pTooltip="XLS" tooltipPosition="bottom"></button> 
+                        <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelectedX()"
+                        class="p-button-info p-mr-2" pTooltip="Seleccionados XLS" tooltipPosition="bottom"></button>
                      </div>
                 </div>
                    <div style="margin-left: 70%;">
-                            <button type="button" pButton pRipple icon="pi pi-refresh" 
-                                class="p-mr-2" tooltipPosition="bottom" (click)="actualizar()"></button>
                          </div>
 
                             <div class="container" style="display: grid;">
@@ -33,14 +37,20 @@
                 <div align="right">
                     <span class="p-input-icon-right">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        <input pInputText type="text" style="height: 40px;width: 120px;"(input)="dt.filterGlobal($any($event.target).value, 'contains')"
                             placeholder="Buscar" />
+                            <button type="button" pButton pRipple icon="pi pi-refresh" 
+                            class="p-mr-2" tooltipPosition="bottom" (click)="actualizar()"></button>
+                    
                     </span>
                 </div>
             </div>         
             </ng-template>
             <ng-template pTemplate="header">
                 <tr >
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
                     <th pSortableColumn="cedula">Cédula
                         <p-sortIcon field="cedula"></p-sortIcon>
                     </th>
@@ -106,6 +116,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-user>
                 <tr  class="p-selectable-row">
+                    <td>
+                        <p-tableCheckbox [value]="user"></p-tableCheckbox>
+                    </td>
                     <td>{{user.cedula}}</td>
                     <td>{{user.nombres}}</td>
                     <td>{{user.apellidos}}</td>
@@ -125,10 +138,13 @@
                     <td>{{user.fecha}}</td>
                     <td>{{user.adulto}}</td>
                     <td>{{user.viveConOTROS}}</td>
-                    <td><button class="p-button-danger" (click)="ingresoFicha(user.cedula)">Ficha</button></td>
+                    <td><button pButton pRipple icon="pi pi-book" 
+                        tooltipPosition="bottom" (click)="ingresoFicha(user.cedula)"></button></td>
                     <td>
-                    <button class="p-button-danger" (click)="ingresoeditar(user.cedula)">Editar</button>
-                    <button class="p-button-danger" (click)="eliminarPersonaBeneficiario(user.cedula)">Eliminar</button>
+                    <button  pButton pRipple icon="pi pi-user-edit" 
+                    class="p-button-rounded p-button-outlined" (click)="ingresoeditar(user.cedula)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                     (click)="eliminarPersonaBeneficiario(user.cedula)"></button>
                     </td>
                 </tr>
             </ng-template>

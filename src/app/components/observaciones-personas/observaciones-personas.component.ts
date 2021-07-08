@@ -90,4 +90,17 @@ export class ObservacionesPersonasComponent implements OnInit {
     }).end)
     pdf.create().open();   
   }
+
+  actualizarObservacion(id,fecha){
+    console.log(id)
+    this.notasObservaciones.fechaRegistro=fecha;
+    this.notasObservaciones._id=id
+     var Observacion=document.getElementById("Observacionestxt")
+    this.notasObservaciones.descripcionobservacion="hola";
+    console.log(this.notasObservaciones)
+    this.Obserserivce.updateFamiliares(this.notasObservaciones).subscribe(data =>{
+      console.log(data)
+
+    });
+  }
 }
