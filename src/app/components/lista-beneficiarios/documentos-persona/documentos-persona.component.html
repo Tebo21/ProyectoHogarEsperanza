@@ -1,0 +1,10 @@
+<p>documentos-persona works!</p>
+<form>
+    <input class="file-img" type="file" (change)="onChange($event)" #photoInput/>
+</form>
+<button (click)="onClickSubir($event)">Cargar Imagen</button>
+
+<div class="progress form-group" *ngIf="subiendo">
+    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) +'%'" aria-valuemax="100">
+    </div>
+</div>

@@ -69,6 +69,7 @@ import { ListarProductoDonadoComponent } from './components/donacion-producto/li
 import { ObservacionesPersonasComponent } from './components/observaciones-personas/observaciones-personas.component';
 import { ListaObservacionesPersonasComponent } from './components/lista-observaciones-personas/lista-observaciones-personas.component';
 import { EditarBeneficiariosComponent } from './components/lista-beneficiarios/editar-beneficiarios/editar-beneficiarios.component';
+import { DocumentosPersonaComponent } from './components/lista-beneficiarios/documentos-persona/documentos-persona.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -110,6 +111,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ObservacionesPersonasComponent,
     ListaObservacionesPersonasComponent,
     EditarBeneficiariosComponent,
+    DocumentosPersonaComponent,
   ],
   imports: [
     CommonModule,

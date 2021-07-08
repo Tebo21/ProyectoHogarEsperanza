@@ -30,6 +30,7 @@ import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navba
 import { ObservacionesPersonasComponent } from './components/observaciones-personas/observaciones-personas.component';
 import { ListaObservacionesPersonasComponent } from './components/lista-observaciones-personas/lista-observaciones-personas.component';
 import { EditarBeneficiariosComponent } from './components/lista-beneficiarios/editar-beneficiarios/editar-beneficiarios.component';
+import { DocumentosPersonaComponent } from './components/lista-beneficiarios/documentos-persona/documentos-persona.component';
 
 // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
 // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -71,6 +72,10 @@ const routes: Routes = [
   {
     path: 'ficha-socioeconomica',
     component: FichaSocioeconomicaComponent,
+  },
+  {
+    path: 'documentos-persona',
+    component: DocumentosPersonaComponent,
   },
   {
     path: 'editar-beneficiarios',
