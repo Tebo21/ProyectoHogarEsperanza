@@ -93,6 +93,7 @@ export class PerfilUsuarioComponent implements OnInit {
       this.genero = this.persona.genero;
       this.nacio = this.persona.nacionalidad;
       this.estado = this.persona.estado_civil;
+      this.usuarioContraseniaAnterior = this.usuario.usuarioContrasenia
     });
   }
 

@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
   }
 
   Validar() {
-    if (this.user.usuarioCedula != '' || this.user.usuarioContrasenia != '' ||
+    if (this.user.usuarioCedula != '' || this.user.usuarioContrasenia != '' || this.tipo.string == null || 
       this.user.usuarioCedula != undefined || this.user.usuarioContrasenia != undefined || this.valido == false) {
       this.Logearse();
     } else {
@@ -143,16 +143,7 @@ export class LoginComponent implements OnInit {
       if (this.perRecu.cedula != null) {
         this.userservice.getUserByCedula(this.perRecu.cedula).subscribe(dat => {
           this.userRec = dat;
-          const NuevoUser: Usuarios = {
-            idUsuario: this.userRec.idUsuario,
-            usuarioCedula: this.userRec.usuarioCedula,
-            usuarioContrasenia: this.tempass.toString(),
-            usuarioNombre: this.userRec.usuarioNombre,
-            usuarioTipo: this.userRec.usuarioTipo,
-            usuarioEstado: this.userRec.usuarioEstado,
-            usuarioFechaCreacion: this.userRec.usuarioFechaCreacion
-          }
-          this.userservice.updateUser(NuevoUser).subscribe(() => { });
+         
           if (this.perRecu.celular.length == 10) {
             let numbersend = this.perRecu.celular.slice(1);
             let numbernew = "593" + numbersend
@@ -160,7 +151,21 @@ export class LoginComponent implements OnInit {
             this.sms.message = 'Hola ' + this.perRecu.nombres + ' \n' + 'Soy tu asistente de recuperación de cuenta, tu contraseña temporal es ' + this.tempass + ' \n' + 'por favor cambiala una vez ingreses a su cuenta dirigiendote a tu perfil' + ' \n' + '*Este mensaje no debe ser repondido ya que se genera de forma automática  :)*';
           }
           this.actividadesService.sendSmS(this.sms).subscribe((res) => {
+            const NuevoUser: Usuarios = {
+              idUsuario: this.userRec.idUsuario,
+              usuarioCedula: this.userRec.usuarioCedula,
+              usuarioContrasenia: this.tempass.toString(),
+              usuarioNombre: this.userRec.usuarioNombre,
+              usuarioTipo: this.userRec.usuarioTipo,
+              usuarioEstado: this.userRec.usuarioEstado,
+              usuarioFechaCreacion: this.userRec.usuarioFechaCreacion
+            }
+            this.userservice.updateUser(NuevoUser).subscribe(() => { });
+            alert('Listo, te hemos enviado un mensaje a tu WhatsApp')
+            this.displayPass = false;
           }, err => {
+            alert('Por favor reintentalo en unos momentos')
+            this.displayPass = false;
             console.log(err)
           })
         })
