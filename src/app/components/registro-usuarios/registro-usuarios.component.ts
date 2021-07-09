@@ -73,6 +73,9 @@ export class RegistroUsuariosComponent implements OnInit {
   usuarioContrasenia: string = '';
   usuarioConfirContrasenia: string = '';
   usuarioFechaCreacion: Date;
+  validoG: boolean;
+  validoN: boolean;
+  validoE: boolean;
   //Edad
   edadC: number;
 
@@ -130,7 +133,7 @@ export class RegistroUsuariosComponent implements OnInit {
     this.usuarioFechaCreacion = new Date;
   }
 
-  onChange(event: any) {
+  onChangeT(event: any) {
     if (event.value == null) {
       this.valido = false;
     } else {
@@ -143,6 +146,22 @@ export class RegistroUsuariosComponent implements OnInit {
         this.displayV = true;
         this.tipoUsuario = 2;
       }
+    }
+  }
+
+  onChangeG(event: any) {
+    if (event.value == null) {
+      this.validoG = false;
+    } else {
+      this.validoG = true;
+    }
+  }
+
+  onChangeN(event: any) {
+    if (event.value == null) {
+      this.validoN = false;
+    } else {
+      this.validoN = true;
     }
   }
 
@@ -160,7 +179,11 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   onChangeEstado(event: any) {
-    this.Validacion();
+    if (event.value == null) {
+      this.validoE = false;
+    } else {
+      this.validoE = true;
+    }
   }
 
   ComprobarLogin() {
@@ -173,23 +196,25 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   Validacion() {
-    if (this.cedula != '' &&
-      this.nombres != '' &&
-      this.apellidos != '' &&
-      this.direccion != '' &&
-      this.celular != '' &&
-      this.correo != '' &&
-      this.genero != undefined &&
-      this.nacio != undefined &&
-      this.estado != undefined) {
-      this.cb = true;
-    } else {
+    if (this.cedula  == '' || this.cedula    == undefined || this.cedula    == null || 
+      this.nombres   == '' || this.nombres   == undefined || this.nombres   == null ||
+      this.apellidos == '' || this.apellidos == undefined || this.apellidos == null ||
+      this.direccion == '' || this.direccion == undefined || this.direccion == null ||
+      this.celular   == '' || this.celular   == undefined || this.celular   == null ||
+      this.correo    == '' || this.correo    == undefined || this.correo    == null ||
+      this.persona.fechaNacimiento == undefined ||
+      this.validoG == false ||
+      this.validoN == false ||
+      this.validoE == false ||
+      this.valido  == false) {
       this.cb = false;
       this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
       const contador = timer(2000);
       contador.subscribe((n) => {
         this.clear();
       })
+    } else {
+      this.cb = true;
     }
   }
 
@@ -202,23 +227,25 @@ export class RegistroUsuariosComponent implements OnInit {
 
 
   ValidacionesExtra() {
-    this.personaservice.getPorCorreo(this.correo).subscribe(da => {
-      this.usuarioValidarCorreo = da;
-    })
-    if (this.usuarioValidarCorreo.cedula == null) {
-      this.GurdarPersona();
-    } else {
-      alert('Esta dirección de correo electrónico ya está en uso')
-    }
-
+    this.Validacion();
     this.usuarioservice.getUserByCedula(this.cedula).subscribe(dat => {
       this.usuarioValidarCedula = dat;
+      //console.log(this.usuarioValidarCedula)
+      if (this.usuarioValidarCedula.usuarioCedula == null) {
+        this.personaservice.getPorCorreo(this.correo).subscribe(da => {
+          this.usuarioValidarCorreo = da;
+          //console.log(this.usuarioValidarCorreo);
+          if (this.usuarioValidarCorreo.cedula == null) {
+            this.GurdarPersona();
+            this.GuardarUsuario();
+          } else {
+            alert('Esta dirección de correo electrónico ya está en uso')
+          }
+        })
+      } else {
+        alert('El número de cédula ya está en uso')
+      }
     })
-    if (this.usuarioValidarCedula.usuarioCedula == null) {
-      this.GuardarUsuario();
-    } else {
-      alert('El número de cédula ya está en uso')
-    }
   }
 
   GurdarPersona() {
@@ -244,7 +271,7 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   GuardarUsuario() {
-    if (this.usuarioNombre != '' && this.usuarioContrasenia != '') {
+    if (this.usuarioNombre != '' || this.usuarioContrasenia != '') {
       if (this.usuarioContrasenia == this.usuarioConfirContrasenia) {
         const nuevoUsuario: Usuarios = {
           usuarioCedula: this.cedula,

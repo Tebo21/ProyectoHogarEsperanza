@@ -4,32 +4,41 @@
 
 <div class="container animated  d-flex justify-content-center fadeIn">
 
-    <p-dialog header="Datos del Voluntario" [(visible)]="displayV" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000">
+    <p-dialog header="Datos del Voluntario" [(visible)]="displayV" [modal]="true" [style]="{width: '40vw'}"
+        [baseZIndex]="10000">
         <p-messages [(value)]="msgs"></p-messages>
         <p-panel class="card">
             <div class="form-floating mb-3">
-                <label class="mb-0"><h6 class="mb-0 text-sm">Cédula</h6></label>
+                <label class="mb-0">
+                    <h6 class="mb-0 text-sm">Cédula</h6>
+                </label>
                 <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10"
                     id="usuarioCedula" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required disabled>
             </div>
             <div class="form-floating mb-3" *ngIf="adminActivar">
-                <label class="mb-0"><h6 class="mb-0 text-sm">Tipo de voluntario</h6></label>
+                <label class="mb-0">
+                    <h6 class="mb-0 text-sm">Tipo de voluntario</h6>
+                </label>
                 <p-dropdown [options]="usuarios" [(ngModel)]="usv" placeholder="Seleccione el tipo de voluntario"
                     optionLabel="uop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true"
                     (onChange)="onChangeV($event)">
                 </p-dropdown>
             </div>
             <div class="form-floating mb-3">
-                <label class="mb-0"><h6 class="mb-0 text-sm">Nombre de Usuario</h6></label>
+                <label class="mb-0">
+                    <h6 class="mb-0 text-sm">Nombre de Usuario</h6>
+                </label>
                 <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
                     id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuarioNombre" name="usuarioNombre"
                     required>
             </div>
             <div class="form-floating mb-3">
-                <label class="mb-0"><h6 class="mb-0 text-sm">Contraseña</h6></label>
+                <label class="mb-0">
+                    <h6 class="mb-0 text-sm">Contraseña</h6>
+                </label>
                 <br>
-                <p-password [(ngModel)]="usuarioContrasenia" name="usuarioContrasenia" [toggleMask]="true" 
-                placeholder="Contraseña del Usuario" maxlength="16" minlength="8" required>
+                <p-password [(ngModel)]="usuarioContrasenia" name="usuarioContrasenia" [toggleMask]="true"
+                    placeholder="Contraseña del Usuario" maxlength="16" minlength="8" required>
                     <ng-template pTemplate="header">
                         <h6>Introduzca una contraseña</h6>
                     </ng-template>
@@ -47,19 +56,21 @@
             </div>
 
             <div class="form-floating mb-3">
-                <label class="mb-0"><h6 class="mb-0 text-sm">Confirmar Contraseña</h6></label>
+                <label class="mb-0">
+                    <h6 class="mb-0 text-sm">Confirmar Contraseña</h6>
+                </label>
                 <br>
-                 <p-password  [(ngModel)]="usuarioConfirContrasenia" name="usuarioContrasenia" [toggleMask]="true" 
-                 placeholder="Confirmar contraseña" maxlength="16" minlength="8" required></p-password>  
+                <p-password [(ngModel)]="usuarioConfirContrasenia" name="usuarioContrasenia" [toggleMask]="true"
+                    placeholder="Confirmar contraseña" maxlength="16" minlength="8" required></p-password>
             </div>
         </p-panel>
         <ng-template pTemplate="footer">
             <button pButton pRipple type="button" label="Aceptar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                 style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
-                (click)="ValidacionesExtra()"></button>
+                (click)='ValidacionesExtra()'></button>
             <button pButton pRipple type="button" label="Cancelar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
                 style="color: #b10000;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-times"
-                (click)="displayV=false"></button>
+                (click)='displayV=false'></button>
         </ng-template>
     </p-dialog>
 
@@ -72,8 +83,8 @@
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Nombres</b></label>
-            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3" id="nombres"
-                placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required>
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
+                id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Apellidos</b></label>
@@ -98,7 +109,7 @@
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Género</b></label>
             <p-dropdown [options]="generos" [(ngModel)]="genero" placeholder="Seleccione su género" optionLabel="gop"
-                [style]="{'width': '100%'}" [showClear]="true">
+                [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChangeG($event)">
             </p-dropdown>
         </div>
 
@@ -116,7 +127,7 @@
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>País de origen</b></label>
             <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="Seleccione su nacionalidad"
-                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true">
+                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true" (onChange)="onChangeN($event)">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
@@ -128,15 +139,18 @@
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Estado civil</b></label>
             <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
-                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true"
-                (onChange)="onChangeEstado($event)">
+                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChangeEstado($event)">
             </p-dropdown>
+        </div>
+        <div>
+            <button pButton pRipple type="button" label="Siguiente" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
+            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
+            (click)='Validacion()'></button>
         </div>
         <div class="form-floating mb-3" *ngIf="cb">
             <label for="floatingInput"><b>Tipo de usuario</b></label>
             <p-dropdown [options]="listadoTipo" [(ngModel)]="tipo" placeholder="Seleccione el tipo de usuario"
-                optionLabel="top" [style]="{'width': '100%'}" [showClear]="true"
-                (onChange)="onChange($event)">
+                optionLabel="top" [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChangeT($event)">
             </p-dropdown>
         </div>
     </p-panel>

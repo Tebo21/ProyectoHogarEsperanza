@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   //Modals
   display: boolean;
   alerta: string;
-  displayPass: boolean = true;
+  displayPass: boolean;
   //DropDown
   tipos: any[];
   tipo: any;
@@ -148,7 +148,7 @@ export class LoginComponent implements OnInit {
             let numbersend = this.perRecu.celular.slice(1);
             let numbernew = "593" + numbersend
             this.sms.number = numbernew;
-            this.sms.message = 'Hola ' + this.perRecu.nombres + ' \n' + 'Soy tu asistente de recuperación de cuenta, tu contraseña temporal es ' + this.tempass + ' \n' + 'por favor cambiala una vez ingreses a su cuenta dirigiendote a tu perfil' + ' \n' + '*Este mensaje no debe ser repondido ya que se genera de forma automática  :)*';
+            this.sms.message = 'Hola ' + this.perRecu.nombres + ' \n' + 'Soy tu asistente de recuperación de cuenta, tu contraseña temporal es ' + this.tempass + ' \n' + 'por favor cambiala una vez ingreses a tu cuenta dirigiendote a tu perfil' + ' \n' + '*Este mensaje no debe ser repondido ya que se genera de forma automática  :)*';
           }
           this.actividadesService.sendSmS(this.sms).subscribe((res) => {
             const NuevoUser: Usuarios = {
