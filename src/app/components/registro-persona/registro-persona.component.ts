@@ -90,6 +90,8 @@ export class RegistroPersonaComponent implements OnInit {
     localStorage.setItem("cedulalocalstorage", cedulalocalstorage)
    this.PersonasService.getPorCedula(this.Personas.cedula).subscribe( data =>{
      if(data==null){
+      this.Personas.beneficiario=true
+      this.Personas.estadoActivo=true
       this.PersonasService.postPersona(this.Personas)
       .subscribe(data => {
         console.log("persona registrada")
