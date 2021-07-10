@@ -17,7 +17,7 @@ export class PerfilUsuarioComponent implements OnInit {
   msgs: Message[];
   usuario: Usuarios = {};
   persona: Personas = {};
-  personaE: Personas = {};
+  personaValidarCorreo: Personas = {};
   usuarioT: any;
   //DropDown
   tipos: any[];
@@ -185,40 +185,48 @@ export class PerfilUsuarioComponent implements OnInit {
 
 
   Actualizar() {
-    const PersonaNueva: Personas = {
-      apellidos: this.persona.apellidos,
-      beneficiario: this.persona.beneficiario,
-      cedula: this.persona.cedula,
-      celular: this.persona.celular,
-      correo: this.persona.correo,
-      direccion: this.persona.direccion,
-      discapacidad: this.discap,
-      edad: this.persona.edad,
-      estadoActivo: this.persona.estadoActivo,
-      estado_civil: this.estadoFinal,
-      fechaNacimiento: this.persona.fechaNacimiento,
-      genero: this.generoFinal,
-      idPersona: this.persona.idPersona,
-      nacionalidad: this.nacioFinal,
-      nombres: this.persona.nombres
-    }
-    this.personaService.updatePersona(PersonaNueva).subscribe(() => {
-    });
-    const UsuarioNuevo: Usuarios = {
-      idUsuario: this.usuario.idUsuario,
-      usuarioCedula: this.usuario.usuarioCedula,
-      usuarioContrasenia: this.usuario.usuarioContrasenia,
-      usuarioNombre: this.usuario.usuarioNombre,
-      usuarioTipo: this.usuarioT,
-      usuarioEstado: true,
-      usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
-    }
-    console.log(UsuarioNuevo)
-    this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-      alert('Se ha actualizado exitosamente')
-      this.router.navigateByUrl('listado-usuarios');
+    this.personaService.getPorCorreo(this.persona.correo).subscribe(data => {
+      this.personaValidarCorreo = data;
+      if (this.personaValidarCorreo.cedula == null) {
+        const PersonaNueva: Personas = {
+          apellidos: this.persona.apellidos,
+          beneficiario: this.persona.beneficiario,
+          cedula: this.persona.cedula,
+          celular: this.persona.celular,
+          correo: this.persona.correo,
+          direccion: this.persona.direccion,
+          discapacidad: this.discap,
+          edad: this.persona.edad,
+          estadoActivo: this.persona.estadoActivo,
+          estado_civil: this.estadoFinal,
+          fechaNacimiento: this.persona.fechaNacimiento,
+          genero: this.generoFinal,
+          idPersona: this.persona.idPersona,
+          nacionalidad: this.nacioFinal,
+          nombres: this.persona.nombres
+        }
+        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+        });
+        const UsuarioNuevo: Usuarios = {
+          idUsuario: this.usuario.idUsuario,
+          usuarioCedula: this.usuario.usuarioCedula,
+          usuarioContrasenia: this.usuario.usuarioContrasenia,
+          usuarioNombre: this.usuario.usuarioNombre,
+          usuarioTipo: this.usuarioT,
+          usuarioEstado: true,
+          usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
+        }
+        console.log(UsuarioNuevo)
+        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+          alert('Se ha actualizado exitosamente')
+          this.router.navigateByUrl('listado-usuarios');
+        });
+      } else {
+        alert('Esta dirección de correo electrónico ya está en uso')
+      }
     });
   }
+
 
   CambiarContra() {
     if (this.usuario.usuarioContrasenia != this.usuarioContraseniaAnterior) {
@@ -241,7 +249,6 @@ export class PerfilUsuarioComponent implements OnInit {
           this.displayContra = false;
           window.location.reload();
         });
-
       }
     }
   }
