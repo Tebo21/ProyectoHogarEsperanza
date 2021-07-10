@@ -92,6 +92,7 @@ export class ListarProductoDonadoComponent implements OnInit {
       this.loading = false;
     })
   }
+  
   async crearReporte() {
     const pdf = new PdfMakeWrapper();
     pdf.pageOrientation('landscape');
