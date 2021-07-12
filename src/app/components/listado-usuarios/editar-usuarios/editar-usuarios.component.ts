@@ -61,6 +61,8 @@ export class EditarUsuariosComponent implements OnInit {
     this.cedulaEditar = localStorage.getItem('cedulaEditar')
     this.usuarioService.getUserByCedula(this.cedUser).subscribe(data => {
       this.usuarioActual = data;
+      this.usuarioContraseniaAnterior = this.usuarioActual.usuarioContrasenia;
+
     });
     this.personaService.getPorCedula(this.cedulaEditar).subscribe(data3 => {
       this.persona = data3;
@@ -239,9 +241,6 @@ export class EditarUsuariosComponent implements OnInit {
   }
 
   CambiarContra() {
-    if (this.usuarioEdit.usuarioContrasenia != this.usuarioContraseniaAnterior) {
-      alert('La contraseña anterior no es correcta')
-    } else {
       if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
         alert('Las contraseñas no coinciden')
       } else {
@@ -260,8 +259,6 @@ export class EditarUsuariosComponent implements OnInit {
           window.location.reload();
         });
       }
-    }
-
   }
 
   Cancelar() {
