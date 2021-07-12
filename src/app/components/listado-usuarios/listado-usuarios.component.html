@@ -19,14 +19,16 @@
                         </span>
                     </div>
                     <div align="left">
+                        <label>Reportes</label>
+                        <br>
                         <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="crearReporte()"
                             class="p-button-danger p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
                         <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelected()"
                             class="p-button-info p-mr-2" pTooltip="Seleccionados PDF" tooltipPosition="bottom"></button>
                         <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
-                            class="p-button-success p-mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                            class="p-button-success p-mr-2" pTooltip="XLS (Excel)" tooltipPosition="bottom"></button>
                         <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelectedX()"
-                            class="p-button-info p-mr-2" pTooltip="Seleccionados XLS" tooltipPosition="bottom"></button>
+                            class="p-button-info p-mr-2" pTooltip="Seleccionados XLS (Excel)" tooltipPosition="bottom"></button>
                     </div>
                 </div>
             </ng-template>
