@@ -7,6 +7,7 @@ import { Usuarios } from 'src/app/models/usuarios';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
+declare const main:any;
 
 @Component({
   selector: 'app-login',
@@ -143,6 +144,7 @@ export class LoginComponent implements OnInit {
       if (this.perRecu.cedula != null) {
         this.userservice.getUserByCedula(this.perRecu.cedula).subscribe(dat => {
           this.userRec = dat;
+          main(correo, this.perRecu.nombres, this.tempass.toString())
           if (this.perRecu.celular.length == 10) {
             let numbersend = this.perRecu.celular.slice(1);
             let numbernew = "593" + numbersend
