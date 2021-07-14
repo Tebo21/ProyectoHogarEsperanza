@@ -16,7 +16,7 @@
                             id="cedula" placeholder="Cédula" [(ngModel)]="cedulaBeneficiario" name="cedula" required>
                     </div>
                     <button pButton pRipple type="button" label="Buscar"
-                        [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff;"
+                        [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff; min-width: 100%;"
                         class="p-button-raised p-button-secondary p-button-text" icon="pi pi-search"
                         (click)="buscarBeneficiario()"></button>
                     <br>
@@ -64,7 +64,7 @@
             <p-table #dt [value]="listaDonaciones" dataKey="id" [rowHover]="true" [rows]="10"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-                [globalFilterFields]="['cedulaPersona','nombreDonacion','categoria']">
+                [globalFilterFields]="['cedulaPersona','nombreDonacion','categoria','fechaDonacion']">
                 <ng-template pTemplate="caption">
                     <div class="table-header">
                         Lista de Donaciones
@@ -116,7 +116,7 @@
                             <div class="p-d-flex p-jc-between p-ai-center">
                                 Fecha Donacion
                                 <p-sortIcon field="fechaDonacion"></p-sortIcon>
-                                <p-columnFilter type="date" field="fechaDonacion" display="menu" class="p-ml-auto">
+                                <p-columnFilter type="text" field="fechaDonacion" display="menu" class="p-ml-auto">
                                 </p-columnFilter>
                             </div>
                         </th>
@@ -149,7 +149,7 @@
                         <td>
                             <!-- {{donacion.fechaDonacion | date: 'MM/dd/yyyy'}} -->
                     <tr *ngFor="let fech of donacion.fechaDonacion">
-                        <td>{{fech | date: 'MM-dd-yyyy'}}</td>
+                        <td>{{fech | date: 'yyyy-MM-dd'}}</td>
                     </tr>
                     </td>
                     <td>
@@ -180,29 +180,29 @@
     <ng-template pTemplate="body">
         <div class="container animated d-flex justify-content-center animated fadeIn">
             <div style="float: left;">
-                <div class="form-floating mb-3">
+                <div class="inpcont form-floating mb-3">
                     <label for="floatingInput">Producto a donar</label>
                     <input class="form-control" type="text" id="productoname" placeholder="Producto"
                         [(ngModel)]="productoEntrega.nombreDonacion" name="productoname" required disabled>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="inpcont form-floating mb-3">
                     <label for="floatingInput">Categoria</label>
                     <input class="form-control" type="text" id="productocategoria" placeholder="Categoria"
                         [(ngModel)]="productoEntrega.categoria" name="productocategoria" required disabled>
                 </div>
             </div>
             <div style="float: right;">
-                <div class="form-floating mb-3">
-                    <label for="floatingInput">Descripcion del producto</label>
+                <div class="inpcont form-floating mb-3">
+                    <label for="floatingInput">Descripcion</label>
                     <input class="form-control" type="text" id="productodescripcion" placeholder="Descripcion"
-                        [(ngModel)]="productoEntrega.descripcionDonacion" name="productodescripcion" required disabled>
+                        [(ngModel)]="productoEntrega.descripcionDonacion" name="productodescripcion" required>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="inpcont form-floating mb-3">
                     <label for="floatingInput">Cantidad total:</label>
                     <input class="form-control" type="number" id="productocantidad" placeholder="Cantidad"
                         [(ngModel)]="productoEntrega.cantidad" name="productocantidad" required disabled>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="inpcont form-floating mb-3">
                     <label for="floatingInput">Cantidad a donar</label>
                     <input class="form-control" type="number" id="cantidad" placeholder="Cantidad"
                         [(ngModel)]="cantidadEntrega" name="cantidad" min="1" pattern="^[0-9]+" required>
@@ -294,7 +294,7 @@
                                 {{entrega.cantidadEntregada}}
                             </td>
                             <td>
-                                {{entrega.fechaEntrega | date: 'MM-dd-yyyy'}}
+                                {{entrega.fechaEntrega | date: 'yyyy-MM-dd'}}
                             </td>
                         </tr>
                     </ng-template>

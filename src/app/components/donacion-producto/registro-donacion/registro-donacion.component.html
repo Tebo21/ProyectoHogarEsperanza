@@ -75,7 +75,7 @@
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Fecha Donacion
                                         <p-sortIcon field="fechaDonacion"></p-sortIcon>
-                                        <p-columnFilter type="date" field="fechaDonacion" display="menu" class="p-ml-auto"></p-columnFilter>
+                                        <p-columnFilter type="text" field="fechaDonacion" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
                                 </th>
                                 <th pSortableColumn="cedulaPersona">
@@ -108,7 +108,7 @@
                                 <td>
                                     <!-- {{donacion.fechaDonacion | date: 'MM/dd/yyyy'}} -->
                                     <tr *ngFor="let fech of donacion.fechaDonacion">
-                                        <td>{{fech | date: 'MM-dd-yyyy'}}</td>
+                                        <td>{{fech | date: 'yyyy-MM-dd'}}</td>
                                     </tr>
                                 </td>
                                 <td>
