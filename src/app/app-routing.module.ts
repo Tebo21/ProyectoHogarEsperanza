@@ -29,8 +29,11 @@ import { ListarProductoDonadoComponent } from './components/donacion-producto/li
 import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
 import { ObservacionesPersonasComponent } from './components/observaciones-personas/observaciones-personas.component';
 import { ListaObservacionesPersonasComponent } from './components/lista-observaciones-personas/lista-observaciones-personas.component';
+import { ListaDocumentosComponent } from './components/lista-beneficiarios/lista-documentos/lista-documentos.component';
 import { EditarBeneficiariosComponent } from './components/lista-beneficiarios/editar-beneficiarios/editar-beneficiarios.component';
 import { DocumentosPersonaComponent } from './components/lista-beneficiarios/documentos-persona/documentos-persona.component';
+import { DescargarDocumentosComponent } from './components/lista-beneficiarios/descargar-documentos/descargar-documentos.component';
+import { EditarDocumentosComponent } from './components/lista-beneficiarios/editar-documentos/editar-documentos.component';
 
 // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
 // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -48,6 +51,18 @@ const routes: Routes = [
   {
     path: 'especialidad',
     component: EspecialidadComponent,
+  },
+  {
+    path: 'editar-documentos',
+    component: EditarDocumentosComponent,
+  },
+  {
+    path: 'lista-documentos',
+    component: ListaDocumentosComponent,
+  },
+  {
+    path: 'descargar-documentos',
+    component: DescargarDocumentosComponent,
   },
   {
     path: 'actividades',
