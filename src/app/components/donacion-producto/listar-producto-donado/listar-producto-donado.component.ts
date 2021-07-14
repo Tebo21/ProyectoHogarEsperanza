@@ -7,6 +7,7 @@ import { PersonasService } from 'src/app/services/personas.service';
 import { EntregaDonacion } from 'src/app/models/EntregaDonacion';
 
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 type TableRow3 = [string, string, string, string, number, string];
 @Component({
@@ -29,18 +30,33 @@ export class ListarProductoDonadoComponent implements OnInit {
    //Tabla carga
   loading: boolean = true;
 
+  tipoUser: any;
 
   constructor(
     private entregarDonacionService: EntregarDonacionService,
     private personaService: PersonasService,
-    
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.ComprobarLogin();
     this.entregas = [];
     this.ListadoPersonas = [];
     this.listarBeneficiarioConNombres();
   }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para visualizar el historial de entregas de donaciones',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    }
+  }
+
   onFilter(event, dt) {
     this.entregasFiltradas = [];
     this.entregasFiltradas = event.filteredValue;
@@ -122,7 +138,7 @@ export class ListarProductoDonadoComponent implements OnInit {
   creaTabla(data: Beneficiarios2[]): ITable {
     [{}];
     return new Table([
-      ['Cédula', 'Nombres', 'Producto', 'descripción', 'cantidad', 'fecha'],
+      ['Cédula', 'Nombres', 'Producto', 'Descripción', 'Cantidad', 'Fecha'],
       ...this.extraerDatos3(data),
     ])
     .widths([85, 140, 130, 100, 142, 110])

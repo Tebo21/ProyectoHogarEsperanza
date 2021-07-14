@@ -41,14 +41,14 @@ export class EntregarDonacionComponent implements OnInit {
 
   displayPE: boolean = false;
 
-  entregaDonacion: EntregaDonacion;
+  entregaDonacion: EntregaDonacion = new EntregaDonacion();
   cantidadEntrega: number;
 
   displayED: boolean = false;
 
   productoEntrega: Donaciones;
 
-
+  tipoUser: any;
 
 
   constructor(
@@ -61,7 +61,20 @@ export class EntregarDonacionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.ComprobarLogin();
     this.obtenerDonaciones();
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para realizar las donaciones',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    }
   }
 
   obtenerDonaciones() {
@@ -152,7 +165,10 @@ export class EntregarDonacionComponent implements OnInit {
       this.productoEntrega.cantidad = producto.cantidad;
       this.productoEntrega.categoria = producto.categoria;
       this.productoEntrega.cedulaPersona = producto.cedulaPersona;
+
+      this.entregaDonacion.descripcionProducto = producto.descripcionDonacion;
       this.productoEntrega.descripcionDonacion = producto.descripcionDonacion;
+
       this.productoEntrega.fechaDonacion = producto.fechaDonacion;
       this.productoEntrega.idDonacion = producto.idDonacion;
       this.productoEntrega.nombreDonacion = producto.nombreDonacion;
@@ -185,14 +201,12 @@ export class EntregarDonacionComponent implements OnInit {
           this.productoEntrega.cantidad > 0 &&
           this.productoEntrega.cantidad > this.cantidadEntrega
         ) {
-          this.entregaDonacion = new EntregaDonacion();
+          
           this.entregaDonacion.cantidadEntregada = this.cantidadEntrega;
           this.entregaDonacion.cedulaBeneficiario = this.cedulaBeneficiario;
-          this.entregaDonacion.descripcionProducto =
-          this.productoEntrega.descripcionDonacion;
+          //this.entregaDonacion.descripcionProducto = this.productoEntrega.descripcionDonacion;
           this.entregaDonacion.fechaEntrega = this.today = new Date;
-          this.entregaDonacion.productoEntregado =
-            this.productoEntrega.nombreDonacion;
+          this.entregaDonacion.productoEntregado = this.productoEntrega.nombreDonacion;
 
           this.entregarDonacionService
             .postEntrega(this.entregaDonacion)

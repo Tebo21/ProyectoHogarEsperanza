@@ -28,9 +28,14 @@ export class FichaSocioeconomicaComponent implements OnInit {
     "Puerto Rico", "Republica Dominicana", "Rumania", "Rusia", "Suecia", "Suiza", "Tailandia", "Taiwán", "Turquía",
     "Ucrania", "Uruguay", "Venezuela", "Vietnam"];
   catalogoEstadoCivil = ["Soltero/a", "Casado/a", "Divorciado/a", "Viudo/a"];
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/
 
   ngOnInit(): void {
     this.fecha_actual()
+    this.cargarDatos()
+    this.recargar()
+  }
+  recargar(){
     this.cargarDatos()
   }
   fecha_actual(){

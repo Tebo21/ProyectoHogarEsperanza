@@ -36,17 +36,17 @@ export class VistaFichaComponent implements OnInit {
                " de los menores de edad."
   
   ngOnInit(): void {
+    this.recargar()
     this.cargarFamilia();
     this.cargarDatos();
     this.cargarFicha();
   }
-
-  /*
-    var index2 = this.familiares.hijos.indexOf(this.familiares.hijos.find(x => x[8] == "Primo"));
-     console.log(this.listaFamiliares(index2,1))
-*/
+  recargar(){
+    this.cargarFamilia();
+    this.cargarDatos();
+    this.cargarFicha();
+  }
   cargarDatos(){
-    //datos persona
     this.personService.getPorCedula(this.cedula_persona).subscribe(data =>{
       this.persona=data
       this.nombreCompleto = this.persona.nombres+" "+this.persona.apellidos
@@ -67,7 +67,6 @@ export class VistaFichaComponent implements OnInit {
       this.NomPareja=this.NomParejaArray[1]+" "+this.NomParejaArray[2]
     });
   }
-
   cargarFicha(){
     this.fichaservice.getfichacedula(this.cedula_persona).subscribe(data=>{
       this.fichaS=data;
@@ -85,9 +84,11 @@ export class VistaFichaComponent implements OnInit {
     })
   }
   extractData(){
+    this.recargar()
     return this.listaFamiliares.map(row =>[row[0],row[1]+" "+row[2],row[6],row[7]])
   }
   async generarPDF(){
+    this.recargar()
     const pdf = new PdfMakeWrapper();
     pdf.add(await new Img('../../assets/img/logo.png').build());
     pdf.add(new Txt("Hoja de Registro").bold().italics().alignment('center').end);

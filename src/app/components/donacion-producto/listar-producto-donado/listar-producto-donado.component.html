@@ -5,7 +5,8 @@
     <body>
         <div>
             <br>
-            <br>    
+            <br>
+            <h3 style="text-align: center;">Historial de entregas</h3>    
             <br>    
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel class="card">
@@ -16,15 +17,15 @@
 
                         <ng-template pTemplate="caption">
                             <div class="table-header">
-                                Lista de Donaciones Entregados
+                                Lista de donaciones entregadas
                                 <span class="p-input-icon-right">
                                     <i class="pi pi-search"></i>
                                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
                                 </span>
 
                                 <button pButton pRipple type="button" 
-                                [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff; margin-left: 10%;"
-                                class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf"
+                                [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #ff0000; float: right;"
+                                class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf" label="Reporte"
                                 (click)="showConfirmacionPDF()"></button>
                                
                             </div>

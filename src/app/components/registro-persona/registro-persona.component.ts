@@ -28,6 +28,7 @@ export class RegistroPersonaComponent implements OnInit {
     "Ucrania", "Uruguay", "Venezuela", "Vietnam"];
   catalogoEstadoCivil = ["Soltero/a", "Casado/a", "Divorciado/a", "Viudo/a"];
   f1: Number;
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/
   constructor(private FAMIserver:RegistroFamiliaresService,private fichaServer:FichaSocioeconomicaService,private PersonasService: PersonasService, private router: Router) { }
   tipoUser: any;
   ngOnInit(): void {
@@ -110,8 +111,7 @@ export class RegistroPersonaComponent implements OnInit {
        this.FAMIserver.getfamicedula(this.Personas.cedula).subscribe(data => {
          if(data==null){
           Swal.fire({
-            title: 'Persona Registrada Registre los Familiares de '+this.Personas.nombres+
-            ' '+this.Personas.apellidos,
+            title: 'Persona Registrada Registre los Familiares de la cedula '+this.Personas.cedula,
             icon: 'warning',
           });
           this.router.navigate(['registro-familiares'])            
@@ -119,8 +119,7 @@ export class RegistroPersonaComponent implements OnInit {
            this.fichaServer.getfichacedula(this.Personas.cedula).subscribe( data => {
            if(data==null){
             Swal.fire({
-              title: 'Persona Registrada Registre la Ficha de '+this.Personas.nombres+
-              ' '+this.Personas.apellidos,
+              title: 'Persona Registrada Registre la Ficha de la cedula '+this.Personas.cedula,
               icon: 'warning',
             });
             this.router.navigate(['ficha-socioeconomica'])

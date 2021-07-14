@@ -20,7 +20,7 @@
     <hr>
     <div class="input-group mb-3">
       <p style="margin-left: 5%;"></p>
-      <input [(ngModel)]="PersonasFami.cedula" name="cedula" id="cedula" style="margin-right: 5%;" type="text" class="form-control" placeholder="cedula">
+      <input [(ngModel)]="PersonasFami.cedula" name="cedula" id="cedula" style="margin-right: 5%;" type="text" class="form-control" placeholder="cedula" maxlength="10" [pKeyFilter]="blockSpecial">
     </div>
     <div class="input-group mb-3">
       <input [(ngModel)]="PersonasFami.nombres" name="nombre" id="nombre" style="margin-left: 5%;" type="text" class="form-control" placeholder="Nombre">
