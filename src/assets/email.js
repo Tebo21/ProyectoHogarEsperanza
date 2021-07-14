@@ -1,6 +1,6 @@
 "use strict";
 const nodemailer = require('nodemailer')
-//main()
+main()
 async function main() {
     
     let transporter = nodemailer.createTransport({
@@ -13,7 +13,8 @@ async function main() {
 
     let info = transporter.sendMail({
         from: '"Fred Foo 👻" <erick.valverde.est@tecazuay.edu.ec>',
-        to: "franklin.lucero.est@tecazuay.edu.ec, erick.valverde.est@tecazuay.edu.ec", 
+        //to: "franklin.lucero.est@tecazuay.edu.ec, erick.valverde.est@tecazuay.edu.ec", 
+        to: "apsg4533@gmail.com", 
         subject: "Hello ✔", 
         text: "Hello world?",
         html: "<b>Hello world?</b>",
