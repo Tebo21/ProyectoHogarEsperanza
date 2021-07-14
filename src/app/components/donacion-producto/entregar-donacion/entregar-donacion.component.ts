@@ -48,7 +48,7 @@ export class EntregarDonacionComponent implements OnInit {
 
   productoEntrega: Donaciones;
 
-
+  tipoUser: any;
 
 
   constructor(
@@ -61,7 +61,20 @@ export class EntregarDonacionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.ComprobarLogin();
     this.obtenerDonaciones();
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para realizar las donaciones',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    }
   }
 
   obtenerDonaciones() {

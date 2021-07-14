@@ -54,6 +54,8 @@ export class RegistroDonacionComponent implements OnInit {
   tipo: any;
   categoria: any;
 
+  tipoUser: any;
+
   constructor(
     private personaService: PersonasService,
     private donacionService: DonaProductoService,
@@ -61,6 +63,7 @@ export class RegistroDonacionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.ComprobarLogin();
     this.obtenerDonaciones();
 
     this.tipoDonador = [
@@ -75,6 +78,18 @@ export class RegistroDonacionComponent implements OnInit {
       { cat: 'Electronico' },
       { cat: 'Otro' },
     ];
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para el modulo de donaciones',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    }
   }
 
   onFilter(event, dt) {
