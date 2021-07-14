@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Personas } from 'src/app/models/personas';
 import { RegistroFamiliares } from 'src/app/models/registro-familiares';
 import { FichaSocioeconomica } from 'src/app/models/ficha-socioeconomica';
+import { DocumentosService } from '../../../services/documentos.service';
+import { DocumentosBeneficiarios } from 'src/app/models/documentos-beneficiarios';
 
 @Component({
   selector: 'app-lista-documentos',
@@ -17,7 +19,8 @@ export class ListaDocumentosComponent implements OnInit {
   public datos:any =[];
   public personaArray:any = [];
   public cedulaArray:any = [];
-  constructor(private personaService:PersonasService,private root:Router) { }
+  public documentosfile: DocumentosBeneficiarios = new DocumentosBeneficiarios();
+  constructor(private docServer:DocumentosService,private personaService:PersonasService,private root:Router) { }
 
   ngOnInit(): void {
  //   this.datos=[]
@@ -70,9 +73,15 @@ export class ListaDocumentosComponent implements OnInit {
          }
      }
   } 
-  ingresoObservacion(i){
+  ingresoCrearDocumento(i){
     localStorage.setItem("cedulalocalstorage", i)
-    this.root.navigate(['documentos-persona']);
+    this.docServer.getDocumentoPorCedula(i).subscribe( data => {
+      if(data==null){
+        this.root.navigate(['documentos-persona']);
+      }else{
+        this.root.navigate(['editar-documentos']);
+      }
+    })
   }
   ingresoDescargaDocumentos(i){
     localStorage.setItem("cedulalocalstorage", i)
@@ -80,6 +89,12 @@ export class ListaDocumentosComponent implements OnInit {
   }
   ingresoEditarDocumentos(i){
     localStorage.setItem("cedulalocalstorage", i)
-    this.root.navigate(['editar-documentos'])
+    this.docServer.getDocumentoPorCedula(i).subscribe( data => {
+      if(data==null){
+        this.root.navigate(['documentos-persona']);
+      }else{
+        this.root.navigate(['editar-documentos']);
+      }
+    });
   }
 }

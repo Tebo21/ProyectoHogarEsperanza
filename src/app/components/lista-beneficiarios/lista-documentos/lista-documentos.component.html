@@ -72,14 +72,10 @@
                     <td>{{user.fechaNacimiento}}</td>
                     <td>{{user.edad}}</td>
                     <td>
-                        <button type="button" (click)="ingresoObservacion(user.cedula)" pButton pRipple icon="pi pi-plus" 
+                        <button type="button" (click)="ingresoCrearDocumento(user.cedula)" pButton pRipple icon="pi pi-plus" 
                          tooltipPosition="bottom" class="p-button-rounded p-button-outlined"></button>
-                         <button type="button"  pButton pRipple icon="pi pi-user-edit" 
-                         tooltipPosition="bottom" class="p-button-rounded p-button-outlined" (click)="ingresoEditarDocumentos(user.cedula)"></button>
                          <button type="button"  pButton pRipple icon="pi pi-cloud-download" 
                          tooltipPosition="bottom" class="p-button-rounded p-button-outlined" (click)="ingresoDescargaDocumentos(user.cedula)"></button>
-                         <button type="button"  pButton pRipple icon="pi pi-times" 
-                         tooltipPosition="bottom" class="p-button-rounded p-button-danger"></button>
                     </td>
                 </tr>
             </ng-template>
