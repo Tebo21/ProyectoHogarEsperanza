@@ -12,7 +12,7 @@
                     <p-table #dt [value]="entregas" dataKey="id" [rowHover]="true"
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
                     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [filterDelay]="0" [globalFilterFields]="['cedula','nombres','productoEntregado','descripcionProducto','cantidadEntregada','fechaEntrega']"(onFilter)="onFilter($event, dt)">
+                    [filterDelay]="0" [globalFilterFields]="['cedula','nombres','productoEntregado','fechaEntrega']"(onFilter)="onFilter($event, dt)">
 
                         <ng-template pTemplate="caption">
                             <div class="table-header">
@@ -33,7 +33,7 @@
                             <tr>
                                 <th pSortableColumn="cedula">
                                     <div class="p-d-flex p-jc-between p-ai-center">
-                                    Cedula
+                                        Cedula
                                         <p-sortIcon field="cedula"></p-sortIcon>
                                         <p-columnFilter type="text" field="cedula" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
@@ -70,7 +70,7 @@
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Fecha Entrega
                                         <p-sortIcon field="fechaEntrega"></p-sortIcon>
-                                        <p-columnFilter type="date" field="fechaEntrega" display="menu" class="p-ml-auto"></p-columnFilter>
+                                        <p-columnFilter type="text" field="fechaEntrega" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
                                 </th>
 
@@ -94,11 +94,9 @@
                                 </td>                  
                                 <td>
                                      {{donacion.cantidadEntregada}} 
-
                                 </td>
                                 <td>
-                                    {{donacion.fechaEntrega | date: 'MM/dd/yyyy'}} 
-
+                                    {{donacion.fechaEntrega | date: 'yyyy-MM-dd'}} 
                                </td>
                             </tr>
                         </ng-template>

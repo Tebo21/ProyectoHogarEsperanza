@@ -8,7 +8,7 @@ import { EntregaDonacion } from 'src/app/models/EntregaDonacion';
 
 import Swal from 'sweetalert2';
 
-type TableRow3 = [string, string, string, string, number, Date];
+type TableRow3 = [string, string, string, string, number, string];
 @Component({
   selector: 'app-listar-producto-donado',
   templateUrl: './listar-producto-donado.component.html',
@@ -142,10 +142,38 @@ export class ListarProductoDonadoComponent implements OnInit {
       row.productoEntregado,
       row.descripcionProducto,
       row.cantidadEntregada,
-      row.fechaEntrega
+      this.dateFormat(row.fechaEntrega),
     ]);
 
-  }      
+  }
+  
+  dateFormat(d: Date): string{
+
+    let date: Date = new Date(d);
+    let fecha: string;
+
+    let dia = date.getDate();
+      let mes = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      if (dia < 10 && mes < 10){
+        fecha = year+'-0'+mes+'-0'+dia;
+      }
+
+      if (dia > 9  && mes < 10){
+        fecha = year+'-0'+mes+'-'+dia;
+      }
+
+      if (dia < 10  && mes > 9){
+        fecha = year+'-'+mes+'-0'+dia;
+      }
+
+      if (dia > 9 && mes > 9){
+        fecha = year+'-'+mes+'-'+dia;
+      }
+    
+    return fecha;
+  }
 }
 
 export class Beneficiarios2 {

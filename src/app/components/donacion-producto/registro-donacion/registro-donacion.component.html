@@ -512,7 +512,7 @@
             <!--TABLA PARA CONTROLAR A LOS DONADORES-->
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel class="card" [hidden]="!mostrarDonadores">
-                    <p-table #dt2 [value]="listaDonadores" dataKey="id2" [rowHover]="true"
+                    <p-table #dt2 [value]="editProducto.cedulaPersona" dataKey="id2" [rowHover]="true"
                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
                         [paginator]="true">
                         <ng-template pTemplate="caption">

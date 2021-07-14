@@ -15,7 +15,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import { DatePipe, formatDate, getLocaleDateFormat } from '@angular/common';
 import * as internal from 'node:stream';
 
-type TableRow2 = [string, string, string, number, Date];
+type TableRow2 = [string, string, string, number, string];
 
 
 @Component({
@@ -246,6 +246,7 @@ export class EntregarDonacionComponent implements OnInit {
     this.router.navigate(['lista']);
   }  
   showConfirmacionPDF(){
+    this.displayPE = false;
     Swal.fire({
       title: '¿Estas seguro de descargar este reporte?',
       text: "Se abrira una visualizacion de su reporte",
@@ -274,7 +275,7 @@ export class EntregarDonacionComponent implements OnInit {
     });
     pdf.add(await new Img('../../assets/img/logo.png').build());
     pdf.add(    
-      new Txt('Usuario: ' + (this.nombresBeneficiario +' '+this.apellidosBeneficiario)).alignment('right').end
+      new Txt('Beneficiario: ' + (this.nombresBeneficiario +' '+this.apellidosBeneficiario)).alignment('right').end
       );
     pdf.add(new Txt('   ').end);
     pdf.add(
@@ -307,9 +308,37 @@ export class EntregarDonacionComponent implements OnInit {
       row.productoEntregado,
       row.descripcionProducto,
       row.cantidadEntregada,     
-      row.fechaEntrega,    
+      this.dateFormat(row.fechaEntrega),    
     ]);
 
+  }
+
+  dateFormat(d: Date): string{
+
+    let date: Date = new Date(d);
+    let fecha: string;
+
+    let dia = date.getDate();
+      let mes = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      if (dia < 10 && mes < 10){
+        fecha = year+'-0'+mes+'-0'+dia;
+      }
+
+      if (dia > 9  && mes < 10){
+        fecha = year+'-0'+mes+'-'+dia;
+      }
+
+      if (dia < 10  && mes > 9){
+        fecha = year+'-'+mes+'-0'+dia;
+      }
+
+      if (dia > 9 && mes > 9){
+        fecha = year+'-'+mes+'-'+dia;
+      }
+    
+    return fecha;
   }
 
  
