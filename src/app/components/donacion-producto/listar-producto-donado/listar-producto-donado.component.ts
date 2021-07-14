@@ -122,7 +122,7 @@ export class ListarProductoDonadoComponent implements OnInit {
   creaTabla(data: Beneficiarios2[]): ITable {
     [{}];
     return new Table([
-      ['Cédula', 'Nombres', 'Producto', 'descripción', 'cantidad', 'fecha'],
+      ['Cédula', 'Nombres', 'Producto', 'Descripción', 'Cantidad', 'Fecha'],
       ...this.extraerDatos3(data),
     ])
     .widths([85, 140, 130, 100, 142, 110])

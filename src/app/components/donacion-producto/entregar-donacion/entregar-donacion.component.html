@@ -54,7 +54,7 @@
     </div>
     <br>
     <button pButton pRipple type="button" label="Lista de beneficiarios que obtuvieron ayuda"
-    [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff; margin-left: 10%;"
+    [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff; margin-left: 25%; margin-right: 25%; min-width: 50%;"
     class="p-button-raised p-button-secondary p-button-text" 
     (click)="listaEntregaProducto()" ></button>
     <br>
@@ -179,33 +179,39 @@
     [draggable]="false" [resizable]="false">
     <ng-template pTemplate="body">
         <div class="container animated d-flex justify-content-center animated fadeIn">
-            <div style="float: left;">
-                <div class="inpcont form-floating mb-3">
-                    <label for="floatingInput">Producto a donar</label>
-                    <input class="form-control" type="text" id="productoname" placeholder="Producto"
-                        [(ngModel)]="productoEntrega.nombreDonacion" name="productoname" required disabled>
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Producto a donar</label>
+                        <input class="form-control" type="text" id="productoname" placeholder="Producto"
+                            [(ngModel)]="productoEntrega.nombreDonacion" name="productoname" required disabled>
+                    </div>
+                
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Descripcion</label>
+                        <textarea class="form-control" type="text" id="productodescripcion" placeholder="Descripcion"
+                            [(ngModel)]="entregaDonacion.descripcionProducto" name="productodescripcion" required></textarea>
+                    </div>
                 </div>
-                <div class="inpcont form-floating mb-3">
-                    <label for="floatingInput">Categoria</label>
-                    <input class="form-control" type="text" id="productocategoria" placeholder="Categoria"
-                        [(ngModel)]="productoEntrega.categoria" name="productocategoria" required disabled>
-                </div>
-            </div>
-            <div style="float: right;">
-                <div class="inpcont form-floating mb-3">
-                    <label for="floatingInput">Descripcion</label>
-                    <input class="form-control" type="text" id="productodescripcion" placeholder="Descripcion"
-                        [(ngModel)]="productoEntrega.descripcionDonacion" name="productodescripcion" required>
-                </div>
-                <div class="inpcont form-floating mb-3">
-                    <label for="floatingInput">Cantidad total:</label>
-                    <input class="form-control" type="number" id="productocantidad" placeholder="Cantidad"
-                        [(ngModel)]="productoEntrega.cantidad" name="productocantidad" required disabled>
-                </div>
-                <div class="inpcont form-floating mb-3">
-                    <label for="floatingInput">Cantidad a donar</label>
-                    <input class="form-control" type="number" id="cantidad" placeholder="Cantidad"
-                        [(ngModel)]="cantidadEntrega" name="cantidad" min="1" pattern="^[0-9]+" required>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Categoria</label>
+                        <input class="form-control" type="text" id="productocategoria" placeholder="Categoria"
+                            [(ngModel)]="productoEntrega.categoria" name="productocategoria" required disabled>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Cantidad total:</label>
+                        <input class="form-control" type="number" id="productocantidad" placeholder="Cantidad"
+                            [(ngModel)]="productoEntrega.cantidad" name="productocantidad" required disabled>
+                    </div>
+                
+                
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Cantidad a donar</label>
+                        <input class="form-control" type="number" id="cantidad" placeholder="Cantidad"
+                            [(ngModel)]="cantidadEntrega" name="cantidad" min="1" pattern="^[0-9]+" required>
+                    </div>
                 </div>
             </div>
         </div>
