@@ -106,13 +106,11 @@
                                     {{donacion.categoria}}
                                 </td>                     
                                 <td>
-                                    <!-- {{donacion.fechaDonacion | date: 'MM/dd/yyyy'}} -->
                                     <tr *ngFor="let fech of donacion.fechaDonacion">
                                         <td>{{fech | date: 'yyyy-MM-dd'}}</td>
                                     </tr>
                                 </td>
                                 <td>
-                                    <!-- {{donacion.cedulaPersona}} -->
                                     <tr *ngFor="let ced of donacion.cedulaPersona">
                                         <td>{{ced}}</td>
                                     </tr>
@@ -525,25 +523,11 @@
                                 <th pSortableColumn="cedulaEdit">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Cedula Donador
-                                        <!-- <p-sortIcon field="cedulaEdit"></p-sortIcon>
-                                        <p-columnFilter type="text" field="cedulaEdit" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
-                                <!-- <th pSortableColumn="nombresEdit">
-                                    <div class="p-d-flex p-jc-between p-ai-center">
-                                        Nombres
-                                    </div>
-                                </th> -->
-                                <!-- <th pSortableColumn="apellidosEdit">
-                                    <div class="p-d-flex p-jc-between p-ai-center">
-                                        Apellidos
-                                    </div>
-                                </th> -->
                                 <th pSortableColumn="fechaEdit">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Fecha Donacion
-                                        <!-- <p-sortIcon field="fechaEdit"></p-sortIcon>
-                                        <p-columnFilter type="date" field="fechaEdit" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 <th>
@@ -556,15 +540,8 @@
                         <ng-template pTemplate="body" let-donador let-i="rowIndex">
                             <tr class="p-selectable-row">
                                 <td>
-                                    <!-- {{donador.cedula}} -->
                                     {{editProducto.cedulaPersona[i]}}
                                 </td>
-                                <!-- <td>
-                                    {{donador.nombres}}
-                                </td>
-                                <td>
-                                    {{donador.apellidos}}
-                                </td> -->
                                 <td>
                                     {{editProducto.fechaDonacion[i] | date:'yyyy-MM-dd'}}
                                 </td>

@@ -188,7 +188,7 @@
                     </div>
                 
                     <div class="form-floating mb-3">
-                        <label for="floatingInput">Descripcion</label>
+                        <label for="floatingInput">Descripcion del producto</label>
                         <textarea class="form-control" type="text" id="productodescripcion" placeholder="Descripcion"
                             [(ngModel)]="entregaDonacion.descripcionProducto" name="productodescripcion" required></textarea>
                     </div>
@@ -201,7 +201,7 @@
                     </div>
                     
                     <div class="form-floating mb-3">
-                        <label for="floatingInput">Cantidad total:</label>
+                        <label for="floatingInput">Cantidad total</label>
                         <input class="form-control" type="number" id="productocantidad" placeholder="Cantidad"
                             [(ngModel)]="productoEntrega.cantidad" name="productocantidad" required disabled>
                     </div>
@@ -249,36 +249,26 @@
                             <th pSortableColumn="nombreDonacion">
                                 <div class="p-d-flex p-jc-between p-ai-center">
                                     Cedula beneficiario
-                                    <!-- <p-sortIcon field="nombreDonacion"></p-sortIcon>
-                                        <p-columnFilter type="text" field="nombreDonacion" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                 </div>
                             </th>
                             <th pSortableColumn="descripcionDonacion">
                                 <div class="p-d-flex p-jc-between p-ai-center">
                                     Producto entregado
-                                    <!-- <p-sortIcon field="descripcionDonacion"></p-sortIcon>
-                                        <p-columnFilter type="text" field="descripcionDonacion" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                 </div>
                             </th>
                             <th pSortableColumn="cantidad">
                                 <div class="p-d-flex p-jc-between p-ai-center">
                                     Descripcion producto
-                                    <!-- <p-sortIcon field="cantidad"></p-sortIcon>
-                                        <p-columnFilter type="text" field="cantidad" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                 </div>
                             </th>
                             <th pSortableColumn="categoria">
                                 <div class="p-d-flex p-jc-between p-ai-center">
                                     Cantidad producto
-                                    <!-- <p-sortIcon field="categoria"></p-sortIcon>
-                                        <p-columnFilter type="text" field="categoria" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                 </div>
                             </th>
                             <th pSortableColumn="fechaDonacion">
                                 <div class="p-d-flex p-jc-between p-ai-center">
                                     Fecha Entrega
-                                    <!-- <p-sortIcon field="fechaDonacion"></p-sortIcon>
-                                        <p-columnFilter type="date" field="fechaDonacion" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                 </div>
                             </th>
 

@@ -9,11 +9,6 @@ import { PersonasService } from 'src/app/services/personas.service';
 import { PdfMakeWrapper, Txt, Img, Table } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import Swal from 'sweetalert2';
-import { Personas } from 'src/app/models/personas';
-import pdfMake from 'pdfmake/build/pdfmake';
-
-import { DatePipe, formatDate, getLocaleDateFormat } from '@angular/common';
-import * as internal from 'node:stream';
 
 type TableRow2 = [string, string, string, number, string];
 
@@ -56,8 +51,7 @@ export class EntregarDonacionComponent implements OnInit {
     private entregarDonacionService: EntregarDonacionService,
     private fichaSocioeconomicaService: FichaSocioeconomicaService,
     private personaService: PersonasService,
-    private router: Router,
-    public datapipe: DatePipe
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -151,7 +145,7 @@ export class EntregarDonacionComponent implements OnInit {
 
         });
       } else {
-        console.log('No se encontraron donaciones');
+        //No hay donaciones
       }
     });
   }
@@ -211,7 +205,6 @@ export class EntregarDonacionComponent implements OnInit {
           this.entregarDonacionService
             .postEntrega(this.entregaDonacion)
             .subscribe((data) => {
-              console.log(data);
               this.productoEntrega.cantidad =
                 this.productoEntrega.cantidad - this.cantidadEntrega;
               this.donacionService
@@ -220,7 +213,6 @@ export class EntregarDonacionComponent implements OnInit {
                   this.productoEntrega
                 )
                 .subscribe((result) => {
-                  console.log(result);
                   Swal.fire({
                     title: 'Entrega registrada!',
                     icon: 'success',
