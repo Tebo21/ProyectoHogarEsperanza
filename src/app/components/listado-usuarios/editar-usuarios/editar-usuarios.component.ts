@@ -23,6 +23,7 @@ export class EditarUsuariosComponent implements OnInit {
   usuarioEdit: Usuarios = {};
   persona: Personas = {};
   personaValidarCorreo: Personas = {};
+  personaValidar: Personas = {};
   //DropDown
   tipos: any[];
   tipo: any;
@@ -198,9 +199,45 @@ export class EditarUsuariosComponent implements OnInit {
 
 
   Actualizar() {
+    this.personaService.getPorCedula(this.persona.cedula).subscribe(dat => {
+      this.personaValidar = dat;
+    })
     this.personaService.getPorCorreo(this.persona.correo).subscribe(data => {
       this.personaValidarCorreo = data;
-      if (this.personaValidarCorreo.cedula == null) { 
+      if (this.personaValidarCorreo.correo == this.personaValidar.correo) { 
+        const PersonaNueva: Personas = {
+          apellidos: this.persona.apellidos,
+          beneficiario: this.persona.beneficiario,
+          cedula: this.persona.cedula,
+          celular: this.persona.celular,
+          correo: this.persona.correo,
+          direccion: this.persona.direccion,
+          discapacidad: this.discap,
+          edad: this.persona.edad,
+          estadoActivo: this.persona.estadoActivo,
+          estado_civil: this.estadoFinal,
+          fechaNacimiento: this.persona.fechaNacimiento,
+          genero: this.generoFinal,
+          idPersona: this.persona.idPersona,
+          nacionalidad: this.nacioFinal,
+          nombres: this.persona.nombres
+        }
+        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+        });
+        const UsuarioNuevo: Usuarios = {
+          idUsuario: this.usuarioEdit.idUsuario,
+          usuarioCedula: this.usuarioEdit.usuarioCedula,
+          usuarioContrasenia: this.usuarioEdit.usuarioContrasenia,
+          usuarioNombre: this.usuarioEdit.usuarioNombre,
+          usuarioTipo: this.usuarioT,
+          usuarioEstado: true,
+          usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+        }
+        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+          alert('Se ha actualizado exitosamente')
+          this.router.navigateByUrl('listado-usuarios');
+        });
+      } else if (this.personaValidarCorreo.cedula == null){
         const PersonaNueva: Personas = {
           apellidos: this.persona.apellidos,
           beneficiario: this.persona.beneficiario,

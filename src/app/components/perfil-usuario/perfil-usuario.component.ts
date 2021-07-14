@@ -18,6 +18,7 @@ export class PerfilUsuarioComponent implements OnInit {
   usuario: Usuarios = {};
   persona: Personas = {};
   personaValidarCorreo: Personas = {};
+  personaValidar: Personas = {};
   usuarioT: any;
   //DropDown
   tipos: any[];
@@ -183,11 +184,13 @@ export class PerfilUsuarioComponent implements OnInit {
     this.Actualizar();
   }
 
-
   Actualizar() {
+    this.personaService.getPorCedula(this.persona.cedula).subscribe(dat => {
+      this.personaValidar = dat;
+    })
     this.personaService.getPorCorreo(this.persona.correo).subscribe(data => {
       this.personaValidarCorreo = data;
-      if (this.personaValidarCorreo.cedula == null) {
+      if (this.personaValidarCorreo.correo == this.personaValidar.correo) { 
         const PersonaNueva: Personas = {
           apellidos: this.persona.apellidos,
           beneficiario: this.persona.beneficiario,
@@ -216,7 +219,39 @@ export class PerfilUsuarioComponent implements OnInit {
           usuarioEstado: true,
           usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
         }
-        console.log(UsuarioNuevo)
+        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+          alert('Se ha actualizado exitosamente')
+          this.router.navigateByUrl('listado-usuarios');
+        });
+      } else if (this.personaValidarCorreo.cedula == null){
+        const PersonaNueva: Personas = {
+          apellidos: this.persona.apellidos,
+          beneficiario: this.persona.beneficiario,
+          cedula: this.persona.cedula,
+          celular: this.persona.celular,
+          correo: this.persona.correo,
+          direccion: this.persona.direccion,
+          discapacidad: this.discap,
+          edad: this.persona.edad,
+          estadoActivo: this.persona.estadoActivo,
+          estado_civil: this.estadoFinal,
+          fechaNacimiento: this.persona.fechaNacimiento,
+          genero: this.generoFinal,
+          idPersona: this.persona.idPersona,
+          nacionalidad: this.nacioFinal,
+          nombres: this.persona.nombres
+        }
+        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+        });
+        const UsuarioNuevo: Usuarios = {
+          idUsuario: this.usuario.idUsuario,
+          usuarioCedula: this.usuario.usuarioCedula,
+          usuarioContrasenia: this.usuario.usuarioContrasenia,
+          usuarioNombre: this.usuario.usuarioNombre,
+          usuarioTipo: this.usuarioT,
+          usuarioEstado: true,
+          usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
+        }
         this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
           alert('Se ha actualizado exitosamente')
           this.router.navigateByUrl('listado-usuarios');
@@ -225,8 +260,8 @@ export class PerfilUsuarioComponent implements OnInit {
         alert('Esta dirección de correo electrónico ya está en uso')
       }
     });
+    
   }
-
 
   CambiarContra() {
     if (this.usuario.usuarioContrasenia != this.usuarioContraseniaAnterior) {
