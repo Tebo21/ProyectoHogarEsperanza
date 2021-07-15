@@ -1,52 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar navbar navbar-light" style="background-color: #e3f2fd;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="inicio-super-admin">
-            <img src="https://hogaresperanza.org/wp-content/uploads/2018/03/logo.png" alt="" width="100" height="30">
-        </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard">Actividades</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="centromedico-listar">Centro Médico</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="buscar-citaM">Citas Médicas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="registro-producto">Donaciones</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="registro-usuario">Registrar Usuarios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="listado-usuarios">Listado de Usuarios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="registro-persona">Beneficiarios</a>
-                </li>
-                <!--
-          <li class="nav-item dropdown">
-            <a class="nav-link disabled dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-        -->
-                <li class="nav-item" style="position: absolute; right: 0;">
-                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="true" style="color: red;">Cerrar Sesion</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
+    <input type="text" placeholder="Name" name="name" ngModel required #name="ngModel">
+    <br>
+    <input type="text" placeholder="Email" email name="email" ngModel required #email="ngModel">
+    <br>
+    <textarea placeholder="Messages" name="messages" ngModel required #messages="ngModel"></textarea>
+    <br>
+    <input type="submit" value="Send">
+</form>
+
+<!-- 123Password@ -->

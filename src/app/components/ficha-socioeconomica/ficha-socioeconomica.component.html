@@ -42,7 +42,7 @@
                   <option value="Si">Si</option>
                   <option value="No">No</option>
                 </select>
-                <input [(ngModel)]="fichasocieconomicaModel.salario" name="Salario" id="Salario" style="margin-right: 2%;"type="text" class="form-control" placeholder="Salario">
+                <input [(ngModel)]="fichasocieconomicaModel.salario" name="Salario" id="Salario" style="margin-right: 2%;"type="text" class="form-control" placeholder="Salario" [pKeyFilter]="blockSpecial">
                 <select [(ngModel)]="fichasocieconomicaModel.nacionalidad" name="Nacionalidad" id="Nacionalidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Nacionalidad">
                   <option selected disabled="disabled">Nacionalidad</option>  
                   <option *ngFor="let nac of catalogoNacionalidad" value="{{nac}}">{{nac}}</option>

@@ -17,4 +17,14 @@ export class ObservacionesPersonasService {
   getBycedula(cedula:any):Observable<any>{
     return this.http.get<any>(this.URL+`/byCedulaObservaciones/${cedula}`);
   }
+  getQueryUpdateObservaciones(query: String, observacion:ObservacionesPersonas){
+    const url = `${this.URL}/${query}`;
+    return this.http.request<ObservacionesPersonas>('put',url, {
+      body: observacion
+    });
+  }
+  updateFamiliares(observacion: ObservacionesPersonas):Observable<any>{
+    const url = `update-Observaciones`;
+    return this.getQueryUpdateObservaciones(url, observacion);
+  }
 }

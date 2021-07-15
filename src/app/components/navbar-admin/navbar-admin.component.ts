@@ -87,6 +87,11 @@ export class NavbarAdminComponent implements OnInit {
                 label: 'Listar Beneficiario',
                 icon: 'pi pi-fw pi-users',
                 routerLink: ['/lista-beneficiarios']
+              },
+              {
+                label: 'Documentos Beneficiario',
+                icon: 'pi pi-fw pi-users',
+                routerLink: ['/lista-documentos']
               }
             ]
           },

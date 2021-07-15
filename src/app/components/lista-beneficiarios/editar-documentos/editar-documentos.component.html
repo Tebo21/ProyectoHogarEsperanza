@@ -1,0 +1,77 @@
+<app-navbar-admin></app-navbar-admin>
+<br><br><br>
+<div class="container">
+  <div class="modal-body ">  
+<div class="card">
+  <div class="card-header mb-3">
+   <h4>Editar Documentos Beneficiario</h4>
+   </div>
+<div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
+<select  [(ngModel)]="this.tipoDocumento" name="tipoarchivo" id="tipoarchivo" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="archivo">
+  <option selected disabled="Documento">Documento</option>
+  <option  value="Cedula Beneficiario">Cedula Beneficiario</option>
+  <option  value="Certificados Beneficiario">Certificados Beneficiario</option>
+  <option  value="Carnet Beneficiario">Carnet Beneficiario</option>
+  <option  value="Documentación extra Beneficiario">Documentación extra Beneficiario</option>
+  <option  value="Cedula Familiares">Cedula Familiares</option>
+  <option  value="Certificados Familares">Certificados Familares</option>
+  <option  value="Carnet Familiares">Carnet Familares</option>
+  <option  value="Documentación extra Familiares">Documentación extra Familares</option>
+  <option  value="Otros">Otros</option>
+</select>
+<input id="inputFile" type="file" (change)="selectFile($event)" value="this.valueFile">
+</div></div></div></div>
+<br><br><br>
+  <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
+    <p-table #dt [rows]="10"  [scrollable]="true" class="table table-responsive" 
+        scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+        [rowHover]="true" [autoLayout]="true" [responsive]="true"
+        [globalFilterFields]="['cedula','nombres','apellidos','direccion','celular','correo','fechaNacimiento','edad']" 
+        [value]="arrayLiStaNombres">
+        <ng-template pTemplate="caption">
+               <div style="margin-left: 70%;">
+                     </div>
+                        <div class="container" style="display: grid;">
+            <div align="right">
+            </div>
+        </div>         
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr >
+                <th pSortableColumn="#">#
+                    <p-sortIcon field="#"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Documento">Documento
+                <p-sortIcon field="Documento"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Tipo de Documento">Tipo de Documento
+                  <p-sortIcon field="Tipo de Documento"></p-sortIcon>
+                  </th>  
+                  <th pSortableColumn="Eliminar">Eliminar
+                    <p-sortIcon field="Eliminar"></p-sortIcon>
+                    </th>  
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user let-rowData let-rowIndex="rowIndex">
+            <tr  class="p-selectable-row">
+                <td>{{rowIndex}}</td> 
+                <td>{{user[0]}}</td>
+                <td>{{user[1]}}</td>
+                <td>
+                     <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                     (click)="eliminar(rowIndex)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>  
+</div>
+<div class="container">
+  <div class="modal-body ">  
+<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: tiempoCarga"  
+  aria-valuemin="0" >{{this.tiempoCarga}}</div>
+</div></div></div>
+<div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
+  <button type="button" class="btn btn-success" 
+  (click)="upload()">Guardar Documentos</button>
+</div>

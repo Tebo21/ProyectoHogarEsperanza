@@ -20,9 +20,15 @@ export class RegistroFamiliaresComponent implements OnInit {
   cedula_persona:string=localStorage.getItem('cedulalocalstorage');
   persona: Personas = new Personas();
   nombreCompleto:string;
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/
   constructor(private famipersonaserve:RegistroFamiliaresService, private personaService:PersonasService, private router:Router) { }
 
   ngOnInit(): void {
+    this.cargarDatos()
+    this.recargar()
+  }
+
+  recargar(){
     this.cargarDatos()
   }
 
@@ -130,7 +136,6 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
    }
    cargarDatos(){
-    //datos persona
    console.log(this.cedula_persona)
     this.personaService.getPorCedula(this.cedula_persona).subscribe(data =>{
       this.persona=data

@@ -3,6 +3,8 @@ import { Personas } from '../../models/personas';
 import { PersonasService } from '../../services/personas.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { RegistroFamiliaresService } from '../../services/registro-familiares.service';
+import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomica.service';
 
 
 @Component({
@@ -26,7 +28,8 @@ export class RegistroPersonaComponent implements OnInit {
     "Ucrania", "Uruguay", "Venezuela", "Vietnam"];
   catalogoEstadoCivil = ["Soltero/a", "Casado/a", "Divorciado/a", "Viudo/a"];
   f1: Number;
-  constructor(private PersonasService: PersonasService, private router: Router) { }
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/
+  constructor(private FAMIserver:RegistroFamiliaresService,private fichaServer:FichaSocioeconomicaService,private PersonasService: PersonasService, private router: Router) { }
   tipoUser: any;
   ngOnInit(): void {
     this.ComprobarLogin();
@@ -86,13 +89,53 @@ export class RegistroPersonaComponent implements OnInit {
     if(confiVali==3){
         var cedulalocalstorage = this.Personas.cedula
     localStorage.setItem("cedulalocalstorage", cedulalocalstorage)
-    this.PersonasService.postPersona(this.Personas)
+   this.PersonasService.getPorCedula(this.Personas.cedula).subscribe( data =>{
+     if(data==null){
+      this.Personas.beneficiario=true
+      this.Personas.estadoActivo=true
+      this.PersonasService.postPersona(this.Personas)
       .subscribe(data => {
         console.log("persona registrada")
       },
         error => console.log(error));
-    this.router.navigate(['registro-familiares'])
-    }else{
+      this.router.navigate(['registro-familiares'])
+     }else{
+        if(data.beneficiario==false){
+          data.beneficiario=true;
+          if(data.estadoActivo==false){
+            data.estadoActivo=true;
+          }
+          this.PersonasService.updatePersona(data).subscribe(data=>{
+          })
+        }
+       this.FAMIserver.getfamicedula(this.Personas.cedula).subscribe(data => {
+         if(data==null){
+          Swal.fire({
+            title: 'Persona Registrada Registre los Familiares de la cedula '+this.Personas.cedula,
+            icon: 'warning',
+          });
+          this.router.navigate(['registro-familiares'])            
+         }else{
+           this.fichaServer.getfichacedula(this.Personas.cedula).subscribe( data => {
+           if(data==null){
+            Swal.fire({
+              title: 'Persona Registrada Registre la Ficha de la cedula '+this.Personas.cedula,
+              icon: 'warning',
+            });
+            this.router.navigate(['ficha-socioeconomica'])
+           }else{
+            Swal.fire({
+              title: 'Beneficiario Registrado',
+              icon: 'warning',
+            });
+            this.router.navigate(['lista-beneficiarios'])
+           } 
+          })
+         }
+       })
+     }
+   })
+   }else{
       Swal.fire({
         title: 'Verifique los campos en rojo',
         icon: 'warning',

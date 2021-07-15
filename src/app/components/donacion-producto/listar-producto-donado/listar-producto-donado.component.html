@@ -5,27 +5,28 @@
     <body>
         <div>
             <br>
-            <br>    
+            <br>
+            <h3 style="text-align: center;">Historial de entregas</h3>    
             <br>    
             <div class="container animated d-flex justify-content-center animated fadeIn">
                 <p-panel class="card">
                     <p-table #dt [value]="entregas" dataKey="id" [rowHover]="true"
                     [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
                     [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [filterDelay]="0" [globalFilterFields]="['cedula','nombres','productoEntregado','descripcionProducto','cantidadEntregada','fechaEntrega']"(onFilter)="onFilter($event, dt)">
+                    [filterDelay]="0" [globalFilterFields]="['cedula','nombres','productoEntregado','fechaEntrega']"(onFilter)="onFilter($event, dt)">
 
                         <ng-template pTemplate="caption">
                             <div class="table-header">
-                                Lista de Donaciones Entregados
+                                Lista de donaciones entregadas
                                 <span class="p-input-icon-right">
                                     <i class="pi pi-search"></i>
                                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Global search" />
                                 </span>
 
                                 <button pButton pRipple type="button" 
-                                [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #008cff; margin-left: 10%;"
-                                class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf"
-                                (click)="crearReporte()"></button>
+                                [ngStyle]="{backgroundColor:'var(--surface-100)'}" style="color: #ff0000; float: right;"
+                                class="p-button-raised p-button-secondary p-button-text" icon="pi pi-file-pdf" label="Reporte"
+                                (click)="showConfirmacionPDF()"></button>
                                
                             </div>
                         </ng-template>
@@ -33,21 +34,21 @@
                             <tr>
                                 <th pSortableColumn="cedula">
                                     <div class="p-d-flex p-jc-between p-ai-center">
-                                    Cedula
+                                        Cedula
                                         <p-sortIcon field="cedula"></p-sortIcon>
                                         <p-columnFilter type="text" field="cedula" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
                                 </th>
                                 <th pSortableColumn="nombres">
                                     <div class="p-d-flex p-jc-between p-ai-center">
-                                        Nombres
+                                        Beneficiario
                                         <p-sortIcon field="nombres"></p-sortIcon>
                                         <p-columnFilter type="text" field="nombres" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
                                 </th>
                                 <th pSortableColumn="productoEntregado">
                                     <div class="p-d-flex p-jc-between p-ai-center">
-                                        Productos Entregados
+                                        Producto entregado
                                         <p-sortIcon field="productoEntregado"></p-sortIcon>
                                         <p-columnFilter type="text" field="productoEntregado" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
@@ -70,11 +71,9 @@
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Fecha Entrega
                                         <p-sortIcon field="fechaEntrega"></p-sortIcon>
-                                        <p-columnFilter type="date" field="fechaEntrega" display="menu" class="p-ml-auto"></p-columnFilter>
+                                        <p-columnFilter type="text" field="fechaEntrega" display="menu" class="p-ml-auto"></p-columnFilter>
                                     </div>
                                 </th>
-
-                                <th style="width: 8rem"></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-donacion>
@@ -94,11 +93,9 @@
                                 </td>                  
                                 <td>
                                      {{donacion.cantidadEntregada}} 
-
                                 </td>
                                 <td>
-                                    {{donacion.fechaEntrega | date: 'MM/dd/yyyy'}} 
-
+                                    {{donacion.fechaEntrega | date: 'yyyy-MM-dd'}} 
                                </td>
                             </tr>
                         </ng-template>

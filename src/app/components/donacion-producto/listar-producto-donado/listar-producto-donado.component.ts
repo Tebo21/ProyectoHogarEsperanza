@@ -7,8 +7,9 @@ import { PersonasService } from 'src/app/services/personas.service';
 import { EntregaDonacion } from 'src/app/models/EntregaDonacion';
 
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
-type TableRow3 = [string, string, string, string, number, Date];
+type TableRow3 = [string, string, string, string, number, string];
 @Component({
   selector: 'app-listar-producto-donado',
   templateUrl: './listar-producto-donado.component.html',
@@ -29,18 +30,33 @@ export class ListarProductoDonadoComponent implements OnInit {
    //Tabla carga
   loading: boolean = true;
 
+  tipoUser: any;
 
   constructor(
     private entregarDonacionService: EntregarDonacionService,
     private personaService: PersonasService,
-    
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.ComprobarLogin();
     this.entregas = [];
     this.ListadoPersonas = [];
     this.listarBeneficiarioConNombres();
   }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para visualizar el historial de entregas de donaciones',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    }
+  }
+
   onFilter(event, dt) {
     this.entregasFiltradas = [];
     this.entregasFiltradas = event.filteredValue;
@@ -92,9 +108,7 @@ export class ListarProductoDonadoComponent implements OnInit {
       this.loading = false;
     })
   }
-
-
-
+  
   async crearReporte() {
     const pdf = new PdfMakeWrapper();
     pdf.pageOrientation('landscape');
@@ -112,17 +126,19 @@ export class ListarProductoDonadoComponent implements OnInit {
       pdf.add(this.creaTabla(this.entregasFiltradas));
     }else{
       pdf.add(this.creaTabla(this.entregas));
-    }
-    
+    } 
+    pdf.footer('hola');
+   
     pdf.create().open();
   }
+  
 
 
 
   creaTabla(data: Beneficiarios2[]): ITable {
     [{}];
     return new Table([
-      ['Cédula', 'Nombres', 'Producto', 'descripción', 'cantidad', 'fecha'],
+      ['Cédula', 'Nombres', 'Producto', 'Descripción', 'Cantidad', 'Fecha'],
       ...this.extraerDatos3(data),
     ])
     .widths([85, 140, 130, 100, 142, 110])
@@ -142,19 +158,46 @@ export class ListarProductoDonadoComponent implements OnInit {
       row.productoEntregado,
       row.descripcionProducto,
       row.cantidadEntregada,
-      row.fechaEntrega,
+      this.dateFormat(row.fechaEntrega),
     ]);
 
   }
+  
+  dateFormat(d: Date): string{
 
+    let date: Date = new Date(d);
+    let fecha: string;
+
+    let dia = date.getDate();
+      let mes = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      if (dia < 10 && mes < 10){
+        fecha = year+'-0'+mes+'-0'+dia;
+      }
+
+      if (dia > 9  && mes < 10){
+        fecha = year+'-0'+mes+'-'+dia;
+      }
+
+      if (dia < 10  && mes > 9){
+        fecha = year+'-'+mes+'-0'+dia;
+      }
+
+      if (dia > 9 && mes > 9){
+        fecha = year+'-'+mes+'-'+dia;
+      }
+    
+    return fecha;
+  }
 }
+
 export class Beneficiarios2 {
   cedula?: string;
   nombres?: string;
   productoEntregado?: string;
   descripcionProducto?: string;
   cantidadEntregada?: number;
-  fechaEntrega?: Date;
-  
+  fechaEntrega?: Date;  
 }
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarSuperAdminComponent } from './navbar-super-admin.component';
+import { EditarDocumentosComponent } from './editar-documentos.component';
 
-describe('NavbarSuperAdminComponent', () => {
-  let component: NavbarSuperAdminComponent;
-  let fixture: ComponentFixture<NavbarSuperAdminComponent>;
+describe('EditarDocumentosComponent', () => {
+  let component: EditarDocumentosComponent;
+  let fixture: ComponentFixture<EditarDocumentosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavbarSuperAdminComponent ]
+      declarations: [ EditarDocumentosComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarSuperAdminComponent);
+    fixture = TestBed.createComponent(EditarDocumentosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

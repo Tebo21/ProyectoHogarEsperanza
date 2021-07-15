@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { PdfMakeWrapper, Img, Txt, Table } from 'pdfmake-wrapper';
 import { FichaSocioeconomica } from '../../models/ficha-socioeconomica';
 import { Personas } from '../../models/personas';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { RegistroFamiliaresService } from 'src/app/services/registro-familiares.service';
 import { RegistroFamiliares } from 'src/app/models/registro-familiares';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-lista-beneficiarios',
@@ -23,6 +24,8 @@ export class ListaBeneficiariosComponent implements OnInit {
   public cedulaArray:any = [];
   public familiaArray:any = [];
   public fichaArray:any = [];
+  public arraySelected:any=[];
+  public arrayExcel:any=[]
   constructor(private personaService:PersonasService, private fichaService:FichaSocioeconomicaService, private famiService:RegistroFamiliaresService,private root:Router) { }
 
   ngOnInit(): void {
@@ -36,7 +39,6 @@ export class ListaBeneficiariosComponent implements OnInit {
   }
 
   actualizar(){
-    this.datos=[]
   this.listaPersona();
   this.listaFamiliares();
   }
@@ -133,15 +135,18 @@ export class ListaBeneficiariosComponent implements OnInit {
            adulto:this.personaArray[c][17],
            viveConOTROS:this.personaArray[c][18]
          }
-         this.datos.push(datosLista)
+         if(this.datos.length<this.cedulaArray.length){
+          this.datos.push(datosLista)
+         }
         }
        }
-     }
+      }
     });
           }
         }
       }
     });
+    console.log("listo")
   } 
   
   ingresoFicha(i){
@@ -154,28 +159,106 @@ export class ListaBeneficiariosComponent implements OnInit {
     this.root.navigate(['editar-beneficiarios']);
   }
 
-  extractData(){
-    return this.datos.map(row =>[row.cedula,row.nombres,row.apellidos,row.direccion,row.celular,row.correo,row.fechaNacimiento,row.edad,row.numeroFamiliares,row.numeroHijos,
-    row.tipovivienda,row.seguro,row.discapacidad,row.nacionalidad,row.estacoCIVIL,row.salario,row.fecha,row.adulto,row.viveConOTROS])
+  extractData(datosTabla){
+    return datosTabla.map(row =>[row.cedula,row.nombres,row.apellidos,row.celular,row.fechaNacimiento,row.edad,row.numeroHijos,
+    row.tipovivienda,row.seguro,row.discapacidad,row.nacionalidad,row.estacoCIVIL,row.fecha,row.adulto])
   }
-  
-  async generarPDF(){
-    console.log(this.extractData())
+  async generarPDFSelected(){
+    if (this.arraySelected.length < 1) {
+      alert('Por favor seleccione al menos un usuario')
+    } else {
     const pdf = new PdfMakeWrapper();
+    pdf.pageOrientation('landscape')
+    pdf.pageSize('A3')
     pdf.add(await new Img('../../assets/img/logo.png').build());
     pdf.add(new Txt("Reporte Beneficiarios").bold().italics().alignment('center').end);
     pdf.add(pdf.ln(3))
     pdf.add(new Table([
-      ['Cedula','Nombres','Apellidos','Dirección','Celular','Correo','Fecha Nacimiento','Edad'
-      ,'Numero Familiares','Numero Hijos','Tipo Vivienda','Seguro','Discapacidad','Nacionalidad','Estado Civil'
-      ,'Salario','Fecha Registro','Adulto Mayor','Vive con Otros'],
-      ...this.extractData()
+      ['Cedula','Nombres','Apellidos','Celular','Fecha Nacimiento','Edad'
+      ,'Numero Hijos','Tipo Vivienda','Seguro','Discapacidad','Nacionalidad','Estado Civil'
+      ,'Fecha Registro','Adulto Mayor'],
+      ...this.extractData(this.arraySelected)
+    ]).widths('*').layout({
+      fillColor:(rowIndex:number, node:any, columnIndex:number)=>{
+        return rowIndex === 0 ? '#CCCCCC': '';
+      }
+    }).end)
+    pdf.create().open();
+  }   
+  }
+  async generarPDF(){
+    const pdf = new PdfMakeWrapper();
+    pdf.pageOrientation('landscape')
+    pdf.pageSize('A3')
+    pdf.add(await new Img('../../assets/img/logo.png').build());
+    pdf.add(new Txt("Reporte Beneficiarios").bold().italics().alignment('center').end);
+    pdf.add(pdf.ln(3))
+    pdf.add(new Table([
+      ['Cedula','Nombres','Apellidos','Celular','Fecha Nacimiento','Edad'
+      ,'Numero Hijos','Tipo Vivienda','Seguro','Discapacidad','Nacionalidad','Estado Civil'
+      ,'Fecha Registro','Adulto Mayor'],
+      ...this.extractData(this.datos)
     ]).widths('*').layout({
       fillColor:(rowIndex:number, node:any, columnIndex:number)=>{
         return rowIndex === 0 ? '#CCCCCC': '';
       }
     }).end)
     pdf.create().open();   
+  }
+  exportSelectedX() {
+    if (this.arraySelected.length < 1) {
+      alert('Por favor seleccione al menos un usuario')
+    } else {
+      for (let i = 0; i < this.arraySelected.length; i++) {
+        let nuevoUserE = this.arraySelected[i];
+        const usuarioImprimirSelected = {
+          cedula:nuevoUserE.cedula, 
+           nombres:nuevoUserE.nombres,
+           apellidos:nuevoUserE.apellidos,
+           direccion:nuevoUserE.direccion,
+           celular:nuevoUserE.celular,
+           correo:nuevoUserE.correo,
+           fechaNacimiento:nuevoUserE.fechaNacimiento,
+           edad:nuevoUserE.edad,
+           numeroFamiliares:nuevoUserE.numeroFamiliares,
+           numeroHijos:nuevoUserE.numeroHijos,
+           tipovivienda:nuevoUserE.tipovivienda,
+           seguro:nuevoUserE.seguro,
+           discapacidad:nuevoUserE.discapacidad,
+           nacionalidad:nuevoUserE.nacionalidad,
+           estacoCIVIL:nuevoUserE.estacoCIVIL,
+           salario:nuevoUserE.salario,
+           fecha:nuevoUserE.fecha,
+           adulto:nuevoUserE.adulto,
+           viveConOTROS:nuevoUserE.viveConOTROS
+        }
+        this.arrayExcel.push(usuarioImprimirSelected);
+      }
+      import("xlsx").then(xlsx => {
+        const worksheet = xlsx.utils.json_to_sheet(this.arrayExcel);
+        const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, "Usuarios");
+      });
+    }
+
+  }
+  exportExcel() {
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.datos);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "Usuarios");
+    });
+  }
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    location.reload();
   }
   eliminarPersonaBeneficiario(i){
    this.personaService.getPorCedula(i).subscribe( data => {

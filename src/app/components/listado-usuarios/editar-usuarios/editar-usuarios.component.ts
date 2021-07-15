@@ -5,7 +5,6 @@ import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
-import { Usuarios2 } from '../listado-usuarios.component';
 
 @Component({
   selector: 'app-editar-usuarios',
@@ -16,22 +15,24 @@ export class EditarUsuariosComponent implements OnInit {
   //Comprobacion de Usuario
   cedUser: any;
   cedulaEditar: any;
-  usuarioT: number;
+  usuarioT: any;
   //Mensajes
   msgs: Message[];
   //Modelos
-  usuario: Usuarios = {};
   usuarioActual: Usuarios = {};
-  usuarioA: Usuarios = {};
   usuarioEdit: Usuarios = {};
   persona: Personas = {};
-
+  personaValidarCorreo: Personas = {};
+  personaValidar: Personas = {};
   //DropDown
   tipos: any[];
   tipo: any;
   valido: boolean = false;
+  validoG: boolean = false;
+  validoE: boolean = false;
+  validoN: boolean = false;
+
   //Validaciones
-  vistaTipo: boolean = true;
   nacionalidades: any[];
   nacio: any;
   estadocivil: any[];
@@ -39,20 +40,44 @@ export class EditarUsuariosComponent implements OnInit {
   generos: any[];
   genero: any;
   discap = false;
-  usuarioConfirContrasenia: any;
   tipoUser: any;
   //Campos
-  edadC: number;
-  usuarioContraseniaAnterior: any;
   usuarioContrasenia: any;
+  usuarioContraseniaAnterior: any;
+  usuarioConfirContrasenia: any;
   displayContra: boolean = false;
+  //Validaciones
+  estadoFinal: any;
+  generoFinal: any;
+  nacioFinal: any;
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
+  noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
+  valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
 
   constructor(private usuarioService: UsuarioService, private personaService: PersonasService, private router: Router) { }
 
   ngOnInit(): void {
+    this.ComprobarLogin();
     this.cedUser = localStorage.getItem('cedUser')
     this.cedulaEditar = localStorage.getItem('cedulaEditar')
-    this.ComprobarLogin();
+    this.usuarioService.getUserByCedula(this.cedUser).subscribe(data => {
+      this.usuarioActual = data;
+      this.usuarioContraseniaAnterior = this.usuarioActual.usuarioContrasenia;
+
+    });
+    this.personaService.getPorCedula(this.cedulaEditar).subscribe(data3 => {
+      this.persona = data3;
+      this.discap = this.persona.discapacidad;
+      this.nacio = this.persona.nacionalidad;
+      this.estado = this.persona.estado_civil;
+      this.genero = this.persona.genero;
+
+    });
+    this.usuarioService.getUserByCedula(this.cedulaEditar).subscribe(data2 => {
+      this.usuarioEdit = data2;
+      this.tipo = this.usuarioEdit.usuarioTipo;
+    });
+
     this.tipos = [
       { string: 'SuperAdministrador' },
       { string: 'Administrador' },
@@ -60,17 +85,13 @@ export class EditarUsuariosComponent implements OnInit {
       { string: 'Voluntario Externo' }
     ];
     this.nacionalidades = [
-      { nop: 'Ecuatoriano' },
-      { nop: 'Afganistán' },
-      { nop: 'Alemania' },
-      { nop: 'Canadá' },
-      { nop: 'China' },
-      { nop: 'Perú' },
-      { nop: 'Colombia' },
-      { nop: 'Venezuela' },
-      { nop: 'Uruguay' },
-      { nop: 'México' },
-      { nop: 'Honduras' }
+      { nop: 'Afganistán' }, { nop: 'Alemania' }, { nop: 'Arabia Saudita' }, { nop: 'Argentina' }, { nop: 'Australia' }, { nop: 'Bélgica' }, { nop: 'Bolivia' }, { nop: 'Brasil' },
+      { nop: 'Camboya' }, { nop: 'Canadá' }, { nop: 'Chile' }, { nop: 'China' }, { nop: 'Colombia' }, { nop: 'Corea' }, { nop: 'Costa Rica' }, { nop: 'Cuba' }, { nop: 'Dinamarca' }, { nop: 'Ecuador' }, { nop: 'Egipto' }, { nop: 'El Salvador' },
+      { nop: 'Escocia' }, { nop: 'España' }, { nop: 'Estados Unidos' }, { nop: 'Estonia' }, { nop: 'Etiopia' }, { nop: 'Filipinas' }, { nop: 'Finlandia' }, { nop: 'Francia' }, { nop: 'Gales' }, { nop: 'Grecia' }, { nop: 'Guatemala' },
+      { nop: 'Haití' }, { nop: 'Holanda' }, { nop: 'Honduras' }, { nop: 'Indonesia' }, { nop: 'Inglaterra' }, { nop: 'Irak' }, { nop: 'Irán' }, { nop: 'Irlanda' }, { nop: 'Israel' }, { nop: 'Italia' }, { nop: 'Japón' }, { nop: 'Jordania' },
+      { nop: 'Laos' }, { nop: 'Letonia' }, { nop: 'Lituania' }, { nop: 'Malasia' }, { nop: 'Marruecos' }, { nop: 'México' }, { nop: 'Nicaragua' }, { nop: 'Noruega' }, { nop: 'Nueva Zelanda' }, { nop: 'Panamá' }, { nop: 'Paraguay' },
+      { nop: 'Perú' }, { nop: 'Polonia' }, { nop: 'Portugal' }, { nop: 'Puerto Rico' }, { nop: 'Republica Dominicana' }, { nop: 'Rumania' }, { nop: 'Rusia' }, { nop: 'Suecia' }, { nop: 'Suiza' }, { nop: 'Tailandia' }, { nop: 'Taiwán' },
+      { nop: 'Turquía' }, { nop: 'Ucrania' }, { nop: 'Uruguay' }, { nop: 'Venezuela' }, { nop: 'Vietnam' }, { nop: 'Otro' }
     ]
     this.estadocivil = [
       { eop: 'Casado' },
@@ -83,23 +104,12 @@ export class EditarUsuariosComponent implements OnInit {
       { gop: 'Femenino' },
       { gop: 'Otro' }
     ]
-    this.usuarioService.getUserByCedula(this.cedUser).subscribe(data => {
-      this.usuarioActual = data;
-    });
-    this.usuarioService.getUserByCedula(this.cedulaEditar).subscribe(data2 => {
-      this.usuario = data2;
-    });
-    this.personaService.getPorCedula(this.cedulaEditar).subscribe(data3 => {
-      this.persona = data3;
-      this.discap = this.persona.discapacidad;
-      this.genero = this.persona.genero
-    });
   }
 
   ComprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
     if (this.tipoUser == 1) {
-    } else if (this.tipoUser == 3 || this.tipoUser == 4 || this.tipoUser == 2) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
       alert('No tiene permisos para editar usuarios')
       this.router.navigateByUrl('inicio-super-admin');
     }
@@ -111,14 +121,35 @@ export class EditarUsuariosComponent implements OnInit {
     } else {
       this.valido = true;
       if (this.tipo.string == 'SuperAdministrador') {
-
+        this.usuarioT = 1;
       } else if (this.tipo.string == 'Administrador') {
-
+        this.usuarioT = 2;
       } else if (this.tipo.string == 'Voluntario Interno') {
-
+        this.usuarioT = 3;
       } else if (this.tipo.string == 'Voluntario Externo') {
-
+        this.usuarioT = 4;
       }
+    }
+  }
+  onChangeE(event: any) {
+    if (event.value == null) {
+      this.validoE = false;
+    } else {
+      this.validoE = true;
+    }
+  }
+  onChangeN(event: any) {
+    if (event.value == null) {
+      this.validoN = false;
+    } else {
+      this.validoN = true;
+    }
+  }
+  onChangeG(event: any) {
+    if (event.value == null) {
+      this.validoG = false;
+    } else {
+      this.validoG = true;
     }
   }
 
@@ -141,21 +172,133 @@ export class EditarUsuariosComponent implements OnInit {
     }
   }
 
-  Actualizar() {
-    const nu: Usuarios = {
-      idUsuario: this.usuarioA.idUsuario,
-      usuarioCedula: this.usuarioA.usuarioCedula,
-      usuarioContrasenia: this.usuarioA.usuarioContrasenia,
-      usuarioNombre: this.usuarioA.usuarioNombre,
-      usuarioTipo: this.usuarioT,
-      usuarioEstado: true,
-      usuarioFechaCreacion: this.usuarioA.usuarioFechaCreacion
+
+  Validacion() {
+    if (this.estado == undefined || this.estado == null || this.validoE == false) {
+      this.estadoFinal = this.persona.estado_civil
+    } else {
+      this.estadoFinal = this.estado.eop
     }
-    this.usuarioService.updateUser(nu).subscribe(data => {
-      this.usuarioEdit = data;
-      alert('Se ha actualizado exitosamente')
-      window.location.reload();
-    });
+    if (this.nacio == undefined || this.nacio == null || this.validoN == false) {
+      this.nacioFinal = this.persona.nacionalidad
+    } else {
+      this.nacioFinal = this.nacio.nop
+    }
+    if (this.genero == undefined || this.genero == null || this.validoG == false) {
+      this.generoFinal = this.persona.genero
+    } else {
+      this.generoFinal = this.genero.gop
+    }
+    if (this.usuarioT == undefined || this.usuarioT == null) {
+      this.usuarioT = this.usuarioEdit.usuarioTipo;
+    } else {
+      this.usuarioT = this.usuarioT;
+    }
+    this.Actualizar();
   }
 
+
+  Actualizar() {
+    this.personaService.getPorCedula(this.persona.cedula).subscribe(dat => {
+      this.personaValidar = dat;
+    })
+    this.personaService.getPorCorreo(this.persona.correo).subscribe(data => {
+      this.personaValidarCorreo = data;
+      if (this.personaValidarCorreo.correo == this.personaValidar.correo) { 
+        const PersonaNueva: Personas = {
+          apellidos: this.persona.apellidos,
+          beneficiario: this.persona.beneficiario,
+          cedula: this.persona.cedula,
+          celular: this.persona.celular,
+          correo: this.persona.correo,
+          direccion: this.persona.direccion,
+          discapacidad: this.discap,
+          edad: this.persona.edad,
+          estadoActivo: this.persona.estadoActivo,
+          estado_civil: this.estadoFinal,
+          fechaNacimiento: this.persona.fechaNacimiento,
+          genero: this.generoFinal,
+          idPersona: this.persona.idPersona,
+          nacionalidad: this.nacioFinal,
+          nombres: this.persona.nombres
+        }
+        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+        });
+        const UsuarioNuevo: Usuarios = {
+          idUsuario: this.usuarioEdit.idUsuario,
+          usuarioCedula: this.usuarioEdit.usuarioCedula,
+          usuarioContrasenia: this.usuarioEdit.usuarioContrasenia,
+          usuarioNombre: this.usuarioEdit.usuarioNombre,
+          usuarioTipo: this.usuarioT,
+          usuarioEstado: true,
+          usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+        }
+        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+          alert('Se ha actualizado exitosamente')
+          this.router.navigateByUrl('listado-usuarios');
+        });
+      } else if (this.personaValidarCorreo.cedula == null){
+        const PersonaNueva: Personas = {
+          apellidos: this.persona.apellidos,
+          beneficiario: this.persona.beneficiario,
+          cedula: this.persona.cedula,
+          celular: this.persona.celular,
+          correo: this.persona.correo,
+          direccion: this.persona.direccion,
+          discapacidad: this.discap,
+          edad: this.persona.edad,
+          estadoActivo: this.persona.estadoActivo,
+          estado_civil: this.estadoFinal,
+          fechaNacimiento: this.persona.fechaNacimiento,
+          genero: this.generoFinal,
+          idPersona: this.persona.idPersona,
+          nacionalidad: this.nacioFinal,
+          nombres: this.persona.nombres
+        }
+        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+        });
+        const UsuarioNuevo: Usuarios = {
+          idUsuario: this.usuarioEdit.idUsuario,
+          usuarioCedula: this.usuarioEdit.usuarioCedula,
+          usuarioContrasenia: this.usuarioEdit.usuarioContrasenia,
+          usuarioNombre: this.usuarioEdit.usuarioNombre,
+          usuarioTipo: this.usuarioT,
+          usuarioEstado: true,
+          usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+        }
+        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+          alert('Se ha actualizado exitosamente')
+          this.router.navigateByUrl('listado-usuarios');
+        });
+      } else {
+        alert('Esta dirección de correo electrónico ya está en uso')
+      }
+    });
+    
+  }
+
+  CambiarContra() {
+      if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
+        alert('Las contraseñas no coinciden')
+      } else {
+        const UsuarioNuevo: Usuarios = {
+          idUsuario: this.usuarioEdit.idUsuario,
+          usuarioCedula: this.usuarioEdit.usuarioCedula,
+          usuarioContrasenia: this.usuarioContrasenia,
+          usuarioNombre: this.usuarioEdit.usuarioNombre,
+          usuarioTipo: this.usuarioEdit.usuarioTipo,
+          usuarioEstado: true,
+          usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+        }
+        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+          alert('Se ha actualizado exitosamente su contraseña')
+          this.displayContra = false;
+          window.location.reload();
+        });
+      }
+  }
+
+  Cancelar() {
+    this.router.navigateByUrl('listado-usuarios');
+  }
 }

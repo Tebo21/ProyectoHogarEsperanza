@@ -45,4 +45,14 @@ export class PersonasService {
     return this.getQueryUpdatePersona(url,  persona);
   }
 
+  //Buscar por Correo
+  getQueryPersonByCorreo(query: string,correoPersona: string): Observable<Personas> {
+    const url = `${this.URL}/${query}?correoPersona=${correoPersona}`;
+    return this.http.request<Personas>('get', url);
+  }
+
+  getPorCorreo(correoPersona: string): Observable<any> {
+    const url = 'listarPorCorreo';
+    return this.getQueryPersonByCorreo(url,correoPersona);
+  }
 }

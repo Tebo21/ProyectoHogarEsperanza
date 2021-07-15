@@ -8,7 +8,7 @@ import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
 import { MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
-import { timer } from 'rxjs';
+import { empty, timer } from 'rxjs';
 
 @Component({
   selector: 'app-registro-usuarios',
@@ -16,13 +16,16 @@ import { timer } from 'rxjs';
   styleUrls: ['./registro-usuarios.component.css']
 })
 export class RegistroUsuariosComponent implements OnInit {
-  blockSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"'/]+$/
-  noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~"']+$/
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
+  noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
+  valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
   //Comprobacion
   nombredeUsuario: any;
   //Modelos
   persona: Personas = {};
+  usuarioValidarCorreo: Personas = {};
   usuario: Usuarios = {};
+  usuarioValidarCedula: Usuarios = {};
   //Variables
   ficha: FichaSocioeconomica[];
   personaCreada: Personas = {};
@@ -70,8 +73,11 @@ export class RegistroUsuariosComponent implements OnInit {
   usuarioContrasenia: string = '';
   usuarioConfirContrasenia: string = '';
   usuarioFechaCreacion: Date;
+  validoG: boolean;
+  validoN: boolean;
+  validoE: boolean;
   //Edad
-  edadC:number;
+  edadC: number;
 
   constructor(private router: Router, private personaservice: PersonasService,
     private usuarioservice: UsuarioService) {
@@ -81,18 +87,13 @@ export class RegistroUsuariosComponent implements OnInit {
       { top: 'Voluntario' }
     ]
     this.nacionalidades = [
-      { nop: 'Ecuatoriano' },
-      { nop: 'Afganistán' },
-      { nop: 'Alemania' },
-      { nop: 'Canadá' },
-      { nop: 'China' },
-      { nop: 'Perú' },
-      { nop: 'Colombia' },
-      { nop: 'Venezuela' },
-      { nop: 'Uruguay' },
-      { nop: 'México' },
-      { nop: 'Honduras' },
-      { nop: 'Otro' }
+      { nop: 'Afganistán' }, { nop: 'Alemania' }, { nop: 'Arabia Saudita' }, { nop: 'Argentina' }, { nop: 'Australia' }, { nop: 'Bélgica' }, { nop: 'Bolivia' }, { nop: 'Brasil' },
+      { nop: 'Camboya' }, { nop: 'Canadá' }, { nop: 'Chile' }, { nop: 'China' }, { nop: 'Colombia' }, { nop: 'Corea' }, { nop: 'Costa Rica' }, { nop: 'Cuba' }, { nop: 'Dinamarca' }, { nop: 'Ecuador' }, { nop: 'Egipto' }, { nop: 'El Salvador' },
+      { nop: 'Escocia' }, { nop: 'España' }, { nop: 'Estados Unidos' }, { nop: 'Estonia' }, { nop: 'Etiopia' }, { nop: 'Filipinas' }, { nop: 'Finlandia' }, { nop: 'Francia' }, { nop: 'Gales' }, { nop: 'Grecia' }, { nop: 'Guatemala' },
+      { nop: 'Haití' }, { nop: 'Holanda' }, { nop: 'Honduras' }, { nop: 'Indonesia' }, { nop: 'Inglaterra' }, { nop: 'Irak' }, { nop: 'Irán' }, { nop: 'Irlanda' }, { nop: 'Israel' }, { nop: 'Italia' }, { nop: 'Japón' }, { nop: 'Jordania' },
+      { nop: 'Laos' }, { nop: 'Letonia' }, { nop: 'Lituania' }, { nop: 'Malasia' }, { nop: 'Marruecos' }, { nop: 'México' }, { nop: 'Nicaragua' }, { nop: 'Noruega' }, { nop: 'Nueva Zelanda' }, { nop: 'Panamá' }, { nop: 'Paraguay' },
+      { nop: 'Perú' }, { nop: 'Polonia' }, { nop: 'Portugal' }, { nop: 'Puerto Rico' }, { nop: 'Republica Dominicana' }, { nop: 'Rumania' }, { nop: 'Rusia' }, { nop: 'Suecia' }, { nop: 'Suiza' }, { nop: 'Tailandia' }, { nop: 'Taiwán' },
+      { nop: 'Turquía' }, { nop: 'Ucrania' }, { nop: 'Uruguay' }, { nop: 'Venezuela' }, { nop: 'Vietnam' }, { nop: 'Otro' }
     ]
     this.estadocivil = [
       { eop: 'Casado' },
@@ -121,7 +122,6 @@ export class RegistroUsuariosComponent implements OnInit {
       { eco: 'Baja' },
       { eco: 'Crítica' }
     ]
-      ;
   }
 
   ngOnInit(): void {
@@ -132,7 +132,7 @@ export class RegistroUsuariosComponent implements OnInit {
     this.usuarioFechaCreacion = new Date;
   }
 
-  onChange(event: any) {
+  onChangeT(event: any) {
     if (event.value == null) {
       this.valido = false;
     } else {
@@ -161,37 +161,56 @@ export class RegistroUsuariosComponent implements OnInit {
     }
   }
 
+  onChangeG(event: any) {
+    if (event.value == null) {
+      this.validoG = false;
+    } else {
+      this.validoG = true;
+    }
+  }
+
+  onChangeN(event: any) {
+    if (event.value == null) {
+      this.validoN = false;
+    } else {
+      this.validoN = true;
+    }
+  }
+
   onChangeEstado(event: any) {
-    this.Validacion();
+    if (event.value == null) {
+      this.validoE = false;
+    } else {
+      this.validoE = true;
+    }
   }
 
   ComprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
     if (this.tipoUser == 1) {
-    } else if (this.tipoUser == 3 || this.tipoUser == 4 || this.tipoUser == 2) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
       alert('No tiene permisos para registrar beneficiarios')
       this.router.navigateByUrl('inicio-super-admin');
     }
   }
 
   Validacion() {
-    if (this.cedula != '' &&
-      this.nombres != '' &&
-      this.apellidos != '' &&
-      this.direccion != '' &&
-      this.celular != '' &&
-      this.correo != '' &&
-      this.genero != undefined &&
-      this.nacio != undefined &&
-      this.estado != undefined) {
-      this.cb = true;
-    } else {
+    if (this.cedula == '' || this.cedula == undefined || this.cedula == null ||
+      this.nombres == '' || this.nombres == undefined || this.nombres == null ||
+      this.apellidos == '' || this.apellidos == undefined || this.apellidos == null ||
+      this.direccion == '' || this.direccion == undefined || this.direccion == null ||
+      this.celular == '' || this.celular == undefined || this.celular == null ||
+      this.correo == '' || this.correo == undefined || this.correo == null ||
+      this.persona.fechaNacimiento == undefined || this.validoG == false || 
+      this.validoN == false || this.validoE == false || this.valido == false) {
       this.cb = false;
       this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
       const contador = timer(2000);
       contador.subscribe((n) => {
         this.clear();
       })
+    } else {
+      this.cb = true;
     }
   }
 
@@ -202,44 +221,60 @@ export class RegistroUsuariosComponent implements OnInit {
     this.edadC = f1
   }
 
-  GurdarPersona() {
-    const nuevaPersona: Personas = {
-      apellidos: this.apellidos,
-      cedula: this.cedula,
-      celular: this.celular,
-      correo: this.correo,
-      direccion: this.direccion,
-      discapacidad: this.discap,
-      estado_civil: this.estado.eop,
-      fechaNacimiento: this.persona.fechaNacimiento,
-      edad: this.edadC,
-      genero: this.genero.gop,
-      nacionalidad: this.nacio.nop,
-      nombres: this.nombres,
-      beneficiario: false,
-      estadoActivo: true
-    }
-    this.personaservice.postPersona(nuevaPersona).subscribe(data2 => {
-      this.personaCreada = data2;
-    });
+
+  ValidacionesExtra() {
+    this.Validacion();
+    this.usuarioservice.getUserByCedula(this.cedula).subscribe(dat => {
+      this.usuarioValidarCedula = dat;
+      if (this.usuarioValidarCedula.usuarioCedula == null) {
+        this.personaservice.getPorCorreo(this.correo).subscribe(da => {
+          this.usuarioValidarCorreo = da;
+          if (this.usuarioValidarCorreo.cedula == null) {
+            this.GuardarUsuario();
+          } else {
+            alert('Esta dirección de correo electrónico ya está en uso')
+          }
+        })
+      } else {
+        alert('El número de cédula ya está en uso')
+      }
+    })
   }
 
+
   GuardarUsuario() {
-    if (this.usuarioNombre != '' &&
-      this.usuarioContrasenia != '') {
+    if (this.usuarioNombre != '' || this.usuarioContrasenia != '') {
       if (this.usuarioContrasenia == this.usuarioConfirContrasenia) {
+        const nuevaPersona: Personas = {
+          apellidos: this.apellidos,
+          cedula: this.cedula,
+          celular: this.celular,
+          correo: this.correo,
+          direccion: this.direccion,
+          discapacidad: this.discap,
+          estado_civil: this.estado.eop,
+          fechaNacimiento: this.persona.fechaNacimiento,
+          edad: this.edadC,
+          genero: this.genero.gop,
+          nacionalidad: this.nacio.nop,
+          nombres: this.nombres,
+          beneficiario: false,
+          estadoActivo: true
+        }
         const nuevoUsuario: Usuarios = {
           usuarioCedula: this.cedula,
           usuarioContrasenia: this.usuarioContrasenia,
           usuarioNombre: this.usuarioNombre,
           usuarioTipo: this.tipoUsuario,
           usuarioEstado: true,
-          usuarioFechaCreacion: 'Fecha:' +((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear() 
-          + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
+          usuarioFechaCreacion: 'Fecha:' + ((this.usuarioFechaCreacion.getDate() < 10) ? '0' : '') + this.usuarioFechaCreacion.getDate() + "-" + (((this.usuarioFechaCreacion.getMonth() + 1) < 10) ? '0' : '') + (this.usuarioFechaCreacion.getMonth() + 1) + "-" + this.usuarioFechaCreacion.getFullYear()
+            + ' Hora:' + this.usuarioFechaCreacion.getHours() + ":" + this.usuarioFechaCreacion.getMinutes()
         }
+        this.personaservice.postPersona(nuevaPersona).subscribe(data2 => {
+          this.personaCreada = data2;
+        });
         this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
           this.usuarioCreado = data;
-          this.GurdarPersona();
           this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
           const contador = timer(1000);
           contador.subscribe((n) => {

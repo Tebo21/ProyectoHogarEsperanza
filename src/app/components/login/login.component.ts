@@ -1,7 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Personas } from 'src/app/models/personas';
+import { Smsrequest } from 'src/app/models/sms';
 import { Usuarios } from 'src/app/models/usuarios';
+import { ActividadesService } from 'src/app/services/actividades.service';
+import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
+declare const main:any;
 
 @Component({
   selector: 'app-login',
@@ -10,26 +16,26 @@ import { UsuarioService } from 'src/app/services/usuarios.service';
 })
 export class LoginComponent implements OnInit {
 
-
-  cedula: string;
   //Comprobacion de Logeo
-  user: Usuarios = {
-    usuarioCedula: '',
-    usuarioContrasenia: '',
-    usuarioTipo: 0
-  };
-  userRecibido: Usuarios = {}
+  user: Usuarios = {};
+  userRecibido: Usuarios = {};
+  perRecu: Personas = {};
+  userRec: Usuarios = {};
   //Modals
   display: boolean;
   alerta: string;
-  displayPass: boolean = true;
+  displayPass: boolean;
   //DropDown
   tipos: any[];
   tipo: any;
   valido: boolean = false;
   correo: any;
+  //Enviar mensajes de wpp 
+  sms: Smsrequest = new Smsrequest("", "");
+  tempass: string;
 
-  constructor(private loginservce: UsuarioService, private router: Router) { }
+  constructor(private userservice: UsuarioService, private router: Router, private persser: PersonasService,
+    private actividadesService: ActividadesService, private http: HttpClient) { }
 
   ngOnInit(): void {
     localStorage.clear();
@@ -60,8 +66,7 @@ export class LoginComponent implements OnInit {
   }
 
   Validar() {
-    if (this.user.usuarioCedula != '' || this.user.usuarioContrasenia != '' ||
-      this.user.usuarioCedula != undefined || this.user.usuarioContrasenia != undefined || this.valido == false) {
+    if (this.user.usuarioCedula != '' && this.user.usuarioContrasenia != '' && this.valido == true) {
       this.Logearse();
     } else {
       this.alerta = 'Rellene todos los campos y seleccione un tipo de usuario por favor'
@@ -70,7 +75,7 @@ export class LoginComponent implements OnInit {
   }
 
   Logearse() {
-    this.loginservce.getLogin(this.user.usuarioCedula, this.user.usuarioContrasenia, this.user.usuarioTipo).subscribe(data => {
+    this.userservice.getLogin(this.user.usuarioCedula, this.user.usuarioContrasenia, this.user.usuarioTipo).subscribe(data => {
       this.userRecibido = data;
       if (this.userRecibido.usuarioCedula != null) {
         this.alerta = 'Bienvendo ' + this.userRecibido.usuarioNombre
@@ -92,7 +97,7 @@ export class LoginComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
-        await delay(2000);
+        await delay(900);
         this.router.navigateByUrl('registro-usuario');
       })();
     } else if (this.tipo.string == 'Administrador') {
@@ -100,7 +105,7 @@ export class LoginComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
-        await delay(2000);
+        await delay(900);
         this.router.navigateByUrl('dashboard');
       })();
     } else if (this.tipo.string == 'Voluntario Interno') {
@@ -108,7 +113,7 @@ export class LoginComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
-        await delay(2000);
+        await delay(900);
         this.router.navigateByUrl('actividades');
       })();
     } else if (this.tipo.string == 'Voluntario Externo') {
@@ -116,13 +121,61 @@ export class LoginComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve, ms));
       }
       (async () => {
-        await delay(2000);
+        await delay(900);
         this.router.navigateByUrl('actividades');
       })();
     }
   }
 
-  Recuperar(){
-    
+  generaRandom(): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 5; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
+
+  Recuperar(correo: string) {
+    this.tempass = this.generaRandom();
+    this.persser.getPorCorreo(correo).subscribe(data => {
+      this.perRecu = data;
+      if (this.perRecu.cedula != null) {
+        this.userservice.getUserByCedula(this.perRecu.cedula).subscribe(dat => {
+          this.userRec = dat;
+          main(correo, this.perRecu.nombres, this.tempass.toString())
+          if (this.perRecu.celular.length == 10) {
+            let numbersend = this.perRecu.celular.slice(1);
+            let numbernew = "593" + numbersend
+            this.sms.number = numbernew;
+            this.sms.message = 'Hola ' + this.perRecu.nombres + ' \n' + 'tu contraseña temporal es *' + this.tempass + '* \n' + 'por favor cambiala una vez ingreses a tu cuenta dirigiendote a tu perfil' + ' \n' + '*Este mensaje no debe ser repondido ya que se genera de forma automática  :)*';
+          }
+          alert('Listo, te hemos enviado un mensaje a tu WhatsApp')
+          this.displayPass = false;
+          this.actividadesService.sendSmS(this.sms).subscribe((res) => {
+          }, err => {
+            if (err.status == 200) {
+              const NuevoUser: Usuarios = {
+                idUsuario: this.userRec.idUsuario,
+                usuarioCedula: this.userRec.usuarioCedula,
+                usuarioContrasenia: this.tempass.toString(),
+                usuarioNombre: this.userRec.usuarioNombre,
+                usuarioTipo: this.userRec.usuarioTipo,
+                usuarioEstado: this.userRec.usuarioEstado,
+                usuarioFechaCreacion: this.userRec.usuarioFechaCreacion
+              }
+              this.userservice.updateUser(NuevoUser).subscribe(() => { });
+            } else if (err.status == 404) {
+              alert('Ah ocurrido un error, por favor inténtalo más tarde')
+              this.displayPass = false;
+            }
+          })
+        })
+      } else {
+        alert('Dirección de correo electrónico no registrado')
+      }
+    })
+  }
+
 }

@@ -9,13 +9,8 @@ import { PersonasService } from 'src/app/services/personas.service';
 import { PdfMakeWrapper, Txt, Img, Table } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import Swal from 'sweetalert2';
-import { Personas } from 'src/app/models/personas';
-import pdfMake from 'pdfmake/build/pdfmake';
 
-import { DatePipe, formatDate, getLocaleDateFormat } from '@angular/common';
-import * as internal from 'node:stream';
-
-type TableRow2 = [string, string, string, number, Date];
+type TableRow2 = [string, string, string, number, string];
 
 
 @Component({
@@ -41,14 +36,14 @@ export class EntregarDonacionComponent implements OnInit {
 
   displayPE: boolean = false;
 
-  entregaDonacion: EntregaDonacion;
+  entregaDonacion: EntregaDonacion = new EntregaDonacion();
   cantidadEntrega: number;
 
   displayED: boolean = false;
 
   productoEntrega: Donaciones;
 
-
+  tipoUser: any;
 
 
   constructor(
@@ -56,12 +51,24 @@ export class EntregarDonacionComponent implements OnInit {
     private entregarDonacionService: EntregarDonacionService,
     private fichaSocioeconomicaService: FichaSocioeconomicaService,
     private personaService: PersonasService,
-    private router: Router,
-    public datapipe: DatePipe
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.ComprobarLogin();
     this.obtenerDonaciones();
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para realizar las donaciones',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    }
   }
 
   obtenerDonaciones() {
@@ -138,7 +145,7 @@ export class EntregarDonacionComponent implements OnInit {
 
         });
       } else {
-        console.log('No se encontraron donaciones');
+        //No hay donaciones
       }
     });
   }
@@ -152,7 +159,10 @@ export class EntregarDonacionComponent implements OnInit {
       this.productoEntrega.cantidad = producto.cantidad;
       this.productoEntrega.categoria = producto.categoria;
       this.productoEntrega.cedulaPersona = producto.cedulaPersona;
+
+      this.entregaDonacion.descripcionProducto = producto.descripcionDonacion;
       this.productoEntrega.descripcionDonacion = producto.descripcionDonacion;
+
       this.productoEntrega.fechaDonacion = producto.fechaDonacion;
       this.productoEntrega.idDonacion = producto.idDonacion;
       this.productoEntrega.nombreDonacion = producto.nombreDonacion;
@@ -185,19 +195,16 @@ export class EntregarDonacionComponent implements OnInit {
           this.productoEntrega.cantidad > 0 &&
           this.productoEntrega.cantidad > this.cantidadEntrega
         ) {
-          this.entregaDonacion = new EntregaDonacion();
+          
           this.entregaDonacion.cantidadEntregada = this.cantidadEntrega;
           this.entregaDonacion.cedulaBeneficiario = this.cedulaBeneficiario;
-          this.entregaDonacion.descripcionProducto =
-          this.productoEntrega.descripcionDonacion;
+          //this.entregaDonacion.descripcionProducto = this.productoEntrega.descripcionDonacion;
           this.entregaDonacion.fechaEntrega = this.today = new Date;
-          this.entregaDonacion.productoEntregado =
-            this.productoEntrega.nombreDonacion;
+          this.entregaDonacion.productoEntregado = this.productoEntrega.nombreDonacion;
 
           this.entregarDonacionService
             .postEntrega(this.entregaDonacion)
             .subscribe((data) => {
-              console.log(data);
               this.productoEntrega.cantidad =
                 this.productoEntrega.cantidad - this.cantidadEntrega;
               this.donacionService
@@ -206,7 +213,6 @@ export class EntregarDonacionComponent implements OnInit {
                   this.productoEntrega
                 )
                 .subscribe((result) => {
-                  console.log(result);
                   Swal.fire({
                     title: 'Entrega registrada!',
                     icon: 'success',
@@ -245,6 +251,28 @@ export class EntregarDonacionComponent implements OnInit {
   listaEntregaProducto() {
     this.router.navigate(['lista']);
   }  
+  showConfirmacionPDF(){
+    this.displayPE = false;
+    Swal.fire({
+      title: '¿Estas seguro de descargar este reporte?',
+      text: "Se abrira una visualizacion de su reporte",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Sí, descargar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.generaPdf();
+        Swal.fire(
+          'Descargado!',
+          'El registro ha sido descargado',
+          'success'
+        )
+      }
+    })
+  }
 
   async generaPdf() {
     const pdf = new PdfMakeWrapper();
@@ -253,7 +281,7 @@ export class EntregarDonacionComponent implements OnInit {
     });
     pdf.add(await new Img('../../assets/img/logo.png').build());
     pdf.add(    
-      new Txt('Usuario: ' + (this.nombresBeneficiario +' '+this.apellidosBeneficiario)).alignment('right').end
+      new Txt('Beneficiario: ' + (this.nombresBeneficiario +' '+this.apellidosBeneficiario)).alignment('right').end
       );
     pdf.add(new Txt('   ').end);
     pdf.add(
@@ -286,9 +314,37 @@ export class EntregarDonacionComponent implements OnInit {
       row.productoEntregado,
       row.descripcionProducto,
       row.cantidadEntregada,     
-      row.fechaEntrega,    
+      this.dateFormat(row.fechaEntrega),    
     ]);
 
+  }
+
+  dateFormat(d: Date): string{
+
+    let date: Date = new Date(d);
+    let fecha: string;
+
+    let dia = date.getDate();
+      let mes = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      if (dia < 10 && mes < 10){
+        fecha = year+'-0'+mes+'-0'+dia;
+      }
+
+      if (dia > 9  && mes < 10){
+        fecha = year+'-0'+mes+'-'+dia;
+      }
+
+      if (dia < 10  && mes > 9){
+        fecha = year+'-'+mes+'-0'+dia;
+      }
+
+      if (dia > 9 && mes > 9){
+        fecha = year+'-'+mes+'-'+dia;
+      }
+    
+    return fecha;
   }
 
  

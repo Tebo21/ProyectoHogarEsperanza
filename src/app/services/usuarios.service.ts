@@ -59,7 +59,7 @@ export class UsuarioService {
   }
 
   //Traer Usuario Especifico
-  getQueryUserByCedula(query: string, usuarioCedula): Observable<Usuarios> {
+  getQueryUserByCedula(query: string, usuarioCedula: string): Observable<Usuarios> {
     const url = `http://localhost:3000/${query}?usuarioCedula=${usuarioCedula}`;
     return this.http.request<Usuarios>('get', url);
   }
