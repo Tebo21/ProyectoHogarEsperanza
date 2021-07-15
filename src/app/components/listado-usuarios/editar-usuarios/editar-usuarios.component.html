@@ -98,12 +98,6 @@
         <p-dialog header="Cambio de contraseña" [(visible)]="displayContra" [modal]="true" [style]="{width: '19vw'}"
             [baseZIndex]="10000">
             <div class="form-floating mb-3">
-                <label for="floatingInput"><b>Contraseña anterior</b></label>
-                <br>
-                <p-password [(ngModel)]="usuarioContraseniaAnterior" name="usuarioContraseniaAnterior"
-                    [toggleMask]="true" placeholder="Contraseña" maxlength="16" minlength="8" required></p-password>
-            </div>
-            <div class="form-floating mb-3">
                 <label for="floatingInput"><b>Nueva contraseña</b></label>
                 <br>
                 <p-password [(ngModel)]="usuarioContrasenia" name="usuarioContrasenia" [toggleMask]="true"
