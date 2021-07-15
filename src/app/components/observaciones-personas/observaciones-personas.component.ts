@@ -6,6 +6,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { PdfMakeWrapper, Txt, Img, Table } from 'pdfmake-wrapper';
 import { PersonasService } from '../../services/personas.service';
 import { Personas } from '../../models/personas';
+import { DonaProductoService } from '../../services/dona-producto.service';
 
 @Component({
   selector: 'app-observaciones-personas',
@@ -14,6 +15,7 @@ import { Personas } from '../../models/personas';
 })
 export class ObservacionesPersonasComponent implements OnInit {
   notasObservaciones: ObservacionesPersonas=new ObservacionesPersonas()
+  datosob:any;
   datos:any=[];
   nombrePersona:String;
   fechaActual = new Date();
@@ -48,7 +50,7 @@ export class ObservacionesPersonasComponent implements OnInit {
     this.Obserserivce.getBycedula(this.notasObservaciones.cedulaPersona).subscribe(data =>{
         for(let c in data){ 
            const datosLista={
-            idObservacionesPersona:c,
+            idObservacionesPersona:data[c].idObservacionesPersona,
             fechaRegistro:data[c].fechaRegistro.substring(0,10),
             descripcionobservacion:data[c].descripcionobservacion
             }
@@ -91,16 +93,17 @@ export class ObservacionesPersonasComponent implements OnInit {
     pdf.create().open();   
   }
 
-  actualizarObservacion(id,fecha){
-    console.log(id)
-    this.notasObservaciones.fechaRegistro=fecha;
-    this.notasObservaciones._id=id
-     var Observacion=document.getElementById("Observacionestxt")
-    this.notasObservaciones.descripcionobservacion="hola";
-    console.log(this.notasObservaciones)
-    this.Obserserivce.updateFamiliares(this.notasObservaciones).subscribe(data =>{
-      console.log(data)
+  optenerDatos(event:any){
+    this.datosob=event.target.value;
+  }
 
+  actualizarObservacion(id,fecha){
+    this.notasObservaciones.idObservacionesPersona=id
+    this.notasObservaciones.cedulaPersona=this.cedula_persona
+    this.notasObservaciones.fechaRegistro=fecha
+    this.notasObservaciones.descripcionobservacion=this.datosob
+    this.Obserserivce.updateFamiliares(this.notasObservaciones).subscribe(data =>{
+      alert("Observación actualizada")
     });
   }
 }

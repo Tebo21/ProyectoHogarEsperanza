@@ -1,5 +1,5 @@
 export class ObservacionesPersonas {
-    _id:number;
+    idObservacionesPersona:number;
     cedulaPersona:String;
     fechaRegistro:string;
     descripcionobservacion:string;

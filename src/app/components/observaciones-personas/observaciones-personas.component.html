@@ -13,7 +13,7 @@
             <div class="input-group mb-3">
               <textarea [(ngModel)]="notasObservaciones.descripcionobservacion" name="situacionEconomica" id="situacionEconomica"
                style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control"
-                placeholder="Situación Economica"></textarea>
+                placeholder="Observaciones"></textarea>
             </div>
             <div class="btn_guardar mb-2">
                 <button (click)="guardarObservaciones()" class="guardar1"  style="margin-left: 30%;" type="submit">Guardar y Continuar</button>
@@ -63,10 +63,9 @@
                      <th pSortableColumn="descripcionobservacion">Observaciones
                      <p-sortIcon field="descripcionobservacion"></p-sortIcon>
                      </th>
-                     <!--
                      <th style="width: 10px;" pSortableColumn="Editar">Editar
                         <p-sortIcon field="Editar"></p-sortIcon>
-                        </th> -->
+                        </th> 
                  </tr>
              </ng-template>
               <ng-template pTemplate="body" let-user>
@@ -74,15 +73,15 @@
                      <td  style="width: 5px;" >{{user.idObservacionesPersona}}</td>
                      <td style="width: 10px;" ([ngModel])="this.notasObservaciones.fechaRegistro" >{{user.fechaRegistro}}</td>
                      <td style="width: 200px;">
-                        <textarea  class="Observaciones" name="Observaciones" id="Observacionestxt"
+                        <textarea  class="Observaciones"  (change)="optenerDatos($event)" name="Observaciones" id="Observacionestxt"
                          style="margin-left: 1%;margin-right: 5%;width: 18cm;height: 2cm;"type="text" 
                          class="form-control" >{{user.descripcionobservacion}}</textarea>       
-                        <!--
+                        
                         </td>
                      <td style="width: 10px;">
                         <button  pButton pRipple icon="pi pi-user-edit" 
                         class="p-button-rounded p-button-outlined" (click)="actualizarObservacion(user.idObservacionesPersona,user.fechaRegistro)" ></button>
-                     </td> -->
+                     </td>
                  </tr>
              </ng-template>
          </p-table>
