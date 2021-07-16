@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistroFamiliaresService {
-  private URL='http://localhost:3000/registroFamiliares';
-  //private URL='http://localhost:8080/registroFamiliares';
+  private URL='http://http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/registroFamiliares';
+  //private URL='http://http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:8080/registroFamiliares';
   constructor(private http:HttpClient) { }
 
   postRegistFami(familiaresPersona:RegistroFamiliares):Observable<any>{

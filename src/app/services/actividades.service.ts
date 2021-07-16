@@ -11,9 +11,9 @@ export class ActividadesService {
   @Output() open: EventEmitter<any> = new EventEmitter();
 
   public actividades: Actividades[] = [];
-  private _http = 'http://localhost:3000/actividadPersona';
-  private _httpTipo = 'http://localhost:3000/tipoactividad';
-  private _smshtrrp = 'http://localhost:3000/sms/sendmessage';
+  private _http = 'http://http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/actividadPersona';
+  private _httpTipo = 'http://http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/tipoactividad';
+  private _smshtrrp = 'http://http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/sms/sendmessage';
 
   constructor(private http: HttpClient) {}
 

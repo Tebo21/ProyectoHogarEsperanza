@@ -8,7 +8,7 @@ import { CitasMedicas } from '../models/citas-medicas';
 })
 export class CitaMedicaService {
 
-  url = 'http://localhost:3000/citasMedicas';
+  url = 'http://http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/citasMedicas';
 
   constructor(private httpClient: HttpClient) { }
 
