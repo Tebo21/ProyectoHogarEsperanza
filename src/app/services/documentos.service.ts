@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DocumentosService {
-  private URL='http://http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/documentosBeneficiarios';
+  private URL='http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/documentosBeneficiarios';
   FOLDER = 'jsa-s3/';
 
   constructor(private http:HttpClient) { }

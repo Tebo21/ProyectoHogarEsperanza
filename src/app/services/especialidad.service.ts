@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class EspecialidadService {
 
-  private conexion = 'http://http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/especialidad';
+  private conexion = 'http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/especialidad';
 
   constructor(private http: HttpClient){}
 
