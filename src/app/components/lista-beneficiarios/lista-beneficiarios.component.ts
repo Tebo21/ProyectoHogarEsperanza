@@ -36,11 +36,15 @@ export class ListaBeneficiariosComponent implements OnInit {
     this.fichaArray=[]
   this.listaPersona();
   this.listaFamiliares();
+  this.optenerlista();
+  this.actualizar();
   }
 
   actualizar(){
+    this.datos=[]
   this.listaPersona();
   this.listaFamiliares();
+  this.optenerlista();
   }
 
   listaPersona(){
@@ -74,7 +78,7 @@ export class ListaBeneficiariosComponent implements OnInit {
         for(let i in this.familia.hijos){
           if(this.familia.hijos[i][8]=="Hijo" || this.familia.hijos[i][8]=="Hija"){
             numeroHIJOS=1+numeroHIJOS
-            totalHijos=numeroHIJOS+1
+            totalHijos=numeroHIJOS
           }
           } 
             this.familiaArray.push([this.familia.numHijos+"",totalHijos+" hijos"])
@@ -109,35 +113,10 @@ export class ListaBeneficiariosComponent implements OnInit {
          this.ficha.seguro, discapacidad, this.ficha.nacionalidad, 
          this.ficha.estadoCivil, this.ficha.salario, this.ficha.fechaRegistro.substring(0,10), 
          adultoMayor, ViveOtros])
-
          this.personaArray[c].push(this.familiaArray[c][0],this.familiaArray[c][1])
          this.personaArray[c].push(this.fichaArray[c][0],this.fichaArray[c][1],
          this.fichaArray[c][2],this.fichaArray[c][3],this.fichaArray[c][4],
          this.fichaArray[c][5],this.fichaArray[c][6],this.fichaArray[c][7],this.fichaArray[c][8])
-         const datosLista={
-           cedula:this.personaArray[c][0], 
-           nombres:this.personaArray[c][1],
-           apellidos:this.personaArray[c][2],
-           direccion:this.personaArray[c][3],
-           celular:this.personaArray[c][4],
-           correo:this.personaArray[c][5],
-           fechaNacimiento:this.personaArray[c][6],
-           edad:this.personaArray[c][7],
-           numeroFamiliares:this.personaArray[c][8],
-           numeroHijos:this.personaArray[c][9],
-           tipovivienda:this.personaArray[c][10],
-           seguro:this.personaArray[c][11],
-           discapacidad:this.personaArray[c][12],
-           nacionalidad:this.personaArray[c][13],
-           estacoCIVIL:this.personaArray[c][14],
-           salario:this.personaArray[c][15],
-           fecha:this.personaArray[c][16],
-           adulto:this.personaArray[c][17],
-           viveConOTROS:this.personaArray[c][18]
-         }
-         if(this.datos.length<this.cedulaArray.length){
-          this.datos.push(datosLista)
-         }
         }
        }
       }
@@ -145,9 +124,39 @@ export class ListaBeneficiariosComponent implements OnInit {
           }
         }
       }
-    });
+    });  
     console.log("listo")
   } 
+
+  optenerlista(){
+    console.log(this.personaArray)
+    for(let c in this.cedulaArray){
+    const datosLista={
+      cedula:this.personaArray[c][0], 
+      nombres:this.personaArray[c][1],
+      apellidos:this.personaArray[c][2],
+      direccion:this.personaArray[c][3],
+      celular:this.personaArray[c][4],
+      correo:this.personaArray[c][5],
+      fechaNacimiento:this.personaArray[c][6],
+      edad:this.personaArray[c][7],
+      numeroFamiliares:this.personaArray[c][8],
+      numeroHijos:this.personaArray[c][9],
+      tipovivienda:this.personaArray[c][10],
+      seguro:this.personaArray[c][11],
+      discapacidad:this.personaArray[c][12],
+      nacionalidad:this.personaArray[c][13],
+      estacoCIVIL:this.personaArray[c][14],
+      salario:this.personaArray[c][15],
+      fecha:this.personaArray[c][16],
+      adulto:this.personaArray[c][17],
+      viveConOTROS:this.personaArray[c][18]
+    }
+    if(this.datos.length<this.cedulaArray.length){
+      this.datos.push(datosLista)
+     }
+    }  
+  }
   
   ingresoFicha(i){
     localStorage.setItem("cedulalocalstorage", i)
@@ -263,16 +272,33 @@ export class ListaBeneficiariosComponent implements OnInit {
   eliminarPersonaBeneficiario(i){
    this.personaService.getPorCedula(i).subscribe( data => {
      this.persona=data
+   //INICIO
+var elimianar
+Swal.fire({
+  title: 'Esta seguro de eliminar al beneficiario',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Aceptar'
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire(
+      'Eliminado!',
+      'Beneficiario eliminado',
+      'success'
+    )
+    elimianar=true;
+    var verificacion=elimianar
+    if (verificacion==true){ 
      this.persona.beneficiario=false;
      this.persona.estadoActivo=false;
-     console.log(this.persona)
      this.personaService.updatePersona(this.persona).subscribe( data => {
-                 Swal.fire(
-        'Eliminado!',
-        'Registro eliminado',
-        'success'
-      )
      })
-   }) 
+      window.location.reload();
+    }
+  }
+});
+   })
   }  
 }
