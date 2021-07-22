@@ -163,7 +163,6 @@ export class FichaSocioeconomicaComponent implements OnInit {
     var cedula_persona=localStorage.getItem('cedulalocalstorage');
     this.fichasocieconomicaModel.cedulaPersona=cedula_persona;
     this.fichasocioserve.postFichaSocio(this.fichasocieconomicaModel).subscribe(data=>{
-      console.log("ficha 1 creada")
     });
     this.root.navigate(['vista-ficha'])
     }

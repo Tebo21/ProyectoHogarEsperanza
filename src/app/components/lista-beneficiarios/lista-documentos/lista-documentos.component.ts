@@ -23,11 +23,6 @@ export class ListaDocumentosComponent implements OnInit {
   constructor(private docServer:DocumentosService,private personaService:PersonasService,private root:Router) { }
 
   ngOnInit(): void {
- //   this.datos=[]
- //   this.personaArray=[]
- //   this.cedulaArray=[]
- //  this.listaPersona();
- // this.listaFamiliares();
   this.actualizar()
   }
 

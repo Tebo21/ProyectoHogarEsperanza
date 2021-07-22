@@ -58,7 +58,6 @@ export class EditarBeneficiariosComponent implements OnInit {
       for(let i in data.hijos){
         this.hijosArray.push(this.familia.hijos[i])
       }
-      console.log(this.hijosArray)
     })
   }
   datosFicha(){
