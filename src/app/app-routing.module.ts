@@ -165,8 +165,8 @@ const routes: Routes = [
     component: ListarProductoDonadoComponent
   },
   {
-    path: 'a',
-    component: NavbarSuperAdminComponent
+    path: '/',
+    component: InicioSuperAdminComponent
   },
   {
     path: '**',
