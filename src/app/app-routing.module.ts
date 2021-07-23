@@ -165,10 +165,6 @@ const routes: Routes = [
     component: ListarProductoDonadoComponent
   },
   {
-    path: '/',
-    component: InicioSuperAdminComponent
-  },
-  {
     path: '**',
     pathMatch: 'full',
     redirectTo: 'login',
