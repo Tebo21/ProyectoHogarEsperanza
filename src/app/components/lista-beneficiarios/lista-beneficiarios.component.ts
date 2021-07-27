@@ -125,11 +125,8 @@ export class ListaBeneficiariosComponent implements OnInit {
         }
       }
     });  
-    console.log("listo")
   } 
-
   optenerlista(){
-    console.log(this.personaArray)
     for(let c in this.cedulaArray){
     const datosLista={
       cedula:this.personaArray[c][0], 
@@ -295,8 +292,13 @@ Swal.fire({
      this.persona.estadoActivo=false;
      this.personaService.updatePersona(this.persona).subscribe( data => {
      })
-      window.location.reload();
-    }
+     var index2 = this.datos.indexOf(this.datos.find(x => x.cedula == i));
+     this.datos.splice(index2,1);
+    this.personaArray=[]
+    this.cedulaArray=[]
+    this.familiaArray=[]
+    this.fichaArray=[]
+   }
   }
 });
    })

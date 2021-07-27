@@ -136,7 +136,6 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
    }
    cargarDatos(){
-   console.log(this.cedula_persona)
     this.personaService.getPorCedula(this.cedula_persona).subscribe(data =>{
       this.persona=data
       this.nombreCompleto = this.persona.nombres+" "+this.persona.apellidos
@@ -186,7 +185,6 @@ export class RegistroFamiliaresComponent implements OnInit {
           'success'
         )
         elimianar=true;
-        console.log(elimianar)
         var verificacion=elimianar
         if (verificacion==true){
          this.hijosArray.splice(i,1)
@@ -209,7 +207,6 @@ export class RegistroFamiliaresComponent implements OnInit {
     this.famipersona.hijos=this.hijosArray
     this.famipersonaserve.postRegistFami(this.famipersona).subscribe
     (data=>{
-      console.log("hijos registrados")
     });
     this.router.navigate(['ficha-socioeconomica'])
   }

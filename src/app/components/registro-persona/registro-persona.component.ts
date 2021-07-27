@@ -95,7 +95,6 @@ export class RegistroPersonaComponent implements OnInit {
       this.Personas.estadoActivo=true
       this.PersonasService.postPersona(this.Personas)
       .subscribe(data => {
-        console.log("persona registrada")
       },
         error => console.log(error));
       this.router.navigate(['registro-familiares'])

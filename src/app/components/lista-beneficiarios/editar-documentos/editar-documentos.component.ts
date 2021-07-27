@@ -31,7 +31,6 @@ selectedFile: FileList;
       this.documentomodel.docPersonasBeneficiarios=data.docPersonasBeneficiarios
       for(let i in data.docPersonasBeneficiarios){
         this.arrayLiStaNombres.push(this.documentomodel.docPersonasBeneficiarios[i])
-        console.log(this.documentomodel[i])
       } 
     })
   }
@@ -95,7 +94,6 @@ selectedFile: FileList;
    // this.documentoserver.postRegostroDocumentos(this.documentomodel).subscribe(data =>{ 
    // })
    this.documentoserver.updateDocumentos(this.documentomodel).subscribe( data => {
-    console.log(data) 
    })
   }
 }

@@ -27,7 +27,6 @@ export class DescargarDocumentosComponent implements OnInit {
       for(let i in data.docPersonasBeneficiarios){
          this.arrayDoc.push(this.documentomodel.docPersonasBeneficiarios[i]); 
       }
-      console.log(this.arrayDoc)
     })
   }
   descargarFile(nombre){
