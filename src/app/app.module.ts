@@ -27,7 +27,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { EspecialidadComponent } from './components/centro-medico/especialidad/especialidad.component';
 import { RegistroActividadCoordinadorComponent } from './components/registro-actividad-coordinador/registro-actividad-coordinador.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -151,7 +151,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     PasswordModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
-  providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe],
+  providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe, {provide:LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
