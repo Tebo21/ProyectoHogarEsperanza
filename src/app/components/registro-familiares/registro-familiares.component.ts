@@ -43,17 +43,13 @@ export class RegistroFamiliaresComponent implements OnInit {
     var ConfirmaValida=0
     if(cedulaPer == null){
       var cedul = document.getElementById("cedula")
-      cedul.style.backgroundColor = "#FCAFAF"
+      ConfirmaValida = ConfirmaValida + 1
+      this.PersonasFami.cedula="0000000000"
     }else{
       if(cedulaPer.length==10){
         var cedul = document.getElementById("cedula")
         cedul.style.backgroundColor = "#FFFEFE"
         ConfirmaValida = ConfirmaValida + 1 
-      }else{
-        Swal.fire({
-          title: 'Compsad',
-          icon: 'warning',
-        });
       } 
     }
      if(nombrePer == null){
@@ -74,7 +70,8 @@ export class RegistroFamiliaresComponent implements OnInit {
     }
     if(fechaNac==null){
       var feN = document.getElementById("fechaNacimiento")
-      feN.style.backgroundColor = "#FCAFAF"
+      this.PersonasFami.fechaNacimiento="00/00/00"
+      ConfirmaValida = ConfirmaValida + 1
     }else{
       var feN = document.getElementById("fechaNacimiento")
       feN.style.backgroundColor = "#FFFEFE"

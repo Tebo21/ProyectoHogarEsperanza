@@ -85,7 +85,7 @@ export class VistaFichaComponent implements OnInit {
   }
   extractData(){
     this.recargar()
-    return this.listaFamiliares.map(row =>[row[0],row[1]+" "+row[2],row[6],row[7]])
+    return this.listaFamiliares.map(row =>[row[0],row[1]+" "+row[2],row[6],row[7],row[8]])
   }
   async generarPDF(){
     this.recargar()
@@ -109,7 +109,7 @@ export class VistaFichaComponent implements OnInit {
     pdf.add(pdf.ln())
     pdf.add(new Txt("NOMBRE Y EDAD DE LOS FAMILIARES").bold().italics().end);
     pdf.add(new Table([
-      ['Cedula','Nombres','Edad','Genero'],
+      ['Cedula','Nombres','Edad','Genero','Parentesco'],
       ...this.extractData()
     ]).widths('*').layout({
       fillColor:(rowIndex:number, node:any, columnIndex:number)=>{
@@ -138,7 +138,7 @@ export class VistaFichaComponent implements OnInit {
     pdf.add(pdf.ln(8))
     pdf.add(new Txt("DATOS ESPECIFICOS PARA LA ENTREG DE AYUDA.(Esto llena el entrevistador según criterio)").italics().end);
     pdf.add(pdf.ln())
-    pdf.add(new Txt("1.¿CÓMO CALIFICA LA ACTITUD DEL ENTREVISTADOR?").italics().end);    
+    pdf.add(new Txt("1.¿CÓMO CALIFICA LA ACTITUD DEL ENTREVISTADO?").italics().end);    
     pdf.add(pdf.ln())
     pdf.add(new Txt("BUENA..........MUY BUENA..........POCO AGRADABLE..........NADA AGRADABLE..........").italics().end);    
     pdf.add(pdf.ln())

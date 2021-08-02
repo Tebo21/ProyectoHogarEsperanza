@@ -45,6 +45,10 @@ export class ListaBeneficiariosComponent implements OnInit {
   this.listaPersona();
   this.listaFamiliares();
   this.optenerlista();
+  this.datos=[]
+  this.listaPersona();
+  this.listaFamiliares();
+  this.optenerlista();
   }
 
   listaPersona(){
@@ -62,6 +66,7 @@ export class ListaBeneficiariosComponent implements OnInit {
           for(var l = this.personaArray.length -1; l >=0; l--){
             if(this.personaArray.indexOf(this.personaArray[l]) !== l) this.personaArray.splice(l,1);
           }
+          this.optenerficha();
         }
       }
      });
@@ -82,50 +87,55 @@ export class ListaBeneficiariosComponent implements OnInit {
           }
           } 
             this.familiaArray.push([this.familia.numHijos+"",totalHijos+" hijos"])
-          for(var l = this.familiaArray.length -1; l >=0; l--){
-            if(this.familiaArray.indexOf(this.familiaArray[l]) !== l) this.familiaArray.splice(l,1);
-          }
- this.fichaService.getficha().subscribe(data =>{
-    for(let c in this.cedulaArray){
-       for(let f in data){
-        this.persona.cedula=this.cedulaArray[c];
-        this.ficha=data[f];
-        if(this.persona.cedula==this.ficha.cedulaPersona){
-          var discapacidad;
-          var adultoMayor;
-          var ViveOtros;
-          if(this.ficha.discapacidad=="true"){
-            discapacidad="Si"
-          }else{
-            discapacidad="No"
-          }
-          if(this.ficha.adultoMayor==true){
-            adultoMayor="Si"
-          }else{
-            adultoMayor="No"
-          }
-          if(this.ficha.viveConOtros==true){
-            ViveOtros="Si"
-          }else{
-            ViveOtros="No"
-          }
-        this.fichaArray.push([this.ficha.tipoVivienda, 
-         this.ficha.seguro, discapacidad, this.ficha.nacionalidad, 
-         this.ficha.estadoCivil, this.ficha.salario, this.ficha.fechaRegistro.substring(0,10), 
-         adultoMayor, ViveOtros])
-         this.personaArray[c].push(this.familiaArray[c][0],this.familiaArray[c][1])
-         this.personaArray[c].push(this.fichaArray[c][0],this.fichaArray[c][1],
-         this.fichaArray[c][2],this.fichaArray[c][3],this.fichaArray[c][4],
-         this.fichaArray[c][5],this.fichaArray[c][6],this.fichaArray[c][7],this.fichaArray[c][8])
-        }
-       }
-      }
-    });
           }
         }
       }
     });  
-  } 
+  }
+  optenerficha(){
+    let numero:number=(this.cedulaArray.length)-1
+    this.fichaService.getficha().subscribe(data =>{
+    for(let h in this.cedulaArray){
+      this.persona.cedula=this.cedulaArray[h]
+      for(let f in data){
+           this.persona.cedula=this.cedulaArray[h];
+           this.ficha=data[f];
+           if(this.cedulaArray[h]==this.ficha.cedulaPersona){
+             var discapacidad;
+             var adultoMayor;
+             var ViveOtros;
+             if(this.ficha.discapacidad=="true"){
+               discapacidad="Si"
+             }else{
+               discapacidad="No"
+             }
+             if(this.ficha.adultoMayor==true){
+               adultoMayor="Si"
+             }else{
+               adultoMayor="No"
+             }
+             if(this.ficha.viveConOtros==true){
+               ViveOtros="Si"
+             }else{
+               ViveOtros="No"
+             }
+             if(this.ficha.fechaRegistro==null){
+              this.ficha.fechaRegistro="_ _/_ _/_ _/";
+             }
+           this.fichaArray.push([this.ficha.tipoVivienda, 
+            this.ficha.seguro, discapacidad, this.ficha.nacionalidad, 
+            this.ficha.estadoCivil, this.ficha.salario, this.ficha.fechaRegistro.substring(0,10), 
+            adultoMayor, ViveOtros])
+            this.personaArray[h].push(this.familiaArray[h][0],this.familiaArray[h][1])
+            this.personaArray[h].push(this.fichaArray[h][0],this.fichaArray[h][1],
+            this.fichaArray[h][2],this.fichaArray[h][3],this.fichaArray[h][4],
+            this.fichaArray[h][5],this.fichaArray[h][6],this.fichaArray[h][7],this.fichaArray[h][8])
+           }
+          }
+        }
+       });
+    }
+
   optenerlista(){
     for(let c in this.cedulaArray){
     const datosLista={
@@ -159,12 +169,10 @@ export class ListaBeneficiariosComponent implements OnInit {
     localStorage.setItem("cedulalocalstorage", i)
     this.root.navigate(['vista-ficha']);
   }
-
     ingresoeditar(i){
     localStorage.setItem("cedulalocalstorage", i)
     this.root.navigate(['editar-beneficiarios']);
   }
-
   extractData(datosTabla){
     return datosTabla.map(row =>[row.cedula,row.nombres,row.apellidos,row.celular,row.fechaNacimiento,row.edad,row.numeroHijos,
     row.tipovivienda,row.seguro,row.discapacidad,row.nacionalidad,row.estacoCIVIL,row.fecha,row.adulto])
@@ -247,7 +255,6 @@ export class ListaBeneficiariosComponent implements OnInit {
         this.saveAsExcelFile(excelBuffer, "Usuarios");
       });
     }
-
   }
   exportExcel() {
     import("xlsx").then(xlsx => {

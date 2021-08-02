@@ -21,7 +21,7 @@
                 <p style="margin-left: 70%;"></p>
                 <input [(ngModel)]="fichasocieconomicaModel.fechaRegistro"
                 name="fechaRegistro" id="fechaRegistro"  style="margin-right: 5%;"
-                type="date" class="form-control" [ngModel]="this.fichasocieconomicaModel.fechaRegistro | date:'yyyy-MM-dd'">
+                type="date" class="form-control" [ngModel]="this.fichasocieconomicaModel.fechaRegistro | date:'yyyy-MM-dd'" disabled>
               </div>
               <div class="input-group mb-3">
               <textarea [(ngModel)]="fichasocieconomicaModel.situacionEconomica" name="situacionEconomica" id="situacionEconomica" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Situación Economica"></textarea>
