@@ -10,7 +10,7 @@
   
       <div class="input-group mb-3">
         <label class="fechalabel" for="">Fecha:</label>
-        <input [(ngModel)]="fichaS.fechaRegistro" id="fecha"  class="fecha" type="text"  [ngModel]="this.fichaS.fechaRegistro | date:'yyyy-MM-dd'" disabled>
+        <input [(ngModel)]="fichaS.fechaRegistro" id="fecha"  class="fecha" type="text"  [ngModel]="this.fichaS.fechaRegistro.substring(0,10)" disabled>
       </div>
       <div class="input-group mb-3">
         <label class="labelNombre" for="">Nombres:</label>
