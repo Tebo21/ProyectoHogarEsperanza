@@ -9,13 +9,9 @@ import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { PersonasService } from '../../../services/personas.service';
 import { Personas } from '../../../models/personas';
-import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Router } from '@angular/router';
-import { NgbAlert, NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
-import { SweetAlertOptions } from 'sweetalert2';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import pdfMake from 'pdfmake/build/pdfmake';
-import jsPDF from 'jspdf';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -86,8 +82,6 @@ export class CrearCitaComponent implements OnInit {
   // tslint:disable-next-line: typedef
   reloadData(): void {
     this.citaMedica = this.citaMedicaService.listCitas();
-    console.log('Si lista');
-    console.log(this.citaMedica);
   }
 
   listCita() {
@@ -124,9 +118,7 @@ export class CrearCitaComponent implements OnInit {
   save() {
     if (this.cita.idCitasMedicas){
       this.cita.centroMedico = this.nombreSeCe;
-      console.log(this.nombreSeCe);
       this.cita.especialidad = this.nombreSeEspecialidad;
-      console.log(this.nombreSeEspecialidad);
       this.cita.paciente = this.cedulaPaciente;
       this.cita.acompaniante = this.cedulaAcom;
       this.cita.trabajadorFundacion = this.cedulaTra;
@@ -148,9 +140,7 @@ export class CrearCitaComponent implements OnInit {
       }
     }else {
       this.cita.centroMedico = this.nombreSeCe;
-      console.log(this.nombreSeCe);
       this.cita.especialidad = this.nombreSeEspecialidad;
-      console.log(this.nombreSeEspecialidad);
       this.cita.paciente = this.cedulaPaciente;
       this.cita.acompaniante = this.cedulaAcom;
       this.cita.trabajadorFundacion = this.cedulaTra;
@@ -177,8 +167,6 @@ export class CrearCitaComponent implements OnInit {
 
   deleteCita(cita: CitasMedicas) {
     const response = confirm(`¿Desea eliminar: ${cita.descripcionCitaMedica}?`);
-    console.log('RESPONSE:');
-    console.log(response);
     // tslint:disable-next-line: triple-equals
     if (response == true) {
       this.citaMedicaService.deletCita(cita.idCitasMedicas).subscribe(data => {
