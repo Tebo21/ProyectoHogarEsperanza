@@ -46,7 +46,7 @@
         </div>
         <div class="form-group ">
             <label for="acompanante"> <b>Ingrese numero de cedula del Acompanante:</b></label>
-            <input type="text" class="form-control" id="acompanante" [formControl]="cedulaac" required [(ngModel)]="cedulaAcom" name="acompanante" placeholder="Ccedula Acopañante">
+            <input type="text" class="form-control" id="acompanante" [formControl]="cedulaac" required [(ngModel)]="cedulaAcom" name="acompanante" placeholder="Cedula Acopañante">
             <p style="margin-left: 5%;"></p>
             <button type="button" class="btn btn-secondary" (click)="buscarAcompa()" [disabled]="cedulaac.invalid">Verificar informacion</button>
 
@@ -81,7 +81,7 @@
 
         <div class="form-group">
             <label for="name"><b> Ingrese numero de cedula del Trabajador de la fundacion:</b></label>
-            <input type="text" class="form-control" id="trabajador" [formControl]="cedulatra" required [(ngModel)]="cedulaTra" name="trabajador" placeholder="Cedula Acopañante">
+            <input type="text" class="form-control" id="trabajador" [formControl]="cedulatra" required [(ngModel)]="cedulaTra" name="trabajador" placeholder="Cedula trabajador">
 
             <p style="margin-left: 5%;"></p>
             <button type="button" class="btn btn-secondary" id="btn3" (click)="buscarTraba()" [disabled]="cedulatra.invalid">Verificar informacion</button>
