@@ -119,7 +119,7 @@ export class CrearActividadComponent implements OnInit {
         this._actividadservice.open.subscribe(
           (data) => {
           },
-          (error) => //console.log(error)
+          (error) => console.log(error)
         );
       },
       (error) => {

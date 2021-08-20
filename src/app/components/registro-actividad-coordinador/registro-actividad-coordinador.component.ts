@@ -29,7 +29,7 @@ export class RegistroActividadCoordinadorComponent implements OnInit {
           (data) => {
             //console.log('Datos cargado');
           },
-          (error) => //console.log('No se cargaron los datos')
+          (error) => console.log(error)
         );
       },
       (error) => {
