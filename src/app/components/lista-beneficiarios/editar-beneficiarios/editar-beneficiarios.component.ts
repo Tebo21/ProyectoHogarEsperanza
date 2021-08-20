@@ -54,6 +54,7 @@ export class EditarBeneficiariosComponent implements OnInit {
   }
   datosFamiliares(){
     this.familiaService.getfamicedula(this.cedula_persona).subscribe(data => {
+      this.familia._id=data.idRegistroFamiliares;
       this.familia.hijos=data.hijos;
       for(let i in data.hijos){
         this.hijosArray.push(this.familia.hijos[i])
@@ -140,14 +141,19 @@ eliminar(j){
    this.actualizarFicha();
  }
  actualizarFamilia(){
-   this.familia.cedulaPersona=this.cedula_persona
    this.familia.numHijos=this.hijosArray.length;
    this.familia.hijos=this.hijosArray;
-   this.familiaService.updateFamiliares(this.familia).subscribe(data => {
+   const familia={
+    cedulaPersona: this.persona.cedula,
+    hijos: this.familia.hijos,
+    idRegistroFamiliares: this.familia._id,
+   numHijos: this.familia.numHijos
+   };
+   this.familiaService.updateFamiliares(familia).subscribe(data => {
    });
  }
  actualizarFicha(){
-   this.ficha.cedulaPersona=this.cedula_persona
+   this.ficha.cedulaPersona=this.persona.cedula
    this.fichaServices.updateFicha(this.ficha).subscribe( data => {
    });
           Swal.fire(
