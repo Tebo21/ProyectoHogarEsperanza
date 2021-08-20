@@ -46,7 +46,7 @@ export class ActividadPersonaComponent implements OnInit {
         this.Person = response;
       },
       (error) => {
-        console.log(error);
+        //console.log(error);
       }
     );
   }
@@ -62,7 +62,7 @@ export class ActividadPersonaComponent implements OnInit {
         });
       },
       err=>{
-        console.log("No carga los datos")
+        //console.log("No carga los datos")
       });
   }
   showExitoso() {

@@ -22,7 +22,7 @@ export class NavbarSuperAdminComponent implements OnInit {
         { name: email.name, replyto: email.email, message: email.messages },
         { 'headers': headers }).subscribe(
           response => {
-            console.log(response);
+            //console.log(response);
           }
         );
     }

@@ -193,8 +193,8 @@ export class BuscarCitaComponent implements OnInit {
       data => {
         if (data != null){
           this.citaMedica = data;
-          console.log('se encontro');
-          console.log(this.citaMedica);
+          //console.log('se encontro');
+          //console.log(this.citaMedica);
         }else{
           alert('No hay resultados');
         }
@@ -207,8 +207,8 @@ export class BuscarCitaComponent implements OnInit {
       data => {
         if (data != null){
           this.citaMedica = data;
-          console.log('se encontro');
-          console.log(this.citaMedica);
+          //console.log('se encontro');
+          //console.log(this.citaMedica);
         }else{
           alert('No hay resultados');
         }
@@ -221,8 +221,8 @@ export class BuscarCitaComponent implements OnInit {
       data => {
         if (data != null){
           this.citaMedica = data;
-          console.log('se encontro');
-          console.log(this.citaMedica);
+          //console.log('se encontro');
+          //console.log(this.citaMedica);
         }else{
           alert('No hay resultados');
         }
@@ -235,8 +235,8 @@ export class BuscarCitaComponent implements OnInit {
       data => {
         if (data != null){
           this.citaMedica = data;
-          console.log('se encontro');
-          console.log(this.citaMedica);
+          //console.log('se encontro');
+          //console.log(this.citaMedica);
         }else{
           alert('No hay resultados');
         }

@@ -24,16 +24,16 @@ export class RegistroActividadCoordinadorComponent implements OnInit {
     this.tipoactividadservice.getAllTipos().subscribe(
       (response) => {
         this.tipoactividad = response;
-        console.log(response);
+        //console.log(response);
         this.tipoactividadservice.open.subscribe(
           (data) => {
-            console.log('Datos cargado');
+            //console.log('Datos cargado');
           },
-          (error) => console.log('No se cargaron los datos')
+          (error) => //console.log('No se cargaron los datos')
         );
       },
       (error) => {
-        console.log(error);
+        //console.log(error);
       }
     );
   }

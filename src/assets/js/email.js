@@ -19,8 +19,8 @@ async function main(correo, nombres, codigo) {
         text: 'Hola ' + nombres + ' \n' + 'tu contraseña temporal es *' + codigo + '* \n' + 'por favor cambiala una vez ingreses a tu cuenta dirigiendote a tu perfil' + ' \n' + '*Este mensaje no debe ser repondido ya que se genera de forma automática  :)*',
     });
 
-    console.log("Message sent: %s", info.messageId);
+    //console.log("Message sent: %s", info.messageId);
 
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
 }

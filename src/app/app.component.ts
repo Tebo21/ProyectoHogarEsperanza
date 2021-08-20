@@ -1,9 +1,7 @@
-import { AfterContentChecked, Component, OnInit } from '@angular/core';
-import { access } from 'node:fs';
+import { Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { ActividadesService } from './services/actividades.service';
 import { Smsrequest } from './models/sms';
-import { async } from '@angular/core/testing';
 import { DatePipe } from '@angular/common';
 import { timer } from 'rxjs';
 import { Actividades } from './models/Actividades';
@@ -46,7 +44,7 @@ export class AppComponent  implements OnInit {
             this.actividadesService.sendSmS(this.sms).subscribe((res)=>{
             })
           }else{
-            console.log('Ingrese un numero de celular correcto')
+            //console.log('Ingrese un numero de celular correcto')
           }
             fecha2="";
         }

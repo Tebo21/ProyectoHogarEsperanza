@@ -232,7 +232,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
 
   addEvent(): void {
     this.citas.forEach((res)=>{
-      console.log(res)
+      //console.log(res)
       this.citas=this.events;
       this.events = [
         ...this.events,
@@ -249,7 +249,7 @@ export class VoluntarioCalendarioComponent implements OnInit {
         },
       ];
     })
-    console.log(this.events)
+    //console.log(this.events)
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
