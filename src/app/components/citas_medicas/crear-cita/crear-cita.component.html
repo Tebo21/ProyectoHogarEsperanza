@@ -7,17 +7,17 @@
         </div>
         <br />
         <div class="form-group">
-            <label for="descripcionCitaMedica"><b>Descripcion de la cita:</b></label>
+            <label for="descripcionCitaMedica"><b>Descripción de la cita:</b></label>
             <input type="text" class="form-control" required [(ngModel)]="cita.descripcionCitaMedica" placeholder="Descripcion Cita Medica" />
         </div>
 
         <div class="form-group">
-            <label for="fechaCitaMedica"><b>Fecha de la cita medica:</b></label>
+            <label for="fechaCitaMedica"><b>Fecha de la Cita Médica:</b></label>
             <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="cita.fechaCitaMedica" type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
         </div>
 
         <div class="form-group ">
-            <label for="cedulpa"> <b>Ingrese numero de cedula del Paciente: </b></label>
+            <label for="cedulpa"> <b>Ingrese el número de cédula del Paciente: </b></label>
             <input type="text" class="form-control" [formControl]="cedulapa" id="paciente" required [(ngModel)]="cedulaPaciente" name="paciente" placeholder="Cedula paciente">
             <p style="margin-left: 5%;"></p>
             <button type="button" class="btn btn-secondary" id="btnpa" (click)="buscarPersona()" [disabled]="cedulapa.invalid">Verificar informacion</button>
@@ -29,26 +29,26 @@
                     <input type="text" class="form-control" [(ngModel)]="nombreper" disabled>
                 </div>
                 <div>
-                    <label for="email" class="form-label"><b>Correo </b></label>
+                    <label for="email" class="form-label"><b>Correo</b></label>
                     <input type="email" class="form-control" id="email" [(ngModel)]="correoper" disabled>
                 </div>
                 <div>
-                    <label for="examplePhone" class="form-label"><b>Teléfono </b></label>
+                    <label for="examplePhone" class="form-label"><b>Teléfono</b></label>
                     <input type="text" class="form-control" [(ngModel)]="telefonoper" disabled>
                 </div>
                 <p style="border: 5%;"></p>
                 <div>
-                    <button type="button" class="btn btn-info" data-dismiss="alert"> Informacion correcta</button>
+                    <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
                     <p style="border: 5%;"></p>
                     <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar Paciente</button>
                 </div>
             </div>
         </div>
         <div class="form-group ">
-            <label for="acompanante"> <b>Ingrese numero de cedula del Acompanante:</b></label>
+            <label for="acompanante"> <b>Ingrese número de cédula del Acompañante:</b></label>
             <input type="text" class="form-control" id="acompanante" [formControl]="cedulaac" required [(ngModel)]="cedulaAcom" name="acompanante" placeholder="Cedula Acopañante">
             <p style="margin-left: 5%;"></p>
-            <button type="button" class="btn btn-secondary" (click)="buscarAcompa()" [disabled]="cedulaac.invalid">Verificar informacion</button>
+            <button type="button" class="btn btn-secondary" (click)="buscarAcompa()" [disabled]="cedulaac.invalid">Verificar información</button>
 
             <p style="margin-left: 25%;"></p>
             <div *ngIf="valida2==true" class="alert alert-info" role="alert" id="alert2">
@@ -57,16 +57,16 @@
                     <input type="text" class="form-control" [(ngModel)]="nombreper2" disabled>
                 </div>
                 <div>
-                    <label for="email" class="form-label"><b>Correo </b></label>
+                    <label for="email" class="form-label"><b>Correo</b></label>
                     <input type="email" class="form-control" id="email" [(ngModel)]="correoper2" disabled>
                 </div>
                 <div>
-                    <label for="examplePhone" class="form-label"><b>Teléfono </b></label>
+                    <label for="examplePhone" class="form-label"><b>Teléfono</b></label>
                     <input type="text" class="form-control" [(ngModel)]="telefonoper2" disabled>
                 </div>
                 <p style="border: 5%;"></p>
                 <div>
-                    <button type="button" class="btn btn-info" data-dismiss="alert"> Informacion correcta</button>
+                    <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
                     <p style="border: 5%;"></p>
                     <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar Acompañante</button>
                 </div>
@@ -74,17 +74,17 @@
         </div>
 
         <div class="form-group ">
-            <label for="mensaje"><b>Ingrese el correo al que se enviara el recordatorio:</b></label>
+            <label for="mensaje"><b>Ingrese el correo al que se enviará el recordatorio:</b></label>
             <input type="text" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje" placeholder="correo">
         </div>
 
 
         <div class="form-group">
-            <label for="name"><b> Ingrese numero de cedula del Trabajador de la fundacion:</b></label>
+            <label for="name"><b>Ingrese el número de cédula del Trabajador de la fundación:</b></label>
             <input type="text" class="form-control" id="trabajador" [formControl]="cedulatra" required [(ngModel)]="cedulaTra" name="trabajador" placeholder="Cedula trabajador">
 
             <p style="margin-left: 5%;"></p>
-            <button type="button" class="btn btn-secondary" id="btn3" (click)="buscarTraba()" [disabled]="cedulatra.invalid">Verificar informacion</button>
+            <button type="button" class="btn btn-secondary" id="btn3" (click)="buscarTraba()" [disabled]="cedulatra.invalid">Verificar información</button>
 
             <p style="margin-left: 5%;"></p>
             <div *ngIf="valida3==true" id="alert3" class="alert alert-info alert-dismissible fade show" role="alert" align-items="center;" justify-content="center;">
@@ -94,16 +94,16 @@
                     <input type="text" class="form-control" [(ngModel)]="nombreper3" disabled>
                 </div>
                 <div>
-                    <label for="email" class="form-label"><b>Correo </b></label>
+                    <label for="email" class="form-label"><b>Correo</b></label>
                     <input type="email" class="form-control" id="email" [(ngModel)]="correoper3" disabled>
                 </div>
                 <div>
-                    <label for="examplePhone" class="form-label"><b>Teléfono </b></label>
+                    <label for="examplePhone" class="form-label"><b>Teléfono</b></label>
                     <input type="text" class="form-control" [(ngModel)]="telefonoper3" disabled>
                 </div>
                 <p style="border: 5%;"></p>
                 <div>
-                    <button type="button" class="btn btn-info" data-dismiss="alert"> Informacion correcta</button>
+                    <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
                     <p style="border: 5%;"></p>
                     <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar Trabajador</button>
                 </div>
@@ -166,21 +166,21 @@
     </div>
     <br />
     <div>
-        <button style="margin-left: 80% " type="button " class="btn btn-secondary btn-lg " (click)="buscar() "> Buscar por:</button>
+        <button style="margin-left: 80% " type="button " class="btn btn-secondary btn-lg " (click)="buscar() ">Buscar por:</button>
     </div>
     <br />
     <div class="container animated d-flex justify-content-center animated fadeIn">
         <table class="table table-bordered ">
             <thead>
                 <tr>
-                    <th scope="col ">Descripcion Cita Medica</th>
-                    <th scope="col ">Fecha Cita Medica</th>
+                    <th scope="col ">Descripción de la Cita Medica</th>
+                    <th scope="col ">Fecha Cita Médica</th>
                     <th scope="col ">Hora</th>
                     <th scope="col ">Paciente</th>
                     <th scope="col ">Acompañante</th>
-                    <th scope="col ">Correo </th>
+                    <th scope="col ">Correo</th>
                     <th scope="col ">Trabajador</th>
-                    <th scope="col ">Centro Medico</th>
+                    <th scope="col ">Centro Médico</th>
                     <th scope="col ">Especialidad</th>
                     <th scope="col ">Observaciones</th>
                     <th scope="col ">Opciones</th>
