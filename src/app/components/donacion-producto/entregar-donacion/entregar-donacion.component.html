@@ -186,6 +186,11 @@
                         <input class="form-control" type="text" id="productoname" placeholder="Producto"
                             [(ngModel)]="productoEntrega.nombreDonacion" name="productoname" required disabled>
                     </div>
+                    <div class="form-floating mb-3">
+                        <label for="floatingInput">Fecha</label>
+                        <input class="form-control" type="date" id="fechaDonacion"
+                            [ngModel]="today | date:'yyyy-MM-dd'" (ngModelChange) = "today = $event" name="fechaDonacion" required>
+                    </div>
                 
                     <div class="form-floating mb-3">
                         <label for="floatingInput">Descripcion del producto</label>

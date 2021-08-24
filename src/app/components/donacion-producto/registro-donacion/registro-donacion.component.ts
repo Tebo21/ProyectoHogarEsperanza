@@ -202,8 +202,13 @@ export class RegistroDonacionComponent implements OnInit {
     this.cedulasDonadores = [];
     this.fechaDonaciones = [];
 
+    let fecha = new Date(this.today)
+    if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0){
+      fecha.setMinutes(fecha.getMinutes() + 480);
+    } 
+
     this.cedulasDonadores.push(this.cedula);
-    this.fechaDonaciones.push(this.today);
+    this.fechaDonaciones.push(fecha);
 
     this.donacion.cedulaPersona = this.cedulasDonadores;
     this.donacion.fechaDonacion = this.fechaDonaciones;
@@ -254,8 +259,15 @@ export class RegistroDonacionComponent implements OnInit {
 
   agregarDonacion() {
     if (this.cedula != undefined && this.cedula != '' && this.addCantidad > 0){
+      let fecha = new Date(this.today);
+
+      if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0){
+        console.log('hola mundo')
+        fecha.setMinutes(fecha.getMinutes() + 480);
+      }      
+
       this.addProducto.cedulaPersona.push(this.cedula);
-      this.addProducto.fechaDonacion.push(this.today);
+      this.addProducto.fechaDonacion.push(fecha);
 
       this.addProducto.cantidad = this.addProducto.cantidad + this.addCantidad;
 
@@ -324,8 +336,13 @@ export class RegistroDonacionComponent implements OnInit {
   agregarDonador() {
     if (this.cedula == 'Anónimo' || this.cedula.length >= 10) {
     
+      let fecha = new Date(this.today);
+      if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0){
+        fecha.setMinutes(fecha.getMinutes() + 480);
+      } 
+
       this.editProducto.cedulaPersona.push(this.cedula);
-      this.editProducto.fechaDonacion.push(this.today);
+      this.editProducto.fechaDonacion.push(fecha);
     
       this.listaDonadores = [];
       for (

@@ -190,7 +190,7 @@
                         <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Fecha:</label>
-                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
+                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" (ngModelChange) = "today = $event" name="fechaDonacion" required>
                             </div>
                         </div>
                     </div>
@@ -273,7 +273,7 @@
                                 <input class="form-control" type="date" placeholder="Fecha Nacimiento" [(ngModel)]="fecha_nac" name="fechaNacimiento" required disabled>
                             </div>
                             <button pButton pRipple type="button" label="Registrar Donador" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                                            style="color: #008cff; min-width: 100%;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-user-plus"
+                                            style="color: #008cff; min-width: 100%;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-external-link"
                                             (click)="registrarDonador()"></button>
                         </div>
                     </div>
@@ -293,7 +293,7 @@
                         <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Fecha:</label>
-                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
+                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" (ngModelChange) = "today = $event" name="fechaDonacion" required>
                             </div>
                         </div>
                     </div>
@@ -349,29 +349,21 @@
                                 <th pSortableColumn="cedulaAdd">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Cedula Donador
-                                        <!-- <p-sortIcon field="cedulaAdd"></p-sortIcon>
-                                        <p-columnFilter type="text" field="cedulaAdd" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 <th pSortableColumn="nombresAdd">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Nombres
-                                        <!-- <p-sortIcon field="nombresAdd"></p-sortIcon>
-                                        <p-columnFilter type="text" field="nombresAdd" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 <th pSortableColumn="apellidosAdd">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Apellidos
-                                        <!-- <p-sortIcon field="apellidosAdd"></p-sortIcon>
-                                        <p-columnFilter type="text" field="apellidosAdd" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                                 <th pSortableColumn="fechaAdd">
                                     <div class="p-d-flex p-jc-between p-ai-center">
                                         Fecha Donacion
-                                        <!-- <p-sortIcon field="fechaAdd"></p-sortIcon>
-                                        <p-columnFilter type="date" field="fechaAdd" display="menu" class="p-ml-auto"></p-columnFilter> -->
                                     </div>
                                 </th>
                             </tr>
@@ -428,7 +420,7 @@
                         <div style="float: right;" class="inpcont">
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Fecha:</label>
-                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" name="fechaDonacion" required disabled>
+                                <input class="form-control" type="date" id="fechaDonacion" [ngModel]="today | date:'yyyy-MM-dd'" (ngModelChange) = "today = $event" name="fechaDonacion" required>
                             </div>
                         </div>
                     </div>

@@ -31,7 +31,7 @@ export class EntregarDonacionComponent implements OnInit {
   direccionBeneficiario: string;
 
   valBeneficiario: boolean = false;
-  today: Date;
+  today: Date = new Date();
   
 
   displayPE: boolean = false;
@@ -199,7 +199,11 @@ export class EntregarDonacionComponent implements OnInit {
           this.entregaDonacion.cantidadEntregada = this.cantidadEntrega;
           this.entregaDonacion.cedulaBeneficiario = this.cedulaBeneficiario;
           //this.entregaDonacion.descripcionProducto = this.productoEntrega.descripcionDonacion;
-          this.entregaDonacion.fechaEntrega = this.today = new Date;
+          let fecha = new Date(this.today);
+          if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0){
+            fecha.setMinutes(fecha.getMinutes() + 480);
+          }
+          this.entregaDonacion.fechaEntrega = fecha;
           this.entregaDonacion.productoEntregado = this.productoEntrega.nombreDonacion;
 
           this.entregarDonacionService
