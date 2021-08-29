@@ -13,6 +13,10 @@
         <input [(ngModel)]="fichaS.fechaRegistro" id="fecha"  class="fecha" type="text"  [ngModel]="this.fichaS.fechaRegistro.substring(0,10)" disabled>
       </div>
       <div class="input-group mb-3">
+        <label class="labelCedula" for="">Cedula:</label>
+        <input  [(ngModel)]="persona.cedula" class="Cedula" id="Cedula" type="text" disabled>
+      </div>
+      <div class="input-group mb-3">
         <label class="labelNombre" for="">Nombres:</label>
         <input  value="{{nombreCompleto}}" class="Nombres" id="Nombres" type="text" disabled>
       </div>

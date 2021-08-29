@@ -94,6 +94,7 @@ export class VistaFichaComponent implements OnInit {
     pdf.add(new Txt("Hoja de Registro").bold().italics().alignment('center').end);
     pdf.add(pdf.ln(3))
     pdf.add(new Txt("FECHA: "+((document.getElementById("fecha") as HTMLInputElement).value)).italics().end);
+    pdf.add(new Txt("Cedula: "+((document.getElementById("Cedula") as HTMLInputElement).value)).italics().end);
     pdf.add(new Txt("NOMBRES: "+((document.getElementById("Nombres") as HTMLInputElement).value)).italics().end);
     pdf.add(new Txt("DIRECCIÓN EXACTA: "+((document.getElementById("Direccion") as HTMLInputElement).value)).italics().end);
     pdf.add(new Txt("TELEFONO: "+((document.getElementById("Telefono") as HTMLInputElement).value)).italics().end);
