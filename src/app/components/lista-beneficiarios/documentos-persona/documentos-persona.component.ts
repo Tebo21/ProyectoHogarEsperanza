@@ -3,6 +3,7 @@ import { DocumentosBeneficiarios } from '../../../models/documentos-beneficiario
 import { DocumentosService } from '../../../services/documentos.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-documentos-persona',
@@ -10,6 +11,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./documentos-persona.component.css']
 })
 export class DocumentosPersonaComponent implements OnInit {
+  archivos:any=[];
+  listaIMAGENES:any=[];
+  previsualizar:string;
+  nombreDoc:any;
   selectedFile: FileList;   
   arrayLista:any=[];
   arrayLiStaNombres:any=[];
@@ -19,23 +24,61 @@ export class DocumentosPersonaComponent implements OnInit {
   tipoDocumento:String;
   documentomodel:DocumentosBeneficiarios = new  DocumentosBeneficiarios();
   cedula_persona:string = localStorage.getItem('cedulalocalstorage');
-  constructor(private documentoserver:DocumentosService,private root:Router) {
+  constructor(private sant:DomSanitizer,private documentoserver:DocumentosService,private root:Router) {
    }
 
   ngOnInit(): void {
   }
 
-  selectFile(event){
+  selectFile(event):any{
+    this.archivos=[];
+    this.listaIMAGENES=[];
     if(this.tipoDocumento==null){
       alert("seleccione el tipo de documento")
-    }else{
-    this.selectedFile = event.target.files;
-    this.arrayLista.push(this.selectedFile)
-    this.arrayLiStaNombres.push([this.tipoDocumento,event.target.files[0].name])
+  }else{
+   //carga de documentos de base 64
+   for(var i=0;i<=File.length;i++){
+    var read = new FileReader();
+    console.log(read);
+    read.readAsDataURL(event.target.files[i])
+    this.nombreDoc=event.target.files[i].name;
+    read.onload = (event:any)=>{
+      this.archivos.push(event.target.result)
+    }
+   }
+   this.archivos.forEach(archis => {
+    this.extraerBASE64(archis).then((imagen:any)=>{
+      this.previsualizar = imagen.base;
+    });
+   });
+   this.listaIMAGENES.push(this.archivos)
+   console.log(this.listaIMAGENES)
+   return this.archivos;
+   //inicio carga de documentos de aws 
+   console.log(this.nombreDoc) 
+    this.arrayLiStaNombres.push([this.tipoDocumento,this.nombreDoc])
     this.tipoDocumento=null;
+    this.nombreDoc=null;
     }
     this.valueFile=null
   }
+  extraerBASE64=async($event:any)=> new Promise ((resolve, reject)=>{
+    try {
+      const usafeimg = window.URL.createObjectURL($event);
+      const image = this.sant.bypassSecurityTrustUrl(usafeimg);
+      let reader = new FileReader();
+      reader.readAsDataURL($event);
+      reader.onload = () =>{
+        resolve({
+          blob:$event,
+          image,
+          base:reader.result as string
+        });
+      };
+    } catch (error) {
+      return null+"erro cargade imagenes"
+    }
+  });
   upload(){
     let i: number = 0;
     var numero= this.arrayLista.length

@@ -42,7 +42,7 @@
                 <td>{{user[0]}}</td>
                 <td>{{user[1]}}</td>
                 <td>
-                  <a (click)="descargarFile(user[1])" href="{{linkDescarga}}">
+                  <a (click)="downLoadFile(user[2],user[1].substring(7,10))" href="{{linkDescarga}}">
                      <button pButton pRipple type="button" icon="pi pi-download" class="p-button-rounded">
                       </button>
                     </a>  

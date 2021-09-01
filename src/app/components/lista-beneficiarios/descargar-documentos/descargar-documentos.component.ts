@@ -26,9 +26,18 @@ export class DescargarDocumentosComponent implements OnInit {
       this.documentomodel.docPersonasBeneficiarios=data.docPersonasBeneficiarios;
       for(let i in data.docPersonasBeneficiarios){
          this.arrayDoc.push(this.documentomodel.docPersonasBeneficiarios[i]); 
+         console.log(this.arrayDoc)
       }
     })
   }
+  downLoadFile(data: any, type: string) {
+    let blob = new Blob([data], { type: type});
+    let url = window.URL.createObjectURL(blob);
+    let pwa = window.open(url);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+        alert( 'Please disable your Pop-up blocker and try again.');
+    }
+}
   descargarFile(nombre){
     const carpetafile=this.cedula_persona
     this.linkDescarga=this.documentoserver.dowloadedFile(carpetafile,nombre)
