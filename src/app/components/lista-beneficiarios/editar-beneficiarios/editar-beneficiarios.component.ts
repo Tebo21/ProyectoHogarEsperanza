@@ -42,6 +42,15 @@ export class EditarBeneficiariosComponent implements OnInit {
   constructor(private personaService: PersonasService, private familiaService: RegistroFamiliaresService, private fichaServices: FichaSocioeconomicaService,private root:Router) { }
 
   ngOnInit(): void {
+    this.recargar()
+  } 
+
+  recargar(){
+          this.datosPersona();
+  }
+
+  reload(){
+    window.location.reload()
     this.datosPersona();
   }
 

@@ -6,6 +6,13 @@
   <div class="card-header mb-3">
    <h4>Documentos Beneficiario</h4>
    </div>
+   <div *ngIf="fileStatus.status==='progress'">
+    <div class="progress">
+      <div [style.width.%]="fileStatus.percent" class="progress-bar progress-bar-animated bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+          {{ fileStatus.requestType }} {{ fileStatus.percent }} 
+        </div>
+    </div>
+  </div> <hr>
 <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
 <select  [(ngModel)]="this.tipoDocumento" name="tipoarchivo" id="tipoarchivo" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="archivo">
   <option selected disabled="Documento">Documento</option>
@@ -19,9 +26,26 @@
   <option  value="Documentación extra Familiares">Documentación extra Familares</option>
   <option  value="Otros">Otros</option>
 </select>
-<input id="inputFile" type="file" accept=".jpg, .jpag, .png" (change)="selectFile($event)" value="this.valueFile" multiple>
+<form enctype="multipart/form-data">
+  <fieldset>
+    <div class="form-group">
+      <div>
+        <input type="file" (change)="selectFile($event)" name="files"  class="form-control" />
+      </div>
+    </div>
+  </fieldset>
+</form>
 </div></div></div></div>
-<br><br><br>
+<br>
+<div *ngIf="filenames?.length > 0" class="js-upload-finished">
+  <h3>Archivo Cargado y Listo</h3>
+  <div *ngFor="let filename of filenames" class="list-group">
+    <a  class="list-group-item list-group-item-success" style="cursor: pointer;">
+      {{ filename }}            
+      <a class="alert-success float-right"></a>
+    </a><br>
+  </div>
+</div>
   <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
     <p-table #dt [rows]="10"  [scrollable]="true" class="table table-responsive" 
         scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
@@ -65,13 +89,7 @@
         </ng-template>
     </p-table>  
 </div>
-<div class="container">
-  <div class="modal-body ">  
-<div class="progress">
-  <div class="progress-bar" role="progressbar" style="width: tiempoCarga"  
-  aria-valuemin="0" >{{this.tiempoCarga}}</div>
-</div></div></div>
 <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-  <button type="button" class="btn btn-success" 
-  (click)="upload()">Guardar Documentos</button>
+  <button type="button" class="btn btn-success"  
+ (click)="upload()">Guardar Documentos</button>
 </div>

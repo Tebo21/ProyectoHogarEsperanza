@@ -37,14 +37,15 @@ export class VistaFichaComponent implements OnInit {
   
   ngOnInit(): void {
     this.recargar()
-    this.cargarFamilia();
-    this.cargarDatos();
-    this.cargarFicha();
   }
   recargar(){
     this.cargarFamilia();
     this.cargarDatos();
     this.cargarFicha();
+  }
+  reload(){
+    window.location.reload()
+    this.recargar();
   }
   cargarDatos(){
     this.personService.getPorCedula(this.cedula_persona).subscribe(data =>{

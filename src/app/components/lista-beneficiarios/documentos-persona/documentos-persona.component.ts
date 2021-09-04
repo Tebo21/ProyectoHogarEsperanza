@@ -4,98 +4,91 @@ import { DocumentosService } from '../../../services/documentos.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { HttpEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-documentos-persona',
   templateUrl: './documentos-persona.component.html',
   styleUrls: ['./documentos-persona.component.css']
 })
-export class DocumentosPersonaComponent implements OnInit {
-  archivos:any=[];
+export class DocumentosPersonaComponent implements OnInit { 
   listaIMAGENES:any=[];
-  previsualizar:string;
+  filenames: string[]=[];
+  fileStatus = { status: '', requestType: '', percent: 0 };
   nombreDoc:any;
-  selectedFile: FileList;   
-  arrayLista:any=[];
   arrayLiStaNombres:any=[];
-  valueFile:any;
-  tiempoCarga:any;
-  cantidad:any;
   tipoDocumento:String;
   documentomodel:DocumentosBeneficiarios = new  DocumentosBeneficiarios();
   cedula_persona:string = localStorage.getItem('cedulalocalstorage');
   constructor(private sant:DomSanitizer,private documentoserver:DocumentosService,private root:Router) {
    }
-
   ngOnInit(): void {
   }
-
+  reperarevent(event:any){
+    const files=event.target.files;
+    this.onUpload(files)
+    }
+    onUpload(files: File[]):void{
+      const formData = new FormData();
+      for(const file of files){
+      formData.append('files',file,file.name);
+    }
+      this.documentoserver.upload(formData).subscribe(event=>
+        this.resportProgress(event),
+      (error: HttpErrorResponse)=>console.log(error)
+      );
+    }
+    private resportProgress(httpEvent: HttpEvent<string[] | Blob>): void {
+      switch(httpEvent.type) {
+        case HttpEventType.UploadProgress:
+          this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Uploading... ');
+          break;
+        case HttpEventType.DownloadProgress:
+          this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Downloading... ');
+          break;
+        case HttpEventType.ResponseHeader:
+          break;
+        case HttpEventType.Response:
+          if (httpEvent.body instanceof Array) {
+            this.fileStatus.status = 'done';
+            for (const filename of httpEvent.body) {
+              this.filenames.unshift(filename);
+            }
+          } else {
+            saveAs(new File([httpEvent.body!], httpEvent.headers.get('File-Name')!, 
+                    {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}));
+             saveAs(new Blob([httpEvent.body!], 
+               { type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}),
+                httpEvent.headers.get('File-Name'));
+          }
+          this.fileStatus.status = 'done';
+          break;
+          default:
+            break;
+        
+      }
+    }
+    private updateStatus(loaded: number, total: number, requestType: string): void {
+      this.fileStatus.status = 'progress';
+      this.fileStatus.requestType = requestType;
+      this.fileStatus.percent = Math.round(100 * loaded / total);
+    }
+  ///////////////////////////////
   selectFile(event):any{
-    this.archivos=[];
     this.listaIMAGENES=[];
     if(this.tipoDocumento==null){
       alert("seleccione el tipo de documento")
   }else{
-   //carga de documentos de base 64
+    this.reperarevent(event)
    for(var i=0;i<=File.length;i++){
-    var read = new FileReader();
-    console.log(read);
-    read.readAsDataURL(event.target.files[i])
     this.nombreDoc=event.target.files[i].name;
-    read.onload = (event:any)=>{
-      this.archivos.push(event.target.result)
-    }
-   }
-   this.archivos.forEach(archis => {
-    this.extraerBASE64(archis).then((imagen:any)=>{
-      this.previsualizar = imagen.base;
-    });
-   });
-   this.listaIMAGENES.push(this.archivos)
-   console.log(this.listaIMAGENES)
-   return this.archivos;
-   //inicio carga de documentos de aws 
-   console.log(this.nombreDoc) 
     this.arrayLiStaNombres.push([this.tipoDocumento,this.nombreDoc])
+    }
     this.tipoDocumento=null;
     this.nombreDoc=null;
     }
-    this.valueFile=null
   }
-  extraerBASE64=async($event:any)=> new Promise ((resolve, reject)=>{
-    try {
-      const usafeimg = window.URL.createObjectURL($event);
-      const image = this.sant.bypassSecurityTrustUrl(usafeimg);
-      let reader = new FileReader();
-      reader.readAsDataURL($event);
-      reader.onload = () =>{
-        resolve({
-          blob:$event,
-          image,
-          base:reader.result as string
-        });
-      };
-    } catch (error) {
-      return null+"erro cargade imagenes"
-    }
-  });
-  upload(){
-    let i: number = 0;
-    var numero= this.arrayLista.length
-    this.tiempoCarga="40%"
-    while (i <= numero) {
-      if(i==numero){
-        this.tiempoCarga="100%"
-        alert("Documentos Guardados")
-        this.addDocumentos();
-        this.root.navigate(['lista-documentos']);
-      }
-      this.selectedFile=this.arrayLista[i]
-      const file = this.selectedFile.item(0);
-      this.documentoserver.uploadfile(this.cedula_persona,file);
-      i++;
-    }
-   }
     eliminar(i){
     var elimianar
     Swal.fire({
@@ -115,12 +108,16 @@ export class DocumentosPersonaComponent implements OnInit {
         elimianar=true;
         var verificacion=elimianar
         if (verificacion==true){
-            this.arrayLista.splice(i,1);
             this.arrayLiStaNombres.splice(i,1);
         }
       }
     });
   }
+  upload(){
+        alert("Documentos Guardados")
+        this.addDocumentos();
+        this.root.navigate(['lista-documentos']);
+   }
   addDocumentos(){
     this.documentomodel.cedulaPersona=this.cedula_persona;
     this.documentomodel.docPersonasBeneficiarios=this.arrayLiStaNombres;

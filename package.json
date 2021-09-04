@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -23,6 +23,7 @@
     "@angular/router": "~9.1.11",
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
     "@popperjs/core": "^2.9.2",
+    "@types/file-saver": "^2.0.3",
     "angular-calendar": "^0.28.24",
     "angularx-flatpickr": "^6.5.1",
     "aws-sdk": "^2.941.0",
