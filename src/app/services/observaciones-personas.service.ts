@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ObservacionesPersonasService {
-  private URL='http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/observacionesPersonas';
+  private URL='http://192.168.0.171:3000/observacionesPersonas';
   constructor(private http:HttpClient) { }
 
   postObservacion(observacionesPersonas:ObservacionesPersonas):Observable<any>{

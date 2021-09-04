@@ -12,7 +12,7 @@ export class UsuarioService {
 
   //Logear Usuario
   getQueryLogin(query: string, usuarioCedula: string, usuarioContrasenia: string, usuarioTipo: number): Observable<Usuarios> {
-    const url = `http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/${query}?usuarioCedula=${usuarioCedula}&usuarioContrasenia=${usuarioContrasenia}&usuarioTipo=${usuarioTipo}`;
+    const url = `http://192.168.0.171:3000/${query}?usuarioCedula=${usuarioCedula}&usuarioContrasenia=${usuarioContrasenia}&usuarioTipo=${usuarioTipo}`;
     return this.http.request<Usuarios>('get', url);
   }
 
@@ -22,7 +22,7 @@ export class UsuarioService {
   }
 
   QueryAddUser(query: String, usuario: Usuarios) {
-    const url = `http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/${query}`;
+    const url = `http://192.168.0.171:3000/${query}`;
     return this.http.request<Usuarios>('post', url, {
       body: usuario
     });
@@ -33,12 +33,12 @@ export class UsuarioService {
   }
 
   getAll(): Observable<any> {
-    const url = `http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/getAll-usuario`;
+    const url = `http://192.168.0.171:3000/getAll-usuario`;
     return this.http.get<Usuarios>(url);
   }
 
   QueryDeleteUser(query: String, idUsuario: number) {
-    const url = `http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/${query}/${idUsuario}`;
+    const url = `http://192.168.0.171:3000/${query}/${idUsuario}`;
     return this.http.request<Usuarios>('delete', url);
   }
 
@@ -48,7 +48,7 @@ export class UsuarioService {
   }
 
   QueryUpdateUser(query: String, usuario: Usuarios) {
-    const url = `http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/${query}`;
+    const url = `http://192.168.0.171:3000/${query}`;
     return this.http.request<Usuarios>('put', url, {
       body: usuario
     });
@@ -60,7 +60,7 @@ export class UsuarioService {
 
   //Traer Usuario Especifico
   getQueryUserByCedula(query: string, usuarioCedula: string): Observable<Usuarios> {
-    const url = `http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/${query}?usuarioCedula=${usuarioCedula}`;
+    const url = `http://192.168.0.171:3000/${query}?usuarioCedula=${usuarioCedula}`;
     return this.http.request<Usuarios>('get', url);
   }
 

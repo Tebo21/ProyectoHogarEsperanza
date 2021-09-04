@@ -7,7 +7,7 @@ import { EntregaDonacion } from '../models/EntregaDonacion';
 })
 export class EntregarDonacionService {
 
-  private URL = "http://ec2-18-222-23-30.us-east-2.compute.amazonaws.com:3000/entregaDonacion/";  
+  private URL = "http://192.168.0.171:3000/entregaDonacion/";  
 
   constructor(private http: HttpClient) { }
 

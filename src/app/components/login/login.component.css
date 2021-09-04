@@ -327,3 +327,7 @@ a {
 :host ::ng-deep .p-password input {
   width: 19rem
 }
+
+a:hover {
+  
+}
