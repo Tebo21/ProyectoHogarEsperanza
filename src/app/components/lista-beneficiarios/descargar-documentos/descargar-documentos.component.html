@@ -6,6 +6,13 @@
   <div class="card-header mb-3">
    <h4>Documentos Beneficiario</h4>
    </div>
+   <div *ngIf="fileStatus.status==='progress'">
+    <div class="progress">
+      <div [style.width.%]="fileStatus.percent" class="progress-bar progress-bar-animated bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+          {{ fileStatus.requestType }} {{ fileStatus.percent }} 
+        </div>
+    </div>
+  </div> <hr>
   <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
     <p-table #dt [rows]="10"  [scrollable]="true" class="table table-responsive" 
         scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
@@ -42,7 +49,7 @@
                 <td>{{user[0]}}</td>
                 <td>{{user[1]}}</td>
                 <td>
-                  <a (click)="downLoadFile(user[2],user[1].substring(7,10))" href="{{linkDescarga}}">
+                  <a  (click)="onDownloadFile(user[1])">
                      <button pButton pRipple type="button" icon="pi pi-download" class="p-button-rounded">
                       </button>
                     </a>  
