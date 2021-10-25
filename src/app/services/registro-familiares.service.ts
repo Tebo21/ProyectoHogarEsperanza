@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistroFamiliaresService {
-  private URL='http://192.168.0.171:3000/registroFamiliares';
+  private URL='http://192.168.0.199:3000/registroFamiliares';
   constructor(private http:HttpClient) { }
 
   postRegistFami(familiaresPersona:RegistroFamiliares):Observable<any>{

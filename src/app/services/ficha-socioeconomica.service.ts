@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FichaSocioeconomicaService {
-  private URL='http://192.168.0.171:3000/fichaSocioeconomica';
+  private URL='http://192.168.0.199:3000/fichaSocioeconomica';
   constructor(private http:HttpClient) { }
 
   postFichaSocio(fichasocioeonomica:FichaSocioeconomica):Observable<any>{

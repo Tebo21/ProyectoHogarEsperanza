@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DocumentosBeneficiarios } from '../models/documentos-beneficiarios';
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
-import { S3 } from 'aws-sdk';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentosService {
-  private URL='http://192.168.0.171:3000/documentosBeneficiarios';
+  private URL='http://192.168.0.199:3000/documentosBeneficiarios';
   FOLDER = 'jsa-s3/';
 
   constructor(private http:HttpClient) { }

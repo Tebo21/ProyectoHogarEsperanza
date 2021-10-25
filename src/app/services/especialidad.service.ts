@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class EspecialidadService {
 
-  private conexion = 'http://192.168.0.171:3000/especialidad';
+  private conexion = 'http://192.168.0.199:3000/especialidad';
 
   constructor(private http: HttpClient){}
 

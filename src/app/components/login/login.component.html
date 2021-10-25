@@ -28,34 +28,30 @@
                             <br>
                             <div class="row px-3">
                                 <label class="mb-0">
-                                    <h6 class="mb-0 text-sm">Cédula de Identidad</h6>
+                                    <h5 class="mb-0 text-sm">Cédula de Identidad</h5>
                                 </label>
                                 <input class="mb-4" type="text" [(ngModel)]="user.usuarioCedula"
                                     name="user.usuarioCedula" placeholder="Número de cédula de identidad">
                             </div>
                             <div class="row px-1">
                                 <label class="mb-0">
-                                    <h6 class="mb-0 text-sm">Contraseña</h6>
+                                    <h5 class="mb-0 text-sm" style="padding-left: 2px;">Contraseña</h5>
                                 </label>
                                 <p-password class="mb-4" [(ngModel)]="user.usuarioContrasenia" [toggleMask]="true"
                                     name="user.usuarioContrasenia" placeholder="Contraseña" [feedback]="false"></p-password>
                             </div>
                             <div class="row px-1">
-                                <h4 class="mb-0 text-sm">Selecciona un tipo de usuario</h4>
+                                <h4 class="mb-0 text-sm">Seleccione un tipo de usuario</h4>
                                 <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario"
                                     optionLabel="string" [style]="{'width': '100%'}" [showClear]="true"
                                     (onChange)="onChange($event)">
                                 </p-dropdown>
                             </div>
                             <br>
-                            <div class="row px-0 mb-4">
-                                <a (click)="displayPass=true" class="ml-auto mb-0 text-sm">¿Olvidaste tu contraseña?</a>
-                            </div>
-                            <div class="row mb-3 px-3">
+                            <div class="row mb-3 px-3" style="padding-top: 8px;">
                                 <button pButton pRipple type="button" label="Iniciar
                                 Sesión" (click)='Validar()' class="p-button-outlined p-button-info"></button>
                             </div>
-                            <a style="width: 50px;" (click)='Validar()' target="_blank" rel="noopener noreferrer">Validar</a>
                         </div>
                     </div>
                 </div>

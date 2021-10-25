@@ -8,7 +8,7 @@ import { CitasMedicas } from '../models/citas-medicas';
 })
 export class CitaMedicaService {
 
-  url = 'http://192.168.0.171:3000/citasMedicas';
+  url = 'http://192.168.0.199:3000/citasMedicas';
 
   constructor(private httpClient: HttpClient) { }
 
