@@ -69,3 +69,15 @@
     padding: 3px;
     background-color: #000;
 }
+
+.false-icon {
+    color: #fa0e0e;
+  }
+  
+  .true-icon {
+    color: green;
+  }
+
+  .false-icon, .true-icon {
+    font-size: 28px;
+  }

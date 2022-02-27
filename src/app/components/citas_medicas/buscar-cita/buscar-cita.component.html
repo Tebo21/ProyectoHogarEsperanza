@@ -126,6 +126,13 @@
                             <p-columnFilter type="text" field="nota" display="menu" class="p-ml-auto"></p-columnFilter>
                         </div>
                     </th>
+                    <th pSortableColumn="asistencia">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Asistencia
+                            <p-sortIcon field="asistencia"></p-sortIcon>
+                            <p-columnFilter type="text" field="asistencia" display="menu" class="p-ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-u>
@@ -165,6 +172,10 @@
                     </td>
                     <td>
                         {{ u.nota }}
+                    </td>
+                    <td>
+                        <i class="pi"
+                        [ngClass]="{'true-icon pi-check-circle': u.asistencia, 'false-icon pi-times-circle': !u.asistencia}"></i>
                     </td>
                 </tr>
             </ng-template>

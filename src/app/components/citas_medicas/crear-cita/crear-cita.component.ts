@@ -5,7 +5,7 @@ import { CitaMedicaService } from '../../../services/cita-medica.service';
 import { CentroMedicoService } from '../../../services/centro-medico.service';
 import { EspecialidadService } from '../../../services/especialidad.service';
 import { Especialidad } from '../../../models/especialidad';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { PersonasService } from '../../../services/personas.service';
 import { Personas } from '../../../models/personas';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { ActividadesService } from 'src/app/services/actividades.service';
 import pdfMake from 'pdfmake/build/pdfmake';
 import { formatDate } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-cita',
@@ -28,15 +29,16 @@ export class CrearCitaComponent implements OnInit {
   especialidad: Especialidad[] = [];
   nombreSeCe: string;
   nombreSeEspecialidad: string;
+  asistencia: boolean;
 
   // persona
   cedulapa = new FormControl('', [Validators.required]);
   cedulaac = new FormControl('', [Validators.required]);
   cedulatra = new FormControl('', [Validators.required]);
 
-  today= new Date();
+  today = new Date();
   fCitaMedica: Date;
-  
+
   fechaRegistro = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-ECU', '+0593');
   fechaCita: string;
   cedulaPaciente: string;
@@ -61,14 +63,16 @@ export class CrearCitaComponent implements OnInit {
   // validaciones
   response_condicion: boolean = false;
   response_msg: string;
-
+  //Asistencia
+  faltas: any;
+  personaValidar: Personas = {};
 
   constructor(private citaMedicaService: CitaMedicaService,
-              private serviCentro: CentroMedicoService,
-              private serviceEspecialidad: EspecialidadService,
-              private personaService: PersonasService,
-              public _actividadservice: ActividadesService,
-              private router: Router) { }
+    private serviCentro: CentroMedicoService,
+    private serviceEspecialidad: EspecialidadService,
+    private personaService: PersonasService,
+    public _actividadservice: ActividadesService,
+    private router: Router) { }
 
   // tslint:disable-next-line: typedef
   ngOnInit(): void {
@@ -76,6 +80,7 @@ export class CrearCitaComponent implements OnInit {
     this.listCentro();
     this.listEspecialidad();
     this.listCita();
+    this.asistencia = false;
   }
 
 
@@ -90,19 +95,19 @@ export class CrearCitaComponent implements OnInit {
     });
   }
 
-  listCentro(){
+  listCentro() {
     this.serviCentro.listCentro().subscribe(data => {
-        this.centro = data;
+      this.centro = data;
     });
   }
 
-  listEspecialidad(){
+  listEspecialidad() {
     this.serviceEspecialidad.listEspecialidad().subscribe(data => {
-        this.especialidad = data;
+      this.especialidad = data;
     });
   }
 
-  openForEdit(citan: CitasMedicas){
+  openForEdit(citan: CitasMedicas) {
     this.cita = citan;
     this.cedulaPaciente = citan.paciente;
     this.cedulaAcom = citan.acompaniante;
@@ -111,34 +116,36 @@ export class CrearCitaComponent implements OnInit {
     this.nombreSeEspecialidad = citan.especialidad;
     this.fechaRegistro = citan.fechaRegistro;
     this.fechaCita = citan.fechaCitaMedica;
+    this.asistencia = citan.asistencia;
     //this.today.
   }
 
   // tslint:disable-next-line: typedef
   save() {
-    if (this.cita.idCitasMedicas){
+    if (this.cita.idCitasMedicas) {
       this.cita.centroMedico = this.nombreSeCe;
       this.cita.especialidad = this.nombreSeEspecialidad;
       this.cita.paciente = this.cedulaPaciente;
       this.cita.acompaniante = this.cedulaAcom;
       this.cita.trabajadorFundacion = this.cedulaTra;
       this.cita.fechaRegistro = this.fechaRegistro;
+      this.cita.asistencia = this.asistencia;
       // tslint:disable-next-line: triple-equals
-      if (this.validar_datos(this.cita) == true){
-      this.citaMedicaService.updateCita(this.cita.idCitasMedicas, this.cita).subscribe(
-        data => {
-          if (data){
-            alert('Cita Medica editada');
-            this.reloadData();
-            this.listCentro();
-            this.listEspecialidad();
-            this.cita = new CitasMedicas();
-            this.limpiarCampo();
+      if (this.validar_datos(this.cita) == true) {
+        this.citaMedicaService.updateCita(this.cita.idCitasMedicas, this.cita).subscribe(
+          data => {
+            if (data) {
+              alert('Cita Medica editada');
+              this.reloadData();
+              this.listCentro();
+              this.listEspecialidad();
+              this.cita = new CitasMedicas();
+              this.limpiarCampo();
+            }
           }
-        }
-      );
+        );
       }
-    }else {
+    } else {
       this.cita.centroMedico = this.nombreSeCe;
       this.cita.especialidad = this.nombreSeEspecialidad;
       this.cita.paciente = this.cedulaPaciente;
@@ -146,19 +153,20 @@ export class CrearCitaComponent implements OnInit {
       this.cita.trabajadorFundacion = this.cedulaTra;
       this.cita.trabajadorFundacion = this.cedulaTra;
       this.cita.fechaRegistro = this.fechaRegistro;
+      this.cita.asistencia = this.asistencia;
       // tslint:disable-next-line: triple-equals
-      if (this.validar_datos(this.cita) == true){
-      this.citaMedicaService.createCitas(this.cita)
-        .subscribe( (data) => {
-        if (data){
-        alert('Cita Medica Registrada Correcamente');
-        this.cita = new CitasMedicas();
-        this.reloadData();
-        this.listCentro();
-        this.listEspecialidad();
-        this.limpiarCampo();
-          }
-      });
+      if (this.validar_datos(this.cita) == true) {
+        this.citaMedicaService.createCitas(this.cita)
+          .subscribe((data) => {
+            if (data) {
+              alert('Cita Medica Registrada Correcamente');
+              this.cita = new CitasMedicas();
+              this.reloadData();
+              this.listCentro();
+              this.listEspecialidad();
+              this.limpiarCampo();
+            }
+          });
       }
     }
 
@@ -170,61 +178,62 @@ export class CrearCitaComponent implements OnInit {
     // tslint:disable-next-line: triple-equals
     if (response == true) {
       this.citaMedicaService.deletCita(cita.idCitasMedicas).subscribe(data => {
-          alert(`${cita.descripcionCitaMedica} fue eliminado`);
-          this.reloadData();
+        alert(`${cita.descripcionCitaMedica} fue eliminado`);
+        this.reloadData();
       });
     }
   }
 
   // alertsInfor
-  buscarPersona(){
-    this.personaService.getPorCedula(this.cedulaPaciente).subscribe(
+  buscarPersona() {
+    this.personaService.getUserByCedula(this.cedulaPaciente).subscribe(
       data => {
-        if (data != null){
+        if (data != null) {
           this.valida = true;
           this.nombreper = data.nombres + ' ' + data.apellidos;
           this.correoper = data.correo;
           this.telefonoper = data.celular;
-        }else{
-          alert('No hay resultados'); 
+
+        } else {
+          alert('No hay resultados');
         }
       }
     );
   }
 
-  buscarAcompa(){
-    this.personaService.getPorCedula(this.cedulaAcom).subscribe(
+  buscarAcompa() {
+    this.personaService.getUserByCedula(this.cedulaAcom).subscribe(
       data => {
-        if (data != null){
+        if (data != null) {
           this.valida2 = true;
           this.nombreper2 = data.nombres + ' ' + data.apellidos;
           this.correoper2 = data.correo;
           this.telefonoper2 = data.celular;
-        }else{
-          alert('No hay resultados'); 
+        } else {
+          alert('No hay resultados');
         }
       }
     );
   }
 
-  buscarTraba(){
-    this.personaService.getPorCedula(this.cedulaTra).subscribe(
+  buscarTraba() {
+    this.personaService.getUserByCedula(this.cedulaTra).subscribe(
       data => {
-        if (data != null){
+        if (data != null) {
           this.valida3 = true;
           this.nombreper3 = data.nombres + ' ' + data.apellidos;
           this.correoper3 = data.correo;
           this.telefonoper3 = data.celular;
 
-        }else{
-          alert('No hay resultados'); 
+        } else {
+          alert('No hay resultados');
         }
       }
     );
   }
 
-  
-  limpiarCampo(){
+
+  limpiarCampo() {
     this.cedulaPaciente = '';
     this.cedulaAcom = '';
     this.cedulaTra = '';
@@ -233,12 +242,12 @@ export class CrearCitaComponent implements OnInit {
   }
 
   // btn para alerts
-  registrar(){
+  registrar() {
     this.router.navigate(['/registro-usuario']);
   }
 
-   // btn para busqueda
-  buscar(){
+  // btn para busqueda
+  buscar() {
     this.router.navigate(['/buscar-citaM']);
   }
 
@@ -336,83 +345,216 @@ export class CrearCitaComponent implements OnInit {
     this.response_msg = msg;
   }
 
-    /*GENERACION DE REPORTES */
+  /*GENERACION DE REPORTES */
   genereport(action = 'open') {
-      var testImageDataUrl = this._actividadservice.img;
-      let docDefinition = {
-        pageSize: 'A4',
-        pageOrientation: 'landscape',
-        pageMargins: [ 40, 60, 40, 60 ],
-        content: [
-          {
-            columns: [
-              {
-                image: testImageDataUrl,
-                width: 100,
-                margin: [0, 0, 0, 0],
-              },
-              {
-                text: 'CITAS MEDICAS',
-                fontSize: 27,
-                bold: true,
-                margin: [100, 0, 0, 0],
-                color: '#047886',
-              },
+    var testImageDataUrl = this._actividadservice.img;
+    let docDefinition = {
+      pageSize: 'A4',
+      pageOrientation: 'landscape',
+      pageMargins: [40, 60, 40, 60],
+      content: [
+        {
+          columns: [
+            {
+              image: testImageDataUrl,
+              width: 100,
+              margin: [0, 0, 0, 0],
+            },
+            {
+              text: 'CITAS MEDICAS',
+              fontSize: 27,
+              bold: true,
+              margin: [100, 0, 0, 0],
+              color: '#047886',
+            },
+          ],
+        },
+        {
+          text: '',
+          style: 'sectionHeader',
+        },
+        {
+          layout: 'lightHorizontalLines',
+          table: {
+            headerRows: 1,
+            body: [
+              [
+                'DESCRIPCION',
+                'FECHA DE CITA MEDICA',
+                'HORA DE CITA MEDICA',
+                'CEDULA DEL PACIENTE',
+                'CEDULA DEL ACOMPAÑANTE',
+                'CENTRO MEDICO',
+                'ESPECIALIDAD',
+                'OBSERVACIONES',
+
+              ],
+              ...this.citaM.map((row) => [
+                row.descripcionCitaMedica,
+                row.fechaCitaMedica.substring(0, 10),
+                row.fechaCitaMedica.substring(11),
+                row.paciente,
+                row.acompaniante,
+                row.centroMedico,
+                row.especialidad,
+                row.nota,
+              ]),
             ],
           },
-          {
-            text: '',
-            style: 'sectionHeader',
-          },
-          {
-            layout: 'lightHorizontalLines',
-            table: {
-              headerRows: 1,
-              body: [
-                [
-                  'DESCRIPCION',
-                  'FECHA DE CITA MEDICA',
-                  'HORA DE CITA MEDICA',
-                  'CEDULA DEL PACIENTE',
-                  'CEDULA DEL ACOMPAÑANTE',
-                  'CENTRO MEDICO',
-                  'ESPECIALIDAD',
-                  'OBSERVACIONES',
-
-                ],
-                ...this.citaM.map((row) => [
-                  row.descripcionCitaMedica,
-                  row.fechaCitaMedica.substring(0, 10),
-                  row.fechaCitaMedica.substring(11),
-                  row.paciente,
-                  row.acompaniante,
-                  row.centroMedico,
-                  row.especialidad,
-                  row.nota,
-                ]),
-              ],
-            },
-            alignment: 'center',
-            margin: [20, 0, 0, 0],
-          },
-        ],
-        styles: {
-          sectionHeader: {
-            bold: true,
-            decoration: 'underline',
-            fontSize: 14,
-            margin: [0, 15, 0, 15],
-            pageOrientation: 'landscape',
-          },
+          alignment: 'center',
+          margin: [20, 0, 0, 0],
         },
-      };
-      if (action === 'download') {
-        pdfMake.createPdf(docDefinition).download();
-      } else if (action === 'print') {
-        pdfMake.createPdf(docDefinition).print();
-      } else {
-        pdfMake.createPdf(docDefinition).open();
-      }
+      ],
+      styles: {
+        sectionHeader: {
+          bold: true,
+          decoration: 'underline',
+          fontSize: 14,
+          margin: [0, 15, 0, 15],
+          pageOrientation: 'landscape',
+        },
+      },
+    };
+    if (action === 'download') {
+      pdfMake.createPdf(docDefinition).download();
+    } else if (action === 'print') {
+      pdfMake.createPdf(docDefinition).print();
+    } else {
+      pdfMake.createPdf(docDefinition).open();
     }
+  }
 
+
+  actualizarAsistencia(idCitasMedicas: number, cita: CitasMedicas) {
+    let nuevaAsistencia: boolean;
+    if (cita.asistencia == true) {
+      nuevaAsistencia = false;
+    } else if (cita.asistencia == false) {
+      nuevaAsistencia = true;
+    }
+    cita.asistencia = nuevaAsistencia;
+    this.citaMedicaService.updateCita(idCitasMedicas, cita).subscribe(
+      data => {
+        if (data) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          this.reloadData();
+          this.listCentro();
+          this.listEspecialidad();
+          this.cita = new CitasMedicas();
+          this.limpiarCampo();
+        }
+      }
+    );
+    this.actualizarPersona(cita.paciente, nuevaAsistencia);
+  }
+
+  actualizarPersona(cedula: string, nuevaAsistencia: boolean) {
+    this.personaService.getUserByCedula(cedula).subscribe(dat => {
+      this.personaValidar = dat;
+      if (nuevaAsistencia == false) {
+        if (this.personaValidar.faltas == 0) {
+          const PersonaNueva: Personas = {
+            apellidos: this.personaValidar.apellidos,
+            beneficiario: this.personaValidar.beneficiario,
+            cedula: this.personaValidar.cedula,
+            celular: this.personaValidar.celular,
+            correo: this.personaValidar.correo,
+            direccion: this.personaValidar.direccion,
+            edad: this.personaValidar.edad,
+            estadoActivo: this.personaValidar.estadoActivo,
+            estado_civil: this.personaValidar.estado_civil,
+            fechaNacimiento: this.personaValidar.fechaNacimiento,
+            genero: this.personaValidar.genero,
+            idPersona: this.personaValidar.idPersona,
+            nacionalidad: this.personaValidar.genero,
+            nombres: this.personaValidar.nombres,
+            faltas: 1
+          }
+          this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+          });
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            window.location.reload();
+          });
+        } else {
+          const PersonaNueva: Personas = {
+            apellidos: this.personaValidar.apellidos,
+            beneficiario: this.personaValidar.beneficiario,
+            cedula: this.personaValidar.cedula,
+            celular: this.personaValidar.celular,
+            correo: this.personaValidar.correo,
+            direccion: this.personaValidar.direccion,
+            edad: this.personaValidar.edad,
+            estadoActivo: this.personaValidar.estadoActivo,
+            estado_civil: this.personaValidar.estado_civil,
+            fechaNacimiento: this.personaValidar.fechaNacimiento,
+            genero: this.personaValidar.genero,
+            idPersona: this.personaValidar.idPersona,
+            nacionalidad: this.personaValidar.genero,
+            nombres: this.personaValidar.nombres,
+            faltas: this.personaValidar.faltas + 1
+          }
+          this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+          });
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            window.location.reload();
+          });
+        }
+
+      } else if (nuevaAsistencia == true) {
+        if(this.personaValidar.faltas<=0){
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            window.location.reload();
+          });
+        } else if(this.personaValidar.faltas>0) {
+          const PersonaNueva: Personas = {
+            apellidos: this.personaValidar.apellidos,
+            beneficiario: this.personaValidar.beneficiario,
+            cedula: this.personaValidar.cedula,
+            celular: this.personaValidar.celular,
+            correo: this.personaValidar.correo,
+            direccion: this.personaValidar.direccion,
+            edad: this.personaValidar.edad,
+            estadoActivo: this.personaValidar.estadoActivo,
+            estado_civil: this.personaValidar.estado_civil,
+            fechaNacimiento: this.personaValidar.fechaNacimiento,
+            genero: this.personaValidar.genero,
+            idPersona: this.personaValidar.idPersona,
+            nacionalidad: this.personaValidar.genero,
+            nombres: this.personaValidar.nombres,
+            faltas: this.personaValidar.faltas - 1
+          }
+          this.personaService.updatePersona(PersonaNueva).subscribe(() => {
+          });
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            window.location.reload();
+          });
+        }
+        
+      
+      }
+    });
+  }
 }

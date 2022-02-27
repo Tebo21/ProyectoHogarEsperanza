@@ -5,9 +5,45 @@
     border-radius: 15px
 }
 
-.container1 {
+.container {
   margin-top: 50rem;
   width: 90%;
   max-width: 2000px;
   margin: 0 auto;
+}
+
+th, td{
+  width: 130px;
+  word-wrap: break-word;
+}
+
+#bus{
+  width: 200px;
+  margin-right: 0%;
+}
+
+.false-icon, .true-icon {
+  font-size: 28px;
+}
+
+.false-icon {
+  color: #fa0e0e;
+}
+
+.true-icon {
+  color: green;
+}
+
+.menu{
+  padding-block: 0px 37px;
+  width: auto;
+  position: relative;
+}
+
+.item{
+  position: absolute;
+  display: inline;
+}
+.derecho{
+  right: 0;
 }

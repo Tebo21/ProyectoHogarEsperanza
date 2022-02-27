@@ -51,8 +51,6 @@ export class FichaSocioeconomicaComponent implements OnInit {
     var DescrVivi=this.fichasocieconomicaModel.descripcionVivienda;
     var CuSeguro=this.fichasocieconomicaModel.seguro;
     var salario=this.fichasocieconomicaModel.salario;
-    var Nacionalidad=this.fichasocieconomicaModel.nacionalidad;
-    var estadoCivi=this.fichasocieconomicaModel.estadoCivil;
     var discapa=this.fichasocieconomicaModel.discapacidad;
     var adulMay=this.fichasocieconomicaModel.adultoMayor;
     var VivCotr=this.fichasocieconomicaModel.viveConOtros;
@@ -97,22 +95,6 @@ export class FichaSocioeconomicaComponent implements OnInit {
       sala.style.backgroundColor = "#FFFEFE"
       ConfirmaValida = ConfirmaValida + 1
     }
-    if(Nacionalidad==null){
-      var nacio = document.getElementById("Nacionalidad")
-      nacio.style.backgroundColor = "#FCAFAF"
-    }else{
-      var nacio = document.getElementById("Nacionalidad")
-      nacio.style.backgroundColor = "#FFFEFE"
-      ConfirmaValida = ConfirmaValida + 1
-    }
-    if(estadoCivi==null){
-      var estCv = document.getElementById("EstadoCivil")
-      estCv.style.backgroundColor = "#FCAFAF"
-    }else{
-      var estCv = document.getElementById("EstadoCivil")
-      estCv.style.backgroundColor = "#FFFEFE"
-      ConfirmaValida = ConfirmaValida + 1
-    }
     if(discapa==null){
       var disca = document.getElementById("Discapacidad")
       disca.style.backgroundColor = "#FCAFAF"
@@ -146,11 +128,11 @@ export class FichaSocioeconomicaComponent implements OnInit {
     if(f1=="false"){
       var descDisca = document.getElementById("descripcionDiscapacidad");
       descDisca.style.display = "none"
-      this.fichasocieconomicaModel.discapacidadDescipcion="Descripción Discapacidad"
+     
     }else if(f1=="true"){
       var descDisca = document.getElementById("descripcionDiscapacidad");
       descDisca.style.display = ""
-      this.fichasocieconomicaModel.discapacidadDescipcion=""
+      
     }
   }
   addFicha(){
@@ -169,7 +151,7 @@ export class FichaSocioeconomicaComponent implements OnInit {
   }
   cargarDatos(){
     //datos persona
-    this.personaService.getPorCedula(this.cedula_persona).subscribe(data =>{
+    this.personaService.getUserByCedula(this.cedula_persona).subscribe(data =>{
       this.persona=data
       this.nombreCompleto = this.persona.nombres+" "+this.persona.apellidos
     })

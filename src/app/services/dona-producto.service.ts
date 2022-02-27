@@ -8,7 +8,7 @@ import { Donaciones } from '../models/Donaciones';
 })
 export class DonaProductoService {
 
-  private URL = "http://192.168.0.199:3000/donaciones/";
+  private URL = "http://localhost:3000/donaciones/";
 
   constructor(private http: HttpClient) { }
 

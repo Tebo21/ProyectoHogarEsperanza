@@ -73,6 +73,11 @@ import { DocumentosPersonaComponent } from './components/lista-beneficiarios/doc
 import { ListaDocumentosComponent } from './components/lista-beneficiarios/lista-documentos/lista-documentos.component';
 import { EditarDocumentosComponent } from './components/lista-beneficiarios/editar-documentos/editar-documentos.component';
 import { DescargarDocumentosComponent } from './components/lista-beneficiarios/descargar-documentos/descargar-documentos.component';
+import { ElegiblesComponent } from './components/elegibles/elegibles.component';
+import { HistorialBComponent } from './components/historial-b/historial-b.component';
+import { RegistroBeneficiariosNComponent } from './registro-beneficiarios-n/registro-beneficiarios-n.component';
+import {KnobModule} from 'primeng/knob';
+import {ChipsModule} from 'primeng/chips';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -118,6 +123,9 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ListaDocumentosComponent,
     EditarDocumentosComponent,
     DescargarDocumentosComponent,
+    ElegiblesComponent,
+    HistorialBComponent,
+    RegistroBeneficiariosNComponent
   ],
   imports: [
     CommonModule,
@@ -149,6 +157,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     TooltipModule,
     DividerModule,
     PasswordModule,
+    KnobModule,
+    ChipsModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe, {provide:LocationStrategy, useClass: HashLocationStrategy}],

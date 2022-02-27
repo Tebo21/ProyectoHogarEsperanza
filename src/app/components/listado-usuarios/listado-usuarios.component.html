@@ -1,100 +1,95 @@
 <app-navbar-admin></app-navbar-admin>
-
 <br>
 <h2 class="text-center">Listado de Usuarios</h2>
-
-<div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-    <p-panel class="card">
+<div class="cont">
+    <div class="hijo">
         <p-table #dt [value]="selectedUsers" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
-            [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10,25,50]" [(selection)]="selected" dataKey="cedula" [rowHover]="true"
-            [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo']">
-            <ng-template pTemplate="caption">
-                <div class="container" style="display: grid;">
-                    <div align="right">
-                        <span class="p-input-icon-right">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text"
-                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
-                        </span>
-                    </div>
-                    <div align="left">
-                        <label>Reportes</label>
-                        <br>
-                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="crearReporte()"
-                            class="p-button-danger p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
-                        <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelected()"
-                            class="p-button-info p-mr-2" pTooltip="Seleccionados PDF" tooltipPosition="bottom"></button>
-                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
-                            class="p-button-success p-mr-2" pTooltip="XLS (Excel)" tooltipPosition="bottom"></button>
-                        <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelectedX()"
-                            class="p-button-info p-mr-2" pTooltip="Seleccionados XLS (Excel)" tooltipPosition="bottom"></button>
-                    </div>
+        [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,25,50]" [(selection)]="selected" dataKey="cedula" [rowHover]="true"
+        [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo']">
+        <ng-template pTemplate="caption">
+            <div class="prin">
+                <div class="sec" >
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                            (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                    </span>
                 </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>
-                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                    </th>
-                    <th pSortableColumn="cedula">Cédula
-                        <p-sortIcon field="cedula"></p-sortIcon>
-                        <p-columnFilter type="text" field="cedula" display="menu" class="p-ml-auto"></p-columnFilter>
-                    </th>
-                    <th pSortableColumn="nombres">Nombres
-                        <p-sortIcon field="nombres"></p-sortIcon>
-                        <p-columnFilter type="text" field="nombres" display="menu" class="p-ml-auto"></p-columnFilter>
-                    </th>
-                    <th pSortableColumn="direccion">Dirección
-                        <p-sortIcon field="direccion"></p-sortIcon>
-                        <p-columnFilter type="text" field="direccion" display="menu" class="p-ml-auto"></p-columnFilter>
-                    </th>
-                    <th pSortableColumn="telefono">Teléfono
-                        <p-sortIcon field="telefono"></p-sortIcon>
-                        <p-columnFilter type="text" field="telefono" display="menu" class="p-ml-auto">
-                        </p-columnFilter>
-                    </th>
-                    <th pSortableColumn="correo">Correo
-                        <p-sortIcon field="correo"></p-sortIcon>
-                        <p-columnFilter typce="text" field="correo" display="menu" class="p-ml-auto">
-                        </p-columnFilter>
-                    </th>
-                    <th pSortableColumn="tipousuario">Tipo de Usuario
-                        <p-sortIcon field="tipousuario"></p-sortIcon>
-                    </th>
-                    <th>Editar / Eliminar</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-user>
-                <tr class="p-selectable-row">
-                    <td>
-                        <p-tableCheckbox [value]="user"></p-tableCheckbox>
-                    </td>
-                    <td>{{user.cedula}}</td>
-                    <td>{{user.nombres}}</td>
-                    <td>{{user.direccion}}</td>
-                    <td>{{user.telefono}}</td>
-                    <td>{{user.correo}}</td>
-                    <td>{{user.tipousuario}}</td>
-                    <td>
-                        <button pButton pRipple type="button" icon="pi pi-user-edit"
-                            class="p-button-rounded p-button-outlined"
-                            (click)="ActualizarUsuario(user.cedula)">
-                        </button>
-                        <button pButton pRipple type="button" icon="pi pi-trash"
-                            class="p-button-rounded p-button-danger p-button-outlined" (click)="eliminarUsuario(user.cedula)">
-                        </button>
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="8">No se encontraron usuarios.</td>
-                </tr>
-            </ng-template>
+                <div class="ter" >
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="crearReporte()"
+                        class="p-button-outlined p-button-danger" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelected()"
+                        class="p-button-outlined p-button-info" pTooltip="Seleccionados PDF" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                        class="p-button-outlined p-button-success" pTooltip="XLS (Excel)" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelectedX()"
+                        class="p-button-outlined p-button-info" pTooltip="Seleccionados XLS (Excel)" tooltipPosition="bottom"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" class="tab">
+            <tr>
+                <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cedula">Cédula
+                    <p-sortIcon field="cedula"></p-sortIcon>
+                    <p-columnFilter type="text" field="cedula" display="menu" class="p-ml-auto"></p-columnFilter>
+                </th>
+                <th pSortableColumn="nombres">Nombres
+                    <p-sortIcon field="nombres"></p-sortIcon>
+                    <p-columnFilter type="text" field="nombres" display="menu" class="p-ml-auto"></p-columnFilter>
+                </th>
+                <th pSortableColumn="direccion">Dirección
+                    <p-sortIcon field="direccion"></p-sortIcon>
+                    <p-columnFilter type="text" field="direccion" display="menu" class="p-ml-auto"></p-columnFilter>
+                </th>
+                <th pSortableColumn="telefono">Teléfono
+                    <p-sortIcon field="telefono"></p-sortIcon>
+                    <p-columnFilter type="text" field="telefono" display="menu" class="p-ml-auto">
+                    </p-columnFilter>
+                </th>
+                <th pSortableColumn="correo">Correo
+                    <p-sortIcon field="correo"></p-sortIcon>
+                    <p-columnFilter typce="text" field="correo" display="menu" class="p-ml-auto">
+                    </p-columnFilter>
+                </th>
+                <th pSortableColumn="tipousuario">Tipo de Usuario
+                    <p-sortIcon field="tipousuario"></p-sortIcon>
+                </th>
+                <th>Editar / Eliminar</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="user"></p-tableCheckbox>
+                </td>
+                <td>{{user.cedula}}</td>
+                <td>{{user.nombres}}</td>
+                <td>{{user.direccion}}</td>
+                <td>{{user.telefono}}</td>
+                <td>{{user.correo}}</td>
+                <td>{{user.tipousuario}}</td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-user-edit"
+                        class="p-button-rounded p-button-outlined"
+                        (click)="ActualizarUsuario(user.cedula)">
+                    </button>
+                    <button pButton pRipple type="button" icon="pi pi-trash"
+                        class="p-button-rounded p-button-danger p-button-outlined" (click)="eliminarUsuario(user.cedula)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No se encontraron usuarios.</td>
+            </tr>
+        </ng-template>
         </p-table>
-    </p-panel>
-
+    </div>
 </div>
 <br>
 <p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">

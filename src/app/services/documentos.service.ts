@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DocumentosService {
-  private URL='http://192.168.0.199:3000/documentosBeneficiarios';
+  private URL='http://localhost:3000/documentosBeneficiarios';
   FOLDER = 'jsa-s3/';
 
   constructor(private http:HttpClient) { }

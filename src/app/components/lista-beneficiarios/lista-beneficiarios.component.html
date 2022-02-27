@@ -1,158 +1,231 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-<br><br>
-<form >
-<body class="body">
-  <div class="container">
-   <div class="modal-body ">  
-   <div class="card">
-         <div class="card-header mb-3">
-          <h4>Lista Beneficiarios</h4>
-          </div>
-      <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-        <p-table #dt [rows]="10"  [scrollable]="true" class="table table-responsive" 
-            scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-            [rowHover]="true" [autoLayout]="true" [responsive]="true"
-            [globalFilterFields]="['cedula','nombres','apellidos','direccion','celular','correo','fechaNacimiento','edad','numHijos','totalHijos','tipoVivienda','seguro','discapacidad','nacionalidad','estadoCivil','salario','fechaRegistro','adultoMayor','ViveOtros']" 
-            [value]="datos" [(selection)]="arraySelected">
+<h2 class="text-center">Listado de Beneficiarios</h2>  
+<div class="cont">
+    <div class="hijo">
+        <p-table #dt [value]="ListadoFinal" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
+            [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]" [(selection)]="selected" dataKey="cedula" [rowHover]="true"
+            [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo']">
             <ng-template pTemplate="caption">
-                <div class="container" style="display: grid;">
-                    <div align="left">
-                        <button type="button" pButton pRipple icon="pi pi-file-pdf" 
-                            class="p-button-danger p-mr-2" tooltipPosition="bottom" (click)="generarPDF()"></button>
-                            <button type="button" pButton pRipple icon="pi pi-filter" (click)="generarPDFSelected()"
-                        class="p-button-info p-mr-2" pTooltip="Seleccionados PDF" tooltipPosition="bottom"></button>
+                <div class="prin">
+                    <div class="sec" >
+                        <span class="p-input-icon-right">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text"
+                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                        </span>
+                    </div>
+                    <div class="ter" >
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="generarPDF()"
+                            class="p-button-outlined p-button-danger" pTooltip="PDF" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelected()"
+                            class="p-button-outlined p-button-info" pTooltip="Seleccionados PDF" tooltipPosition="bottom"></button>
                         <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
-                        class="p-button-success p-mr-2" pTooltip="XLS" tooltipPosition="bottom"></button> 
+                            class="p-button-outlined p-button-success" pTooltip="XLS (Excel)" tooltipPosition="bottom"></button>
                         <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelectedX()"
-                        class="p-button-info p-mr-2" pTooltip="Seleccionados XLS" tooltipPosition="bottom"></button>
-                     </div>
+                            class="p-button-outlined p-button-info" pTooltip="Seleccionados XLS (Excel)" tooltipPosition="bottom"></button>
+                    </div>
                 </div>
-                   <div style="margin-left: 70%;">
-                         </div>
-
-                            <div class="container" style="display: grid;">
-               
-                <div align="right">
-                    <span class="p-input-icon-right">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" style="height: 40px;width: 120px;"(input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Buscar" />
-                            <button type="button" pButton pRipple icon="pi pi-refresh" 
-                            class="p-mr-2" tooltipPosition="bottom" (click)="actualizar()"></button>
-                    
-                    </span>
-                </div>
-            </div>         
             </ng-template>
-            <ng-template pTemplate="header">
-                <tr >
+            <ng-template pTemplate="header" class="tab">
+                <tr>
                     <th>
                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                     </th>
                     <th pSortableColumn="cedula">Cédula
                         <p-sortIcon field="cedula"></p-sortIcon>
+                        <p-columnFilter type="text" field="cedula" display="menu" class="p-ml-auto"></p-columnFilter>
                     </th>
-                    <th pSortableColumn="nombres">Nombre de Usuario
-                    <p-sortIcon field="nombres"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="apellidos">Apellido
-                    <p-sortIcon field="apellidos"></p-sortIcon>
+                    <th pSortableColumn="nombres">Nombres
+                        <p-sortIcon field="nombres"></p-sortIcon>
+                        <p-columnFilter type="text" field="nombres" display="menu" class="p-ml-auto"></p-columnFilter>
                     </th>
                     <th pSortableColumn="direccion">Dirección
-                    <p-sortIcon field="direccion"></p-sortIcon>
+                        <p-sortIcon field="direccion"></p-sortIcon>
+                        <p-columnFilter type="text" field="direccion" display="menu" class="p-ml-auto"></p-columnFilter>
                     </th>
-                    <th pSortableColumn="celular">Celular
-                    <p-sortIcon field="celular"></p-sortIcon>
+                    <th pSortableColumn="telefono">Teléfono
+                        <p-sortIcon field="telefono"></p-sortIcon>
+                        <p-columnFilter type="text" field="telefono" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
                     <th pSortableColumn="correo">Correo
-                    <p-sortIcon field="correo"></p-sortIcon>
+                        <p-sortIcon field="correo"></p-sortIcon>
+                        <p-columnFilter typce="text" field="correo" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
-                    <th pSortableColumn="fechaNacimiento">Fecha Nacimiento
-                    <p-sortIcon field="fechaNacimiento"></p-sortIcon>
+                    <th pSortableColumn="genero">Genero
+                        <p-sortIcon field="genero"></p-sortIcon>
+                        <p-columnFilter typce="text" field="genero" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="fechaNacimiento">Fecha de nacimiento
+                        <p-sortIcon field="fechaNacimiento"></p-sortIcon>
+                        <p-columnFilter typce="text" field="fechaNacimiento" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
                     <th pSortableColumn="edad">Edad
-                    <p-sortIcon field="edad"></p-sortIcon>
+                        <p-sortIcon field="edad"></p-sortIcon>
+                        <p-columnFilter typce="text" field="edad" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
-                    <th pSortableColumn="numHijos">Numero Familires
-                   <p-sortIcon field="numHijos"></p-sortIcon>
+                    <th pSortableColumn="nacionalidad">Nacionalidad
+                        <p-sortIcon field="nacionalidad"></p-sortIcon>
+                        <p-columnFilter typce="text" field="nacionalidad" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
-                    <th pSortableColumn="totalHijos">Numero Hijos
-                   <p-sortIcon field="totalHijos"></p-sortIcon>
+                    <th pSortableColumn="estado_civil">Estado civil
+                        <p-sortIcon field="estado_civil"></p-sortIcon>
+                        <p-columnFilter typce="text" field="estado_civil" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
-                    <th pSortableColumn="tipoVivienda">Tipo de Vivienda
-                   <p-sortIcon field="tipoVivienda"></p-sortIcon>
+                    <th pSortableColumn="faltas">Faltas
+                        <p-sortIcon field="faltas"></p-sortIcon>
+                        <p-columnFilter typce="text" field="faltas" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="pareja">Pareja
+                        <p-sortIcon field="pareja"></p-sortIcon>
+                        <p-columnFilter typce="text" field="pareja" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="familiares">Familiares
+                        <p-sortIcon field="familiares"></p-sortIcon>
+                        <p-columnFilter typce="text" field="familiares" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="situacionEconomica">Situacion económica
+                        <p-sortIcon field="situacionEconomica"></p-sortIcon>
+                        <p-columnFilter typce="text" field="situacionEconomica" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="tipoVivienda">Tipo de vivienda
+                        <p-sortIcon field="tipoVivienda"></p-sortIcon>
+                        <p-columnFilter typce="text" field="tipoVivienda" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="descripcionVivienda">Descripción de la vivienda
+                        <p-sortIcon field="descripcionVivienda"></p-sortIcon>
+                        <p-columnFilter typce="text" field="descripcionVivienda" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
                     <th pSortableColumn="seguro">Seguro
-                    <p-sortIcon field="seguro"></p-sortIcon>
-                   </th>
-                    <th pSortableColumn="discapacidad">Discapacidad
-                    <p-sortIcon field="discapacidad"></p-sortIcon>
-                   </th>
-                    <th pSortableColumn="nacionalidad">Nacionalidad
-                    <p-sortIcon field="nacionalidad"></p-sortIcon>
-                   </th>
-                    <th pSortableColumn="estadoCivil">Estado Civil
-                    <p-sortIcon field="estadoCivil"></p-sortIcon>
-                   </th>
+                        <p-sortIcon field="seguro"></p-sortIcon>
+                        <p-columnFilter typce="text" field="seguro" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
                     <th pSortableColumn="salario">Salario
-                    <p-sortIcon field="salario"></p-sortIcon>
-                   </th>
-                    <th pSortableColumn="fechaRegistro">Fecha de Registro
-                    <p-sortIcon field="fechaRegistro"></p-sortIcon>
-                   </th>
-                    <th pSortableColumn="adultoMayor">Adulto Mayor
-                    <p-sortIcon field="adultoMayor"></p-sortIcon>
-                   </th>
-                    <th pSortableColumn="ViveOtros">Vive con Otros
-                    <p-sortIcon field="ViveOtros"></p-sortIcon>
-                   </th>
-                    <th pSortableColumn="ficha">Ficha
+                        <p-sortIcon field="salario"></p-sortIcon>
+                        <p-columnFilter typce="text" field="salario" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
-                    <th pSortableColumn="editar/eliminar">Editar/Eliminar
+                    <th pSortableColumn="fechaRegistro">Fecha de registro
+                        <p-sortIcon field="fechaRegistro"></p-sortIcon>
+                        <p-columnFilter typce="text" field="fechaRegistro" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
                     </th>
+                    <th pSortableColumn="adultoMayor">Adulto mayor
+                        <p-sortIcon field="adultoMayor"></p-sortIcon>
+                        <p-columnFilter typce="text" field="adultoMayor" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="viveConOtros">Vive con otros
+                        <p-sortIcon field="viveConOtros"></p-sortIcon>
+                        <p-columnFilter typce="text" field="viveConOtros" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="recibebono">Recibe bono
+                        <p-sortIcon field="recibebono"></p-sortIcon>
+                        <p-columnFilter typce="text" field="recibebono" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="cantidadbono">Cantidad bono
+                        <p-sortIcon field="cantidadbono"></p-sortIcon>
+                        <p-columnFilter typce="text" field="cantidadbono" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="discapacidad">Discapacidad
+                        <p-sortIcon field="discapacidad"></p-sortIcon>
+                        <p-columnFilter typce="text" field="discapacidad" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="tipo_discapacidad">Tipo de discapacidad
+                        <p-sortIcon field="tipo_discapacidad"></p-sortIcon>
+                        <p-columnFilter typce="text" field="tipo_discapacidad" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="porc_disc_mental">Porcentaje de discapacidad intelectual
+                        <p-sortIcon field="porc_disc_mental"></p-sortIcon>
+                        <p-columnFilter typce="text" field="porc_disc_mental" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="porc_disc_fisica">Porcentaje de discapacidad física
+                        <p-sortIcon field="porc_disc_fisica"></p-sortIcon>
+                        <p-columnFilter typce="text" field="porc_disc_fisica" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="enfermedades">Enfermedades
+                        <p-sortIcon field="enfermedades"></p-sortIcon>
+                        <p-columnFilter typce="text" field="enfermedades" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th>Editar / Eliminar / Ver Ficha</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-user>
-                <tr  class="p-selectable-row">
+                <tr class="p-selectable-row">
                     <td>
                         <p-tableCheckbox [value]="user"></p-tableCheckbox>
                     </td>
                     <td>{{user.cedula}}</td>
-                    <td>{{user.nombres}}</td>
-                    <td>{{user.apellidos}}</td>
+                    <td>{{user.nombres}} {{user.apellidos}}</td>
                     <td>{{user.direccion}}</td>
                     <td>{{user.celular}}</td>
                     <td>{{user.correo}}</td>
+                    <td>{{user.genero}}</td>
                     <td>{{user.fechaNacimiento}}</td>
                     <td>{{user.edad}}</td>
-                    <td>{{user.numeroFamiliares}}</td>
-                    <td>{{user.numeroHijos}}</td>
-                    <td>{{user.tipovivienda}}</td>
-                    <td>{{user.seguro}}</td>
-                    <td>{{user.discapacidad}}</td>
                     <td>{{user.nacionalidad}}</td>
-                    <td>{{user.estacoCIVIL}}</td>
+                    <td>{{user.estado_civil}}</td>
+                    <td>{{user.faltas}}</td>
+                    <td>{{user.pareja}}</td>
+                    <td>{{user.familiares.length}}</td>
+                    <td>{{user.situacionEconomica}}</td>
+                    <td>{{user.tipoVivienda}}</td>
+                    <td>{{user.descripcionVivienda}}</td>
+                    <td>{{user.seguro}}</td>
                     <td>{{user.salario}}</td>
-                    <td>{{user.fecha}}</td>
-                    <td>{{user.adulto}}</td>
-                    <td>{{user.viveConOTROS}}</td>
-                    <td><button pButton pRipple icon="pi pi-book" 
-                        tooltipPosition="bottom" (click)="ingresoFicha(user.cedula)"></button></td>
+                    <td>{{user.fechaRegistro}}</td>
+                    <td>{{user.adultoMayor}}</td>
+                    <td>{{user.viveConOtros}}</td>
+                    <td>{{user.recibebono}}</td>
+                    <td>{{user.cantidadbono}}</td>
+                    <td>{{user.discapacidad}}</td>
+                    <td>{{user.tipo_discapacidad}}</td>
+                    <td>{{user.porc_disc_mental}}%</td>
+                    <td>{{user.porc_disc_fisica}}%</td>
+                    <td>{{user.enfermedades}}</td>
                     <td>
-                    <button  pButton pRipple icon="pi pi-user-edit" 
-                    class="p-button-rounded p-button-outlined" (click)="ingresoeditar(user.cedula)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
-                     (click)="eliminarPersonaBeneficiario(user.cedula)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-user-edit" 
+                            class="p-button-rounded p-button-outlined" (click)="editarBeneficiario(user.cedula)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-trash"
+                            class="p-button-rounded p-button-danger p-button-outlined" (click)="eliminarPersonaBeneficiario(user.cedula)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-folder-open"
+                            class="p-button-rounded p-button-warning p-button-outlined" (click)="eliminarPersonaBeneficiario(user.cedula)">
+                        </button>
                     </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron beneficiarios.</td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
-      </div>
-  </div>   
 </div>
-</body>
-<br><br><br><br>
-</form>
+<p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
+</p-confirmDialog>

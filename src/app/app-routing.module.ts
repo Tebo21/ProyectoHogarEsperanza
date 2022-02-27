@@ -34,6 +34,8 @@ import { EditarBeneficiariosComponent } from './components/lista-beneficiarios/e
 import { DocumentosPersonaComponent } from './components/lista-beneficiarios/documentos-persona/documentos-persona.component';
 import { DescargarDocumentosComponent } from './components/lista-beneficiarios/descargar-documentos/descargar-documentos.component';
 import { EditarDocumentosComponent } from './components/lista-beneficiarios/editar-documentos/editar-documentos.component';
+import { ElegiblesComponent } from './components/elegibles/elegibles.component';
+import { HistorialBComponent } from './components/historial-b/historial-b.component';
 
 // AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
 // NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
@@ -163,6 +165,14 @@ const routes: Routes = [
   {
     path: 'lista',
     component: ListarProductoDonadoComponent
+  },
+  {
+    path: 'elegible',
+    component: ElegiblesComponent
+  },
+  {
+    path: 'historial',
+    component: HistorialBComponent
   },
   {
     path: '**',

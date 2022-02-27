@@ -64,22 +64,24 @@
                     placeholder="Confirmar contraseña" maxlength="16" minlength="8" required></p-password>
             </div>
         </p-panel>
-        <ng-template pTemplate="footer">
-            <button pButton pRipple type="button" label="Aceptar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
-                (click)='ValidacionesExtra()'></button>
-            <button pButton pRipple type="button" label="Cancelar" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-                style="color: #b10000;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-times"
-                (click)='displayV=false'></button>
+        <ng-template pTemplate="footer">            
+            <button pButton type="button" label="Aceptar"
+                class="p-button-outlined"
+                (click)='ValidacionesExtra()'>
+            </button>
+            <button pButton type="button" label="Cancelar"
+                class="p-button-outlined p-button-danger"
+                (click)='displayV=false'>
+            </button>
         </ng-template>
     </p-dialog>
 
     <p-panel class="card" id="panel">
         <h2 class="text-center">Registro de Usuarios</h2>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Cédula</b></label>
+            <label for="floatingInput"><b>Número de cédula</b></label>
             <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula"
-                placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required>
+                placeholder="Número de cédula" [(ngModel)]="cedula" name="cedula" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Nombres</b></label>
@@ -92,7 +94,7 @@
                 id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Direccion</b></label>
+            <label for="floatingInput"><b>Dirección</b></label>
             <input class="form-control" type="text" [pKeyFilter]="noSpecial" maxlength="50" minlength="3" id="direccion"
                 placeholder="Dirección" [(ngModel)]="direccion" name="direccion" required>
         </div>
@@ -104,7 +106,7 @@
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Correo electrónico</b></label>
             <input class="form-control" type="email" maxlength="40" [pKeyFilter]="valCorreo" minlength="12" id="correo"
-                placeholder="Correo Electrónico" [(ngModel)]="correo" name="correo" required>
+                placeholder="Correo electrónico" [(ngModel)]="correo" name="correo" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Género</b></label>
@@ -130,11 +132,6 @@
                 optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true" (onChange)="onChangeN($event)">
             </p-dropdown>
         </div>
-        <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Discapacidad No | Si</b></label>
-            <br>
-            <p-inputSwitch [(ngModel)]="discap"></p-inputSwitch>
-        </div>
         <p-messages [(value)]="msgs"></p-messages>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Estado civil</b></label>
@@ -142,9 +139,9 @@
                 optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChangeEstado($event)">
             </p-dropdown>
         </div>
-        <div>
-            <button pButton pRipple type="button" label="Siguiente" [ngStyle]="{backgroundColor:'var(--surface-100)'}"
-            style="color: #008cff;" class="p-button-raised p-button-secondary p-button-text" icon="pi pi-send"
+        <div align="center">
+            <button pButton type="button" label="Siguiente"
+            class="p-button-outlined"
             (click)='Validacion()'></button>
         </div>
         <div class="form-floating mb-3" *ngIf="cb">

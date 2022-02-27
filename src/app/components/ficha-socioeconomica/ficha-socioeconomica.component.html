@@ -43,14 +43,6 @@
                   <option value="No">No</option>
                 </select>
                 <input [(ngModel)]="fichasocieconomicaModel.salario" name="Salario" id="Salario" style="margin-right: 2%;"type="text" class="form-control" placeholder="Salario" [pKeyFilter]="blockSpecial">
-                <select [(ngModel)]="fichasocieconomicaModel.nacionalidad" name="Nacionalidad" id="Nacionalidad" style="margin-right: 2%;" type="text" class="form-control" placeholder="Nacionalidad">
-                  <option selected disabled="disabled">Nacionalidad</option>  
-                  <option *ngFor="let nac of catalogoNacionalidad" value="{{nac}}">{{nac}}</option>
-                  </select>
-                  <select [(ngModel)]="fichasocieconomicaModel.estadoCivil" name="EstadoCivil" id="EstadoCivil" style="margin-right: 5%;" type="text" class="form-control" placeholder="EstadoCivil">
-                    <option selected disabled="disabled">Estado Civil</option>
-                    <option  *ngFor="let estc of catalogoEstadoCivil" value="{{estc}}">{{estc}}</option>
-                  </select>
               </div>
               <div class="input-group mb-3">
                 <p style="margin-left: 5%;"> </p>
@@ -59,7 +51,6 @@
                   <option value="true">Si</option>
                     <option value="false">No</option>
                   </select>
-                <textarea [(ngModel)]="fichasocieconomicaModel.discapacidadDescipcion" name="descripcionDiscapacidad" id="descripcionDiscapacidad" style="margin-right: 5%;width: 300px;height: 37px;"type="text" class="form-control" placeholder="Descripción de la Discapacidad"></textarea>
               </div>
               <div class="input-group mb-3">
                 <p style="margin-left: 5%;"> </p>

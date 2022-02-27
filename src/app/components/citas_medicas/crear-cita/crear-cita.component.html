@@ -1,26 +1,30 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
 <div class="container animated d-flex justify-content-center animated fadeIn">
-    <p-panel class="card">
+    <p-panel class="card" id="panel">
         <div class="modal-header text-center">
             <h2 class="title">Agregar Cita Medica</h2>
         </div>
         <br />
         <div class="form-group">
             <label for="descripcionCitaMedica"><b>Descripción de la cita:</b></label>
-            <input type="text" class="form-control" required [(ngModel)]="cita.descripcionCitaMedica" placeholder="Descripcion Cita Medica" />
+            <input type="text" class="form-control" required [(ngModel)]="cita.descripcionCitaMedica"
+                placeholder="Descripcion Cita Medica" />
         </div>
 
         <div class="form-group">
             <label for="fechaCitaMedica"><b>Fecha de la Cita Médica:</b></label>
-            <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="cita.fechaCitaMedica" type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
+            <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="cita.fechaCitaMedica"
+                type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
         </div>
 
         <div class="form-group ">
             <label for="cedulpa"> <b>Ingrese el número de cédula del Paciente: </b></label>
-            <input type="text" class="form-control" [formControl]="cedulapa" id="paciente" required [(ngModel)]="cedulaPaciente" name="paciente" placeholder="Cedula paciente">
+            <input type="text" class="form-control" [formControl]="cedulapa" id="paciente" required
+                [(ngModel)]="cedulaPaciente" name="paciente" placeholder="Cedula paciente">
             <p style="margin-left: 5%;"></p>
-            <button type="button" class="btn btn-secondary" id="btnpa" (click)="buscarPersona()" [disabled]="cedulapa.invalid">Verificar informacion</button>
+            <button type="button" class="btn btn-secondary" id="btnpa" (click)="buscarPersona()"
+                [disabled]="cedulapa.invalid">Verificar informacion</button>
 
             <p style="margin-left: 25%;"></p>
             <div *ngIf="valida==true" class="alert alert-info" role="alert" id="alert1">
@@ -40,15 +44,18 @@
                 <div>
                     <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
                     <p style="border: 5%;"></p>
-                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar Paciente</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar
+                        Paciente</button>
                 </div>
             </div>
         </div>
         <div class="form-group ">
             <label for="acompanante"> <b>Ingrese número de cédula del Acompañante:</b></label>
-            <input type="text" class="form-control" id="acompanante" [formControl]="cedulaac" required [(ngModel)]="cedulaAcom" name="acompanante" placeholder="Cedula Acopañante">
+            <input type="text" class="form-control" id="acompanante" [formControl]="cedulaac" required
+                [(ngModel)]="cedulaAcom" name="acompanante" placeholder="Cedula Acopañante">
             <p style="margin-left: 5%;"></p>
-            <button type="button" class="btn btn-secondary" (click)="buscarAcompa()" [disabled]="cedulaac.invalid">Verificar información</button>
+            <button type="button" class="btn btn-secondary" (click)="buscarAcompa()"
+                [disabled]="cedulaac.invalid">Verificar información</button>
 
             <p style="margin-left: 25%;"></p>
             <div *ngIf="valida2==true" class="alert alert-info" role="alert" id="alert2">
@@ -68,26 +75,31 @@
                 <div>
                     <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
                     <p style="border: 5%;"></p>
-                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar Acompañante</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar
+                        Acompañante</button>
                 </div>
             </div>
         </div>
 
         <div class="form-group ">
             <label for="mensaje"><b>Ingrese el correo al que se enviará el recordatorio:</b></label>
-            <input type="text" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje" placeholder="correo">
+            <input type="text" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje"
+                placeholder="correo">
         </div>
 
 
         <div class="form-group">
             <label for="name"><b>Ingrese el número de cédula del Trabajador de la fundación:</b></label>
-            <input type="text" class="form-control" id="trabajador" [formControl]="cedulatra" required [(ngModel)]="cedulaTra" name="trabajador" placeholder="Cedula trabajador">
+            <input type="text" class="form-control" id="trabajador" [formControl]="cedulatra" required
+                [(ngModel)]="cedulaTra" name="trabajador" placeholder="Cedula trabajador">
 
             <p style="margin-left: 5%;"></p>
-            <button type="button" class="btn btn-secondary" id="btn3" (click)="buscarTraba()" [disabled]="cedulatra.invalid">Verificar información</button>
+            <button type="button" class="btn btn-secondary" id="btn3" (click)="buscarTraba()"
+                [disabled]="cedulatra.invalid">Verificar información</button>
 
             <p style="margin-left: 5%;"></p>
-            <div *ngIf="valida3==true" id="alert3" class="alert alert-info alert-dismissible fade show" role="alert" align-items="center;" justify-content="center;">
+            <div *ngIf="valida3==true" id="alert3" class="alert alert-info alert-dismissible fade show" role="alert"
+                align-items="center;" justify-content="center;">
                 <p style="margin-left: 25%;"></p>
                 <div>
                     <label for="nombre" class="form-label"><b>Nombre</b></label>
@@ -105,7 +117,8 @@
                 <div>
                     <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
                     <p style="border: 5%;"></p>
-                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar Trabajador</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar
+                        Trabajador</button>
                 </div>
             </div>
         </div>
@@ -115,11 +128,12 @@
             <br>
             <p style="margin-left: 5%;"></p>
             <div class="dropdown show">
-                <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
-                             <option *ngFor="let c of centro" class="dropdown-item">
-                             {{c.nombreCentroMedico}}
-                             </option>
-                            </select>
+                <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro"
+                    forControlName="nomcentro">
+                    <option *ngFor="let c of centro" class="dropdown-item">
+                        {{c.nombreCentroMedico}}
+                    </option>
+                </select>
             </div>
         </div>
 
@@ -128,45 +142,50 @@
             <br>
             <p style="margin-left: 25%; "></p>
             <div class="dropdown show ">
-                <select [(ngModel)]="nombreSeEspecialidad " class="btn btn-secondary dropdown-toggle " id="nomespecialidad " forControlName="nomespecialidad ">
-                                <option *ngFor="let e of especialidad " class="dropdown-item ">
-                                    {{e.nombreEspecialidad}}
-                                 </option>
-                            </select>
+                <select [(ngModel)]="nombreSeEspecialidad " class="btn btn-secondary dropdown-toggle "
+                    id="nomespecialidad " forControlName="nomespecialidad ">
+                    <option *ngFor="let e of especialidad " class="dropdown-item ">
+                        {{e.nombreEspecialidad}}
+                    </option>
+                </select>
             </div>
         </div>
 
         <div class="form-group ">
             <label for="name "><b>Observaciones a tener en cuenta para la cita:</b></label>
-            <input type="text " class="form-control " id="nota " required [(ngModel)]="cita.nota " name="nota " placeholder="Observaciones ">
+            <input type="text " class="form-control " id="nota " required [(ngModel)]="cita.nota " name="nota "
+                placeholder="Observaciones ">
         </div>
         <div class="card-footer">
             <div class="botones">
                 <div class="row">
                     <div class="col d-grid gap-2">
-                        <button class="btn btn-outline-success btnfooter" (click)="save()" type="button" style="margin-left: 10px">
-                    Guardar <i class="pi pi-check"></i>
-                  </button>
+                        <button class="btn btn-outline-success btnfooter" (click)="save()" type="button"
+                            style="margin-left: 10px">
+                            Guardar <i class="pi pi-check"></i>
+                        </button>
                     </div>
 
                     <div class="col d-grid gap-2">
-                        <button class="btn btn-outline-primary btnfooter" (click)="genereport()" type="button" style="margin-left: 10px">
-                    Reporte <i class="pi pi-file-pdf"></i>
-                  </button>
+                        <button class="btn btn-outline-primary btnfooter" (click)="genereport()" type="button"
+                            style="margin-left: 10px">
+                            Reporte <i class="pi pi-file-pdf"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </p-panel>
 </div>
-<br/>
+<br />
 <div>
     <div class="modal-header text-center ">
         <h3 class="text-center "><b>Lista de las Citas Medicas agendadas</b></h3>
     </div>
     <br />
     <div>
-        <button style="margin-left: 80% " type="button " class="btn btn-secondary btn-lg " (click)="buscar() ">Buscar por:</button>
+        <button style="margin-left: 80% " type="button " class="btn btn-secondary btn-lg " (click)="buscar() ">Buscar
+            por:</button>
     </div>
     <br />
     <div class="container animated d-flex justify-content-center animated fadeIn">
@@ -183,6 +202,8 @@
                     <th scope="col ">Centro Médico</th>
                     <th scope="col ">Especialidad</th>
                     <th scope="col ">Observaciones</th>
+                    <th scope="col ">Asistencia</th>
+                    <th scope="col ">Cambiar Asistencia</th>
                     <th scope="col ">Opciones</th>
                 </tr>
             </thead>
@@ -219,9 +240,21 @@
                         {{ u.nota }}
                     </td>
                     <td>
+                        <i class="pi"
+                            [ngClass]="{'true-icon pi-check-circle': u.asistencia, 'false-icon pi-times-circle': !u.asistencia}"></i>
+                    </td>
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-user-edit"
+                            class="p-button-rounded p-button-outlined"
+                            (click)="actualizarAsistencia(u.idCitasMedicas, u)">
+                        </button>
+                    </td>
+                    <td>
                         <div class="cell" data-title="Acciones">
-                            <input class="btn-update" (click)="openForEdit(u)" type="image" src="../../../assets/img/pencil.svg" alt="Delete" />
-                            <input class="btn-delete" (click)="deleteCita(u)" type="image" src="../../../assets/img/delete.svg" alt="Delete" />
+                            <input class="btn-update" (click)="openForEdit(u)" type="image"
+                                src="../../../assets/img/pencil.svg" alt="Delete" />
+                            <input class="btn-delete" (click)="deleteCita(u)" type="image"
+                                src="../../../assets/img/delete.svg" alt="Delete" />
                         </div>
                     </td>
                 </tr>

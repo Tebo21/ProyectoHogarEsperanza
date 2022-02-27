@@ -7,7 +7,7 @@ import { CentroMedico } from '../models/centro-medico';
   providedIn: 'root'
 })
 export class CentroMedicoService {
-  private conexion = 'http://192.168.0.199:3000/centroMedico';
+  private conexion = 'http://localhost:3000/centroMedico';
 
   constructor(private http: HttpClient){}
 

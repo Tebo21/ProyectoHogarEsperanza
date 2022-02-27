@@ -91,7 +91,7 @@ export class ListadoUsuariosComponent implements OnInit {
     this.usuarioService.getAll().subscribe(data => {
       this.listaUsuarios = data;
       for (let i = 0; i < this.listaUsuarios.length; i++) {
-        this.personaService.getPorCedula(this.listaUsuarios[i].usuarioCedula).subscribe(data2 => {
+        this.personaService.getUserByCedula(this.listaUsuarios[i].usuarioCedula).subscribe(data2 => {
           this.Persona = data2
           if (this.Persona.estadoActivo == true) {
             this.ListadoPersonas.push(this.Persona)
@@ -119,7 +119,7 @@ export class ListadoUsuariosComponent implements OnInit {
       message: `¿Está seguro de eliminar este usuario?`,
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.personaService.getPorCedula(cedula).subscribe(data2 => {
+        this.personaService.getUserByCedula(cedula).subscribe(data2 => {
           this.personaEliminar = data2;
           this.personaEliminar.estadoActivo = false;
           this.personaService.updatePersona(this.personaEliminar).subscribe(data => {

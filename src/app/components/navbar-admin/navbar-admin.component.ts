@@ -25,16 +25,16 @@ export class NavbarAdminComponent implements OnInit {
     this.items = [
       {
         label: 'Actividades',
-        icon: 'pi pi-calendar-times',
+        icon: 'pi pi-calendar',
         items: [{
 
             label: 'Mis Actividades',
-            icon: 'pi pi-fw pi-user-plus',
+            icon: 'pi pi-fw pi-calendar-plus',
             routerLink: ['/dashboard']
         },{
 
           label: 'Reporte de actividades',
-          icon: 'pi pi-fw pi-user-plus',
+          icon: 'pi pi-fw pi-calendar',
           routerLink: ['/reportes-actividades']
       }]
       },
@@ -45,7 +45,7 @@ export class NavbarAdminComponent implements OnInit {
       },
       {
         label: 'Citas Médicas',
-        icon: 'pi pi-fw pi-folder-open',
+        icon: 'pi pi-briefcase',
         routerLink: ['/crear-citaM']
       },
       {
@@ -84,24 +84,29 @@ export class NavbarAdminComponent implements OnInit {
                 routerLink: ['/registro-persona']
               },
               {
-                label: 'Listar Beneficiario',
+                label: 'Listar Beneficiarios',
                 icon: 'pi pi-fw pi-users',
                 routerLink: ['/lista-beneficiarios']
               },
               {
-                label: 'Documentos Beneficiario',
-                icon: 'pi pi-fw pi-users',
+                label: 'Documentos Beneficiarios',
+                icon: 'pi pi-fw pi-id-card',
                 routerLink: ['/lista-documentos']
+              },
+              {
+                label: 'Historial Beneficiarios',
+                icon: 'pi pi-fw pi-folder-open',
+                routerLink: ['/historial']
               }
             ]
           },
           {
             label: 'Observaciones',
-            icon: 'pi pi-fw pi-users',
+            icon: 'pi pi-fw pi-eye',
             items: [
               {
                 label: 'Listar Observaciones',
-                icon: 'pi pi-fw pi-users',
+                icon: 'pi pi-fw pi-eye',
                 routerLink: ['/lista-observaciones-personas']
               }
             ]

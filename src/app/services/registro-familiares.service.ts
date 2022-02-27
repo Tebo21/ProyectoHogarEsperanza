@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistroFamiliaresService {
-  private URL='http://192.168.0.199:3000/registroFamiliares';
+  private URL='http://localhost:3000/registroFamiliares';
   constructor(private http:HttpClient) { }
 
   postRegistFami(familiaresPersona:RegistroFamiliares):Observable<any>{
@@ -29,5 +29,16 @@ export class RegistroFamiliaresService {
   updateFamiliares(familia: any):Observable<any>{
     const url = `update-familiares`;
     return this.getQueryUpdateFamiliares(url, familia);
+  }
+
+   //Traer Registro familiar Especifico por numero de cedula del beneficiario
+   getQueryFamByCedula(query: string, cedulaPersona: string): Observable<RegistroFamiliares> {
+    const url = `http://localhost:3000/registroFamiliares/${query}?cedulaPersona=${cedulaPersona}`;
+    return this.http.request<RegistroFamiliares>('get', url);
+  }
+
+  getFamByCedula(cedulaPersona: string): Observable<any> {
+    const url = 'getByCedula';
+    return this.getQueryFamByCedula(url, cedulaPersona);
   }
 }

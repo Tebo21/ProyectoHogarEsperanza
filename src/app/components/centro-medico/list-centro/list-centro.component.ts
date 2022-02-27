@@ -193,7 +193,7 @@ export class ListCentroComponent implements OnInit {
   }
 
   async fetchData(): Promise<DataResponse[]> {
-    return fetch('http://192.168.0.199:3000/centroMedico/listado').then(
+    return fetch('http://localhost:3000/centroMedico/listado').then(
       (response) => response.json()
     );
   }

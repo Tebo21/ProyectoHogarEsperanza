@@ -7,7 +7,7 @@ import { EntregaDonacion } from '../models/EntregaDonacion';
 })
 export class EntregarDonacionService {
 
-  private URL = "http://192.168.0.199:3000/entregaDonacion/";  
+  private URL = "http://localhost:3000/entregaDonacion/";  
 
   constructor(private http: HttpClient) { }
 

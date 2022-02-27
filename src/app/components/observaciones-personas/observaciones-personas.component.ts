@@ -64,7 +64,7 @@ export class ObservacionesPersonasComponent implements OnInit {
   }
 
   getPersona(){
-    this.personaservice.getPorCedula(this.cedula_persona).subscribe(data => {
+    this.personaservice.getUserByCedula(this.cedula_persona).subscribe(data => {
       this.persona=data
       this.nombrePersona=this.persona.nombres;
     })

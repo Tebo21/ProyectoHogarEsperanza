@@ -10,8 +10,8 @@ export class Personas {
     fechaNacimiento?: string;
     edad?: number;
     nacionalidad?: string;
-    discapacidad?: boolean;
     estado_civil?: string;
     beneficiario?: boolean;
     estadoActivo?: boolean;
+    faltas?: number;
 }

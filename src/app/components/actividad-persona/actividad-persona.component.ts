@@ -41,7 +41,7 @@ export class ActividadPersonaComponent implements OnInit {
   }
 
   getPersonsById() {
-    this.personaService.getPorCedula(this.PersonId).subscribe(
+    this.personaService.getUserByCedula(this.PersonId).subscribe(
       (response) => {
         this.Person = response;
       },

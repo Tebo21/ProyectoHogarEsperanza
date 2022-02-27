@@ -39,7 +39,6 @@ export class EditarUsuariosComponent implements OnInit {
   estado: any;
   generos: any[];
   genero: any;
-  discap = false;
   tipoUser: any;
   //Campos
   usuarioContrasenia: any;
@@ -65,9 +64,8 @@ export class EditarUsuariosComponent implements OnInit {
       this.usuarioContraseniaAnterior = this.usuarioActual.usuarioContrasenia;
 
     });
-    this.personaService.getPorCedula(this.cedulaEditar).subscribe(data3 => {
+    this.personaService.getUserByCedula(this.cedulaEditar).subscribe(data3 => {
       this.persona = data3;
-      this.discap = this.persona.discapacidad;
       this.nacio = this.persona.nacionalidad;
       this.estado = this.persona.estado_civil;
       this.genero = this.persona.genero;
@@ -199,12 +197,12 @@ export class EditarUsuariosComponent implements OnInit {
 
 
   Actualizar() {
-    this.personaService.getPorCedula(this.persona.cedula).subscribe(dat => {
+    this.personaService.getUserByCedula(this.persona.cedula).subscribe(dat => {
       this.personaValidar = dat;
     })
     this.personaService.getPorCorreo(this.persona.correo).subscribe(data => {
       this.personaValidarCorreo = data;
-      if (this.personaValidarCorreo.correo == this.personaValidar.correo) { 
+      if (this.personaValidarCorreo.correo == this.personaValidar.correo) {
         const PersonaNueva: Personas = {
           apellidos: this.persona.apellidos,
           beneficiario: this.persona.beneficiario,
@@ -212,7 +210,6 @@ export class EditarUsuariosComponent implements OnInit {
           celular: this.persona.celular,
           correo: this.persona.correo,
           direccion: this.persona.direccion,
-          discapacidad: this.discap,
           edad: this.persona.edad,
           estadoActivo: this.persona.estadoActivo,
           estado_civil: this.estadoFinal,
@@ -220,7 +217,8 @@ export class EditarUsuariosComponent implements OnInit {
           genero: this.generoFinal,
           idPersona: this.persona.idPersona,
           nacionalidad: this.nacioFinal,
-          nombres: this.persona.nombres
+          nombres: this.persona.nombres,
+          faltas: this.persona.faltas
         }
         this.personaService.updatePersona(PersonaNueva).subscribe(() => {
         });
@@ -237,7 +235,7 @@ export class EditarUsuariosComponent implements OnInit {
           alert('Se ha actualizado exitosamente')
           this.router.navigateByUrl('listado-usuarios');
         });
-      } else if (this.personaValidarCorreo.cedula == null){
+      } else if (this.personaValidarCorreo.cedula == null) {
         const PersonaNueva: Personas = {
           apellidos: this.persona.apellidos,
           beneficiario: this.persona.beneficiario,
@@ -245,7 +243,6 @@ export class EditarUsuariosComponent implements OnInit {
           celular: this.persona.celular,
           correo: this.persona.correo,
           direccion: this.persona.direccion,
-          discapacidad: this.discap,
           edad: this.persona.edad,
           estadoActivo: this.persona.estadoActivo,
           estado_civil: this.estadoFinal,
@@ -253,7 +250,8 @@ export class EditarUsuariosComponent implements OnInit {
           genero: this.generoFinal,
           idPersona: this.persona.idPersona,
           nacionalidad: this.nacioFinal,
-          nombres: this.persona.nombres
+          nombres: this.persona.nombres,
+          faltas: this.persona.faltas
         }
         this.personaService.updatePersona(PersonaNueva).subscribe(() => {
         });
@@ -274,28 +272,28 @@ export class EditarUsuariosComponent implements OnInit {
         alert('Esta dirección de correo electrónico ya está en uso')
       }
     });
-    
+
   }
 
   CambiarContra() {
-      if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
-        alert('Las contraseñas no coinciden')
-      } else {
-        const UsuarioNuevo: Usuarios = {
-          idUsuario: this.usuarioEdit.idUsuario,
-          usuarioCedula: this.usuarioEdit.usuarioCedula,
-          usuarioContrasenia: this.usuarioContrasenia,
-          usuarioNombre: this.usuarioEdit.usuarioNombre,
-          usuarioTipo: this.usuarioEdit.usuarioTipo,
-          usuarioEstado: true,
-          usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
-        }
-        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-          alert('Se ha actualizado exitosamente su contraseña')
-          this.displayContra = false;
-          window.location.reload();
-        });
+    if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
+      alert('Las contraseñas no coinciden')
+    } else {
+      const UsuarioNuevo: Usuarios = {
+        idUsuario: this.usuarioEdit.idUsuario,
+        usuarioCedula: this.usuarioEdit.usuarioCedula,
+        usuarioContrasenia: this.usuarioContrasenia,
+        usuarioNombre: this.usuarioEdit.usuarioNombre,
+        usuarioTipo: this.usuarioEdit.usuarioTipo,
+        usuarioEstado: true,
+        usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
       }
+      this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+        alert('Se ha actualizado exitosamente su contraseña')
+        this.displayContra = false;
+        window.location.reload();
+      });
+    }
   }
 
   Cancelar() {

@@ -36,7 +36,6 @@ export class PerfilUsuarioComponent implements OnInit {
   estado: any;
   generos: any[];
   genero: any;
-  discap: boolean;
   usuarioContraseniaAnterior: any;
   usuarioContrasenia: any;
   usuarioConfirContrasenia: any;
@@ -93,9 +92,8 @@ export class PerfilUsuarioComponent implements OnInit {
         this.vistaTipo = true;
       }
     });
-    this.personaService.getPorCedula(this.cedUser).subscribe(data2 => {
+    this.personaService.getUserByCedula(this.cedUser).subscribe(data2 => {
       this.persona = data2;
-      this.discap = this.persona.discapacidad;
       this.genero = this.persona.genero;
       this.nacio = this.persona.nacionalidad;
       this.estado = this.persona.estado_civil;
@@ -185,7 +183,7 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   Actualizar() {
-    this.personaService.getPorCedula(this.persona.cedula).subscribe(dat => {
+    this.personaService.getUserByCedula(this.persona.cedula).subscribe(dat => {
       this.personaValidar = dat;
     })
     this.personaService.getPorCorreo(this.persona.correo).subscribe(data => {
@@ -198,7 +196,6 @@ export class PerfilUsuarioComponent implements OnInit {
           celular: this.persona.celular,
           correo: this.persona.correo,
           direccion: this.persona.direccion,
-          discapacidad: this.discap,
           edad: this.persona.edad,
           estadoActivo: this.persona.estadoActivo,
           estado_civil: this.estadoFinal,
@@ -206,7 +203,8 @@ export class PerfilUsuarioComponent implements OnInit {
           genero: this.generoFinal,
           idPersona: this.persona.idPersona,
           nacionalidad: this.nacioFinal,
-          nombres: this.persona.nombres
+          nombres: this.persona.nombres,
+          faltas: this.persona.faltas
         }
         this.personaService.updatePersona(PersonaNueva).subscribe(() => {
         });
@@ -231,7 +229,6 @@ export class PerfilUsuarioComponent implements OnInit {
           celular: this.persona.celular,
           correo: this.persona.correo,
           direccion: this.persona.direccion,
-          discapacidad: this.discap,
           edad: this.persona.edad,
           estadoActivo: this.persona.estadoActivo,
           estado_civil: this.estadoFinal,
@@ -239,7 +236,8 @@ export class PerfilUsuarioComponent implements OnInit {
           genero: this.generoFinal,
           idPersona: this.persona.idPersona,
           nacionalidad: this.nacioFinal,
-          nombres: this.persona.nombres
+          nombres: this.persona.nombres,
+          faltas: this.persona.faltas
         }
         this.personaService.updatePersona(PersonaNueva).subscribe(() => {
         });

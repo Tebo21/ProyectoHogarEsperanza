@@ -1,87 +1,87 @@
 <app-navbar-admin></app-navbar-admin>
 
 <br>
-<div class="container1">
-  <div class="card">
-    <div class="card-header">
-      <h5 class="card-tittle">Reportes </h5>
-    </div>
-    <div class="card-body">
-      <br>
-      <div>
-        <div>
-          <div class="row">
-            <div class="col">
-              <label class="visually-hidden text-center">Cédula:
-                <input type="text " class="form-control " placeholder="Buscar.."  [(ngModel)]="filterpost1.cedula" (ngModelChange)="updateFilters()">
-              </label>
-            </div>
-            <div class="col">
-              <label for="validationTooltip01 " class="form-label text-center">Nombre:
-                <input type="text " class="form-control" placeholder="Buscar.."  [(ngModel)]="filterpost1.nombre" (ngModelChange)="updateFilters()"></label>
-            </div>
-            <div class="col">
-              <label for="validationTooltip01 " class="form-label text-center">Apellido:
-                <input type="text " class="form-control" placeholder="Buscar.."  [(ngModel)]="filterpost1.apellido" (ngModelChange)="updateFilters()"></label>
-            </div>
-            <div class="col">
-              <label for="validationTooltip01 " class="form-label text-center">Correo:  <input type="text " class="form-control" placeholder="Buscar.."  [(ngModel)]="filterpost1.correo" (ngModelChange)="updateFilters()"></label>
-            </div>
-            <div class="col">
-              <label for="staticEmail2 " class="visually-hidden text-center">Fecha:
-                <input type="date" id="start" class="form-control" name="fecha" [(ngModel)]="filterpost1.fecha" (ngModelChange)="updateFilters()">
-              </label>
-            </div>
-            <div class="col">
-              <label for="validationTooltip01 " class="form-label text-center">Hora de inicio:  <input type="time" class="form-control" name="fecha" [(ngModel)]="filterpost1.hinicio" (ngModelChange)="updateFilters()"></label>
-            </div>
-            <div class="col">
-              <label for="validationTooltip01 " class="form-label text-center">Hora de finalizacion:<input type="time" class="form-control" name="fecha" [(ngModel)]="filterpost1.hfin" (ngModelChange)="updateFilters()"></label>
-            </div>
-            <div class="col">
-              <label for="validationTooltip01 " class="form-label text-center">Actividad<input type="text " class="form-control" name="fecha" placeholder="Buscar.." [(ngModel)]="filterpost1.actividad" (ngModelChange)="updateFilters()"></label>
-            </div>
-            <div class="col">
-              <label for="validationTooltip01 " class="form-label text-center"> Tipo de Actividad<input type="text" class="form-control" name="fecha" placeholder="Buscar.." [(ngModel)]="filterpost1.Tactividad" (ngModelChange)="updateFilters()"></label>
-            </div>
+
+<body>
+  <div class="container">
+    <p-table #dt [value]="Actividadview1" [rows]="12" styleClass="p-datatable-striped-responsive-demo"
+      [scrollable]="true" scrollHeight="500px" [paginator]="true" [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[12,25,50]" [rowHover]="false"
+      [globalFilterFields]="['cedulaPersona.cedula' , 'cedulaPersona.nombres' , 'cedulaPersona.apellidos' , 'cedulaPersona.correo']">
+      <ng-template pTemplate="caption">
+        <div class="menu">
+          <div class="item">
+            <span class="p-input-icon-right">
+              <i class="pi pi-search"></i>
+              <input id="bus" pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Buscar" />
+            </span>
+          </div>
+          <div class="item derecho">
+            <button class="btn btn-outline-info" (click)="showConfirmacionPDF()">
+              <i class="pi pi-file-pdf"></i>
+              Reporte
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card-header ">
-      <button class="btn btn-outline-info" (click)="showConfirmacionPDF()">
-        <i class="pi pi-file-pdf"></i>
-        reporte
-      </button>
-    </div>
-    <div class="card-body ">
-      <table class="table ">
-        <thead class="table ">
-          <th scope="col ">CÉDULA</th>
-          <th scope="col ">NOMBRES</th>
-          <th scope="col ">APELLIDOS</th>
-          <th scope="col ">CORREO</th>
-          <th scope="col ">FECHA DE REALIZACION</th>
-          <th scope="col ">HORA DE INICIO</th>
-          <th scope="col ">HORA DE FINALIZACION</th>
-          <th scope="col ">ACTIVIDAD</th>
-          <th scope="col ">TIPO DE ACTIVIDAD</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of Actividadview | filter:filterpost ">
-            <td>{{item.cedulaPersona.cedula}}</td>
-            <td>{{item.cedulaPersona.nombres}}</td>
-            <td>{{item.cedulaPersona.apellidos}}</td>
-            <td>{{item.cedulaPersona.correo}}</td>
-            <td>{{item.fechaActividad}}</td>
-            <td>{{item.horaInicio}}</td>
-            <td>{{item.horaFin}}</td>
-            <td>{{item.descripcionActividad}}</td>
-            <td>{{item.tipoActividad.nombreActividad}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card-footer "></div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="cedulaPersona.cedula">Cédula
+            <p-sortIcon field="cedulaPersona.cedula"></p-sortIcon>
+            <p-columnFilter type="text" field="cedulaPersona.cedula" display="menu" class="p-ml-auto"></p-columnFilter>
+          </th>
+          <th pSortableColumn="cedulaPersona.nombres">Nombres
+            <p-sortIcon field="cedulaPersona.nombres"></p-sortIcon>
+            <p-columnFilter type="text" field="cedulaPersona.nombres" display="menu" class="p-ml-auto"></p-columnFilter>
+          </th>
+          <th pSortableColumn="cedulaPersona.correo">Correo
+            <p-sortIcon field="cedulaPersona.correo"></p-sortIcon>
+            <p-columnFilter type="text" field="cedulaPersona.correo" display="menu" class="p-ml-auto"></p-columnFilter>
+          </th>
+          <th pSortableColumn="fechaActividad">Fecha de Realización
+            <p-sortIcon field="fechaActividad"></p-sortIcon>
+          </th>
+          <th pSortableColumn="horaInicio">Horario
+            <p-sortIcon field="horaInicio"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tipoActividad.nombreActividad">Tipo de Actividad
+            <p-sortIcon field="tipoActividad.nombreActividad"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tipoActividad.descripcionActividad">Descripción de Actividad
+            <p-sortIcon field="tipoActividad.descripcionActividad"></p-sortIcon>
+          </th>
+          <th pSortableColumn="asistencia">Asistencia
+            <p-sortIcon field="asistencia"></p-sortIcon>
+          </th>
+          <th pSortableColumn="asistencia">Cambiar Asistencia
+            <p-sortIcon field="asistencia"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr class="p-selectable-row">
+          <td>{{item.cedulaPersona.cedula}}</td>
+          <td>{{item.cedulaPersona.nombres}} {{item.cedulaPersona.apellidos}}</td>
+          <td>{{item.cedulaPersona.correo}}</td>
+          <td>{{item.fechaActividad}}</td>
+          <td>{{item.horaInicio}} - {{item.horaFin}}</td>
+          <td>{{item.tipoActividad.nombreActividad}}</td>
+          <td>{{item.tipoActividad.descripcionActividad}}</td>
+          <td><i class="pi" [ngClass]="{'true-icon pi-check-circle': item.asistencia, 'false-icon pi-times-circle': !item.asistencia}"></i></td>
+          <td>
+            <button pButton pRipple type="button" icon="pi pi-user-edit"
+                class="p-button-rounded p-button-outlined"
+                (click)="cambiarEstadoDeAsistencia(item.idActividadPersona, item)">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No se encontraron actividades.</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
-</div>
+</body>

@@ -1,6 +1,11 @@
 export class RegistroFamiliares {
-_id:number;    
-cedulaPersona:string;
-numHijos:number;
-hijos:[]
+    idRegistroFamiliares?: number;  
+    cedulaFamiliar?: string;
+    cedulaPersona?: string;
+    parentesco?: string;
+    nombreF?: string;
+    apellidoF?: string;
+    celularF?: string;
+    correo?: string;
+    numHijos?: number; 
 }

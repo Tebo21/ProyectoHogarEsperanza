@@ -18,10 +18,10 @@ type TableRow2 = [string, string, string, number, string];
   templateUrl: './entregar-donacion.component.html',
   styleUrls: ['./entregar-donacion.component.css'],
 })
-export class EntregarDonacionComponent implements OnInit { 
+export class EntregarDonacionComponent implements OnInit {
 
   listaDonaciones: Array<Donaciones>;
-  listaEntregaDonaciones: Array<EntregaDonacion>; 
+  listaEntregaDonaciones: Array<EntregaDonacion>;
 
   loading: boolean = true;
 
@@ -32,7 +32,7 @@ export class EntregarDonacionComponent implements OnInit {
 
   valBeneficiario: boolean = false;
   today: Date = new Date();
-  
+
 
   displayPE: boolean = false;
 
@@ -52,7 +52,7 @@ export class EntregarDonacionComponent implements OnInit {
     private fichaSocioeconomicaService: FichaSocioeconomicaService,
     private personaService: PersonasService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ComprobarLogin();
@@ -79,7 +79,7 @@ export class EntregarDonacionComponent implements OnInit {
         donacion.cantidad = result.cantidad;
         donacion.categoria = result.categoria;
         donacion.cedulaPersona = result.cedulaPersona;
-        donacion.descripcionDonacion = result.descripcionDonacion;       
+        donacion.descripcionDonacion = result.descripcionDonacion;
         donacion.fechaDonacion = result.fechaDonacion;
         donacion.idDonacion = result.idDonacion;
         donacion.nombreDonacion = result.nombreDonacion;
@@ -92,30 +92,43 @@ export class EntregarDonacionComponent implements OnInit {
 
   buscarBeneficiario() {
     this.personaService
-      .getPorCedula(this.cedulaBeneficiario)
+      .getUserByCedula(this.cedulaBeneficiario)
       .subscribe((data) => {
         if (data != null) {
-          this.nombresBeneficiario = data.nombres;
-          this.apellidosBeneficiario = data.apellidos;
-          this.direccionBeneficiario = data.direccion;
-
-          this.fichaSocioeconomicaService
-            .getfichacedula(data.cedula)
-            .subscribe((data) => {
-              if (data != null) {
-                this.displayPE = true;
-                this.valBeneficiario = true;
-                this.obtenerEntregas(this.cedulaBeneficiario);
-              } else {
-                this.valBeneficiario = false;
-                Swal.fire({
-                  title:
-                    'No hay Ficha Socioeconómica relacionada con la cédula:',
-                  text: this.cedulaBeneficiario,
-                  icon: 'warning',
-                });
-              }
+          if (data.faltas >= 3) {
+            Swal.fire({
+              icon: 'error',
+              title: 'El beneficiario presenta ' + data.faltas + ' faltas',
+              html:
+                'Puede consultarlas en el menú <b>Actividades</b>, ' +
+                'en <b>Reporte de Actividades</b>',
+              confirmButtonText:
+                'Cerrar',
             });
+          } else {
+            this.nombresBeneficiario = data.nombres;
+            this.apellidosBeneficiario = data.apellidos;
+            this.direccionBeneficiario = data.direccion;
+            this.fichaSocioeconomicaService
+              .getfichacedula(data.cedula)
+              .subscribe((data) => {
+                if (data != null) {
+                  this.displayPE = true;
+                  this.valBeneficiario = true;
+                  this.obtenerEntregas(this.cedulaBeneficiario);
+                } else {
+                  this.valBeneficiario = false;
+                  Swal.fire({
+                    title:
+                      'No hay Ficha Socioeconómica relacionada con la cédula:',
+                    text: this.cedulaBeneficiario,
+                    icon: 'warning',
+                  });
+                }
+              });
+          }
+
+
         } else {
           this.valBeneficiario = false;
           Swal.fire({
@@ -127,7 +140,7 @@ export class EntregarDonacionComponent implements OnInit {
   }
 
   obtenerEntregas(cedula: string) {
-    
+
     this.listaEntregaDonaciones = [];
     this.entregarDonacionService.getPorCedula(cedula).subscribe((data) => {
       if (data != null) {
@@ -136,12 +149,12 @@ export class EntregarDonacionComponent implements OnInit {
           entrega.cantidadEntregada = result.cantidadEntregada;
           entrega.cedulaBeneficiario = result.cedulaBeneficiario;
           entrega.descripcionProducto = result.descripcionProducto;
-          entrega.fechaEntrega =result.fechaEntrega;
-          entrega.idEntregaDonacion = result.idEntregaDonacion;         
-          entrega.productoEntregado = result.productoEntregado; 
-          
+          entrega.fechaEntrega = result.fechaEntrega;
+          entrega.idEntregaDonacion = result.idEntregaDonacion;
+          entrega.productoEntregado = result.productoEntregado;
+
           return entrega;
-         
+
 
         });
       } else {
@@ -195,12 +208,12 @@ export class EntregarDonacionComponent implements OnInit {
           this.productoEntrega.cantidad > 0 &&
           this.productoEntrega.cantidad > this.cantidadEntrega
         ) {
-          
+
           this.entregaDonacion.cantidadEntregada = this.cantidadEntrega;
           this.entregaDonacion.cedulaBeneficiario = this.cedulaBeneficiario;
           //this.entregaDonacion.descripcionProducto = this.productoEntrega.descripcionDonacion;
           let fecha = new Date(this.today);
-          if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0){
+          if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0) {
             fecha.setMinutes(fecha.getMinutes() + 480);
           }
           this.entregaDonacion.fechaEntrega = fecha;
@@ -254,8 +267,8 @@ export class EntregarDonacionComponent implements OnInit {
 
   listaEntregaProducto() {
     this.router.navigate(['lista']);
-  }  
-  showConfirmacionPDF(){
+  }
+  showConfirmacionPDF() {
     this.displayPE = false;
     Swal.fire({
       title: '¿Estas seguro de descargar este reporte?',
@@ -284,9 +297,9 @@ export class EntregarDonacionComponent implements OnInit {
       title: 'Reporte de productos entregados ',
     });
     pdf.add(await new Img('../../assets/img/logo.png').build());
-    pdf.add(    
-      new Txt('Beneficiario: ' + (this.nombresBeneficiario +' '+this.apellidosBeneficiario)).alignment('right').end
-      );
+    pdf.add(
+      new Txt('Beneficiario: ' + (this.nombresBeneficiario + ' ' + this.apellidosBeneficiario)).alignment('right').end
+    );
     pdf.add(new Txt('   ').end);
     pdf.add(
       new Txt('Lista de los productos entregados ').alignment('center').bold().fontSize(16).end
@@ -298,10 +311,10 @@ export class EntregarDonacionComponent implements OnInit {
   creaTabla2(data: EntregaDonacion[]): ITable {
     [{}];
     return new Table([
-      ['Cédula', 'Producto Entregado', 'Descripcion','Cantidad', 'Fecha entrega'],
+      ['Cédula', 'Producto Entregado', 'Descripcion', 'Cantidad', 'Fecha entrega'],
       ...this.extraerDatos2(data),
     ])
-    
+
       .heights((rowIndex) => {
         return rowIndex === 0 ? 20 : 0;
       })
@@ -317,40 +330,40 @@ export class EntregarDonacionComponent implements OnInit {
       row.cedulaBeneficiario,
       row.productoEntregado,
       row.descripcionProducto,
-      row.cantidadEntregada,     
-      this.dateFormat(row.fechaEntrega),    
+      row.cantidadEntregada,
+      this.dateFormat(row.fechaEntrega),
     ]);
 
   }
 
-  dateFormat(d: Date): string{
+  dateFormat(d: Date): string {
 
     let date: Date = new Date(d);
     let fecha: string;
 
     let dia = date.getDate();
-      let mes = date.getMonth() + 1;
-      let year = date.getFullYear();
+    let mes = date.getMonth() + 1;
+    let year = date.getFullYear();
 
-      if (dia < 10 && mes < 10){
-        fecha = year+'-0'+mes+'-0'+dia;
-      }
+    if (dia < 10 && mes < 10) {
+      fecha = year + '-0' + mes + '-0' + dia;
+    }
 
-      if (dia > 9  && mes < 10){
-        fecha = year+'-0'+mes+'-'+dia;
-      }
+    if (dia > 9 && mes < 10) {
+      fecha = year + '-0' + mes + '-' + dia;
+    }
 
-      if (dia < 10  && mes > 9){
-        fecha = year+'-'+mes+'-0'+dia;
-      }
+    if (dia < 10 && mes > 9) {
+      fecha = year + '-' + mes + '-0' + dia;
+    }
 
-      if (dia > 9 && mes > 9){
-        fecha = year+'-'+mes+'-'+dia;
-      }
-    
+    if (dia > 9 && mes > 9) {
+      fecha = year + '-' + mes + '-' + dia;
+    }
+
     return fecha;
   }
 
- 
- 
+
+
 }

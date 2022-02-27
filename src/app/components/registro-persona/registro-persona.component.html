@@ -1,62 +1,281 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-<br><br>
-<form >
-<body class="body">
-  <div class="container">
-   <div class="modal-body ">  
-   <div class="card">
-         <div class="card-header mb-3">
-          <h4>REGISTRO PERSONA</h4>
-          </div>
-    <div style="margin-right: 5%;" class="input-group mb-3">
-        <input [(ngModel)]="Personas.cedula" name="cedula" id="cedula" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Numero de cedula" maxlength="10" [pKeyFilter]="blockSpecial">
-      </div>
-      <div class="input-group mb-3">
-        <input [(ngModel)]="Personas.nombres" name="nombre" id="nombre" style="margin-left: 5%;" type="text" class="form-control" placeholder="Nombre">
-        <p style="margin-left: 2%;"> </p>
-        <input [(ngModel)]="Personas.apellidos" name="apellido" id="apellido" style="margin-right: 5%;" type="text" class="form-control" placeholder="apellido">
-      </div>
-      <div class="input-group mb-3">
-        <input [(ngModel)]="Personas.direccion" name="direccion" id="direccion" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control" placeholder="Direccion">
-      </div>
-      <div class="input-group mb-3">
-        <input [(ngModel)]="Personas.celular" name="celular" id="celular" style="margin-left: 5%;" type="text" class="form-control" placeholder="Celular">
-        <p style="margin-left: 2%;"> </p>
-        <input [(ngModel)]="Personas.correo" name="correo" id="correo" style="margin-right: 5%;" type="text" class="form-control" placeholder="Correo">
-      </div>
-      <div class="input-group mb-3">
-        <input  [(ngModel)]="Personas.fechaNacimiento"  (change)="calcularedad($event)" name="fechaNacimiento" id="fechaNacimiento" style="margin-left: 5%;" type="date" class="form-control" placeholder="Fecha nacimiento">
-        <p style="margin-left: 2%;"> </p>
-        <input  [(ngModel)]="Personas.edad" name="edad" id="edad" style="margin-right: 5%;" type="number" class="form-control" placeholder="Edad">
-        <select [(ngModel)]="Personas.genero" name="genero" id="genero" style="margin-right: 5%;" type="text" class="form-select" aria-label="Default select example">
-          <option selected disabled="disabled">Genero</option>
-          <option value="Masculino">Masculino</option>
-          <option value="Femenino">Femenino</option>
-        </select>  
-      </div>
-      <div class="input-group mb-2">
-        <select [(ngModel)]="Personas.nacionalidad" name="nacionalidad" id="nacionalidad" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="nacionalidad">
-          <option selected disabled="disabled">Nacionalidad</option>
-          <option *ngFor="let nac of catalogoNacionalidad" value="{{nac}}">{{nac}}</option>
-        </select>
-        <select [(ngModel)]="Personas.discapacidad" name="discapacidad" id="discapacidad" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="discapacidad">
-          <option selected disabled="disabled">Discapacidad</option>
-          <option value="false">No</option>
-          <option value="true">Si</option>
-        </select>
-        <select [(ngModel)]="Personas.estado_civil" name="estado_civil" id="estado_civil" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="estado_civil">
-          <option selected disabled="disabled">Estado civil</option>
-          <option  *ngFor="let estc of catalogoEstadoCivil" value="{{estc}}">{{estc}}</option>
-        </select>
-      </div>
-      <div class="btn_guardar mb-2">
-        <button class="guardar1" (click)="addPersona()" style="margin-left: 30%;" type="submit">Guardar y Continuar</button>
-    </div>
-  </div>   
+<p-messages [(value)]="msgs"></p-messages>
+
+<div class="container animated  d-flex justify-content-center fadeIn">
+    <p-panel class="card" id="panel">
+        <h2 class="text-center">Registro de Beneficiarios</h2>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Número de cédula</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="Ced" #Ced
+                placeholder="Número de cédula" [(ngModel)]="persona.cedula" name="persona.cedula" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Nombres</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
+                id="persona.nombres" placeholder="Nombres" [(ngModel)]="persona.nombres" name="persona.nombres" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Apellidos</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
+                id="persona.apellidos" placeholder="Apellidos" [(ngModel)]="persona.apellidos" name="persona.apellidos" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Direccion</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="noSpecial" maxlength="70" minlength="3" 
+                id="persona.direccion"  placeholder="Dirección" [(ngModel)]="persona.direccion" name="persona.direccion" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Número celular</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" minlength="7" maxlength="13" 
+                id="persona.celular" placeholder="Número celular" [(ngModel)]="persona.celular" name="persona.celular"  required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Correo electrónico</b></label>
+            <input class="form-control" type="email" maxlength="40" [pKeyFilter]="valCorreo" minlength="12" 
+                id="persona.correo" placeholder="Correo electrónico" [(ngModel)]="persona.correo" name="persona.correo" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Género</b></label>
+            <p-dropdown [options]="generos" [(ngModel)]="genero" placeholder="Seleccione su género" optionLabel="gop"
+                [style]="{'width': '100%'}" [showClear]="true">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Fecha de nacimiento</b></label>
+            <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
+                [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" dateFormat="yy-mm-dd" maxlength="10"
+                (change)="calcularedad($event)" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Edad</b></label>
+            <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
+                placeholder="Edad" [(ngModel)]="edadC" name="edad" required disabled>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>País de origen</b></label>
+            <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="Seleccione su nacionalidad"
+                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Estado civil</b></label>
+            <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
+                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>¿Tiene pareja? (Conviviente) No | Si</b></label>
+            <br>
+            <p-inputSwitch [(ngModel)]="ficha.pareja"></p-inputSwitch>
+        </div>
+        <p-messages [(value)]="msgs"></p-messages>
+        <div align="center">
+            <button pButton type="button" label="Siguiente"
+            class="p-button-outlined"
+            (click)='ValidarDatos()'></button>
+        </div>
+    </p-panel>
 </div>
+<br>
+<div class="container animated  d-flex justify-content-center fadeIn" *ngIf="habiRegFam == true">
+    <p-panel class="card" id="panel">
+        <h2 class="text-center">Registro de Familiares</h2>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Número de cédula</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="familiares.cedulaFamiliar"
+                placeholder="Número de cédula" [(ngModel)]="familiares.cedulaFamiliar" name="familiares.cedulaFamiliar" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Parentesco familiar</b></label>
+            <p-dropdown [options]="parentescos" [(ngModel)]="parentesco" placeholder="Seleccione el parentesco familiar"
+                optionLabel="par" [style]="{'width': '100%'}" [showClear]="true" dataKey="value">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Nombres</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
+                id="familiares.nombreF" placeholder="Nombres" [(ngModel)]="familiares.nombreF" name="familiares.nombreF" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Apellidos</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
+                id="familiares.apellidoF" placeholder="Apellidos" [(ngModel)]="familiares.apellidoF" name="familiares.apellidoF" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Número celular</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" id="familiares.celularF" placeholder="Número celular"
+                [(ngModel)]="familiares.celularF" name="familiares.celularF" minlength="7" maxlength="13">
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Correo electrónico</b></label>
+            <input class="form-control" type="email" maxlength="40" [pKeyFilter]="valCorreo" minlength="12" id="familiares.correo"
+                placeholder="Correo electrónico" [(ngModel)]="familiares.correo" name="familiares.correo">
+        </div>
+        <p-messages [(value)]="msgs"></p-messages>
+        <div align="center">
+            <button pButton type="button" label="Agregar"
+            class="p-button-outlined p-button-success" icon="pi pi-plus-circle"
+            (click)='agregarFamiliar()'></button>
+        </div>
+        <br>
+            <p-table [value]="familyArray" styleClass="p-datatable-striped p-datatable-gridlines" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Parentesco</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Celular</th>
+                        <th>Correo</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-fam>
+                    <tr>
+                        <td>{{fam.cedulaPersona}}</td>
+                        <td>{{fam.parentesco}}</td>
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="fam.nombreF">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{fam.nombreF}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="fam.apellidoF">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{fam.apellidoF}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="fam.celularF">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{fam.celularF}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" [(ngModel)]="fam.correo">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{fam.correo}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <button pButton pRipple type="button" icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger p-button-outlined" 
+                                (click)="eliminarFamiliar(fam)">
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        <br>
+    </p-panel>
 </div>
-</body>
-<br><br><br><br>
-</form>
+<br>
+<div class="container animated  d-flex justify-content-center fadeIn" *ngIf="habiRegFam == true">
+    <p-panel class="card" id="panel">
+        <h2 class="text-center">Ficha Socioeconómica</h2>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Discapacidad No | Si</b></label>
+            <br>
+            <p-inputSwitch [(ngModel)]="discap"  (onChange)="habilitarDiscap($event)"></p-inputSwitch>
+        </div>
+        <div class="form-floating mb-3" *ngIf="estadoDiscapacidad == true">
+            <label for="floatingInput"><b>Tipo de discapacidad</b></label>
+            <p-dropdown [options]="tipodiscpa" [(ngModel)]="tipodis" placeholder="Seleccione el tipo de discapacidad"
+                optionLabel="dis" [style]="{'width': '100%'}" [showClear]="true"  (onChange)="habilitarTipoDiscap($event)" dataKey="value">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3"  *ngIf="habiFisica == true">
+            <label for="floatingInput"><b>Porcentaje de discapacidad física</b></label>
+            <input class="form-control" type="number" pKeyFilter="int" maxlength="2" minlength="1" id="ficha.porc_disc_fisica"
+                placeholder="Porcentaje de discapacidad física" [(ngModel)]="ficha.porc_disc_fisica" name="ficha.porc_disc_fisica">
+        </div>
+        <div class="form-floating mb-3"  *ngIf="habiMental == true">
+            <label for="floatingInput"><b>Porcentaje de discapacidad intelectual</b></label>
+            <input class="form-control" type="number" pKeyFilter="int" maxlength="2" minlength="1" id="ficha.porc_disc_mental"
+                placeholder="Porcentaje de discapacidad intelectual" [(ngModel)]="ficha.porc_disc_mental" name="ficha.porc_disc_mental">
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Situación económica</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
+                id="situacionEconomica" placeholder="Situación económica" [(ngModel)]="ficha.situacionEconomica" name="ficha.situacionEconomica" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Tipo de vivienda</b></label>
+            <p-dropdown [options]="viviendas" [(ngModel)]="vivienda" placeholder="Seleccione el tipo de vivienda"
+                optionLabel="viv" [style]="{'width': '100%'}" [showClear]="true" dataKey="value">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Descripción de la vivienda</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="60" minlength="3"
+                id="descripcionVivienda" placeholder="Descripción de la vivienda" [(ngModel)]="ficha.descripcionVivienda" name="ficha.descripcionVivienda" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>¿Cuenta con seguro de vida? No | Si</b></label>
+            <br>
+            <p-inputSwitch [(ngModel)]="ficha.seguro"></p-inputSwitch>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Salario mensual</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="salario"
+                placeholder="Salario mensual" [(ngModel)]="ficha.salario" name="ficha.salario" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>¿Es adulto mayor? No | Si</b></label>
+            <br>
+            <p-inputSwitch [(ngModel)]="ficha.adultoMayor"></p-inputSwitch>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>¿Vive con más personas? No | Si</b></label>
+            <br>
+            <p-inputSwitch [(ngModel)]="ficha.viveConOtros"></p-inputSwitch>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>¿Recibe bono de desarrollo humano? No | Si</b></label>
+            <br>
+            <p-inputSwitch [(ngModel)]="ficha.recibebono" (onChange)="habilitarCantidadBono($event)"></p-inputSwitch>
+        </div>
+        <div class="form-floating mb-3" *ngIf="recibebono == true">
+            <label for="floatingInput"><b>Cantidad que recibe por bono de desarrollo humano</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="ficha.cantidadbono"
+                placeholder="Cantidad que recibe por bono de desarrollo humano" [(ngModel)]="ficha.cantidadbono" name="ficha.cantidadbono">
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Enfermedades catastróficas</b></label>
+            <br>
+            <p-chips [(ngModel)]="enfermedades" separator=","></p-chips>
+        </div>
+        <p-messages [(value)]="msgs"></p-messages>
+        <div class="prin">
+            <div class="sec">
+                <button pButton type="button" label="Guardar"
+                class="p-button-outlined"
+                (click)='guardarTodo()'></button>
+            </div>
+            <div class="ter">
+                <button pButton type="button" label="Cancelar"
+                class="p-button-danger p-button-outlined"
+                (click)='cancelar()'></button>
+            </div>
+        </div>    
+    </p-panel>
+</div>
+<br>

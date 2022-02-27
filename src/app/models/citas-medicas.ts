@@ -13,4 +13,5 @@ export class CitasMedicas {
     centroMedico: string;
     especialidad: string;
     nota: string;
+    asistencia: boolean;
 }

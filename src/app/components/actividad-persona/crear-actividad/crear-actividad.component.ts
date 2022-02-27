@@ -23,6 +23,7 @@ export class CrearActividadComponent implements OnInit {
   @Input() ActividadviewActu: Actividades[] = [];
   public fecha1 = formatDate(new Date(), 'HH:mm', 'EN');
   public fecha2 = formatDate(new Date(), 'HH:mm', 'EN');
+  public asistencia: boolean = false;
   _tipoactividadCreate: TipoActividad = new TipoActividad(0, '', '');
   _tipoactividad: TipoActividad[] = [];
   _tipoactividad1: TipoActividad = new TipoActividad(0, '', '');
@@ -34,7 +35,8 @@ export class CrearActividadComponent implements OnInit {
     this.fecha1,
     this.fecha2,
     '',
-    this._tipoactividadCreate
+    this._tipoactividadCreate,
+    this.asistencia
   );
   constructor(
     private router: Router,
@@ -57,6 +59,7 @@ export class CrearActividadComponent implements OnInit {
     this.actividadCreate.fechaActividad= this.fechaT;
     this.actividadCreate.cedulaPersona = this.Person;
     this.actividadCreate.tipoActividad= this._tipoactividad1;
+    this.actividadCreate.asistencia= this.asistencia;
     if( this.actividadCreate.cedulaPersona.cedula != "" && this.actividadCreate.cedulaPersona.nombres != "" && this.actividadCreate.cedulaPersona.apellidos != "" &&  this.actividadCreate.tipoActividad.nombreActividad != "" && this.actividadCreate.horaFin != "" && this.actividadCreate.horaInicio != ""  && this.actividadCreate.descripcionActividad != ""){
       this._actividadservice.createActividad(this.actividadCreate).subscribe((res)=>{
         window.location.reload();
@@ -71,6 +74,7 @@ export class CrearActividadComponent implements OnInit {
     this.actividadCreate.fechaActividad= this.fechaT;
     this.actividadCreate.cedulaPersona = this.Person;
     this.actividadCreate.tipoActividad= this._tipoactividad1;
+    this.actividadCreate.asistencia= this.asistencia;
     let id=0;
     this.ActividadviewActu.forEach((res)=>{ id = res.idActividadPersona})
       this._actividadservice.updateUser(id,this.actividadCreate).subscribe(

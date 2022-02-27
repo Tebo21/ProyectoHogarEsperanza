@@ -55,8 +55,6 @@ export class RegistroUsuariosComponent implements OnInit {
   displayB: boolean;
   adultoMayor: boolean;
   viveOtros: boolean;
-  discap = false;
-  estadoDiscapacidad: boolean;
   adminActivar: boolean;
   //Validacion de Logeo
   tipoUser: any;
@@ -251,7 +249,6 @@ export class RegistroUsuariosComponent implements OnInit {
           celular: this.celular,
           correo: this.correo,
           direccion: this.direccion,
-          discapacidad: this.discap,
           estado_civil: this.estado.eop,
           fechaNacimiento: this.persona.fechaNacimiento,
           edad: this.edadC,
@@ -259,7 +256,8 @@ export class RegistroUsuariosComponent implements OnInit {
           nacionalidad: this.nacio.nop,
           nombres: this.nombres,
           beneficiario: false,
-          estadoActivo: true
+          estadoActivo: true,
+          faltas: 0
         }
         const nuevoUsuario: Usuarios = {
           usuarioCedula: this.cedula,

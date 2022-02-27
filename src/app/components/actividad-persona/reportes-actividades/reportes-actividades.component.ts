@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { TipoActividad } from '../../../models/TipoActividad';
 import { Router } from '@angular/router';
 import { ActividadesService } from '../../../services/actividades.service';
@@ -8,32 +8,57 @@ import { DatePipe } from '@angular/common';
 import { FilterPipe } from './pipe/filter.pipe';
 import pdfMake from 'pdfmake/build/pdfmake';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { Personas } from 'src/app/models/personas';
+import { timer } from 'rxjs';
+import { PersonasService } from 'src/app/services/personas.service';
 
 @Component({
   selector: 'app-reportes-actividades',
   templateUrl: './reportes-actividades.component.html',
-  styleUrls: ['./reportes-actividades.component.css']
+  styleUrls: ['./reportes-actividades.component.css'],
 })
-
-export class ReportesActividadesComponent implements PipeTransform,OnInit {
-
-  filterpost: any ={cedula:"",nombre:"",apellido:"",correo:"",fecha:"",hinicio:"",hfin:"",actividad:"",Tactividad:""};
-  filterpost1: any ={cedula:"",nombre:"",apellido:"",correo:"",fecha:"",hinicio:"",hfin:"",actividad:"",Tactividad:""};
+export class ReportesActividadesComponent implements PipeTransform, OnInit {
+  @Input() Person: Personas = new Personas();
+  filterpost: any = {
+    cedula: '',
+    nombre: '',
+    apellido: '',
+    correo: '',
+    fecha: '',
+    hinicio: '',
+    hfin: '',
+    actividad: '',
+    Tactividad: '',
+  };
+  filterpost1: any = {
+    cedula: '',
+    nombre: '',
+    apellido: '',
+    correo: '',
+    fecha: '',
+    hinicio: '',
+    hfin: '',
+    actividad: '',
+    Tactividad: '',
+  };
+  //Usuarios DTO
+  selected: Actividades[];
+  personaValidar: Personas = {};
 
   Actividadview: Actividades[] = [];
 
   Actividadview1: Actividades[] = [];
+
   constructor(
     private router: Router,
     public _actividadservice: ActividadesService,
-    public datapipe: DatePipe
-  ) {
-
-
-  }
+    public datapipe: DatePipe,
+    public personaservice: PersonasService
+  ) { }
   ngOnInit(): void {
     this.mostrarTipoActividades();
     this.ComprobarLogin();
+    this.selected = [];
   }
   tipoUser: any;
 
@@ -49,65 +74,83 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
   showExitoso() {
     Swal.fire({
       icon: 'warning',
-      title: 'No tienes permisos de administrador'
+      title: 'No tienes permisos de administrador',
     });
   }
 
   mostrarTipoActividades(): void {
-    this._actividadservice.getAll().subscribe(
-      (response) => {
-        this.Actividadview=response
+    this._actividadservice.getAll().subscribe((response) => {
+      this.Actividadview = response;
 
-    this.Actividadview.forEach(res=>{
-      this.Actividadview1.push(res)
-    })
-      }
-  );
+      this.Actividadview.forEach((res) => {
+        this.Actividadview1.push(res);
+      });
+    });
   }
 
   updateFilters(): void {
     this.filterpost = Object.assign({}, this.filterpost1);
-    this.Actividadview1=this.transform(this.Actividadview,this.filterpost1);
-    }
+    this.Actividadview1 = this.transform(this.Actividadview, this.filterpost1);
+  }
 
   transform(members: any, filters: any): any {
-    return members.filter(item => {
-    return (item.cedulaPersona.cedula.toLowerCase().indexOf(filters.cedula.toLowerCase()) >= 0 && item.cedulaPersona.nombres.toLowerCase().indexOf(filters.nombre.toLowerCase()) >= 0  && item.cedulaPersona.apellidos.toLowerCase().indexOf(filters.apellido.toLowerCase()) >= 0 && item.cedulaPersona.correo.toLowerCase().indexOf(filters.correo.toLowerCase()) >= 0 && item.fechaActividad.toLowerCase().indexOf(filters.fecha.toLowerCase()) >= 0 && item.horaInicio.toLowerCase().indexOf(filters.hinicio.toLowerCase()) >= 0 && item.horaFin.toLowerCase().indexOf(filters.hfin.toLowerCase()) >= 0  && item.descripcionActividad.toLowerCase().indexOf(filters.actividad.toLowerCase()) >= 0 && item.tipoActividad.nombreActividad.toLowerCase().indexOf(filters.Tactividad.toLowerCase()) >= 0);
+    return members.filter((item) => {
+      return (
+        item.cedulaPersona.cedula
+          .toLowerCase()
+          .indexOf(filters.cedula.toLowerCase()) >= 0 &&
+        item.cedulaPersona.nombres
+          .toLowerCase()
+          .indexOf(filters.nombre.toLowerCase()) >= 0 &&
+        item.cedulaPersona.apellidos
+          .toLowerCase()
+          .indexOf(filters.apellido.toLowerCase()) >= 0 &&
+        item.cedulaPersona.correo
+          .toLowerCase()
+          .indexOf(filters.correo.toLowerCase()) >= 0 &&
+        item.fechaActividad
+          .toLowerCase()
+          .indexOf(filters.fecha.toLowerCase()) >= 0 &&
+        item.horaInicio.toLowerCase().indexOf(filters.hinicio.toLowerCase()) >=
+        0 &&
+        item.horaFin.toLowerCase().indexOf(filters.hfin.toLowerCase()) >= 0 &&
+        item.descripcionActividad
+          .toLowerCase()
+          .indexOf(filters.actividad.toLowerCase()) >= 0 &&
+        item.tipoActividad.nombreActividad
+          .toLowerCase()
+          .indexOf(filters.Tactividad.toLowerCase()) >= 0
+      );
     });
   }
 
-  showConfirmacionPDF(){
+  showConfirmacionPDF() {
     Swal.fire({
       title: '¿Estas seguro de descargar este reporte?',
-      text: "Se abrira una visualizacion de su reporte",
+      text: 'Se abrira una visualizacion de su reporte',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Sí, descargar'
+      confirmButtonText: 'Sí, descargar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.genereport();
-        Swal.fire(
-          'Descargado!',
-          'El registro ha sido descargado',
-          'success'
-        )
+        Swal.fire('Descargado!', 'El registro ha sido descargado', 'success');
       }
-    })
+    });
   }
   genereport(action = 'open') {
     var testImageDataUrl = this._actividadservice.img;
     let docDefinition = {
+      pageSize: 'LETTER',
+      pageMargins: [25, 25, 25, 35],
 
-    pageSize : 'LETTER',
-    pageMargins : [25, 25, 25, 35],
-
-    defaultStyle : {
-      fontSize  : 12,
-      columnGap : 20
-    },
+      defaultStyle: {
+        fontSize: 12,
+        columnGap: 20,
+      },
       content: [
         {
           columns: [
@@ -132,7 +175,7 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
           columns: [
             [
               {
-                text:''
+                text: '',
               },
             ],
             [
@@ -199,5 +242,134 @@ export class ReportesActividadesComponent implements PipeTransform,OnInit {
     } else {
       pdfMake.createPdf(docDefinition).open();
     }
+  }
+
+  cambiarEstadoDeAsistencia(idActividad: number, Actividad: Actividades) {
+    let nuevaAsistencia: boolean;
+    if (Actividad.asistencia == true) {
+      nuevaAsistencia = false;
+    } else if (Actividad.asistencia == false) {
+      nuevaAsistencia = true;
+    }
+    const ActividadActualizada: Actividades = {
+      cedulaPersona: Actividad.cedulaPersona,
+      idActividadPersona: idActividad,
+      fechaActividad: Actividad.fechaActividad,
+      horaInicio: Actividad.horaInicio,
+      horaFin: Actividad.horaFin,
+      descripcionActividad: Actividad.descripcionActividad,
+      tipoActividad: Actividad.tipoActividad,
+      asistencia: nuevaAsistencia,
+    };
+    this._actividadservice.updateUser(idActividad, ActividadActualizada).subscribe(() => {
+    });
+    this.actualizarPersona(Actividad.cedulaPersona.cedula, nuevaAsistencia);
+  }
+
+  actualizarPersona(cedula: string, nuevaAsistencia: boolean) {
+    this.personaservice.getUserByCedula(cedula).subscribe(dat => {
+      this.personaValidar = dat;
+      if (nuevaAsistencia == false) {
+        if (this.personaValidar.faltas == 0) {
+          const PersonaNueva: Personas = {
+            apellidos: this.personaValidar.apellidos,
+            beneficiario: this.personaValidar.beneficiario,
+            cedula: this.personaValidar.cedula,
+            celular: this.personaValidar.celular,
+            correo: this.personaValidar.correo,
+            direccion: this.personaValidar.direccion,
+            edad: this.personaValidar.edad,
+            estadoActivo: this.personaValidar.estadoActivo,
+            estado_civil: this.personaValidar.estado_civil,
+            fechaNacimiento: this.personaValidar.fechaNacimiento,
+            genero: this.personaValidar.genero,
+            idPersona: this.personaValidar.idPersona,
+            nacionalidad: this.personaValidar.genero,
+            nombres: this.personaValidar.nombres,
+            faltas: 1
+          }
+          this.personaservice.updatePersona(PersonaNueva).subscribe(() => {
+          });
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            window.location.reload();
+          });
+        } else {
+          const PersonaNueva: Personas = {
+            apellidos: this.personaValidar.apellidos,
+            beneficiario: this.personaValidar.beneficiario,
+            cedula: this.personaValidar.cedula,
+            celular: this.personaValidar.celular,
+            correo: this.personaValidar.correo,
+            direccion: this.personaValidar.direccion,
+            edad: this.personaValidar.edad,
+            estadoActivo: this.personaValidar.estadoActivo,
+            estado_civil: this.personaValidar.estado_civil,
+            fechaNacimiento: this.personaValidar.fechaNacimiento,
+            genero: this.personaValidar.genero,
+            idPersona: this.personaValidar.idPersona,
+            nacionalidad: this.personaValidar.genero,
+            nombres: this.personaValidar.nombres,
+            faltas: this.personaValidar.faltas + 1
+          }
+          this.personaservice.updatePersona(PersonaNueva).subscribe(() => {
+          });
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            window.location.reload();
+          });
+        }
+
+      } else if (nuevaAsistencia == true) {
+        if(this.personaValidar.faltas<=0){
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            window.location.reload();
+          });
+        } else if(this.personaValidar.faltas>0) {
+          const PersonaNueva: Personas = {
+            apellidos: this.personaValidar.apellidos,
+            beneficiario: this.personaValidar.beneficiario,
+            cedula: this.personaValidar.cedula,
+            celular: this.personaValidar.celular,
+            correo: this.personaValidar.correo,
+            direccion: this.personaValidar.direccion,
+            edad: this.personaValidar.edad,
+            estadoActivo: this.personaValidar.estadoActivo,
+            estado_civil: this.personaValidar.estado_civil,
+            fechaNacimiento: this.personaValidar.fechaNacimiento,
+            genero: this.personaValidar.genero,
+            idPersona: this.personaValidar.idPersona,
+            nacionalidad: this.personaValidar.genero,
+            nombres: this.personaValidar.nombres,
+            faltas: this.personaValidar.faltas - 1
+          }
+          this.personaservice.updatePersona(PersonaNueva).subscribe(() => {
+          });
+          Swal.fire({
+            icon: 'success',
+            title: 'Se actualizó con exito!',
+          });
+          const contador = timer(2000);
+          contador.subscribe((n) => {
+            window.location.reload();
+          });
+        }
+        
+      
+      }
+    });
   }
 }

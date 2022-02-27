@@ -150,7 +150,7 @@ export class RegistroDonacionComponent implements OnInit {
 
   buscarPersona() {
     if (this.cedula != null) {
-      this.personaService.getPorCedula(this.cedula).subscribe((data) => {
+      this.personaService.getUserByCedula(this.cedula).subscribe((data) => {
         if (data != null) {
           this.cedula = data.cedula;
           this.nombres = data.nombres;
@@ -176,13 +176,13 @@ export class RegistroDonacionComponent implements OnInit {
   buscarDonador(cedula: string) {
     if (cedula.toUpperCase() != 'ANONIMO' && cedula.toUpperCase() != 'ANÓNIMO') {
       
-      this.personaService.getPorCedula(cedula).subscribe((data) => {
+      this.personaService.getUserByCedula(cedula).subscribe((data) => {
 
         let personadon = new Personas;
         personadon.cedula = data.cedula;
         personadon.nombres = data.nombres;
         personadon.apellidos = data.apellidos;        
-
+        personadon.faltas = data.faltas;
         this.listaDonadores.push(personadon);
       })
     }
@@ -193,7 +193,7 @@ export class RegistroDonacionComponent implements OnInit {
       personainc.cedula = 'Anónimo';
       personainc.nombres = 'Anónimo';
       personainc.apellidos = 'Anónimo';
-
+      personainc.faltas = 0;
       this.listaDonadores.push(personainc);
     }
   }

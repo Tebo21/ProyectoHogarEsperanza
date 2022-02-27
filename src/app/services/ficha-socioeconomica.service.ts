@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FichaSocioeconomicaService {
-  private URL='http://192.168.0.199:3000/fichaSocioeconomica';
+  private URL='http://localhost:3000/fichaSocioeconomica';
   constructor(private http:HttpClient) { }
 
   postFichaSocio(fichasocioeonomica:FichaSocioeconomica):Observable<any>{
@@ -19,13 +19,15 @@ export class FichaSocioeconomicaService {
   getficha():Observable<any>{
     return this.http.get(`${this.URL}/listadoFichas`); 
   }
-  getQueryUpdateFicha(query: String, ficha:FichaSocioeconomica){
-    const url = `${this.URL}/${query}`;
-    return this.http.request<FichaSocioeconomica>('put',url, {
+  
+
+  getQueryUpdateFicha(query: String, ficha: FichaSocioeconomica) {
+    const url = `http://localhost:3000/fichaSocioeconomica/${query}`;
+    return this.http.request<FichaSocioeconomica>('put', url, {
       body: ficha
     });
   }
-  updateFicha(ficha:FichaSocioeconomica):Observable<any>{
+  updateFicha(ficha: FichaSocioeconomica): Observable<any> {
     const url = 'update-ficha';
     return this.getQueryUpdateFicha(url, ficha);
   }

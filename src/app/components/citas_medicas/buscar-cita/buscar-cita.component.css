@@ -78,3 +78,14 @@
     font-size: 20px;
     border-radius: 50%;
 }
+.false-icon {
+    color: #fa0e0e;
+  }
+  
+  .true-icon {
+    color: green;
+  }
+
+  .false-icon, .true-icon {
+    font-size: 28px;
+  }

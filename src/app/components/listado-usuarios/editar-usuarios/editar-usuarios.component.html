@@ -61,11 +61,6 @@
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Discapacidad No | Si</b></label>
-            <br>
-            <p-inputSwitch [(ngModel)]="discap"></p-inputSwitch>
-        </div>
-        <div class="form-floating mb-3">
             <label for="floatingInput"><b>Estado civil</b></label>
             <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="{{persona.estado_civil}}"
                 optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" 

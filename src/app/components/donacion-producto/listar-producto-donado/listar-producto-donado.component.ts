@@ -89,7 +89,7 @@ export class ListarProductoDonadoComponent implements OnInit {
     this.entregarDonacionService.getEntregas().subscribe(data =>{
       this.listaEntrega = data;
       for(let i = 0; i < this.listaEntrega.length; i++){
-        this.personaService.getPorCedula(this.listaEntrega[i].cedulaBeneficiario).subscribe(data2 =>{
+        this.personaService.getUserByCedula(this.listaEntrega[i].cedulaBeneficiario).subscribe(data2 =>{
           this.Persona = data2
           this.ListadoPersonas.push(this.Persona)
           const usuarioImprimir: Beneficiarios2 = {

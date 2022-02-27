@@ -9,6 +9,7 @@ export class Actividades {
 	public horaFin : string;
   public descripcionActividad: string;
   public tipoActividad: TipoActividad;
+  public asistencia: boolean;
 
   constructor(idActividadPersona: number,
     cedulaPersona: Personas,
@@ -16,13 +17,15 @@ export class Actividades {
     horaInicio:string,
     horaFin : string,
     descripcionActividad: string,
-    tipoactividad: TipoActividad) {
+    tipoactividad: TipoActividad,
+    asistencia: boolean) {
     this.idActividadPersona = idActividadPersona,
     this.cedulaPersona = cedulaPersona,
     this.fechaActividad = fechaActividad,
     this.horaInicio = horaInicio,
     this.horaFin= horaFin,
-    this.descripcionActividad = descripcionActividad
-    this.tipoActividad = tipoactividad
+    this.descripcionActividad = descripcionActividad,
+    this.tipoActividad = tipoactividad,
+    this.asistencia = asistencia
   }
 }
