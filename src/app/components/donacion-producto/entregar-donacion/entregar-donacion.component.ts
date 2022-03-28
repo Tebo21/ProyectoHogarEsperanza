@@ -44,7 +44,7 @@ export class EntregarDonacionComponent implements OnInit {
   productoEntrega: Donaciones;
 
   tipoUser: any;
-
+  cedula: string = '';
 
   constructor(
     private donacionService: DonaProductoService,
@@ -55,19 +55,30 @@ export class EntregarDonacionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.cedula = localStorage.getItem('cedulaEditar');
+    if(this.cedula != ''){
+      this.cedulaBeneficiario = this.cedula
+      this.buscarBeneficiario();
+    }
     this.ComprobarLogin();
     this.obtenerDonaciones();
   }
 
   ComprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
-    if (this.tipoUser == 1) {
-    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+    if (this.tipoUser == 1 || this.tipoUser == 2) {
+    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
       Swal.fire({
-        title: 'No tiene permisos para realizar las donaciones',
+        title: 'No tiene permisos para registrar o editar donaciones',
         icon: 'warning',
       });
       this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
     }
   }
 

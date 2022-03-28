@@ -1,0 +1,270 @@
+<app-navbar-admin></app-navbar-admin>
+<br>
+<h2 class="text-center">Historial completo</h2>
+<div class="cont">
+    <div class="hijo">
+        <div class="tabla">
+            <h5 class="text-center">Hoja de registro</h5>
+            <div class="margen">
+                <div class="grid-container">
+                    <p class="t">Cédula:</p>
+                    <p>{{persona.cedula}}</p>
+                    <p class="t">Nombre completo:</p>
+                    <p>{{persona.nombres}} {{persona.apellidos}}</p>
+                    <p class="t">Dirección:</p>
+                    <p>{{persona.direccion}}</p>
+                    <p class="t">Teléfono:</p>
+                    <p>{{persona.celular}}</p>
+                    <p class="t">Nacionalidad:</p>
+                    <p>{{persona.nacionalidad}}</p>
+                    <p class="t">Correo electrónico:</p>
+                    <p>{{persona.correo}}</p>
+                    <p class="t">Fecha de nacimiento:</p>
+                    <p>{{persona.fechaNacimiento}}</p>
+                    <p class="t">Edad:</p>
+                    <p>{{persona.edad}}</p>
+                    <p class="t">Discapacidad:</p>
+                    <p>{{convertirBooleanos(ficha.discapacidad)}}</p>
+                    <p class="t">Tipo de discapacidad:</p>
+                    <p>{{ficha.tipo_discapacidad}}</p>
+                    <p class="t">Porcentaje de discapacidad intelectual:</p>
+                    <p>{{ficha.porc_disc_mental}}%</p>
+                    <p class="t">Descripción de discapacidad intelectual:</p>
+                    <p>{{ficha.descrip_disc_mental}}</p>
+                    <p class="t">Porcentaje de discapacidad física:</p>
+                    <p>{{ficha.porc_disc_fisica}}%</p>
+                    <p class="t">Descripción de discapacidad física:</p>
+                    <p>{{ficha.descrip_disc_fisica}}</p>
+                    <p class="t">Estado civil:</p>
+                    <p>{{persona.estado_civil}}</p>
+                    <p class="t">Pareja:</p>
+                    <p>{{convertirBooleanos(ficha.pareja)}}</p>
+                    <p class="t">Número de familiares:</p>
+                    <p>{{familiares.length}}</p>
+                    <p class="t">Número de hijos:</p>
+                    <p>{{numHijos}}</p>
+                    <p class="t">Adulto mayor:</p>
+                    <p>{{convertirBooleanos(ficha.adultoMayor)}}</p>
+                    <p class="t">Vive con otros:</p>
+                    <p>{{convertirBooleanos(ficha.viveConOtros)}}</p>
+                    <p class="t">Situación economica:</p>
+                    <p>{{ficha.situacionEconomica}}</p>
+                    <p class="t">Seguro:</p>
+                    <p>{{convertirBooleanos(ficha.seguro)}}</p>
+                    <p class="t">Tipo de vivienda:</p>
+                    <p>{{ficha.tipoVivienda}}</p>
+                    <p class="t">Descripción de la vivienda:</p>
+                    <p>{{ficha.descripcionVivienda}}</p>
+                    <p class="t">Salario:</p>
+                    <p>{{ficha.salario}}</p>
+                    <p class="t">Madre soltera:</p>
+                    <p>{{convertirBooleanos(ficha.madreSoltera)}}</p>
+                    <p class="t">Recibe bono:</p>
+                    <p>{{convertirBooleanos(ficha.recibebono)}}</p>
+                    <p class="t">Cantidad que recibe por bono:</p>
+                    <p>{{ficha.cantidadbono}}</p>
+                    <p class="t">Asistencias:</p>
+                    <p>{{asistencias.length}}</p>
+                    <p class="t">Observaciones:</p>
+                    <p>{{observaciones.length}}</p>
+                    <p class="t">Fecha de registro:</p>
+                    <p>{{ficha.fechaRegistro}}</p>
+                    <p class="t">Enfermedades:</p>
+                    <p>{{ficha.enfermedades}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="tabla">
+            <h5 class="text-center">Familiares</h5>
+            <div class="margen">
+                <p-table [value]="familiares" styleClass="p-datatable-striped p-datatable-gridlines"
+                    responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Cédula</th>
+                            <th>Parentesco</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Celular</th>
+                            <th>Correo</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-fam>
+                        <tr>
+                            <td>{{fam.cedulaFamiliar}}</td>
+                            <td>{{fam.parentesco}}</td>
+                            <td>{{fam.nombreF}}</td>
+                            <td>{{fam.apellidoF}}</td>
+                            <td>{{fam.celularF}}</td>
+                            <td>{{fam.correo}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="tabla">
+            <h5 class="text-center">Observaciones</h5>
+            <div class="margen">
+                <p-table #dt [rows]="10" [scrollable]="true" class="table table-responsive" scrollHeight="300px"
+                    [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                    [rowHover]="true" [autoLayout]="true" [responsive]="true"
+                    [globalFilterFields]="['#','fechaRegistro','descripcionobservacion']" [value]="observaciones">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="descripcionobservacion">Descripción
+                                <p-sortIcon field="descripcionobservacion"></p-sortIcon>
+                                <p-columnFilter type="text" field="descripcionobservacion" display="menu"
+                                    class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="fechaRegistro">Fecha
+                                <p-sortIcon field="fechaRegistro"></p-sortIcon>
+                                <p-columnFilter type="text" field="fechaRegistro" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-obser>
+                        <tr class="p-selectable-row">
+                            <td>{{obser.descripcionobservacion}}</td>
+                            <td>{{obser.fechaRegistro}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No se encontraron observaciones para el beneficiario.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </div>
+        <div class="tabla">
+            <h5 class="text-center">Asistencias</h5>
+            <div class="margen">
+                <p-table class="card" #dt [value]="asistencias" [rows]="10"
+                    styleClass="p-datatable-striped-responsive-demo" [scrollable]="true" scrollHeight="300px"
+                    [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                    dataKey="idAsistencia" [rowHover]="true"
+                    [globalFilterFields]="['actividad', 'descripcion', 'fecha']">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="actividad">Actividad
+                                <p-sortIcon field="actividad"></p-sortIcon>
+                                <p-columnFilter type="text" field="actividad" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="descripcion">Descripción
+                                <p-sortIcon field="descripcion"></p-sortIcon>
+                                <p-columnFilter type="text" field="descripcion" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="fecha">Fecha y hora
+                                <p-sortIcon field="fecha"></p-sortIcon>
+                                <p-columnFilter type="text" field="fecha" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-asistencia>
+                        <tr class="p-selectable-row">
+                            <td>{{asistencia.actividad}}</td>
+                            <td>{{asistencia.descripcion}}</td>
+                            <td>{{asistencia.fecha}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No se encontraron actividades.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </div>
+        <div class="tabla">
+            <h5 class="text-center">Documentos</h5>
+            <div class="margen">
+                <p-table #dt [rows]="10" [scrollable]="true" class="table table-responsive" scrollHeight="300px"
+                    [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                    [rowHover]="true" [autoLayout]="true" [responsive]="true" [value]="listaDocumentos">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Nombre del archivo</th>
+                            <th>Tipo de Documento</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-user let-rowData let-rowIndex="rowIndex">
+                        <tr class="p-selectable-row">
+                            <td>{{user.nombreArchivo}}</td>
+                            <td>{{user.tipoDocumento}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No se encontraron documentos.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="tabla">
+            <h5 class="text-center">Donaciones</h5>
+            <div class="margen">
+                <p-table #dt [rows]="10" [scrollable]="true" class="table table-responsive" scrollHeight="300px"
+                    [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                    [rowHover]="true" [autoLayout]="true" [responsive]="true" [value]="donaciones">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="productoEntregado">Producto entregado
+                                <p-sortIcon field="productoEntregado"></p-sortIcon>
+                                <p-columnFilter type="text" field="productoEntregado" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="descripcionProducto">Descripción del producto
+                                <p-sortIcon field="descripcionProducto"></p-sortIcon>
+                                <p-columnFilter type="text" field="descripcionProducto" display="menu"
+                                    class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="cantidadEntregada">Descripción del producto
+                                <p-sortIcon field="cantidadEntregada"></p-sortIcon>
+                                <p-columnFilter type="text" field="cantidadEntregada" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="fechaEntrega">Fecha de entrega
+                                <p-sortIcon field="fechaEntrega"></p-sortIcon>
+                                <p-columnFilter type="text" field="fechaEntrega" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-donacion>
+                        <tr class="p-selectable-row">
+                            <td>{{donacion.productoEntregado}}</td>
+                            <td>{{donacion.descripcionProducto}}</td>
+                            <td>{{donacion.cantidadEntregada}}</td>
+                            <td>{{donacion.fechaEntrega}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No se encontraron donaciones para el beneficiario.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </div>
+        <div class="prin">
+            <div class="sec">
+
+            </div>
+            <div class="ter">
+                <button pButton type="button" label="Volver" class="p-button-danger p-button-outlined"
+                    (click)='cancelar()'></button>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>

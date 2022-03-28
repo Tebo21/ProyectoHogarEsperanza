@@ -3,3 +3,22 @@
     width: 1200px;
     border: 1px solid black;
 }
+input:invalid{
+    background-color: #fcdfdf;
+}
+.prin{
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 1em;
+}
+.sec{
+    display: block;
+    position: absolute;
+    left: 2%;
+}
+.ter{
+    display: block;
+    position: absolute;
+    right: 2%;
+}

@@ -1,5 +1,46 @@
 #panel{
     align-items: left;
-    width: 700px;
+    width: 1200px;
     border: 1px solid black;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+#boton{
+    width: 70%;
+}
+.c{
+    display: flex;
+    place-content: center;
+}
+.prin{
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 1em;
+}
+.sec{
+    display: block;
+    position: absolute;
+    left: 2%;
+}
+.ter{
+    display: block;
+    position: absolute;
+    right: 2%;
+}
+.dia{
+    display: block;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+.c{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+input:invalid{
+    background-color: #fcdfdf;
 }

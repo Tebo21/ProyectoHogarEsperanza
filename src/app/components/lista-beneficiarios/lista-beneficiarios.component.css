@@ -13,10 +13,6 @@
     border: 1px solid black;
     
 }
-#panel{
-    align-items: left;
-    border: 1px solid black;
-}
 
 th, td {
     width: 120px;
@@ -27,7 +23,7 @@ th, td {
     display: block;
     position: relative;
     height: 45px;
- }
+}
 
 .sec{
     display: block;

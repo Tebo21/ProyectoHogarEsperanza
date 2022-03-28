@@ -1,94 +1,126 @@
-<html>
 <app-navbar-admin></app-navbar-admin>
-    <head>
-    <br><br><br><br>
-    </head>
-    <body>
-      <div class="container">
-        <div class="card">
-        <div class="card-header mb-3">
-                <h4>Observaciones</h4>
+<br>
+<h2 class="text-center">Observaciones</h2>
+<div class="padre">
+    <div class="p1">
+        <p-panel class="card" header="Nombre del beneficiario: {{persona.nombres}} {{persona.apellidos}}" [toggleable]="true"> 
+            <div class="input-group mb-3 tabla">
+                <textarea [(ngModel)]="observacion.descripcionobservacion" name="descripcionobservacion"
+                    id="descripcionobservacion" type="text" class="form-control"
+                    placeholder="Describa la observacion realizada"></textarea>
+            </div>
+            <div class="prin">
+                <div class="sec">
+                    <button pButton type="button" label="Cancelar" class="p-button-danger p-button-outlined"
+                        (click)='cancelar()'></button>
                 </div>
-         <form action="">       
-            <div class="input-group mb-3">
-              <textarea [(ngModel)]="notasObservaciones.descripcionobservacion" name="situacionEconomica" id="situacionEconomica"
-               style="margin-left: 5%; margin-right: 5%;" type="text" class="form-control"
-                placeholder="Observaciones"></textarea>
+                <div class="ter">
+                    <button pButton type="button" label="Guardar" class="p-button-outlined"
+                        (click)='guardarObservaciones()'></button>
+                </div>
             </div>
-            <div class="btn_guardar mb-2">
-                <button (click)="guardarObservaciones()" class="guardar1"  style="margin-left: 30%;" type="submit">Guardar y Continuar</button>
-            </div>
-         </form>
-        </div>
-      
-
-        <div class="card">
-          <div class="card-header mb-3">
-           <h4>Lista Beneficiarios</h4>
-           </div>
-       <div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-         <p-table #dt [rows]="10"  [scrollable]="true" class="table table-responsive" 
-             scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-             [rowHover]="true" [autoLayout]="true" [responsive]="true"
-             [globalFilterFields]="['#','fechaRegistro','descripcionobservacion']" 
-             [value]="datos">
-             <ng-template pTemplate="caption">
-                    <div style="margin-left: 70%;">
-                          </div>
-                             <div class="container" style="display: grid;">
-                                <div align="left">
-                                    <button type="button" pButton pRipple icon="pi pi-file-pdf" 
-                                        class="p-button-danger p-mr-2" tooltipPosition="bottom" (click)="generarPDF()"></button>
-                                 </div>
-                 <div align="right">
-                     <span class="p-input-icon-right">
-                         <i class="pi pi-search"></i>
-                             <input pInputText type="date"  style="height: 40px;width: 120px;" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                                placeholder="Buscar"/> 
-                                <button type="button" pButton pRipple icon="pi pi-refresh" 
-                                class="p-mr-2" tooltipPosition="bottom" (click)="actualizar()"></button>
-                            
-                     </span>
-                 </div>
-             </div>         
-             </ng-template>
-             <ng-template pTemplate="header">
-                 <tr >
-                    <th style="width: 5px;" pSortableColumn="idObservacionesPersona">#
-                        <p-sortIcon field="idObservacionesPersona"></p-sortIcon>
-                        </th>
-                     <th style="width: 10px;" pSortableColumn="fechaRegistro">Fecha Registro
-                     <p-sortIcon field="fechaRegistro"></p-sortIcon>
-                     </th>
-                     <th pSortableColumn="descripcionobservacion">Observaciones
-                     <p-sortIcon field="descripcionobservacion"></p-sortIcon>
-                     </th>
-                     <th style="width: 10px;" pSortableColumn="Editar">Editar
-                        <p-sortIcon field="Editar"></p-sortIcon>
-                        </th> 
-                 </tr>
-             </ng-template>
-              <ng-template pTemplate="body" let-user>
-                 <tr  class="p-selectable-row">
-                     <td  style="width: 5px;" >{{user.idObservacionesPersona}}</td>
-                     <td style="width: 10px;" ([ngModel])="this.notasObservaciones.fechaRegistro" >{{user.fechaRegistro}}</td>
-                     <td style="width: 200px;">
-                        <textarea  class="Observaciones"  (change)="optenerDatos($event)" name="Observaciones" id="Observacionestxt"
-                         style="margin-left: 1%;margin-right: 5%;width: 18cm;height: 2cm;"type="text" 
-                         class="form-control" >{{user.descripcionobservacion}}</textarea>       
-                        
-                        </td>
-                     <td style="width: 10px;">
-                        <button  pButton pRipple icon="pi pi-user-edit" 
-                        class="p-button-rounded p-button-outlined" (click)="actualizarObservacion(user.idObservacionesPersona,user.fechaRegistro)" ></button>
-                     </td>
-                 </tr>
-             </ng-template>
-         </p-table>
-     </div>
+            <p-messages [(value)]="msgs"></p-messages>
+        </p-panel>
     </div>
-        
+    <div class="p2">
+        <div class="tabla">
+            <p-table #dt [rows]="10" [scrollable]="true" class="table table-responsive" scrollHeight="450px"
+                [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [rowHover]="true"
+                [autoLayout]="true" [responsive]="true"
+                [globalFilterFields]="['#','fechaRegistro','descripcionobservacion']" [value]="observaciones">
+                <ng-template pTemplate="caption">
+                    <div class="prin">
+                        <div class="sec">
+                            <span class="p-input-icon-right">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text"
+                                    (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                            </span>
+                        </div>
+                        <div class="ter">
+                            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="generarPDF()"
+                                class="p-button-outlined p-button-danger" pTooltip="PDF" tooltipPosition="bottom"></button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="descripcionobservacion">Descripción
+                            <p-sortIcon field="descripcionobservacion"></p-sortIcon>
+                            <p-columnFilter type="text" field="descripcionobservacion" display="menu" class="p-ml-auto">
+                            </p-columnFilter>
+                        </th>
+                        <th pSortableColumn="fechaRegistro">Fecha
+                            <p-sortIcon field="fechaRegistro"></p-sortIcon>
+                            <p-columnFilter type="text" field="fechaRegistro" display="menu" class="p-ml-auto">
+                            </p-columnFilter>
+                        </th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-obser>
+                    <tr class="p-selectable-row">
+                        <td>{{obser.descripcionobservacion}}</td>
+                        <td>{{obser.fechaRegistro}}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-outlined"
+                                (click)="modal(obser)" pTooltip="Editar" tooltipPosition="top"></button>
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger p-button-outlined"
+                                (click)="modalEliminar(obser.idObservacionesPersona)" pTooltip="Eliminar"
+                                tooltipPosition="top"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No se encontraron observaciones para el beneficiario.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
 
-      </div>
-    </body>
-</html>
+<p-dialog header="Editar observacion" [(visible)]="display" [modal]="true" [style]="{width: '70vw'}" [draggable]="false"
+    [resizable]="false">
+    <div class="input-group mb-3 tabla">
+        <textarea [(ngModel)]="observacionEditar.descripcionobservacion" name="descripcionobservacion"
+            id="descripcionobservacion" type="text" class="form-control"
+            placeholder="Describa la observacion realizada"></textarea>
+    </div>
+    <p-messages [(value)]="msgs"></p-messages>
+    <ng-template pTemplate="footer">
+        <div class="prin">
+            <div class="sec">
+                <button pButton type="button" label="Cancelar" class="p-button-danger p-button-outlined"
+                    (click)='display=false'></button>
+            </div>
+            <div class="ter">
+                <button pButton type="button" label="Guardar" class="p-button-outlined"
+                    (click)='actualizarObservacion()'></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Advertencia" [(visible)]="displayEliminar" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <b><p>¿Está seguro que desea eliminar esta observación?</p></b>
+    <p>Esta acción no se puede revertir</p>
+    <ng-template pTemplate="footer">
+        <div class="prin">
+            <div class="sec">
+                <button pButton type="button" label="Cancelar" class="p-button-danger p-button-outlined"
+                    (click)='displayEliminar=false'></button>
+            </div>
+            <div class="ter">
+                <button pButton type="button" label="Continuar" class="p-button-outlined"
+                    (click)='eliminarObservacion()'></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

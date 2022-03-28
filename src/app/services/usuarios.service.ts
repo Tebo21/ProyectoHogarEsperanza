@@ -37,6 +37,7 @@ export class UsuarioService {
     return this.http.get<Usuarios>(url);
   }
 
+  //Eliminar Usuario
   QueryDeleteUser(query: String, idUsuario: number) {
     const url = `http://localhost:3000/${query}/${idUsuario}`;
     return this.http.request<Usuarios>('delete', url);
@@ -47,6 +48,7 @@ export class UsuarioService {
     return this.QueryDeleteUser(url, idUsuario);
   }
 
+  //Actualizar Usuario
   QueryUpdateUser(query: String, usuario: Usuarios) {
     const url = `http://localhost:3000/${query}`;
     return this.http.request<Usuarios>('put', url, {

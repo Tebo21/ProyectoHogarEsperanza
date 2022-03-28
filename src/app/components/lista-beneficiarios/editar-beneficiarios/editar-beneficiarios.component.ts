@@ -8,6 +8,7 @@ import { Message } from 'primeng/api';
 import { RegistroFamiliares } from 'src/app/models/registro-familiares';
 import { FichaSocioeconomica } from 'src/app/models/ficha-socioeconomica';
 import { timer } from 'rxjs';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-editar-beneficiarios',
   templateUrl: './editar-beneficiarios.component.html',
@@ -15,7 +16,7 @@ import { timer } from 'rxjs';
 })
 
 export class EditarBeneficiariosComponent implements OnInit {
-   //Refactor
+  //Refactor
   msgs: Message[];
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
   noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
@@ -23,7 +24,7 @@ export class EditarBeneficiariosComponent implements OnInit {
   //Variables
   usuarioValidarCorreo: Personas = {};
   usuarioValidarCedula: Personas = {};
-  cedulaEditar : string;
+  cedulaEditar: string;
   persona: Personas = {};
   //Dropdown
   nacionalidades: any[];
@@ -32,14 +33,13 @@ export class EditarBeneficiariosComponent implements OnInit {
   estado: any;
   generos: any[];
   genero: any;
-  tipodiscpa:  any[];
+  tipodiscpa: any[];
   tipodis: any;
   viviendas: any[];
   vivienda: any;
   viviendaFinal: any;
-  parentescos:  any[];
+  parentescos: any[];
   parentesco: any;
-  enfermedades: string[];
   //Variables
   discap: boolean;
   estadoDiscapacidad: boolean;
@@ -52,13 +52,13 @@ export class EditarBeneficiariosComponent implements OnInit {
   familyArray: RegistroFamiliares[];
   habiRegFam: boolean = false;
   datosFami: boolean = false;
-  numHijos:  number;
-  hijosFinal : number = 0
+  numHijos: number;
+  hijosFinal: number = 0
   //Ficha Socioeconomica
   ficha: FichaSocioeconomica = {};
   recibebono: boolean = false;
   fechaCreacionFicha: Date = new Date;
-  tipodisfinal : string = 'Ninguna'
+  tipodisfinal: string;
   //Validaciones
   validoG: boolean = false;
   validoE: boolean = false;
@@ -68,9 +68,12 @@ export class EditarBeneficiariosComponent implements OnInit {
   generoFinal: any;
   nacioFinal: any;
   discapFinal: any;
+  //Modal
+  display: boolean = false;
+  texto: string = '';
 
-  constructor(private personaService: PersonasService, private familiaService: RegistroFamiliaresService, 
-              private fichaServices: FichaSocioeconomicaService, private router: Router) {
+  constructor(private personaService: PersonasService, private familiaService: RegistroFamiliaresService,
+    private fichaServices: FichaSocioeconomicaService, private router: Router) {
     this.nacionalidades = [
       { nop: 'Afganistán' }, { nop: 'Alemania' }, { nop: 'Arabia Saudita' }, { nop: 'Argentina' }, { nop: 'Australia' }, { nop: 'Bélgica' }, { nop: 'Bolivia' }, { nop: 'Brasil' },
       { nop: 'Camboya' }, { nop: 'Canadá' }, { nop: 'Chile' }, { nop: 'China' }, { nop: 'Colombia' }, { nop: 'Corea' }, { nop: 'Costa Rica' }, { nop: 'Cuba' }, { nop: 'Dinamarca' }, { nop: 'Ecuador' }, { nop: 'Egipto' }, { nop: 'El Salvador' },
@@ -83,6 +86,7 @@ export class EditarBeneficiariosComponent implements OnInit {
     this.estadocivil = [
       { eop: 'Soltero' },
       { eop: 'Casado' },
+      { eop: 'Unión de hecho' },
       { eop: 'Divorciado' },
       { eop: 'Viudo' }
     ]
@@ -98,29 +102,51 @@ export class EditarBeneficiariosComponent implements OnInit {
       { dis: 'Ambas' }
     ]
     this.parentescos = [
-      { par: 'Hijo'},
-      { par: 'Hija'},
-      { par: 'Esposo'},
-      { par: 'Esposa'},
-      { par: 'Padre'},
-      { par: 'Madre'},
-      { par: 'Sobrino'},
-      { par: 'Sobrina'},
-      { par: 'Tio'},
-      { par: 'Tia'},
+      { par: 'Hijo' },
+      { par: 'Hija' },
+      { par: 'Esposo' },
+      { par: 'Esposa' },
+      { par: 'Padre' },
+      { par: 'Madre' },
+      { par: 'Sobrino' },
+      { par: 'Sobrina' },
+      { par: 'Tio' },
+      { par: 'Tia' },
+      { par: 'Otro' }
     ]
     this.viviendas = [
-      { viv: 'Propia'},
-      { viv: 'Arrendada'},
-      { viv: 'Prestada'}
+      { viv: 'Propia' },
+      { viv: 'Arrendada' },
+      { viv: 'Prestada' }
     ]
-}
-
-  ngOnInit(): void {
-    this.cargarDatos();
   }
 
-  cargarDatos(){
+  ngOnInit(): void {
+    this.ComprobarLogin()
+    this.cargarDatos()
+    this.familyArray = []
+    
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1) {
+    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para editar beneficiarios',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
+    }
+  }
+
+  cargarDatos() {
     this.cedulaEditar = localStorage.getItem('cedulaEditar');
     this.personaService.getUserByCedula(this.cedulaEditar).subscribe(data => {
       this.persona = data;
@@ -130,44 +156,50 @@ export class EditarBeneficiariosComponent implements OnInit {
     })
     this.familiaService.getFamByCedula(this.cedulaEditar).subscribe(data => {
       this.familyArray = data;
+      this.familiares.celularF = '';
+      this.familiares.correo = '';
+      this.familyArray.forEach(element => this.hijosFinal = element.numHijos);
     })
     this.fichaServices.getfichacedula(this.cedulaEditar).subscribe(data => {
       this.ficha = data;
-      this.enfermedades = this.ficha.enfermedades;
       this.discap = this.ficha.discapacidad;
+      this.tipodisfinal = this.ficha.tipo_discapacidad;
+      if (this.ficha.enfermedades == null || this.ficha.enfermedades == [] || this.ficha.enfermedades.length == 0) {
+        this.ficha.enfermedades = ['Ninguna']
+      }
       this.habilitarDiscap(event);
       this.habilitarCantidadBono(event);
       this.tiposDiscap();
     })
-    
+
   }
 
   calcularedad(event: any) {
-   const today: Date = new Date();
+    const today: Date = new Date();
     const birthDate: Date = new Date(this.persona.fechaNacimiento);
-    let age : number = today.getFullYear() - birthDate.getFullYear();
+    let age: number = today.getFullYear() - birthDate.getFullYear();
     const month: number = today.getMonth() - birthDate.getMonth();
     if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
+      age--;
     }
     this.persona.edad = age;
     return age;
   }
 
-  tiposDiscap(){
-    if(this.ficha.tipo_discapacidad == 'Ninguna'){
+  tiposDiscap() {
+    if (this.ficha.tipo_discapacidad == 'Ninguna') {
       this.habiFisica = false;
       this.habiMental = false;
-    } else if (this.ficha.tipo_discapacidad == 'Fisica'){
+    } else if (this.ficha.tipo_discapacidad == 'Fisica') {
       this.habiFisica = true;
       this.habiMental = false;
-    } else if (this.ficha.tipo_discapacidad == 'Intelectual'){
+    } else if (this.ficha.tipo_discapacidad == 'Intelectual') {
       this.habiFisica = false;
       this.habiMental = true;
-    } else if (this.ficha.tipo_discapacidad == 'Ambas'){
+    } else if (this.ficha.tipo_discapacidad == 'Ambas') {
       this.habiFisica = true;
       this.habiMental = true;
-    } 
+    }
   }
 
   onChangeE(event: any) {
@@ -203,12 +235,14 @@ export class EditarBeneficiariosComponent implements OnInit {
   }
 
   habilitarDiscap(event: any) {
-    if(this.discap==true){
+    if (this.discap == true) {
       this.estadoDiscapacidad = true;
-    } else {
+    } else if(this.discap == false){
       this.estadoDiscapacidad = false;
       this.ficha.porc_disc_fisica = 0;
+      this.ficha.descrip_disc_fisica = '' 
       this.ficha.porc_disc_mental = 0;
+      this.ficha.descrip_disc_mental = ''
       this.habiFisica = false;
       this.habiMental = false;
       this.tipodisfinal = 'Ninguna'
@@ -216,7 +250,7 @@ export class EditarBeneficiariosComponent implements OnInit {
   }
 
   habilitarTipoDiscap(event: any) {
-    if(event.value == null){
+    if (event.value == null) {
       this.ficha.porc_disc_fisica = 0;
       this.ficha.porc_disc_mental = 0;
       this.habiFisica = false
@@ -224,28 +258,33 @@ export class EditarBeneficiariosComponent implements OnInit {
       this.discap = false
       this.estadoDiscapacidad = false
     } else {
-      if(this.tipodis.dis == undefined || this.tipodis.dis == null || this.tipodis.dis == '') {
-        this.ficha.porc_disc_fisica = 0;
-        this.ficha.porc_disc_mental = 0;
+      if (this.tipodis.dis == undefined || this.tipodis.dis == null || this.tipodis.dis == '') {
+        this.ficha.porc_disc_fisica = 0
+        this.ficha.porc_disc_mental = 0
         this.habiFisica = false
         this.habiMental = false
-      } else if(this.tipodis.dis == 'Intelectual'){
-        this.ficha.porc_disc_fisica = 0;
+        this.tipodisfinal = 'Ninguna'
+      } else if (this.tipodis.dis == 'Intelectual') {
+        this.ficha.porc_disc_fisica = 0
+        this.ficha.descrip_disc_fisica = ''
         this.habiMental = true
         this.habiFisica = false
         this.tipodisfinal = 'Intelectual'
-      } else if (this.tipodis.dis == 'Fisica'){
-        this.ficha.porc_disc_mental = 0;
+      } else if (this.tipodis.dis == 'Fisica') {
+        this.ficha.porc_disc_mental = 0
+        this.ficha.descrip_disc_mental = ''
         this.habiFisica = true
         this.habiMental = false
         this.tipodisfinal = 'Fisica'
-      } else if (this.tipodis.dis == 'Ambas'){
+      } else if (this.tipodis.dis == 'Ambas') {
         this.habiFisica = true
         this.habiMental = true
         this.tipodisfinal = 'Ambas'
-      } else if (this.tipodis.dis == 'Ninguna'){
-        this.ficha.porc_disc_fisica = 0;
-        this.ficha.porc_disc_mental = 0;
+      } else if (this.tipodis.dis == 'Ninguna') {
+        this.ficha.porc_disc_fisica = 0
+        this.ficha.descrip_disc_fisica = ''
+        this.ficha.porc_disc_mental = 0
+        this.ficha.descrip_disc_mental = ''
         this.habiFisica = false
         this.habiMental = false
         this.discap = false
@@ -256,7 +295,7 @@ export class EditarBeneficiariosComponent implements OnInit {
   }
 
   habilitarCantidadBono(event: any) {
-    if(this.ficha.recibebono == true){
+    if (this.ficha.recibebono == true) {
       this.recibebono = true;
     } else {
       this.recibebono = false;
@@ -264,17 +303,14 @@ export class EditarBeneficiariosComponent implements OnInit {
     }
   }
   //Validar campos persona
-  camposVacios(): boolean{
+  camposVacios(): boolean {
     let comprobacion: boolean = false;
     if (this.persona.cedula == '' || this.persona.cedula == undefined || this.persona.cedula == null ||
       this.persona.nombres == '' || this.persona.nombres == undefined || this.persona.nombres == null ||
       this.persona.apellidos == '' || this.persona.apellidos == undefined || this.persona.apellidos == null ||
-      this.persona.direccion == '' || this.persona.direccion == undefined || this.persona.direccion == null ||
-      this.persona.celular == '' || this.persona.celular == undefined || this.persona.celular == null ||
       this.persona.fechaNacimiento == undefined) {
-        comprobacion = false;
-        this.addMultiple('error', 'Error', 'Complete los campos de Persona');
-        this.timer();
+      comprobacion = false;
+      this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
     } else {
       comprobacion = true;
     }
@@ -282,51 +318,74 @@ export class EditarBeneficiariosComponent implements OnInit {
   }
 
   //Registro de Familiares
-  camposVaciosFamiliares() : boolean{
+  camposVaciosFamiliares(): boolean {
     if (this.familiares.cedulaFamiliar == '' || this.familiares.cedulaFamiliar == undefined || this.familiares.cedulaFamiliar == null ||
       this.familiares.nombreF == '' || this.familiares.nombreF == undefined || this.familiares.nombreF == null ||
       this.familiares.apellidoF == '' || this.familiares.apellidoF == undefined || this.familiares.apellidoF == null ||
       this.parentesco == null) {
-        this.datosFami = false
-        this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
-        this.timer();
+      this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *')
+      return false
     } else {
-      this.datosFami = true;
+      return true
     }
-    return this.datosFami;
   }
 
-  //Registro de Ficha
-  CamposVaciosFicha()  :boolean{
-    let datosFich: boolean = false;
-    if (this.ficha.descripcionVivienda == '' || this.ficha.descripcionVivienda == undefined || this.ficha.descripcionVivienda == null) {
-        datosFich = false
-        this.addMultiple('error', 'Error', 'Rellene los campos solicitados');
-        this.timer();
-    } else {
-      datosFich = true;
-    }
-    return datosFich;
-  }
-
-
-  agregarFamiliar(){
-    if(this.camposVaciosFamiliares()==true){
-      let resultadoC = this.familyArray.find( fruta => fruta.cedulaFamiliar === this.familiares.cedulaFamiliar );
-      if(this.familyArray.length <= 0){
-        this.addFamiliar();
-      } else if(this.familyArray.length >= 1) {
-          if(resultadoC == undefined){
-            this.addFamiliar();
-          } else {
-            this.addMultiple('error', 'Error', 'Este número de cédula ya está en uso');
-            this.timer();
-          }
+  //Verificar FichaSocioeconomica
+  CamposVaciosFicha(): boolean {
+    if (this.discap == true) {
+      if (this.tipodisfinal == 'Ninguna') {
+        this.addMultiple('error', 'Error', 'Por favor seleccione un tipo de discapacidad y complete la información requerida');
+        return false
+      } else if (this.tipodisfinal == 'Intelectual') {
+        if (this.ficha.porc_disc_mental == null || this.ficha.porc_disc_mental <= 0 || this.ficha.descrip_disc_mental == '' || this.ficha.descrip_disc_mental == null ) {
+          this.addMultiple('error', 'Error', 'Rellene el porcentaje (mayor a 0%) y descripción de discapacidad intelectual');
+          return false
+        }
+      } else if (this.tipodisfinal == 'Fisica') {
+        if (this.ficha.porc_disc_fisica == null || this.ficha.porc_disc_fisica <= 0 || this.ficha.descrip_disc_fisica == '' || this.ficha.descrip_disc_fisica == null ) {
+          this.addMultiple('error', 'Error', 'Rellene el porcentaje (mayor a 0%) y descripción de la discapacidad física');
+          return false
+        }
+      } else if (this.tipodisfinal == 'Ambas') {
+        if (this.ficha.porc_disc_fisica == null || this.ficha.descrip_disc_fisica == '' || this.ficha.porc_disc_mental == null || this.ficha.descrip_disc_mental == '') {
+          this.addMultiple('error', 'Error', 'Rellene el porcentaje (mayor a 0%) y descripción de discapacidades');
+          return false
+        }
+      }
+      if (this.ficha.descripcionVivienda == '' || this.ficha.descripcionVivienda == undefined || this.ficha.descripcionVivienda == null ||
+        this.ficha.situacionEconomica == '' || this.ficha.situacionEconomica == undefined || this.ficha.situacionEconomica == null) {
+        this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan * ');
+        return false;
+      } else {
+        return true;
+      }
+    } else if (this.discap == false) {
+      if (this.ficha.descripcionVivienda == '' || this.ficha.descripcionVivienda == undefined || this.ficha.descripcionVivienda == null ||
+        this.ficha.situacionEconomica == '' || this.ficha.situacionEconomica == undefined || this.ficha.situacionEconomica == null) {
+        this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
+        return false;
+      } else {
+        return true;
       }
     }
   }
 
-  addFamiliar(){
+  agregarFamiliar() {
+    if (this.camposVaciosFamiliares() == true) {
+      let resultadoC = this.familyArray.find(fruta => fruta.cedulaFamiliar === this.familiares.cedulaFamiliar);
+      if (this.familyArray.length <= 0) {
+        this.addFamiliar();
+      } else if (this.familyArray.length >= 1) {
+        if (resultadoC == undefined) {
+          this.addFamiliar();
+        } else {
+          this.addMultiple('error', 'Error', 'Este número de cédula ya está en uso');
+        }
+      }
+    }
+  }
+
+  addFamiliar() {
     const nuevoFamiliares: RegistroFamiliares = {
       apellidoF: this.familiares.apellidoF,
       cedulaFamiliar: this.familiares.cedulaFamiliar,
@@ -336,7 +395,7 @@ export class EditarBeneficiariosComponent implements OnInit {
       nombreF: this.familiares.nombreF,
       parentesco: this.parentesco.par
     }
-    if(nuevoFamiliares.parentesco == 'Hijo' || nuevoFamiliares.parentesco == 'Hija'){
+    if (nuevoFamiliares.parentesco == 'Hijo' || nuevoFamiliares.parentesco == 'Hija') {
       this.hijosFinal++;
     }
     this.familyArray.push(nuevoFamiliares);
@@ -347,12 +406,12 @@ export class EditarBeneficiariosComponent implements OnInit {
     this.familiares.nombreF = '';
   }
 
-  eliminarFamiliar(familiar: RegistroFamiliares){
-    for(let i = 0; i<this.familyArray.length; i++){
-      if(familiar.cedulaPersona == this.familyArray[i].cedulaPersona){
-        let n : number = this.familyArray.indexOf(this.familyArray[i]);
+  eliminarFamiliar(familiar: RegistroFamiliares) {
+    for (let i = 0; i < this.familyArray.length; i++) {
+      if (familiar.cedulaPersona == this.familyArray[i].cedulaPersona) {
+        let n: number = this.familyArray.indexOf(this.familyArray[i]);
         this.familyArray.splice(n, 1);
-        if(familiar.parentesco == 'Hijo' || familiar.parentesco == 'Hija'){
+        if (familiar.parentesco == 'Hijo' || familiar.parentesco == 'Hija') {
           this.hijosFinal--
         }
       }
@@ -382,7 +441,7 @@ export class EditarBeneficiariosComponent implements OnInit {
     }
   }
 
-  actualizarPersona(){
+  actualizarPersona() {
     const PersonaNueva: Personas = {
       idPersona: this.persona.idPersona,
       apellidos: this.persona.apellidos,
@@ -401,37 +460,53 @@ export class EditarBeneficiariosComponent implements OnInit {
       faltas: this.persona.faltas
     }
     this.personaService.updatePersona(PersonaNueva).subscribe(data => {
-      
+
     });
   }
 
-  actualizarFamiliares(){
-    for(let i = 0; i<this.familyArray.length; i++){
-      let nuevoFamiliares: RegistroFamiliares = {
+  actualizarFamiliares() {
+    this.familiaService.deleteRegistro(this.persona.cedula).subscribe(data => { })
+    const contador = timer(1000);
+    contador.subscribe((n) => {
+      this.postFamiliares();
+    })
+  }
+
+  postFamiliares() {
+    for (let i = 0; i < this.familyArray.length; i++) {
+      let nuevoRgistro: RegistroFamiliares = {
         apellidoF: this.familyArray[i].apellidoF,
         cedulaFamiliar: this.familyArray[i].cedulaFamiliar,
-        cedulaPersona: this.persona.cedula,
+        cedulaPersona: this.familyArray[i].cedulaPersona,
         celularF: this.familyArray[i].celularF,
         correo: this.familyArray[i].correo,
         nombreF: this.familyArray[i].nombreF,
-        parentesco: this.familyArray[i].parentesco,  
+        parentesco: this.familyArray[i].parentesco,
         numHijos: this.hijosFinal
       }
+      this.familiaService.postRegistFami(nuevoRgistro).subscribe(data => {
+
+      })
     }
   }
 
-  actualizarFicha(){
-    let nuevaFicha : FichaSocioeconomica = {
+  actualizarFicha() {
+    if (this.ficha.enfermedades == null || this.ficha.enfermedades == [] || this.ficha.enfermedades.length == 0) {
+      this.ficha.enfermedades = ['Ninguna']
+    }
+    let nuevaFicha: FichaSocioeconomica = {
       idFichaSocioeconomica: this.ficha.idFichaSocioeconomica,
       adultoMayor: this.ficha.adultoMayor,
       cantidadbono: this.ficha.cantidadbono,
       cedulaPersona: this.persona.cedula,
       descripcionVivienda: this.ficha.descripcionVivienda,
       discapacidad: this.discap,
-      enfermedades: this.enfermedades,
+      enfermedades: this.ficha.enfermedades,
       fechaRegistro: this.ficha.fechaRegistro,
       porc_disc_fisica: this.ficha.porc_disc_fisica,
+      descrip_disc_fisica: this.ficha.descrip_disc_fisica,
       porc_disc_mental: this.ficha.porc_disc_mental,
+      descrip_disc_mental: this.ficha.descrip_disc_mental,
       recibebono: this.recibebono,
       salario: this.ficha.salario,
       seguro: this.ficha.seguro,
@@ -439,43 +514,40 @@ export class EditarBeneficiariosComponent implements OnInit {
       tipoVivienda: this.viviendaFinal,
       tipo_discapacidad: this.tipodisfinal,
       viveConOtros: this.ficha.viveConOtros,
+      madreSoltera: this.ficha.madreSoltera,
       pareja: this.ficha.pareja
     }
     this.fichaServices.updateFicha(nuevaFicha).subscribe(data => {
 
-    }) 
+    })
   }
 
-  guardarTodo(){
+  guardarTodo() {
     this.validacion();
-    if( this.camposVacios() == true && this.CamposVaciosFicha() == true){
+    if (this.camposVacios() == true && this.CamposVaciosFicha() == true) {
       this.actualizarPersona();
       this.actualizarFamiliares();
       this.actualizarFicha();
+      this.display = true;
+      this.texto = 'Se ha actualizado con exito, por favor espere unos instantes';
+      const contador = timer(3000);
+      contador.subscribe((n) => {
+        this.router.navigate(['/lista-beneficiarios']);
+      })
     }
-    
   }
 
-  cancelar(){
+  cancelar() {
     this.router.navigate(['/lista-beneficiarios']);
   }
 
   addMultiple(severity1: string, sumary1: string, detail1: string) {
     this.msgs =
       [{ severity: severity1, summary: sumary1, detail: detail1 }];
-    function delay(ms: number) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    (async () => {
-      await delay(6000);
-      window.location.reload();
-    });
-  }
-
-  timer(){
     const contador = timer(6000);
     contador.subscribe((n) => {
       this.msgs = [];
     })
   }
+
 }

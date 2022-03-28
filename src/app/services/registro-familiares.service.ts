@@ -10,25 +10,36 @@ export class RegistroFamiliaresService {
   private URL='http://localhost:3000/registroFamiliares';
   constructor(private http:HttpClient) { }
 
-  postRegistFami(familiaresPersona:RegistroFamiliares):Observable<any>{
-    return this.http.post(`${this.URL}/addfamiliares`,familiaresPersona);
-  }
+ 
   getfamicedula(cedula: any): Observable<any>{
     return this.http.get<any>(this.URL+`/bycedula/${cedula}`);
   }
   getFami():Observable<any>{
     return this.http.get(`${this.URL}/listadoRegistroFamiliares`)
   }
-  getQueryUpdateFamiliares(query: String, familia:any){
-    const url = `${this.URL}/${query}`;
-    return this.http.request<any>('put',url, {
-      body: familia
+
+  //Post Registro
+  QueryAddRegistro(query: String, registro: RegistroFamiliares) {
+    const url = `http://localhost:3000/registroFamiliares/${query}`;
+    return this.http.request<RegistroFamiliares>('post', url, {
+      body: registro
     });
   }
+  postRegistFami(registro: RegistroFamiliares): Observable<any> {
+    const url = 'addfamiliares';
+    return this.QueryAddRegistro(url, registro);
+  }
 
-  updateFamiliares(familia: any):Observable<any>{
-    const url = `update-familiares`;
-    return this.getQueryUpdateFamiliares(url, familia);
+  //Actualizar Fichas
+  getQueryUpdateFamiliares(query: String, registro: RegistroFamiliares) {
+    const url = `http://localhost:3000/registroFamiliares/${query}`;
+    return this.http.request<RegistroFamiliares>('put', url, {
+      body: registro
+    });
+  }
+  updateFamiliares(registro: RegistroFamiliares): Observable<any> {
+    const url = 'update-ficha';
+    return this.getQueryUpdateFamiliares(url, registro);
   }
 
    //Traer Registro familiar Especifico por numero de cedula del beneficiario
@@ -40,5 +51,26 @@ export class RegistroFamiliaresService {
   getFamByCedula(cedulaPersona: string): Observable<any> {
     const url = 'getByCedula';
     return this.getQueryFamByCedula(url, cedulaPersona);
+  }
+
+  //Eliminar Familiares
+  QueryDeleteRegistro(query: String, cedulaPersona: string) {
+    const url = `http://localhost:3000/registroFamiliares/${query}/${cedulaPersona}`;
+    return this.http.request<RegistroFamiliares>('delete', url);
+  }
+
+  deleteRegistro(cedulaPersona: string): Observable<any> {
+    const url = 'delete-familiar';
+    return this.QueryDeleteRegistro(url, cedulaPersona);
+  }
+
+  QueryDeleteRegistroById(query: String, idRegistroFamiliares: number) {
+    const url = `http://localhost:3000/registroFamiliares/${query}/${idRegistroFamiliares}`;
+    return this.http.request<RegistroFamiliares>('delete', url);
+  }
+
+  deleteRegistroById(idRegistroFamiliares: number): Observable<any> {
+    const url = 'delete-familiarByiD';
+    return this.QueryDeleteRegistroById(url, idRegistroFamiliares);
   }
 }

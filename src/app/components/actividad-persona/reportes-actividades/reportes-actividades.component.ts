@@ -68,6 +68,12 @@ export class ReportesActividadesComponent implements PipeTransform, OnInit {
     } else if (this.tipoUser == '3' || this.tipoUser == '4') {
       this.showExitoso();
       this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
     }
   }
 

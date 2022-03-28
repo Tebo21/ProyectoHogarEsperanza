@@ -4,5 +4,4 @@ export class AsistenciaPersona {
 	actividad?: string;
 	descripcion?: string;
 	fecha?: string;
-	asistencias?: number;
 }

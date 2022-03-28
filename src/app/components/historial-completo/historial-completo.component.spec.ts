@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ElegiblesComponent } from './elegibles.component';
+import { HistorialCompletoComponent } from './historial-completo.component';
 
-describe('ElegiblesComponent', () => {
-  let component: ElegiblesComponent;
-  let fixture: ComponentFixture<ElegiblesComponent>;
+describe('HistorialCompletoComponent', () => {
+  let component: HistorialCompletoComponent;
+  let fixture: ComponentFixture<HistorialCompletoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ElegiblesComponent ]
+      declarations: [ HistorialCompletoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ElegiblesComponent);
+    fixture = TestBed.createComponent(HistorialCompletoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

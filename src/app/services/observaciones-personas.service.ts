@@ -27,4 +27,15 @@ export class ObservacionesPersonasService {
     const url = `update-Observaciones`;
     return this.getQueryUpdateObservaciones(url, observacion);
   }
+
+   //Eliminar Observacion
+   QueryDeleteObservacion(query: String, idObservacionesPersona: number) {
+    const url = `http://localhost:3000/observacionesPersonas/${query}/${idObservacionesPersona}`;
+    return this.http.request<ObservacionesPersonas>('delete', url);
+  }
+
+  deleteObservacion(idObservacionesPersona: number): Observable<any> {
+    const url = 'deleteObser';
+    return this.QueryDeleteObservacion(url, idObservacionesPersona);
+  }
 }

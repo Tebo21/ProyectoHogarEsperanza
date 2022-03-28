@@ -54,7 +54,13 @@ export class ListarProductoDonadoComponent implements OnInit {
         icon: 'warning',
       });
       this.router.navigateByUrl('inicio-super-admin');
-    }
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
+    } 
   }
 
   onFilter(event, dt) {

@@ -4,9 +4,10 @@
 <div class="cont">
     <div class="hijo">
         <p-table #dt [value]="selectedUsers" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
-        [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
+        [scrollable]="true" scrollHeight="400px" [paginator]="true" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10,25,50]" [(selection)]="selected" dataKey="cedula" [rowHover]="true"
-        [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo']">
+        [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo']"
+        currentPageReportTemplate="Se muestran del {first} al {last} de un total de {totalRecords} usuarios registrados">
         <ng-template pTemplate="caption">
             <div class="prin">
                 <div class="sec" >
@@ -58,7 +59,7 @@
                 <th pSortableColumn="tipousuario">Tipo de Usuario
                     <p-sortIcon field="tipousuario"></p-sortIcon>
                 </th>
-                <th>Editar / Eliminar</th>
+                <th>Acciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
@@ -73,11 +74,10 @@
                 <td>{{user.correo}}</td>
                 <td>{{user.tipousuario}}</td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-user-edit"
-                        class="p-button-rounded p-button-outlined"
-                        (click)="ActualizarUsuario(user.cedula)">
+                    <button pButton pRipple type="button" icon="pi pi-user-edit" pTooltip="Editar" tooltipPosition="left"
+                        class="p-button-rounded p-button-outlined" (click)="ActualizarUsuario(user.cedula)">
                     </button>
-                    <button pButton pRipple type="button" icon="pi pi-trash"
+                    <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="Eliminar" tooltipPosition="left"
                         class="p-button-rounded p-button-danger p-button-outlined" (click)="eliminarUsuario(user.cedula)">
                     </button>
                 </td>

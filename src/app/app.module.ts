@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -9,21 +8,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
-import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
 import { UsuarioService } from './services/usuarios.service';
 import { PanelModule } from 'primeng/panel';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {InputSwitchModule} from 'primeng/inputswitch';
-
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
@@ -35,9 +31,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FichaSocioeconomicaService } from './services/ficha-socioeconomica.service';
 import { ListadoUsuariosComponent } from './components/listado-usuarios/listado-usuarios.component';
 import {TableModule} from 'primeng/table';
-import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
-import { NavbarVoluntarioComponent } from './components/navbar-voluntario/navbar-voluntario.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CrearCitaComponent } from './components/citas_medicas/crear-cita/crear-cita.component';
 import { VistaFichaComponent } from './components/vista-ficha/vista-ficha.component';
@@ -52,9 +46,7 @@ import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { EntregarDonacionComponent } from './components/donacion-producto/entregar-donacion/entregar-donacion.component';
 import { ReportesActividadesComponent } from './components/actividad-persona/reportes-actividades/reportes-actividades.component';
-import flatpickr from 'flatpickr';
 import { FlatpickrModule } from 'angularx-flatpickr';
-
 import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
 import { PaginatorModule } from 'primeng/paginator';
 import {TooltipModule} from 'primeng/tooltip';
@@ -67,19 +59,17 @@ import { PipePipe } from './components/voluntario-calendario/pipe.pipe';
 import { EditarUsuariosComponent } from './components/listado-usuarios/editar-usuarios/editar-usuarios.component';
 import { ListarProductoDonadoComponent } from './components/donacion-producto/listar-producto-donado/listar-producto-donado.component';
 import { ObservacionesPersonasComponent } from './components/observaciones-personas/observaciones-personas.component';
-import { ListaObservacionesPersonasComponent } from './components/lista-observaciones-personas/lista-observaciones-personas.component';
 import { EditarBeneficiariosComponent } from './components/lista-beneficiarios/editar-beneficiarios/editar-beneficiarios.component';
-import { DocumentosPersonaComponent } from './components/lista-beneficiarios/documentos-persona/documentos-persona.component';
-import { ListaDocumentosComponent } from './components/lista-beneficiarios/lista-documentos/lista-documentos.component';
 import { EditarDocumentosComponent } from './components/lista-beneficiarios/editar-documentos/editar-documentos.component';
-import { DescargarDocumentosComponent } from './components/lista-beneficiarios/descargar-documentos/descargar-documentos.component';
-import { ElegiblesComponent } from './components/elegibles/elegibles.component';
 import { HistorialBComponent } from './components/historial-b/historial-b.component';
-import { RegistroBeneficiariosNComponent } from './registro-beneficiarios-n/registro-beneficiarios-n.component';
 import {KnobModule} from 'primeng/knob';
 import {ChipsModule} from 'primeng/chips';
+import { FichaComponent } from './components/ficha/ficha.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {ChartModule} from 'primeng/chart';
+import {FileUploadModule} from 'primeng/fileupload';
+import { HistorialCompletoComponent } from './components/historial-completo/historial-completo.component';
 PdfMakeWrapper.setFonts(pdfFonts);
-
 
 @NgModule({
   declarations: [
@@ -88,8 +78,6 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ActividadPersonaComponent,
     CrearActividadComponent,
     RegistroPersonaComponent,
-    RegistroFamiliaresComponent,
-    FichaSocioeconomicaComponent,
     DasboardvoluntariosComponent,
     VoluntarioCalendarioComponent,
     ListCentroComponent,
@@ -101,9 +89,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ListCentroComponent,
     RegistroActividadCoordinadorComponent,
     ListadoUsuariosComponent,
-    NavbarSuperAdminComponent,
     NavbarAdminComponent,
-    NavbarVoluntarioComponent,
     VistaFichaComponent,
     RegistroDonacionComponent,
     InicioSuperAdminComponent,
@@ -117,15 +103,11 @@ PdfMakeWrapper.setFonts(pdfFonts);
     EditarUsuariosComponent,
     ListarProductoDonadoComponent,
     ObservacionesPersonasComponent,
-    ListaObservacionesPersonasComponent,
     EditarBeneficiariosComponent,
-    DocumentosPersonaComponent,
-    ListaDocumentosComponent,
     EditarDocumentosComponent,
-    DescargarDocumentosComponent,
-    ElegiblesComponent,
     HistorialBComponent,
-    RegistroBeneficiariosNComponent
+    FichaComponent,
+    HistorialCompletoComponent
   ],
   imports: [
     CommonModule,
@@ -159,6 +141,9 @@ PdfMakeWrapper.setFonts(pdfFonts);
     PasswordModule,
     KnobModule,
     ChipsModule,
+    InputTextareaModule,
+    ChartModule,
+    FileUploadModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [UsuarioService,FichaSocioeconomicaService,MessageService,DatePipe, {provide:LocationStrategy, useClass: HashLocationStrategy}],

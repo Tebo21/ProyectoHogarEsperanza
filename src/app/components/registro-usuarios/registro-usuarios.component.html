@@ -1,122 +1,47 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
-<p-messages [(value)]="msgs"></p-messages>
-
+<h2 class="text-center">Registro de Usuarios</h2>
 <div class="container animated  d-flex justify-content-center fadeIn">
-
-    <p-dialog header="Datos del Voluntario" [(visible)]="displayV" [modal]="true" [style]="{width: '40vw'}"
-        [baseZIndex]="10000">
-        <p-messages [(value)]="msgs"></p-messages>
-        <p-panel class="card">
-            <div class="form-floating mb-3">
-                <label class="mb-0">
-                    <h6 class="mb-0 text-sm">Cédula</h6>
-                </label>
-                <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10"
-                    id="usuarioCedula" placeholder="Cédula" [(ngModel)]="cedula" name="cedula" required disabled>
-            </div>
-            <div class="form-floating mb-3" *ngIf="adminActivar">
-                <label class="mb-0">
-                    <h6 class="mb-0 text-sm">Tipo de voluntario</h6>
-                </label>
-                <p-dropdown [options]="usuarios" [(ngModel)]="usv" placeholder="Seleccione el tipo de voluntario"
-                    optionLabel="uop" [style]="{'width': '100%'}" [showClear]="true"
-                    (onChange)="onChangeV($event)">
-                </p-dropdown>
-            </div>
-            <div class="form-floating mb-3">
-                <label class="mb-0">
-                    <h6 class="mb-0 text-sm">Nombre de Usuario</h6>
-                </label>
-                <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
-                    id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuarioNombre" name="usuarioNombre"
-                    required>
-            </div>
-            <div class="form-floating mb-3">
-                <label class="mb-0">
-                    <h6 class="mb-0 text-sm">Contraseña</h6>
-                </label>
-                <br>
-                <p-password [(ngModel)]="usuarioContrasenia" name="usuarioContrasenia" [toggleMask]="true"
-                    placeholder="Contraseña del Usuario" maxlength="16" minlength="8" required>
-                    <ng-template pTemplate="header">
-                        <h6>Introduzca una contraseña</h6>
-                    </ng-template>
-                    <ng-template pTemplate="footer">
-                        <p-divider></p-divider>
-                        <p class="p-mt-2">Sugerencia</p>
-                        <ul class="p-pl-2 p-ml-2 p-mt-0" style="line-height: 1.5">
-                            <li>Al menos una minúscula</li>
-                            <li>Al menos una mayúscula</li>
-                            <li>Al menos un número</li>
-                            <li>Mínimo 8 caracteres</li>
-                        </ul>
-                    </ng-template>
-                </p-password>
-            </div>
-
-            <div class="form-floating mb-3">
-                <label class="mb-0">
-                    <h6 class="mb-0 text-sm">Confirmar Contraseña</h6>
-                </label>
-                <br>
-                <p-password [(ngModel)]="usuarioConfirContrasenia" name="usuarioContrasenia" [toggleMask]="true"
-                    placeholder="Confirmar contraseña" maxlength="16" minlength="8" required></p-password>
-            </div>
-        </p-panel>
-        <ng-template pTemplate="footer">            
-            <button pButton type="button" label="Aceptar"
-                class="p-button-outlined"
-                (click)='ValidacionesExtra()'>
-            </button>
-            <button pButton type="button" label="Cancelar"
-                class="p-button-outlined p-button-danger"
-                (click)='displayV=false'>
-            </button>
-        </ng-template>
-    </p-dialog>
-
-    <p-panel class="card" id="panel">
-        <h2 class="text-center">Registro de Usuarios</h2>
+    <p-panel class="card" id="panel" header="* Obligatorio">
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Número de cédula</b></label>
-            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula"
+            <label for="floatingInput"><b>Número de cédula *</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="cedula" #Ced
                 placeholder="Número de cédula" [(ngModel)]="cedula" name="cedula" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Nombres</b></label>
+            <label for="floatingInput"><b>Nombres *</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
                 id="nombres" placeholder="Nombres" [(ngModel)]="nombres" name="nombres" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Apellidos</b></label>
+            <label for="floatingInput"><b>Apellidos *</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
                 id="apellidos" placeholder="Apellidos" [(ngModel)]="apellidos" name="apellidos" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Dirección</b></label>
             <input class="form-control" type="text" [pKeyFilter]="noSpecial" maxlength="50" minlength="3" id="direccion"
-                placeholder="Dirección" [(ngModel)]="direccion" name="direccion" required>
+                placeholder="Dirección" [(ngModel)]="direccion" name="direccion">
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Número celular</b></label>
-            <input class="form-control" type="text" pKeyFilter="int" id="celular" placeholder="Número celular"
-                [(ngModel)]="celular" name="celular" minlength="7" maxlength="13" required>
+            <label for="floatingInput"><b>Número celular o convencional</b></label>
+            <input class="form-control" type="text" pKeyFilter="int" id="celular"
+                placeholder="Número celular o convencional" [(ngModel)]="celular" name="celular" minlength="7"
+                maxlength="13">
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Correo electrónico</b></label>
             <input class="form-control" type="email" maxlength="40" [pKeyFilter]="valCorreo" minlength="12" id="correo"
-                placeholder="Correo electrónico" [(ngModel)]="correo" name="correo" required>
+                placeholder="Correo electrónico" [(ngModel)]="correo" name="correo">
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Género</b></label>
+            <label for="floatingInput"><b>Género *</b></label>
             <p-dropdown [options]="generos" [(ngModel)]="genero" placeholder="Seleccione su género" optionLabel="gop"
-                [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChangeG($event)">
+                [style]="{'width': '100%'}" (onChange)="onChangeG($event)">
             </p-dropdown>
         </div>
-
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Fecha de nacimiento</b></label>
+            <label for="floatingInput"><b>Fecha de nacimiento *</b></label>
             <input class="form-control" type="date" id="fechadeNacimiento" placeholder="Fecha de nacimiento"
                 [(ngModel)]="persona.fechaNacimiento" name="fechadenacimiento" dateFormat="yy-mm-dd" maxlength="10"
                 (change)="calcularedad($event)" required>
@@ -124,33 +49,70 @@
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Edad</b></label>
             <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
-                placeholder="Edad" [(ngModel)]="edadC" name="edad" required disabled>
+                placeholder="Edad" [(ngModel)]="edadC" name="edad" disabled>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>País de origen</b></label>
+            <label for="floatingInput"><b>País de origen *</b></label>
             <p-dropdown [options]="nacionalidades" [(ngModel)]="nacio" placeholder="Seleccione su nacionalidad"
-                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" [showClear]="true" (onChange)="onChangeN($event)">
+                optionLabel="nop" [style]="{'width': '100%'}" [filter]="true" (onChange)="onChangeN($event)">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Estado civil *</b></label>
+            <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
+                optionLabel="eop" [style]="{'width': '100%'}" (onChange)="onChangeEstado($event)">
+            </p-dropdown>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="floatingInput"><b>Tipo de usuario *</b></label>
+            <p-dropdown [options]="listadoTipo" [(ngModel)]="tipo" placeholder="Seleccione el tipo de usuario"
+                optionLabel="top" [style]="{'width': '100%'}" (onChange)="onChangeT($event)">
             </p-dropdown>
         </div>
         <p-messages [(value)]="msgs"></p-messages>
-        <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Estado civil</b></label>
-            <p-dropdown [options]="estadocivil" [(ngModel)]="estado" placeholder="Seleccione su estado civil"
-                optionLabel="eop" [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChangeEstado($event)">
-            </p-dropdown>
-        </div>
         <div align="center">
-            <button pButton type="button" label="Siguiente"
-            class="p-button-outlined"
-            (click)='Validacion()'></button>
-        </div>
-        <div class="form-floating mb-3" *ngIf="cb">
-            <label for="floatingInput"><b>Tipo de usuario</b></label>
-            <p-dropdown [options]="listadoTipo" [(ngModel)]="tipo" placeholder="Seleccione el tipo de usuario"
-                optionLabel="top" [style]="{'width': '100%'}" [showClear]="true" (onChange)="onChangeT($event)">
-            </p-dropdown>
+            <button pButton type="button" label="Siguiente" class="p-button-outlined" (click)='Validacion()'></button>
         </div>
     </p-panel>
 </div>
-
+<br>
+<div class="container animated  d-flex justify-content-center fadeIn">
+    <p-panel class="card" id="panel" header="Información de la cuenta" *ngIf="displayV">
+        <div class="form-floating mb-3">
+            <label class="mb-0">
+                <h6 class="mb-0 text-sm">Nombre de Usuario *</h6>
+            </label>
+            <input class="form-control" type="text" pKeyFilter="alphanum" maxlength="30" minlength="3"
+                id="usuarioNombre" placeholder="Nombre de Usuario" [(ngModel)]="usuarioNombre" name="usuarioNombre"
+                required>
+        </div>
+        <div class="form-floating mb-3">
+            <label class="mb-0">
+                <h6 class="mb-0 text-sm">Contraseña *</h6>
+            </label>
+            <br>
+            <input class="form-control" type="password" id="usuarioContrasenia" placeholder="Contraseña"
+                [(ngModel)]="usuarioContrasenia" name="usuarioContrasenia" required />
+        </div>
+        <div class="form-floating mb-6">
+            <label class="mb-0">
+                <h6 class="mb-0 text-sm">Confirmar Contraseña *</h6>
+            </label>
+            <br>
+            <input class="form-control" type="password" id="usuarioConfirContrasenia" placeholder="Contraseña"
+            [(ngModel)]="usuarioConfirContrasenia" name="usuarioConfirContrasenia" required />
+        </div>
+        <div class="prin">
+            <div class="sec">
+                <button pButton type="button" label="Guardar" class="p-button-outlined" (click)='GuardarUsuario()'>
+                </button>
+            </div>
+            <div class="ter">
+                <button pButton type="button" label="Cancelar" class="p-button-outlined p-button-danger" (click)='displayV=false'>
+                </button>
+            </div>
+        </div>
+        <br>
+    </p-panel>
+</div>
 <br>

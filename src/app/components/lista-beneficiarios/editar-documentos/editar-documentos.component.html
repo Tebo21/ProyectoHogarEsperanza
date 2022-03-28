@@ -1,99 +1,86 @@
 <app-navbar-admin></app-navbar-admin>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-<div class="container">
-  <div class="modal-body ">  
-<div class="card">
-  <div class="card-header mb-3">
-   <h4>Editar Documentos Beneficiario</h4>
-   </div>
-   <div class="panel-body">        
-    <div *ngIf="fileStatus.status==='progress'">
-      <div class="progress">
-        <div [style.width.%]="fileStatus.percent" class="progress-bar progress-bar-animated bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-            {{ fileStatus.requestType }} {{ fileStatus.percent }} 
-          </div>
-      </div>
-    </div> <hr>
-<div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-<select  [(ngModel)]="this.tipoDocumento" name="tipoarchivo" id="tipoarchivo" style="margin-left: 5%; margin-right: 5%;" type="text" class="form-select" placeholder="archivo">
-  <option selected disabled="Documento">Documento</option>
-  <option  value="Cedula Beneficiario">Cedula Beneficiario</option>
-  <option  value="Certificados Beneficiario">Certificados Beneficiario</option>
-  <option  value="Carnet Beneficiario">Carnet Beneficiario</option>
-  <option  value="Documentación extra Beneficiario">Documentación extra Beneficiario</option>
-  <option  value="Cedula Familiares">Cedula Familiares</option>
-  <option  value="Certificados Familares">Certificados Familares</option>
-  <option  value="Carnet Familiares">Carnet Familares</option>
-  <option  value="Documentación extra Familiares">Documentación extra Familares</option>
-  <option  value="Otros">Otros</option>
-</select>
-<!--INICIO DEL INPUT-->
-<form enctype="multipart/form-data">
-  <fieldset>
-    <div class="form-group">
-      <div>
-        <input type="file" (change)="selectFile($event)" name="files" class="form-control" />
-      </div>
-    </div>
-  </fieldset>
-</form>
-<br>  
-<!--FIN DEL INPUT-->
-</div></div></div></div>
 <br>
-<div *ngIf="filenames?.length > 0" class="js-upload-finished">
-  <h3>Archivo Cargado y Listo</h3>
-  <div *ngFor="let filename of filenames" class="list-group">
-    <a  class="list-group-item list-group-item-success" style="cursor: pointer;">
-      {{ filename }}            
-      <a class="alert-success float-right"></a>
-    </a><br>
+<h2 class="text-center">Documentos de beneficiarios</h2>
+<div class="padre">
+  <div class="p1">
+    <p-panel class="card tabla" header="Nombre del beneficiario: {{persona.nombres}} {{persona.apellidos}}" [toggleable]="true"> 
+        <h6 class="text-center">Cargar documentos</h6>
+        <div class="form-floating mb-3 tabla">
+          <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Seleccione el tipo de documento"
+          optionLabel="tip" [style]="{'width': '100%'}" [filter]="true">
+          </p-dropdown>
+        </div>
+        <div  class="custom-input-file mb-3 tabla">
+          <input type="file" id="fichero-tarifas" class="input-file" name="files" accept=".jpg, .jpeg, .png"
+          (change)="selectFile($event)"> 
+          {{texto}}
+        </div>
+        <p-messages [(value)]="msgs"></p-messages>
+        <div class="prin">
+          <div class="ter">
+            <button pButton type="button" label="Cancelar" class="p-button-danger p-button-outlined"
+            (click)='cancelar()'></button>
+          </div>
+          <div class="sec">
+            <button pButton type="button" label="Guardar" class="p-button-outlined" (click)='postDocumento()'></button>
+          </div>
+        </div>
+    </p-panel>
+  </div>
+  <div class="p2">
+    <div class="tabla">
+      <p-table #dt [rows]="10" [scrollable]="true" class="table table-responsive" scrollHeight="450px"
+        [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [rowHover]="true"
+        [autoLayout]="true" [responsive]="true"
+        [globalFilterFields]="['cedula','nombres','apellidos','direccion','celular','correo','fechaNacimiento','edad']"
+        [value]="listaDocumentos">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nombre del archivo</th>
+            <th>Tipo de Documento</th>
+            <th>Ver archivo</th>
+            <th>Eliminar</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user let-rowData let-rowIndex="rowIndex">
+          <tr class="p-selectable-row">
+            <td>{{user.nombreArchivo}}</td>
+            <td>{{user.tipoDocumento}}</td>
+            <td>
+              <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-outlined"
+              (click)="onDownloadFile(user.nombreArchivo)" pTooltip="Ver" tooltipPosition="top"></button>
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined"
+                (click)="modalEliminar(user)" pTooltip="Eliminar"
+                tooltipPosition="top"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">No se encontraron documentos.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </div>
-<div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-  <p-table #dt [rows]="10"  [scrollable]="true" class="table table-responsive" 
-      scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
-      [rowHover]="true" [autoLayout]="true" [responsive]="true"
-      [globalFilterFields]="['cedula','nombres','apellidos','direccion','celular','correo','fechaNacimiento','edad']" 
-      [value]="arrayLiStaNombres">
-      <ng-template pTemplate="caption">
-             <div style="margin-left: 70%;">
-                   </div>
-                      <div class="container" style="display: grid;">
-          <div align="right">
-          </div>
-      </div>         
-      </ng-template>
-      <ng-template pTemplate="header">
-          <tr >
-              <th pSortableColumn="#">#
-                  <p-sortIcon field="#"></p-sortIcon>
-              </th>
-              <th pSortableColumn="Documento">Documento
-              <p-sortIcon field="Documento"></p-sortIcon>
-              </th>
-              <th pSortableColumn="Tipo de Documento">Tipo de Documento
-                <p-sortIcon field="Tipo de Documento"></p-sortIcon>
-                </th>  
-                <th pSortableColumn="Eliminar">Eliminar
-                  <p-sortIcon field="Eliminar"></p-sortIcon>
-                  </th>  
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-user let-rowData let-rowIndex="rowIndex">
-          <tr  class="p-selectable-row">
-              <td>{{rowIndex}}</td> 
-              <td>{{user[0]}}</td>
-              <td>{{user[1]}}</td>
-              <td>
-                   <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
-                   (click)="eliminar(rowIndex)"></button>
-              </td>
-          </tr>
-      </ng-template>
-  </p-table>  
-</div>
-<div class="container animated  d-flex justify-content-center animated fadeIn" id="contenedor">
-  <button type="button" class="btn btn-success" 
-  (click)="upload()">Guardar Documentos</button>
-</div>
+
+<p-dialog header="Advertencia" [(visible)]="displayEliminar" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <b><p>¿Está seguro que desea eliminar esta observación?</p></b>
+    <p>Esta acción no se puede revertir</p>
+    <ng-template pTemplate="footer">
+        <div class="prin">
+            <div class="ter">
+                <button pButton type="button" label="Cancelar" class="p-button-danger p-button-outlined"
+                    (click)='displayEliminar=false'></button>
+            </div>
+            <div class="sec">
+                <button pButton type="button" label="Continuar" class="p-button-outlined"
+                    (click)='eliminar()'></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

@@ -9,6 +9,7 @@ import { Message } from 'primeng/api';
 import { FichaSocioeconomica } from 'src/app/models/ficha-socioeconomica';
 import { timer } from 'rxjs';
 import { RegistroFamiliares } from 'src/app/models/registro-familiares';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-registro-persona',
@@ -16,7 +17,7 @@ import { RegistroFamiliares } from 'src/app/models/registro-familiares';
   styleUrls: ['./registro-persona.component.css']
 })
 export class RegistroPersonaComponent implements OnInit {
-  @ViewChild("Ced") Ced: ElementRef;
+  @ViewChild("Ced") Ced: ElementRef
   //Refactor
   msgs: Message[];
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
@@ -25,7 +26,6 @@ export class RegistroPersonaComponent implements OnInit {
   //Modelos
   persona: Personas = {};
   personaCreada: Personas = {};
-  usuarioValidarCorreo: Personas = {};
   usuarioValidarCedula: Personas = {};
   //Dropdown
   nacionalidades: any[];
@@ -34,11 +34,11 @@ export class RegistroPersonaComponent implements OnInit {
   estado: any;
   generos: any[];
   genero: any;
-  tipodiscpa:  any[];
+  tipodiscpa: any[];
   tipodis: any;
   viviendas: any[];
   vivienda: any;
-  parentescos:  any[];
+  parentescos: any[];
   parentesco: any;
   enfermedades: string[];
   //Variables
@@ -55,18 +55,16 @@ export class RegistroPersonaComponent implements OnInit {
   familiares: RegistroFamiliares = {};
   familyArray: RegistroFamiliares[];
   habiRegFam: boolean = false;
-  datosFami: boolean = false;
-  numHijos:  number;
-  hijosFinal : number = 0
+  numHijos: number;
+  hijosFinal: number = 0
   //Ficha Socioeconomica
   ficha: FichaSocioeconomica = {};
   recibebono: boolean = false;
-  datosFich: boolean = false;
   fechaCreacionFicha: Date = new Date;
-  tipodisfinal : string = 'Ninguna'
+  tipodisfinal: string = 'Ninguna'
 
-  constructor(private renderer: Renderer2, private regfamiser:RegistroFamiliaresService, private fichaser:FichaSocioeconomicaService, 
-              private PersonasService: PersonasService, private router: Router) {
+  constructor(private renderer: Renderer2, private regfamiser: RegistroFamiliaresService, private fichaser: FichaSocioeconomicaService,
+    private PersonasService: PersonasService, private router: Router) {
     this.nacionalidades = [
       { nop: 'Afganistán' }, { nop: 'Alemania' }, { nop: 'Arabia Saudita' }, { nop: 'Argentina' }, { nop: 'Australia' }, { nop: 'Bélgica' }, { nop: 'Bolivia' }, { nop: 'Brasil' },
       { nop: 'Camboya' }, { nop: 'Canadá' }, { nop: 'Chile' }, { nop: 'China' }, { nop: 'Colombia' }, { nop: 'Corea' }, { nop: 'Costa Rica' }, { nop: 'Cuba' }, { nop: 'Dinamarca' }, { nop: 'Ecuador' }, { nop: 'Egipto' }, { nop: 'El Salvador' },
@@ -79,6 +77,7 @@ export class RegistroPersonaComponent implements OnInit {
     this.estadocivil = [
       { eop: 'Soltero' },
       { eop: 'Casado' },
+      { eop: 'Unión de hecho' },
       { eop: 'Divorciado' },
       { eop: 'Viudo' }
     ]
@@ -94,24 +93,25 @@ export class RegistroPersonaComponent implements OnInit {
       { dis: 'Ambas' }
     ]
     this.parentescos = [
-      { par: 'Hijo'},
-      { par: 'Hija'},
-      { par: 'Esposo'},
-      { par: 'Esposa'},
-      { par: 'Padre'},
-      { par: 'Madre'},
-      { par: 'Sobrino'},
-      { par: 'Sobrina'},
-      { par: 'Tio'},
-      { par: 'Tia'},
+      { par: 'Hijo' },
+      { par: 'Hija' },
+      { par: 'Esposo' },
+      { par: 'Esposa' },
+      { par: 'Padre' },
+      { par: 'Madre' },
+      { par: 'Sobrino' },
+      { par: 'Sobrina' },
+      { par: 'Tio' },
+      { par: 'Tia' },
+      { par: 'Otro' }
     ]
     this.viviendas = [
-      { viv: 'Propia'},
-      { viv: 'Arrendada'},
-      { viv: 'Prestada'}
+      { viv: 'Propia' },
+      { viv: 'Arrendada' },
+      { viv: 'Prestada' }
     ]
   }
-  
+
   ngOnInit(): void {
     this.comprobarLogin();
     this.familyArray = [];
@@ -121,79 +121,95 @@ export class RegistroPersonaComponent implements OnInit {
     this.ficha.tipo_discapacidad = this.tipodisfinal;
     this.familiares.celularF = '';
     this.familiares.correo = '';
+    this.enfermedades = ['Ninguna']
   }
 
   comprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
-    if (this.tipoUser == '1' || this.tipoUser == 2) {
-    } else if (this.tipoUser == '3' || this.tipoUser == '4') {
+    if (this.tipoUser == 1 || this.tipoUser == 2) {
+    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
       Swal.fire({
         title: 'No tiene permisos para registrar beneficiarios',
         icon: 'warning',
       });
       this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
     }
-  } 
- 
+  }
+
   calcularedad(event: any) {
-   const today: Date = new Date();
-    const birthDate: Date = new Date(this.persona.fechaNacimiento);
-    let age : number = today.getFullYear() - birthDate.getFullYear();
-    const month: number = today.getMonth() - birthDate.getMonth();
-    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    this.edadC = age;
-    return age;
+    const hoy: Date = new Date();
+    var a = moment(hoy);
+    var b = moment(this.persona.fechaNacimiento);
+
+    var years = a.diff(b, 'year');
+    b.add(years, 'years');
+
+    var months = a.diff(b, 'months');
+    b.add(months, 'months');
+
+    var days = a.diff(b, 'days');
+    
+    this.edadC = years
   }
 
   habilitarDiscap(event: any) {
-    if(this.discap==true){
-      this.estadoDiscapacidad = true;
-    } else {
-      this.estadoDiscapacidad = false;
-      this.ficha.porc_disc_fisica = 0;
-      this.ficha.porc_disc_mental = 0;
-      this.habiFisica = false;
-      this.habiMental = false;
+    if (this.discap == true) {
+      this.estadoDiscapacidad = true
+    } else if (this.discap == false) {
+      this.estadoDiscapacidad = false
+      this.ficha.porc_disc_fisica = 0
+      this.ficha.descrip_disc_fisica = ''
+      this.ficha.porc_disc_mental = 0
+      this.ficha.descrip_disc_mental = ''
+      this.habiFisica = false
+      this.habiMental = false
       this.tipodisfinal = 'Ninguna'
     }
   }
 
   habilitarTipoDiscap(event: any) {
-    if(event.value == null){
+    if (event.value == null) {
       this.ficha.porc_disc_fisica = 0;
       this.ficha.porc_disc_mental = 0;
       this.habiFisica = false
       this.habiMental = false
       this.discap = false
       this.estadoDiscapacidad = false
-      
     } else {
-      if(this.tipodis.dis == undefined || this.tipodis.dis == null || this.tipodis.dis == '') {
+      if (this.tipodis.dis == undefined || this.tipodis.dis == null || this.tipodis.dis == '') {
         this.ficha.porc_disc_fisica = 0;
         this.ficha.porc_disc_mental = 0;
         this.habiFisica = false
         this.habiMental = false
-      } else if(this.tipodis.dis == 'Intelectual'){
-        this.ficha.porc_disc_fisica = 0;
+      } else if (this.tipodis.dis == 'Intelectual') {
+        this.ficha.porc_disc_fisica = 0
+        this.ficha.descrip_disc_fisica = ''
         this.habiMental = true
         this.habiFisica = false
         this.tipodisfinal = 'Intelectual'
-      } else if (this.tipodis.dis == 'Fisica'){
-        this.ficha.porc_disc_mental = 0;
+      } else if (this.tipodis.dis == 'Fisica') {
+        this.ficha.porc_disc_mental = 0
+        this.ficha.descrip_disc_mental = ''
         this.habiFisica = true
         this.habiMental = false
         this.tipodisfinal = 'Fisica'
-      } else if (this.tipodis.dis == 'Ambas'){
+      } else if (this.tipodis.dis == 'Ambas') {
         this.habiFisica = true
         this.habiMental = true
         this.tipodisfinal = 'Ambas'
-      } else if (this.tipodis.dis == 'Ninguna'){
+      } else if (this.tipodis.dis == 'Ninguna') {
         this.habiFisica = false
         this.habiMental = false
         this.ficha.porc_disc_mental = 0;
+        this.ficha.descrip_disc_mental = ''
         this.ficha.porc_disc_fisica = 0;
+        this.ficha.descrip_disc_fisica = ''
         this.estadoDiscapacidad = false
         this.discap = false;
         this.tipodisfinal = 'Ninguna'
@@ -202,7 +218,7 @@ export class RegistroPersonaComponent implements OnInit {
   }
 
   habilitarCantidadBono(event: any) {
-    if(this.ficha.recibebono == true){
+    if (this.ficha.recibebono == true) {
       this.recibebono = true;
     } else {
       this.recibebono = false;
@@ -211,81 +227,64 @@ export class RegistroPersonaComponent implements OnInit {
   }
 
   //Registro de Persona
-  camposVacios(): boolean{
-    let comprobacion: boolean = false;
+  camposVacios(): boolean {
     if (this.persona.cedula == '' || this.persona.cedula == undefined || this.persona.cedula == null ||
       this.persona.nombres == '' || this.persona.nombres == undefined || this.persona.nombres == null ||
       this.persona.apellidos == '' || this.persona.apellidos == undefined || this.persona.apellidos == null ||
-      this.persona.direccion == '' || this.persona.direccion == undefined || this.persona.direccion == null ||
-      this.persona.celular == '' || this.persona.celular == undefined || this.persona.celular == null ||
       this.persona.fechaNacimiento == undefined || this.genero == null || this.nacio == null ||
       this.estado == null) {
-        comprobacion = false;
-        this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
-        this.timer();
+      this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
+      this.habiRegFam = false;
+      return false;
     } else {
-      comprobacion = true;
+      return true;
     }
-    return comprobacion;
   }
 
   ValidarDatos() {
-    if(this.camposVacios()==true){
+    if (this.camposVacios() == true) {
       this.PersonasService.getUserByCedula(this.persona.cedula).subscribe(dat => {
         this.usuarioValidarCedula = dat;
         if (this.usuarioValidarCedula.cedula == null) {
-          this.PersonasService.getPorCorreo(this.persona.correo).subscribe(da => {
-            this.usuarioValidarCorreo = da;
-            if (this.usuarioValidarCorreo.cedula == null) {
-              this.habiRegFam = true;
-              this.renderer.setAttribute(this.Ced.nativeElement, "disabled", "true");
-              this.addMultiple('success', 'Exito', 'Por favor complete la información solicitada debajo');
-              this.timer();
-            } else {
-              this.addMultiple('error', 'Error', 'Esta dirección de correo electrónico ya está en uso');
-              this.timer();
-            }
-          })
+          this.habiRegFam = true;
+          this.renderer.setAttribute(this.Ced.nativeElement, "disabled", "true");
+          this.addMultiple('success', 'Exito', 'Por favor complete la información solicitada debajo');
         } else {
-          this.addMultiple('error', 'Error', 'El número de cédula ya está en uso');
-          this.timer();
+          this.addMultiple('error', 'Error', 'El número de cédula ya está registrado para: ' + this.usuarioValidarCedula.nombres + ' ' + this.usuarioValidarCedula.apellidos);
         }
       })
     }
   }
 
   //Registro de Familiares
-  camposVaciosFamiliares() : boolean{
+  camposVaciosFamiliares(): boolean {
     if (this.familiares.cedulaFamiliar == '' || this.familiares.cedulaFamiliar == undefined || this.familiares.cedulaFamiliar == null ||
       this.familiares.nombreF == '' || this.familiares.nombreF == undefined || this.familiares.nombreF == null ||
       this.familiares.apellidoF == '' || this.familiares.apellidoF == undefined || this.familiares.apellidoF == null ||
       this.parentesco == null) {
-        this.datosFami = false
-        this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
-        this.timer();
+      this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
+      return false;
     } else {
-      this.datosFami = true;
+      return true;
     }
-    return this.datosFami;
   }
 
-  agregarFamiliar(){
-    if(this.camposVaciosFamiliares()==true){
-      let resultadoC = this.familyArray.find( fruta => fruta.cedulaFamiliar === this.familiares.cedulaFamiliar );
-      if(this.familyArray.length <= 0){
+  agregarFamiliar() {
+    if (this.camposVaciosFamiliares() == true) {
+      let resultadoC = this.familyArray.find(fruta => fruta.cedulaFamiliar === this.familiares.cedulaFamiliar);
+      if (this.familyArray.length <= 0) {
         this.addFamiliar();
-      } else if(this.familyArray.length >= 1) {
-          if(resultadoC == undefined){
-            this.addFamiliar();
-          } else {
-            this.addMultiple('error', 'Error', 'Este número de cédula ya está en uso');
-            this.timer();
-          }
+      } else if (this.familyArray.length >= 1) {
+        if (resultadoC == undefined) {
+          this.addFamiliar();
+        } else {
+          this.addMultiple('error', 'Error', 'Este número de cédula ya está en uso');
+        }
       }
     }
   }
 
-  addFamiliar(){
+  addFamiliar() {
     const nuevoFamiliares: RegistroFamiliares = {
       apellidoF: this.familiares.apellidoF,
       cedulaFamiliar: this.familiares.cedulaFamiliar,
@@ -295,7 +294,7 @@ export class RegistroPersonaComponent implements OnInit {
       nombreF: this.familiares.nombreF,
       parentesco: this.parentesco.par
     }
-    if(nuevoFamiliares.parentesco == 'Hijo' || nuevoFamiliares.parentesco == 'Hija'){
+    if (nuevoFamiliares.parentesco == 'Hijo' || nuevoFamiliares.parentesco == 'Hija') {
       this.hijosFinal++;
     }
     this.familyArray.push(nuevoFamiliares);
@@ -306,12 +305,12 @@ export class RegistroPersonaComponent implements OnInit {
     this.familiares.nombreF = '';
   }
 
-  eliminarFamiliar(familiar: RegistroFamiliares){
-    for(let i = 0; i<this.familyArray.length; i++){
-      if(familiar.cedulaPersona == this.familyArray[i].cedulaPersona){
-        let n : number = this.familyArray.indexOf(this.familyArray[i]);
+  eliminarFamiliar(familiar: RegistroFamiliares) {
+    for (let i = 0; i < this.familyArray.length; i++) {
+      if (familiar.cedulaPersona == this.familyArray[i].cedulaPersona) {
+        let n: number = this.familyArray.indexOf(this.familyArray[i]);
         this.familyArray.splice(n, 1);
-        if(familiar.parentesco == 'Hijo' || familiar.parentesco == 'Hija'){
+        if (familiar.parentesco == 'Hijo' || familiar.parentesco == 'Hija') {
           this.hijosFinal--
         }
       }
@@ -319,20 +318,47 @@ export class RegistroPersonaComponent implements OnInit {
   }
 
   //Registro de Ficha
-  CamposVaciosFicha()  :boolean{
-    if (this.ficha.descripcionVivienda == '' || this.ficha.descripcionVivienda == undefined || this.ficha.descripcionVivienda == null ||
-      this.vivienda == null) {
-        this.datosFich = false
-        this.addMultiple('error', 'Error', 'Rellene los campos solicitados');
-        this.timer();
-    } else {
-      this.datosFich = true;
+  camposVaciosFicha(): boolean {
+    if (this.discap == true) {
+      if (this.tipodisfinal == 'Ninguna') {
+        this.addMultiple('error', 'Error', 'Por favor seleccione un tipo de discapacidad o ponga el campo en "No"');
+        return false
+      } else if (this.tipodisfinal == 'Intelectual') {
+        if (this.ficha.porc_disc_mental == null || this.ficha.porc_disc_mental <= 0 || this.ficha.descrip_disc_mental == '' || this.ficha.descrip_disc_mental == null ) {
+          this.addMultiple('error', 'Error', 'Rellene el porcentaje (mayor a 0%) y descripción de discapacidad intelectual');
+          return false
+        }
+      } else if (this.tipodisfinal == 'Fisica') {
+        if (this.ficha.porc_disc_fisica == null || this.ficha.porc_disc_fisica <= 0 || this.ficha.descrip_disc_fisica == '' || this.ficha.descrip_disc_fisica == null ) {
+          this.addMultiple('error', 'Error', 'Rellene el porcentaje (mayor a 0%) y descripción de la discapacidad física');
+          return false
+        }
+      } else if (this.tipodisfinal == 'Ambas') {
+        if (this.ficha.porc_disc_fisica == null || this.ficha.descrip_disc_fisica == '' || this.ficha.porc_disc_mental == null || this.ficha.descrip_disc_mental == '') {
+          this.addMultiple('error', 'Error', 'Rellene el porcentaje (mayor a 0%) y descripción de discapacidades');
+          return false
+        }
+      }
+      if (this.ficha.descripcionVivienda == '' || this.ficha.descripcionVivienda == undefined || this.ficha.descripcionVivienda == null ||
+        this.ficha.situacionEconomica == '' || this.ficha.situacionEconomica == undefined || this.ficha.situacionEconomica == null) {
+        this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
+        return false;
+      } else {
+        return true;
+      }
+    } else if (this.discap == false) {
+      if (this.ficha.descripcionVivienda == '' || this.ficha.descripcionVivienda == undefined || this.ficha.descripcionVivienda == null ||
+        this.ficha.situacionEconomica == '' || this.ficha.situacionEconomica == undefined || this.ficha.situacionEconomica == null) {
+        this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
+        return false;
+      } else {
+        return true;
+      }
     }
-    return this.datosFich;
   }
 
   //Guardar informacion
-  guardarPersona(){
+  guardarPersona() {
     let nuevaPersona: Personas = {
       cedula: this.persona.cedula,
       nombres: this.persona.nombres,
@@ -349,14 +375,27 @@ export class RegistroPersonaComponent implements OnInit {
       estadoActivo: true,
       faltas: 0
     }
-    console.log(nuevaPersona);
     this.PersonasService.postPersona(nuevaPersona).subscribe(data => {
-
-    })
+      this.personaCreada = data;
+      if(this.personaCreada == null ){
+        this.addMultiple('error', 'Error', 'Ha ocurrido un error por favor intentelo más tarde');
+      } else{
+        this.guardarFamiliares();
+        this.guardarFicha();
+        Swal.fire({
+          title: 'Beneficiario registrado correctamente',
+          icon: 'success',
+        });
+        const contador = timer(3000);
+        contador.subscribe((n) => {
+          window.location.reload();
+        })
+      }
+    });
   }
 
-  guardarFamiliares(){
-    for(let i = 0; i<this.familyArray.length; i++){
+  guardarFamiliares() {
+    for (let i = 0; i < this.familyArray.length; i++) {
       let nuevoFamiliares: RegistroFamiliares = {
         apellidoF: this.familyArray[i].apellidoF,
         cedulaFamiliar: this.familyArray[i].cedulaFamiliar,
@@ -364,23 +403,24 @@ export class RegistroPersonaComponent implements OnInit {
         celularF: this.familyArray[i].celularF,
         correo: this.familyArray[i].correo,
         nombreF: this.familyArray[i].nombreF,
-        parentesco: this.familyArray[i].parentesco,  
+        parentesco: this.familyArray[i].parentesco,
         numHijos: this.hijosFinal
       }
-      console.log(nuevoFamiliares)
       this.regfamiser.postRegistFami(nuevoFamiliares).subscribe(data => {
 
       })
     }
   }
 
-  guardarFicha(){
-    if(this.CamposVaciosFicha()==true){
-      let fechaCreacionFicha = ((this.fechaCreacionFicha.getDate() < 10) ? '0' : '') + this.fechaCreacionFicha.getDate() 
-      + "-" + (((this.fechaCreacionFicha.getMonth() + 1) < 10) ? '0' : '') + (this.fechaCreacionFicha.getMonth() + 1) 
-      + "-" + this.fechaCreacionFicha.getFullYear()
-      + ' / ' + this.fechaCreacionFicha.getHours() + ":" + this.fechaCreacionFicha.getMinutes();
-      let nuevaFicha : FichaSocioeconomica = {
+  guardarFicha() {
+    if (this.camposVaciosFicha() == true) {
+      let fechaCreacionFicha = ((this.fechaCreacionFicha.getDate() < 10) ? '0' : '') + this.fechaCreacionFicha.getDate()
+        + "-" + (((this.fechaCreacionFicha.getMonth() + 1) < 10) ? '0' : '') + (this.fechaCreacionFicha.getMonth() + 1)
+        + "-" + this.fechaCreacionFicha.getFullYear()
+      if (this.enfermedades == null || this.enfermedades == [] || this.enfermedades.length == 0) {
+        this.enfermedades = ['Ninguna']
+      }
+      let nuevaFicha: FichaSocioeconomica = {
         adultoMayor: this.ficha.adultoMayor,
         cantidadbono: this.ficha.cantidadbono,
         cedulaPersona: this.persona.cedula,
@@ -389,7 +429,9 @@ export class RegistroPersonaComponent implements OnInit {
         enfermedades: this.enfermedades,
         fechaRegistro: fechaCreacionFicha,
         porc_disc_fisica: this.ficha.porc_disc_fisica,
+        descrip_disc_fisica: this.ficha.descrip_disc_fisica,
         porc_disc_mental: this.ficha.porc_disc_mental,
+        descrip_disc_mental: this.ficha.descrip_disc_mental,
         recibebono: this.recibebono,
         salario: this.ficha.salario,
         seguro: this.ficha.seguro,
@@ -397,52 +439,34 @@ export class RegistroPersonaComponent implements OnInit {
         tipoVivienda: this.vivienda.viv,
         tipo_discapacidad: this.tipodisfinal,
         viveConOtros: this.ficha.viveConOtros,
+        madreSoltera: this.ficha.madreSoltera,
         pareja: this.ficha.pareja
       }
-      console.log(nuevaFicha);
       this.fichaser.postFichaSocio(nuevaFicha).subscribe(data => {
-        
+
       })
     }
   }
 
-  guardarTodo(){
-    let lastVerification: Personas= {};
+  guardarTodo() {
+    let lastVerification: Personas = {};
     this.PersonasService.getUserByCedula(this.persona.cedula).subscribe(dat => {
       lastVerification = dat;
-      if (this.usuarioValidarCedula.cedula == null) {
-        if(this.camposVacios()==true && this.CamposVaciosFicha()==true){
+      if (lastVerification.cedula == null) {
+        if (this.camposVacios() == true && this.camposVaciosFicha() == true) {
           this.guardarPersona();
-          this.guardarFamiliares();
-          this.guardarFicha();
-          const contador = timer(3000);
-              contador.subscribe((n) => {
-              window.location.reload();
-          })
         }
       }
     })
-
-    
   }
 
-  cancelar(){
+  cancelar() {
     window.location.reload();
   }
 
   addMultiple(severity1: string, sumary1: string, detail1: string) {
     this.msgs =
       [{ severity: severity1, summary: sumary1, detail: detail1 }];
-    function delay(ms: number) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    (async () => {
-      await delay(6000);
-      window.location.reload();
-    });
-  }
-
-  timer(){
     const contador = timer(6000);
     contador.subscribe((n) => {
       this.msgs = [];

@@ -1,3 +1,186 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
-<h2 class="text-center">Listado de Usuarios</h2>
+<h2 class="text-center">Actividades realizadas</h2>
+<div class="padre">
+    <div class="p1">
+        <p-panel class="card" header="Nombre del beneficiario: {{persona.nombres}} {{persona.apellidos}}"
+            [toggleable]="true">
+            <div class="form-floating mb-3">
+                <label class="mb-0">
+                    <h6 class="mb-0 text-sm">Actividad</h6>
+                </label>
+                <input class="form-control" type="text" maxlength="50" minlength="10" id="asistencia.actividad"
+                    placeholder="Medicina, nutrición, charlas, talleres, etc..." [(ngModel)]="asistencia.actividad"
+                    name="asistencia.actividad" required>
+            </div>
+            <div class="form-floating mb-3">
+                <label class="mb-0">
+                    <h6 class="mb-0 text-sm">Descripción</h6>
+                </label>
+                <input class="form-control" type="text" minlength="10" id="asistencia.descripcion"
+                    placeholder="Descripción" [(ngModel)]="asistencia.descripcion" name="asistencia.descripcion"
+                    required>
+            </div>
+            <div class="form-floating mb-3">
+                <label class="mb-0">
+                    <h6 class="mb-0 text-sm">Fecha</h6>
+                </label>
+                <br>
+                <input [(ngModel)]="asistencia.fecha" name="asistencia.fecha" id="asistencia.fecha"
+                    type="datetime-local" placeholder="Fecha" style="width: 100%; height: 100%;">
+            </div>
+            <div class="prin">
+                <div class="sec">
+                    <button pButton type="button" label="Guardar" class="p-button-outlined"
+                        (click)='agregarAsistencia()'></button>
+                </div>
+                <div class="ter">
+                    <button pButton type="button" label="Cancelar" class="p-button-danger p-button-outlined"
+                        (click)='cancelar()'></button>
+                </div>
+            </div>
+            <p-messages [(value)]="msgs"></p-messages>
+        </p-panel>
+    </div>
+    <div class="p2">
+        <p-table class="card" #dt [value]="asistencias" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
+            [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]" [(selection)]="selected" dataKey="idAsistencia" [rowHover]="true"
+            [globalFilterFields]="['actividad', 'descripcion', 'fecha']">
+            <ng-template pTemplate="caption">
+                <div class="prin">
+                    <div class="ter">
+                        <span class="p-input-icon-right">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text"
+                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                        </span>
+                    </div>
+                    <div class="sec">
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="crearReporte()"
+                            class="p-button-outlined p-button-danger" pTooltip="PDF" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelected()"
+                            class="p-button-outlined p-button-info" pTooltip="Seleccionados PDF"
+                            tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                            class="p-button-outlined p-button-success" pTooltip="XLS (Excel)"
+                            tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelectedX()"
+                            class="p-button-outlined p-button-info" pTooltip="Seleccionados XLS (Excel)"
+                            tooltipPosition="bottom"></button>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th pSortableColumn="actividad">Actividad
+                        <p-sortIcon field="actividad"></p-sortIcon>
+                        <p-columnFilter type="text" field="actividad" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="descripcion">Descripción
+                        <p-sortIcon field="descripcion"></p-sortIcon>
+                        <p-columnFilter type="text" field="descripcion" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="fecha">Fecha y hora
+                        <p-sortIcon field="fecha"></p-sortIcon>
+                        <p-columnFilter type="text" field="fecha" display="menu" class="p-ml-auto"></p-columnFilter>
+                    </th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-asistencia>
+                <tr class="p-selectable-row">
+                    <td>
+                        <p-tableCheckbox [value]="asistencia"></p-tableCheckbox>
+                    </td>
+                    <td>{{asistencia.actividad}}</td>
+                    <td>{{asistencia.descripcion}}</td>
+                    <td>{{asistencia.fecha}}</td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-outlined"
+                            (click)="modal(asistencia)" pTooltip="Editar" tooltipPosition="top"></button>
+                    </td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-trash"
+                            class="p-button-rounded p-button-danger p-button-outlined"
+                            (click)="modalEliminar(asistencia.idAsistencia)" pTooltip="Eliminar"
+                            tooltipPosition="top"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron actividades.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog class="dialogo" header="Editar acción" [(visible)]="display" [modal]="true" [style]="{width: '70vw', height: '27vw'}" 
+    [draggable]="false" [resizable]="false">
+        <div class="form-floating mb-3">
+            <label class="mb-0">
+                <h6 class="mb-0 text-sm">Actividad</h6>
+            </label>
+            <input class="form-control" type="text" maxlength="50" minlength="10" id="asistenciaEditar.actividad"
+                placeholder="Medicina, nutrición, charlas, talleres, etc..." [(ngModel)]="asistenciaEditar.actividad"
+                name="asistenciaEditar.actividad" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label class="mb-0">
+                <h6 class="mb-0 text-sm">Descripción</h6>
+            </label>
+            <input class="form-control" type="text" minlength="10" id="asistenciaEditar.descripcion"
+                placeholder="Descripción" [(ngModel)]="asistenciaEditar.descripcion" name="asistenciaEditar.descripcion"
+                required>
+        </div>
+        <div class="form-floating mb-3">
+            <label class="mb-0">
+                <h6 class="mb-0 text-sm">Fecha</h6>
+            </label>
+            <br>
+            <input [(ngModel)]="asistenciaEditar.fecha" name="asistenciaEditar.fecha" id="asistenciaEditar.fecha"
+                type="datetime-local" placeholder="Fecha">
+        </div>
+    <p-messages [(value)]="msgs"></p-messages>
+    <ng-template pTemplate="footer">
+        <div class="prin">
+            <div class="ter">
+                <button pButton type="button" label="Cancelar" class="p-button-danger p-button-outlined"
+                    (click)='display=false'></button>
+            </div>
+            <div class="sec">
+                <button pButton type="button" label="Guardar" class="p-button-outlined"
+                    (click)='actualizarAsistencia()'></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Advertencia" [(visible)]="displayEliminar" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <b>
+        <p>¿Está seguro que desea eliminar esta actividad?</p>
+    </b>
+    <p>Esta acción no se puede revertir</p>
+    <p-messages [(value)]="msgs"></p-messages>
+    <ng-template pTemplate="footer">
+        <div class="prin">
+            <div class="ter">
+                <button pButton type="button" label="Cancelar" class="p-button-danger p-button-outlined"
+                    (click)='displayEliminar=false'></button>
+            </div>
+            <div class="sec">
+                <button pButton type="button" label="Continuar" class="p-button-outlined"
+                    (click)='eliminarAsistencia()'></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

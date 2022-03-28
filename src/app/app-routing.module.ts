@@ -1,14 +1,10 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ActividadPersonaComponent } from './components/actividad-persona/actividad-persona.component';
 import { LoginComponent } from './components/login/login.component';
 import { CrearActividadComponent } from './components/actividad-persona/crear-actividad/crear-actividad.component';
 import { RegistroPersonaComponent } from './components/registro-persona/registro-persona.component';
-import { RegistroFamiliaresComponent } from './components/registro-familiares/registro-familiares.component';
-
-import { FichaSocioeconomicaComponent } from './components/ficha-socioeconomica/ficha-socioeconomica.component';
 import { RegistroUsuariosComponent } from './components/registro-usuarios/registro-usuarios.component';
-
 import { ListCentroComponent } from './components/centro-medico/list-centro/list-centro.component';
 import { VoluntarioCalendarioComponent } from './components/voluntario-calendario/voluntario-calendario.component';
 import { DasboardvoluntariosComponent } from './components/dasboardvoluntarios/dasboardvoluntarios.component';
@@ -26,20 +22,12 @@ import { BuscarCitaComponent } from './components/citas_medicas/buscar-cita/busc
 import { ListaBeneficiariosComponent } from './components/lista-beneficiarios/lista-beneficiarios.component';
 import { EditarUsuariosComponent } from './components/listado-usuarios/editar-usuarios/editar-usuarios.component';
 import { ListarProductoDonadoComponent } from './components/donacion-producto/listar-producto-donado/listar-producto-donado.component';
-import { NavbarSuperAdminComponent } from './components/navbar-super-admin/navbar-super-admin.component';
 import { ObservacionesPersonasComponent } from './components/observaciones-personas/observaciones-personas.component';
-import { ListaObservacionesPersonasComponent } from './components/lista-observaciones-personas/lista-observaciones-personas.component';
-import { ListaDocumentosComponent } from './components/lista-beneficiarios/lista-documentos/lista-documentos.component';
 import { EditarBeneficiariosComponent } from './components/lista-beneficiarios/editar-beneficiarios/editar-beneficiarios.component';
-import { DocumentosPersonaComponent } from './components/lista-beneficiarios/documentos-persona/documentos-persona.component';
-import { DescargarDocumentosComponent } from './components/lista-beneficiarios/descargar-documentos/descargar-documentos.component';
 import { EditarDocumentosComponent } from './components/lista-beneficiarios/editar-documentos/editar-documentos.component';
-import { ElegiblesComponent } from './components/elegibles/elegibles.component';
 import { HistorialBComponent } from './components/historial-b/historial-b.component';
-
-// AQUI VAN SUS RUTAS DENTRO DE LOS CHILDRENS
-// NO SE OLVIDEN SI NO ENCUENTRA SU PROYECTO ALGUN MODULO LE DAN NPM INSTALL Y SE SOLUCIONA
-// ESTE PATH DE AQUI TIENEN EL CSS PARA PODER APLICAR A TODO EL PROYECTO
+import { FichaComponent } from './components/ficha/ficha.component';
+import { HistorialCompletoComponent } from './components/historial-completo/historial-completo.component';
 
 const routes: Routes = [
   {
@@ -59,14 +47,6 @@ const routes: Routes = [
     component: EditarDocumentosComponent,
   },
   {
-    path: 'lista-documentos',
-    component: ListaDocumentosComponent,
-  },
-  {
-    path: 'descargar-documentos',
-    component: DescargarDocumentosComponent,
-  },
-  {
     path: 'actividades',
     component: ActividadPersonaComponent,
   },
@@ -83,24 +63,8 @@ const routes: Routes = [
     component: RegistroPersonaComponent,
   },
   {
-    path: 'registro-familiares',
-    component: RegistroFamiliaresComponent,
-  },
-  {
-    path: 'ficha-socioeconomica',
-    component: FichaSocioeconomicaComponent,
-  },
-  {
-    path: 'documentos-persona',
-    component: DocumentosPersonaComponent,
-  },
-  {
     path: 'editar-beneficiarios',
     component: EditarBeneficiariosComponent,
-  },
-  {
-    path: 'lista-observaciones-personas',
-    component: ListaObservacionesPersonasComponent,
   },
   {
     path: 'registro-usuario',
@@ -167,12 +131,16 @@ const routes: Routes = [
     component: ListarProductoDonadoComponent
   },
   {
-    path: 'elegible',
-    component: ElegiblesComponent
-  },
-  {
     path: 'historial',
     component: HistorialBComponent
+  },
+  {
+    path: 'informe',
+    component: FichaComponent
+  },
+  {
+    path: 'historial-completo',
+    component: HistorialCompletoComponent
   },
   {
     path: '**',

@@ -1,11 +1,8 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
+<h2 class="text-center">Citas médicas</h2>
 <div class="container animated d-flex justify-content-center animated fadeIn">
-    <p-panel class="card" id="panel">
-        <div class="modal-header text-center">
-            <h2 class="title">Agregar Cita Medica</h2>
-        </div>
-        <br />
+    <p-panel class="card" id="panel" header="Agendar cita médicas">
         <div class="form-group">
             <label for="descripcionCitaMedica"><b>Descripción de la cita:</b></label>
             <input type="text" class="form-control" required [(ngModel)]="cita.descripcionCitaMedica"
@@ -188,7 +185,7 @@
             por:</button>
     </div>
     <br />
-    <div class="container animated d-flex justify-content-center animated fadeIn">
+    <div class="tables">
         <table class="table table-bordered ">
             <thead>
                 <tr>

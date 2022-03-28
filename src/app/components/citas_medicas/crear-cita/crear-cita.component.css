@@ -1,6 +1,7 @@
 .cell {
     display: table-cell;
     vertical-align: middle;
+    border: 1px solid black;
 }
 
 @media screen and (max-width: 768px) {
@@ -81,3 +82,10 @@
   .false-icon, .true-icon {
     font-size: 28px;
   }
+.card{
+    border: 1px solid black;
+    width: 1000px;
+}
+.tables{
+    border: 1px solid black;
+}

@@ -12,9 +12,9 @@ export class DocumentosService {
   constructor(private http:HttpClient) { }
   postRegostroDocumentos(documentos:DocumentosBeneficiarios):Observable<any>{
     return this.http.post(`${this.URL}/addDocumentos`,documentos);
-  }
-  getDocumentoPorCedula(cedula:any):Observable<any>{
-    return this.http.get(this.URL+`/listadoporcedula/${cedula}`);  
+  } 
+  getBycedula(cedulaPersona:string):Observable<any>{
+    return this.http.get<any>(this.URL+`/porcedula/${cedulaPersona}`);
   }
   getDocumentos():Observable<any>{
     return this.http.get(`${this.URL}//listadoDocumentos`)
@@ -41,5 +41,14 @@ download(filename: string): Observable<HttpEvent<Blob>> {
     observe: 'events',
     responseType: 'blob'
   });
+}
+delete(filename:string):Observable<any>{
+  return this.http.delete<any>(this.URL+`/deletedoc/${filename}`);
+}
+deleteBase(idDocumentos: number):Observable<any>{
+  return this.http.delete<any>(this.URL+`/delete-documento/${idDocumentos}`);
+}
+ver(filename:string):Observable<any>{
+  return this.http.get<any>(this.URL+`/ver/${filename}`);
 }
 }

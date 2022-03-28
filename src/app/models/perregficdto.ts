@@ -1,3 +1,4 @@
+import { AsistenciaPersona } from "./asistenciapersona";
 import { RegistroFamiliares } from "./registro-familiares";
 
 export class Perregficdto {
@@ -16,7 +17,6 @@ export class Perregficdto {
     estado_civil?: string;
     faltas?: number;
     pareja?: boolean;
-    asistencias?: number;
     //Registro Familiares
     familiares?: RegistroFamiliares[];
     //Ficha
@@ -33,7 +33,10 @@ export class Perregficdto {
     discapacidad?: boolean;
     tipo_discapacidad?: string;
     porc_disc_mental?: number;
+    descrip_disc_mental?: string;
     porc_disc_fisica?: number;
+    descrip_disc_fisica?: string;
+    madreSoltera?: boolean;
     enfermedades?: string[];
-
+    asistencias?: AsistenciaPersona[];
 }

@@ -7,6 +7,7 @@ import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
+import Swal from 'sweetalert2';
 type TableRow = [string, string, string, string, string, string];
 
 @Component({
@@ -33,9 +34,10 @@ export class ListadoUsuariosComponent implements OnInit {
   //Validacion de tipo de usuario
   usuarioT: number;
   usuarioFechaCreacion: Date = new Date;
-  ListadoPersonas: Personas[];
   ListadoInactivos: Personas[] = [];
   personaEliminar: Personas = {};
+  //Logeo
+  tipoUser: any
 
   constructor(private usuarioService: UsuarioService,
     private confirmationService: ConfirmationService,
@@ -50,11 +52,49 @@ export class ListadoUsuariosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedUsers = [];
-    this.selected = [];
-    this.selectedUsersE = [];
-    this.ListadoPersonas = [];
-    this.listarUsuarios();
+    this.selectedUsers = []
+    this.selected = []
+    this.selectedUsersE = []
+    this.tipoUser = localStorage.getItem('rolUser');
+    this.ComprobarLogin()
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1 || this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
+      this.listarUsuarios()
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
+    }
+  }
+
+  listarUsuarios() {
+    this.usuarioService.getAll().subscribe(data => {
+      this.listaUsuarios = data;
+      for (let i = 0; i < this.listaUsuarios.length; i++) {
+        this.personaService.getUserByCedula(this.listaUsuarios[i].usuarioCedula).subscribe(data2 => {
+          this.Persona = data2
+          if (this.Persona.estadoActivo == true) {
+            const usuarioImprimir: Usuarios2 = {
+              cedula: this.Persona.cedula,
+              nombres: this.Persona.nombres + ' ' + this.Persona.apellidos,
+              direccion: this.Persona.direccion,
+              telefono: this.Persona.celular,
+              correo: this.Persona.correo,
+              tipousuario: this.tipoUsuario(this.listaUsuarios[i].usuarioTipo)
+            }
+            this.selectedUsers.push(usuarioImprimir);
+          }
+          else if (this.Persona.estadoActivo == false) {
+            this.ListadoInactivos.push(this.Persona)
+          }
+        })
+      }
+    })
   }
 
   tipoUsuario(usuarioTipo: number): string {
@@ -87,56 +127,39 @@ export class ListadoUsuariosComponent implements OnInit {
     }
   }
 
-  listarUsuarios() {
-    this.usuarioService.getAll().subscribe(data => {
-      this.listaUsuarios = data;
-      for (let i = 0; i < this.listaUsuarios.length; i++) {
-        this.personaService.getUserByCedula(this.listaUsuarios[i].usuarioCedula).subscribe(data2 => {
-          this.Persona = data2
-          if (this.Persona.estadoActivo == true) {
-            this.ListadoPersonas.push(this.Persona)
-            const usuarioImprimir: Usuarios2 = {
-              cedula: this.Persona.cedula,
-              nombres: this.Persona.nombres + ' ' + this.Persona.apellidos,
-              direccion: this.Persona.direccion,
-              telefono: this.Persona.celular,
-              correo: this.Persona.correo,
-              tipousuario: this.tipoUsuario(this.listaUsuarios[i].usuarioTipo).toString()
-            }
-            this.selectedUsers.push(usuarioImprimir);
-          }
-          else if (this.Persona.estadoActivo == false) {
-            this.ListadoInactivos.push(this.Persona)
-          }
-        })
-      }
-    })
-  }
-
   eliminarUsuario(cedula: string) {
-    this.confirmationService.confirm({
-      target: event.target,
-      message: `¿Está seguro de eliminar este usuario?`,
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.personaService.getUserByCedula(cedula).subscribe(data2 => {
-          this.personaEliminar = data2;
-          this.personaEliminar.estadoActivo = false;
-          this.personaService.updatePersona(this.personaEliminar).subscribe(data => {
-          });
-        })
-        this.usuarioService.getUserByCedula(cedula).subscribe(data3 => {
-          this.usuario = data3;
-          this.usuario.usuarioEstado = false;
-          this.usuarioService.updateUser(this.usuario).subscribe(data => {
-            alert('Se ha eliminado a '+this.personaEliminar.nombres+' ('+this.usuario.usuarioNombre+')')
-            window.location.reload();
-          });
-        })
-      },
-      reject: () => {
-      }
-    });
+    if(this.tipoUser != 1){
+      Swal.fire({
+        title: 'No tiene permisos para eliminar usuarios',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      this.confirmationService.confirm({
+        target: event.target,
+        message: `¿Está seguro de eliminar este usuario?`,
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.personaService.getUserByCedula(cedula).subscribe(data2 => {
+            this.personaEliminar = data2;
+            this.personaEliminar.estadoActivo = false;
+            this.personaService.updatePersona(this.personaEliminar).subscribe(data => {
+            });
+          })
+          this.usuarioService.getUserByCedula(cedula).subscribe(data3 => {
+            this.usuario = data3;
+            this.usuario.usuarioEstado = false;
+            this.usuarioService.updateUser(this.usuario).subscribe(data => {
+              alert('Se ha eliminado a '+this.personaEliminar.nombres+' ('+this.usuario.usuarioNombre+')')
+              window.location.reload();
+            });
+          })
+        },
+        reject: () => {
+        }
+      });
+    }
+    
   }
 
   async exportSelected() {
@@ -257,13 +280,13 @@ export class ListadoUsuariosComponent implements OnInit {
       type: EXCEL_TYPE
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-    location.reload();
   }
 
   ActualizarUsuario(cedula: any) {
     localStorage.setItem('cedulaEditar', cedula);
     this.router.navigateByUrl('editar-usuario');
   }
+  
 }
 
 export class Usuarios2 {

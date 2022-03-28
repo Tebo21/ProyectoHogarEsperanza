@@ -1,85 +1,60 @@
-h4{
-    align-items: center;
+.cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-bottom: 1%;
 }
-.hoja{
-    background-color:#f4fafe;
+.hijo {
+  width: 70%;
+  height: 100%;
+  border: 1px solid black;
+  padding-top: 1%;
 }
-.container{
-    margin-top: 1cm;
+.grid-container {
+  display: grid;
+  grid-template-columns: 20% 30% 20% 30%;
+  /*background-color: #2196F3;*/
+  padding: 2%;
 }
-.fechalabel{
-    margin-right: 4%;
-    margin-left: 1%;
+.grid-item {
+  /* border: 1px solid rgba(0, 0, 0, 0.8);*/
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
 }
-.labelNombre{
-    margin-left: 1%;
+.t {
+  font-weight: bold;
 }
-.Nombres{
-    margin-left: 2%;
-    width: 18cm;
+.tabla{
+    padding: 2%;
+    text-justify: auto;
+}
+td {
+    width: 120px;
+    word-wrap: break-word;
+}
+.grid-container1 {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    /*background-color: #2196F3;*/
+    padding: 2%;
+}
+.prin{
+  display: block;
+  position: relative;
+  height: 45px;
+}
+.sec{
+  display: block;
+  position: absolute;
+  left: 2%;
+}
+.ter{
+  display: block;
+  position: absolute;
+  right: 2%;
 }
 
-.labelDireccion{
- margin-left: 1%;  
- margin-right: 1%; 
-}
-
-.Direccion{
-    width: 22cm;
-    height: 2cm;
-}
-.labelTelefono{
-    margin-left: 1%;
-    margin-right: 1%;
-}
-.labelNacionalidad{
-    margin-left: 1%;
-    margin-right: 1%;
-}
-.labelDiscapacidad{
-    margin-left: 1%;
-    margin-right: 1%;
-}
-.labelAdultosM{
-    margin-left: 1%;
-    margin-right: 1%;
-}
-.labelEstadoC{
-    margin-left: 1%;
-    margin-right: 1%;
-}
-.labelViveFami{
-    margin-left: 1%;
-}
-.ViveFami{
-    margin-left: 1%;
-}
-.labelSituEcono{
-    margin-left: 1%;
-}
-.SituEcono{
-    margin-left: 1%;
-    width: 25.5cm;
-    height: 2cm;
-}
-.labelViviPro{
-    margin-left: 1%;
-}
-.ViviPro{
-    margin-left: 1%;
-}
-.labelNotas{
-    margin-left: 1%;
-}
-.Notas1{
-    margin-left: 1%;
-}
-.Notas2{
-    margin-left: 1%;
-}
-.lblACP{
-    margin-left: 1%;
-}
-table{
-    margin-left: 10%;
-}

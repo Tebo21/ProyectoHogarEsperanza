@@ -1,127 +1,128 @@
 <app-navbar-admin></app-navbar-admin>
-<div class="container hoja">
-    <div class="titulo" >
-      <div class="input-group mb-3">
-        <h1>Hoja de Registro</h1>
-      </div>
-      <button type="button" style="margin: 10px; align-items: center;" class="btn btn-primary" (click)="reload()">Actualizar</button>
+<br />
+<h2 class="text-center">Ficha socioeconómica</h2>
+<div class="cont">
+  <div class="hijo">
+    <h4 class="text-center">Hoja de registro</h4>
+    <div class="grid-container">
+      <p class="t">Cédula:</p>
+      <p>{{persona.cedula}}</p>
+      <p class="t">Nombre completo:</p>
+      <p>{{persona.nombres}} {{persona.apellidos}}</p>
+      <p class="t">Dirección:</p>
+      <p>{{persona.direccion}}</p>
+      <p class="t">Teléfono:</p>
+      <p>{{persona.celular}}</p>
+      <p class="t">Nacionalidad:</p>
+      <p>{{persona.nacionalidad}}</p>
+      <p class="t">Correo electrónico:</p>
+      <p>{{persona.correo}}</p>
+      <p class="t">Fecha de nacimiento:</p>
+      <p>{{persona.fechaNacimiento}}</p>
+      <p class="t">Edad:</p>
+      <p>{{persona.edad}}</p>
+      <p class="t">Discapacidad:</p>
+      <p>{{convertirBooleanos(ficha.discapacidad)}}</p>
+      <p class="t">Tipo de discapacidad:</p>
+      <p>{{ficha.tipo_discapacidad}}</p>
+      <p class="t">Porcentaje de discapacidad intelectual:</p>
+      <p>{{ficha.porc_disc_mental}}%</p>
+      <p class="t">Descripción de discapacidad intelectual:</p>
+      <p>{{ficha.descrip_disc_mental}}</p>
+      <p class="t">Porcentaje de discapacidad física:</p>
+      <p>{{ficha.porc_disc_fisica}}%</p>
+      <p class="t">Descripción de discapacidad física:</p>
+      <p>{{ficha.descrip_disc_fisica}}</p>
+      <p class="t">Estado civil:</p>
+      <p>{{persona.estado_civil}}</p>
+      <p class="t">Pareja:</p>
+      <p>{{convertirBooleanos(ficha.pareja)}}</p>
+      <p class="t">Número de familiares:</p>
+      <p>{{familiares.length}}</p>
+      <p class="t">Número de hijos:</p>
+      <p>{{numHijos}}</p>
+      <p class="t">Adulto mayor:</p>
+      <p>{{convertirBooleanos(ficha.adultoMayor)}}</p>
+      <p class="t">Vive con otros:</p>
+      <p>{{convertirBooleanos(ficha.viveConOtros)}}</p>
+      <p class="t">Situación economica:</p>
+      <p>{{ficha.situacionEconomica}}</p>
+      <p class="t">Seguro:</p>
+      <p>{{convertirBooleanos(ficha.seguro)}}</p>
+      <p class="t">Tipo de vivienda:</p>
+      <p>{{ficha.tipoVivienda}}</p>
+      <p class="t">Descripción de la vivienda:</p>
+      <p>{{ficha.descripcionVivienda}}</p>
+      <p class="t">Salario:</p>
+      <p>{{ficha.salario}}</p>
+      <p class="t">Madre soltera:</p>
+      <p>{{convertirBooleanos(ficha.madreSoltera)}}</p>
+      <p class="t">Recibe bono:</p>
+      <p>{{convertirBooleanos(ficha.recibebono)}}</p>
+      <p class="t">Cantidad que recibe por bono:</p>
+      <p>{{ficha.cantidadbono}}</p>
+      <p class="t">Asistencias:</p>
+      <p>{{asistencias.length}}</p>
+      <p class="t">Observaciones:</p>
+      <p>{{observaciones.length}}</p>
+      <p class="t">Fecha de registro:</p>
+      <p>{{ficha.fechaRegistro}}</p>
+      <p class="t">Enfermedades:</p>
+      <p>{{ficha.enfermedades}}</p>
     </div>
-    <div class="estructura">
-  
-      <div class="input-group mb-3">
-        <label class="fechalabel" for="">Fecha:</label>
-        <input [(ngModel)]="fichaS.fechaRegistro" id="fecha"  class="fecha" type="text"  [ngModel]="this.fichaS.fechaRegistro.substring(0,10)" disabled>
-      </div>
-      <div class="input-group mb-3">
-        <label class="labelCedula" for="">Cedula:</label>
-        <input  [(ngModel)]="persona.cedula" class="Cedula" id="Cedula" type="text" disabled>
-      </div>
-      <div class="input-group mb-3">
-        <label class="labelNombre" for="">Nombres:</label>
-        <input  value="{{nombreCompleto}}" class="Nombres" id="Nombres" type="text" disabled>
-      </div>
-      <div class="input-group mb-3">
-        <label class="labelDireccion" for="">Dirección Exacta:</label>
-        <textarea [(ngModel)]="persona.direccion" class="Direccion" id="Direccion" type="text" disabled></textarea>
-      </div>
-      <div class="input-group mb-3">
-        <label class="labelTelefono" for="">Telefono:</label>
-        <input [(ngModel)]="persona.celular" class="Telefono" id="Telefono" type="text" disabled>
-        <label class="labelNacionalidad" for="">Nacionalidad:</label>
-        <input [(ngModel)]="persona.nacionalidad" class="Nacionalidad" id="Nacionalidad" type="text" disabled>
-      </div>
-      <div class="input-group mb-3">
-        <label class="labelDiscapacidad" for="">Discapacidad:</label>
-        <input  class="Discapacidad" id="Discapacidad" type="text" value="{{discapacidad}}" disabled>
-        <label class="labelAdultosM" for="">Adultos Mayores:</label>
-        <input  class="AdultosM" id="AdultosM" type="text" value="{{adultoMayor}}" disabled>
-        <label  class="labelEstadoC" for="">Estado Civil:</label>
-        <input [(ngModel)]="persona.estado_civil" class="EstadoC" id="EstadoC" type="text" disabled>  
-      </div>
-      <div class="input-group mb-3">
-        <label class="labelNoIntegrantes" for="">Nro. Integrantes de Familia:</label>
-        <input [(ngModel)]="familiares.parentesco" class="NoIntegrantes" id="NoIntegrantes" type="text" disabled>
-        <label class="labelNomP" for="">Nombre de la pareja o Esposo/a:</label>
-        <input class="NomPareja" id="NomPareja" type="text" value="{{NomPareja}}" disabled>
-      </div>
-      <div class="input-group mb-3">
-        <label class="labelNacionalidad" for="">Nombre y edad de los familiares:</label>
-      </div>
-      
-      <div class="input-group mb-3">
-      <table class="table table-responsive">
-        <thead>
+    <div class="tabla">
+      <h5 class="text-center">Familiares</h5>
+      <p-table [value]="familiares" styleClass="p-datatable-striped p-datatable-gridlines" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Cedula</th>
-            <th scope="col">Nombres</th>
-            <th scope="col">Edad</th>
-            <th scope="col">Genero</th>
-            <th scope="col">Parentesco</th>
+            <th>Cédula</th>
+            <th>Parentesco</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Celular</th>
+            <th>Correo</th>
           </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let hijos of listaFamiliares;let i=index">
-            <th>{{i}}</th>
-            <td>{{hijos[0]}}</td>
-            <td>{{hijos[1]}} {{hijos[2]}}</td>
-            <td>{{hijos[6]}}</td>
-            <td>{{hijos[7]}}</td>
-            <td>{{hijos[8]}}</td>
+        </ng-template>
+        <ng-template pTemplate="body" let-fam>
+          <tr>
+            <td>{{fam.cedulaFamiliar}}</td>
+            <td>{{fam.parentesco}}</td>
+            <td>{{fam.nombreF}}</td>
+            <td>{{fam.apellidoF}}</td>
+            <td>{{fam.celularF}}</td>
+            <td>{{fam.correo}}</td>
           </tr>
-        </tbody>
-      </table>
+        </ng-template>
+      </p-table>
     </div>
-    <hr>
-    <div class="input-group mb-1">
-      <label class="labelViveFami" for="">Vive con otros familiares:</label>
-    </div>
-    <div class="input-group mb-3">
-        <input  class="ViveFami" id="ViveFami" type="text" value="{{viveConOtros}}" disabled>
-    </div>
-    <div class="input-group mb-1">
-      <label  class="labelSituEcono" for="">Situación Economica:</label>
-    </div>
-    <div class="input-group mb-3">
-      <textarea [(ngModel)]="fichaS.situacionEconomica" class="SituEcono" id="SituEcono" type="text" disabled></textarea>
-    </div>
-    <div class="input-group mb-1">
-      <label  class="labelViviPro" for="">Posee vivienda Propia:</label>
-    </div>
-    <div class="input-group mb-3">
-        <input [(ngModel)]="fichaS.tipoVivienda" class="ViviPro" id="ViviPro" type="text" disabled>
-    </div>
-    <div class="input-group mb-1">
-      <label class="labelNotas" for="">Notas:</label>
-    </div>
-    <div class="input-group mb-2">
-      <textarea  class="Notas1" name="Notas1" id="Notas1" style="margin-left: 1%;margin-right: 5%;width: 18cm;height: 2cm;"type="text" class="form-control" value="{{nota1}}" ></textarea>        
-    </div>
-    <div class="input-group mb-3">
-      <textarea class="Notas2" name="Notas2" id="Notas2" style="margin-left: 1%;margin-right: 5%;width: 12cm;height: 2cm;"type="text" class="form-control" value="{{nota2}}" ></textarea>
-    </div>
-    <div class="input-group mb-3" id="acepta">
-      <label for="" class="lblACP">Acepta:</label>
+    <div class="tabla">
+      <h5 class="text-center">Notas</h5>
+      <p>{{nota1}}</p>
+      <p>{{nota2}}</p>
+    </div> 
+    <div class="grid-container1">
+      <p>Acepta:</p>
       <p> </p>
-      <label for=""> Si:.........</label>
-      <label for=""> No:.........</label>
+      <p> </p>
+      <p>Si: ......... No: .........</p>
+      <p>____________________________</p>
+      <p>____________________________</p>
+      <p> </p>
+      <p>Entrevistado</p>
+      <p>Representante</p>
+      <p> </p>
+      <p> </p>
     </div>
-    <div class="input-group ">
-      <label style="margin-left: 20%;margin-right: 2%;" for="">__________________________________</label>
-      <label style="margin-right: 20%;" for="">__________________________________</label>
+    <div class="prin">
+      <div class="sec">
+          <button pButton type="button" label="Imprimir"
+          class="p-button-outlined" (click)='generarPDF()'></button>
+      </div>
+      <div class="ter">
+          <button pButton type="button" label="Cancelar"
+          class="p-button-danger p-button-outlined" (click)='cancelar()'></button>
+      </div>
     </div>
-    <div class="input-group mb-3">
-      <label style="margin-left: 25%;margin-right: 10%;" for="">Entrevistado/Usuario</label>
-      <label style="margin-right: 20%;" for="">entrevistado/representante de la organización</label>
-    </div>
-    <br><br>
-    <div class="input-group mb-1">
-      <label class="labelNotas" for="">NOTAS EXTRAS</label>
-    </div>
-    <div class="input-group mb-3">
-      <textarea class="NotasExtras" name="NotasExtras" id="NotasExtras" style="margin-left: 1%;margin-right: 5%;width: 12cm;height: 2cm;"type="text" class="form-control"></textarea>
-    </div>
-
-    <button type="button" style="margin: 10px;" class="btn btn-primary" (click)="generarPDF()" >Generar Ficha</button>
+    <br>
   </div>
-  </div> 
+</div>

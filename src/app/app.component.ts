@@ -11,45 +11,12 @@ import { Actividades } from './models/Actividades';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent  implements OnInit {
+export class AppComponent implements OnInit {
 
-  Actividadview: Actividades[] = [];
-
-  constructor(private primengConfig: PrimeNGConfig, public actividadesService: ActividadesService,public datapipe: DatePipe) {}
-
-  sms: Smsrequest= new Smsrequest("","");
+  constructor(private primengConfig: PrimeNGConfig) { }
 
   ngOnInit() {
-    this.primengConfig.ripple = true;
-    this.observableTimer();
+    this.primengConfig.ripple = true; 
   }
 
-  observableTimer() {
-    this.actividadesService.getAll().subscribe((res) =>{
-      res.forEach(x => {
-        const f=x.fechaActividad+"T"+x.horaInicio+":00";
-        const prueba=new Date(f);
-        prueba.setHours(prueba.getHours() - 2)
-        let fecha2= this.datapipe.transform(prueba, 'yyyy-MM-dd-hh-mm');
-        const source = timer(1000, 1000);
-        const abc = source.subscribe(val => {
-          let fecha3= this.datapipe.transform(new Date(), 'yyyy-MM-dd-hh-mm');
-      if (fecha2==fecha3) {
-        let numebersize= x.cedulaPersona.celular;
-        if (numebersize.length == 10) {
-            let numbersend=numebersize.slice(1);
-            let numbernew="593"+numbersend
-            this.sms.number=numbernew;
-            this.sms.message='Tienes una actividad pendiente en la Fundacion HOGAR ESPERANZA'+' \n'+'La actividad esta asignada para dentro de dos horas'+' \n'+'Actividad a realizar: '+ x.descripcionActividad+' \n'+'Hora de Inicio: '+ x.horaInicio +' \n'+'Hora de Finalizacion: '+ x.horaFin+' \n'+'"Este mensaje no debe ser repondido ya que se genera de forma automatica  :) "';
-            this.actividadesService.sendSmS(this.sms).subscribe((res)=>{
-            })
-          }else{
-            //console.log('Ingrese un numero de celular correcto')
-          }
-            fecha2="";
-        }
-        });
-      });
-    })
-  }
 }

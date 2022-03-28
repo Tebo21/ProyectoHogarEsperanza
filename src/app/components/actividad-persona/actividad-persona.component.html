@@ -1,10 +1,15 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
+<h2 class="text-center">Registro de actividades</h2>
 <div class="container">
     <div class="modal-body ">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-tittle">Registro de actividades </h5>
+                <form class="row">
+                    <div class="col-md-9">
+                        <h5>Información del usuario:</h5>
+                    </div>
+                </form>
             </div>
             <div class="card-body">
                 <form class="row g-3 ">
@@ -12,14 +17,16 @@
                         <label for="staticEmail2 " class="visually-hidden">Cedula</label>
                     </div>
                     <div class="col-md-3 position-relative">
-                        <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId" readonly>
+                        <input type="text " class="form-control " name="cedula" #cedula="ngModel" [(ngModel)]="PersonId"
+                            readonly>
                     </div>
                     <a class="col-md-4 position-relative"></a>
                     <div>
-                        <input type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}" #fecha="ngModel" [(ngModel)]="fecha2">
+                        <input type="date" id="start" class="form-control" name="fecha" value="{{fecha2}}"
+                            #fecha="ngModel" [(ngModel)]="fecha2">
                     </div>
-                    <button class="btn btn-outline-info" (click)="getCedulaAndFecha()"><i class="pi pi-search"></i>
-            Buscar</button>
+                    <button class="btn btn-outline-info" (click)="getCedulaAndFecha()"><i
+                            class="pi pi-search"></i>Buscar</button>
                 </form>
                 <br>
                 <form class="row g-3 needs-validation " novalidate>
@@ -50,17 +57,20 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <br>
+        <div class="card">
             <div class="card-header">
                 <form class="row">
                     <div class="col-md-9">
                         <h5>Actividades diarias:</h5>
                     </div>
                     <div>
-                        <button type="submit " class="btn btn-outline-info" (click)="modalService.open(modalForm); setear()"><i
-                class="pi pi-pencil"></i> <br>Añadir
-              actividad</button>
+                        <button type="submit " class="btn btn-outline-info"
+                            (click)="modalService.open(modalForm); setear()"><i class="pi pi-pencil"></i> <br>Añadir
+                            actividad</button>
                         <button class="btn btn-outline-info" (click)=" showConfirmacionPDF()"><i
-              class="pi pi-file-pdf"></i> <br>Reporte</button>
+                                class="pi pi-file-pdf"></i> <br>Reporte</button>
                     </div>
                 </form>
             </div>
@@ -85,11 +95,14 @@
                             <td>{{ x.cedulaPersona.nombres}}</td>
                             <td>{{ x.descripcionActividad}}</td>
                             <td>
-                                <button type="button" class="btn btn-outline-warning" (click)="editActi(x.idActividadPersona); modalService.open(modalForm)"> <i class="pi pi-user-edit" ></i>Editar</button>
+                                <button type="button" class="btn btn-outline-warning"
+                                    (click)="editActi(x.idActividadPersona); modalService.open(modalForm)"> <i
+                                        class="pi pi-user-edit"></i>Editar</button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-outline-danger" (click)="showConfirmacion(x.idActividadPersona)"> <i
-                    class="pi pi-trash"></i>Eliminar</button>
+                                <button type="button" class="btn btn-outline-danger"
+                                    (click)="showConfirmacion(x.idActividadPersona)"> <i
+                                        class="pi pi-trash"></i>Eliminar</button>
                             </td>
                         </tr>
                     </tbody>
@@ -105,6 +118,7 @@
 
 <ng-template #modalForm let-modal>
     <div class="modal-body">
-        <app-crear-actividad [modal]=modal [Person]="Person" [fechaT]="fecha2" [ActividadviewActu]="ActividadviewActu"></app-crear-actividad>
+        <app-crear-actividad [modal]=modal [Person]="Person" [fechaT]="fecha2" [ActividadviewActu]="ActividadviewActu">
+        </app-crear-actividad>
     </div>
 </ng-template>

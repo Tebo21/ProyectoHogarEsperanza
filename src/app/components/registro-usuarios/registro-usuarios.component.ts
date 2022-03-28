@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FichaSocioeconomica } from 'src/app/models/ficha-socioeconomica';
 import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
-import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomica.service';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
-import { MessageService } from 'primeng/api';
 import { Message } from 'primeng/api';
-import { empty, timer } from 'rxjs';
-
+import { timer } from 'rxjs';
+import * as moment from 'moment';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-registro-usuarios',
   templateUrl: './registro-usuarios.component.html',
   styleUrls: ['./registro-usuarios.component.css']
 })
+
 export class RegistroUsuariosComponent implements OnInit {
+  @ViewChild("Ced") Ced: ElementRef
+
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
   noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
   valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
@@ -49,17 +51,11 @@ export class RegistroUsuariosComponent implements OnInit {
   //Modal
   valido: boolean;
   //ModalVoluntario
-  displayV: boolean;
+  displayV: boolean = false
   tipoUsuario: number;
-  //ModalBeneficiario
-  displayB: boolean;
-  adultoMayor: boolean;
-  viveOtros: boolean;
-  adminActivar: boolean;
   //Validacion de Logeo
   tipoUser: any;
   msgs: Message[];
-  cb: boolean = false;
   cedula: string = '';
   nombres: string = '';
   apellidos: string = '';
@@ -78,11 +74,13 @@ export class RegistroUsuariosComponent implements OnInit {
   edadC: number;
 
   constructor(private router: Router, private personaservice: PersonasService,
-    private usuarioservice: UsuarioService) {
+    private usuarioservice: UsuarioService, private renderer: Renderer2) {
 
     this.listadoTipo = [
+      { top: 'SuperAdministrador' },
       { top: 'Administrador' },
-      { top: 'Voluntario' }
+      { top: 'Voluntario Interno' },
+      { top: 'Voluntario Externo' }
     ]
     this.nacionalidades = [
       { nop: 'Afganistán' }, { nop: 'Alemania' }, { nop: 'Arabia Saudita' }, { nop: 'Argentina' }, { nop: 'Australia' }, { nop: 'Bélgica' }, { nop: 'Bolivia' }, { nop: 'Brasil' },
@@ -94,10 +92,11 @@ export class RegistroUsuariosComponent implements OnInit {
       { nop: 'Turquía' }, { nop: 'Ucrania' }, { nop: 'Uruguay' }, { nop: 'Venezuela' }, { nop: 'Vietnam' }, { nop: 'Otro' }
     ]
     this.estadocivil = [
+      { eop: 'Soltero' },
       { eop: 'Casado' },
-      { eop: 'Viudo' },
+      { eop: 'Unión de hecho' },
       { eop: 'Divorciado' },
-      { eop: 'Soltero' }
+      { eop: 'Viudo' }
     ]
     this.generos = [
       { gop: 'Masculino' },
@@ -124,9 +123,6 @@ export class RegistroUsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.ComprobarLogin();
-    this.displayV = false;
-    this.displayB = false;
-    this.adminActivar = true;
     this.usuarioFechaCreacion = new Date;
   }
 
@@ -135,13 +131,14 @@ export class RegistroUsuariosComponent implements OnInit {
       this.valido = false;
     } else {
       this.valido = true;
-      if (this.tipo.top == 'Voluntario') {
-        this.adminActivar = true;
-        this.displayV = true;
+      if (this.tipo.top == 'SuperAdministrador') {
+        this.tipoUsuario = 1;
       } else if (this.tipo.top == 'Administrador') {
-        this.adminActivar = false;
-        this.displayV = true;
         this.tipoUsuario = 2;
+      } else if (this.tipo.top == 'Voluntario Interno') {
+        this.tipoUsuario = 3;
+      } else if (this.tipo.top == 'Voluntario Externo') {
+        this.tipoUsuario = 4;
       }
     }
   }
@@ -187,8 +184,17 @@ export class RegistroUsuariosComponent implements OnInit {
     this.tipoUser = localStorage.getItem('rolUser');
     if (this.tipoUser == 1) {
     } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
-      alert('No tiene permisos para registrar beneficiarios')
+      Swal.fire({
+        title: 'No tiene permisos para registrar usuarios',
+        icon: 'warning',
+      });
       this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
     }
   }
 
@@ -196,52 +202,48 @@ export class RegistroUsuariosComponent implements OnInit {
     if (this.cedula == '' || this.cedula == undefined || this.cedula == null ||
       this.nombres == '' || this.nombres == undefined || this.nombres == null ||
       this.apellidos == '' || this.apellidos == undefined || this.apellidos == null ||
-      this.direccion == '' || this.direccion == undefined || this.direccion == null ||
-      this.celular == '' || this.celular == undefined || this.celular == null ||
-      this.correo == '' || this.correo == undefined || this.correo == null ||
-      this.persona.fechaNacimiento == undefined || this.validoG == false || 
-      this.validoN == false || this.validoE == false || this.valido == false) {
-      this.cb = false;
-      this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
-      const contador = timer(2000);
-      contador.subscribe((n) => {
-        this.clear();
-      })
+      this.persona.fechaNacimiento == undefined || this.genero == null ||
+      this.nacio == null || this.estado == null || this.tipo == null) {
+      this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
     } else {
-      this.cb = true;
+      this.msgs = []
+      this.ValidacionesExtra();
     }
   }
 
   calcularedad(event: any) {
-    let fecha = new Date(event.target.value);
-    let fechactual = new Date();
-    var f1 = fechactual.getFullYear() - fecha.getFullYear();
-    this.edadC = f1
+    const hoy: Date = new Date();
+    var a = moment(hoy);
+    var b = moment(this.persona.fechaNacimiento);
+
+    var years = a.diff(b, 'year');
+    b.add(years, 'years');
+
+    var months = a.diff(b, 'months');
+    b.add(months, 'months');
+
+    var days = a.diff(b, 'days');
+
+    this.edadC = years
   }
 
-
   ValidacionesExtra() {
-    this.Validacion();
     this.usuarioservice.getUserByCedula(this.cedula).subscribe(dat => {
       this.usuarioValidarCedula = dat;
       if (this.usuarioValidarCedula.usuarioCedula == null) {
-        this.personaservice.getPorCorreo(this.correo).subscribe(da => {
-          this.usuarioValidarCorreo = da;
-          if (this.usuarioValidarCorreo.cedula == null) {
-            this.GuardarUsuario();
-          } else {
-            alert('Esta dirección de correo electrónico ya está en uso')
-          }
-        })
+        this.renderer.setAttribute(this.Ced.nativeElement, "disabled", "true");
+        this.displayV = true
+        this.addMultiple('success', 'Exito', 'Por favor complete la información solicitada debajo');
       } else {
-        alert('El número de cédula ya está en uso')
+        this.addMultiple('error', 'Error', 'El número de cédula ya está en uso por el usuario ' + this.usuarioValidarCedula.usuarioNombre)
       }
     })
   }
 
-
   GuardarUsuario() {
-    if (this.usuarioNombre != '' || this.usuarioContrasenia != '') {
+    if (this.usuarioNombre == '' || this.usuarioContrasenia == '' || this.usuarioNombre == null || this.usuarioContrasenia == null) {
+      this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan * ')
+    } else {
       if (this.usuarioContrasenia == this.usuarioConfirContrasenia) {
         const nuevaPersona: Personas = {
           apellidos: this.apellidos,
@@ -270,48 +272,36 @@ export class RegistroUsuariosComponent implements OnInit {
         }
         this.personaservice.postPersona(nuevaPersona).subscribe(data2 => {
           this.personaCreada = data2;
+          if(this.personaCreada == null){
+            alert('Ha ocurrido un error por favor intentelo más tarde')
+          } else {
+            this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
+              this.usuarioCreado = data;
+              this.displayV = false;
+              Swal.fire({
+                title: 'Usuario registrado correctamente',
+                icon: 'success',
+              });
+              const contador = timer(2000);
+              contador.subscribe((n) => {
+                window.location.reload();
+              })
+            });
+          }
         });
-        this.usuarioservice.addUser(nuevoUsuario).subscribe(data => {
-          this.usuarioCreado = data;
-          this.addMultiple('success', 'Exito', 'Usuario guardado correctamente')
-          const contador = timer(1000);
-          contador.subscribe((n) => {
-            this.clear();
-            window.location.reload();
-          })
-        });
-        this.displayV = false
       } else {
-        this.addMultiple('error', 'Error', 'Las contraseñas no coinciden');
-        const contador = timer(2000);
-        contador.subscribe((n) => {
-          this.clear();
-        })
+        this.addMultiple('error', 'Error', 'Las contraseñas no coinciden')
       }
-    } else {
-      this.addMultiple('error', 'Error', 'Todos los campos deben ser llenados');
-      const contador = timer(2000);
-      contador.subscribe((n) => {
-        this.clear();
-      })
     }
   }
 
   addMultiple(severity1: string, sumary1: string, detail1: string) {
     this.msgs =
       [{ severity: severity1, summary: sumary1, detail: detail1 }];
-    function delay(ms: number) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    (async () => {
-      await delay(2000);
-      window.location.reload();
-    });
-
-  }
-
-  clear() {
-    this.msgs = [];
+    const contador = timer(6000);
+    contador.subscribe((n) => {
+      this.msgs = []
+    })
   }
 
 }

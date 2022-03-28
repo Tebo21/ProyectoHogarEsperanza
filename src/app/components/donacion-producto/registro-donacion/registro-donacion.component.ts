@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Data, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Donaciones } from 'src/app/models/Donaciones';
 import { Personas } from 'src/app/models/personas';
 import { DonaProductoService } from 'src/app/services/dona-producto.service';
@@ -8,14 +8,14 @@ import { PdfMakeWrapper, Txt, Img, Table } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
 import Swal from 'sweetalert2';
 
-
-type TableRow2  = [string, string, number, string, string[], string[]]
+type TableRow2 = [string, string, number, string, string[], string[]]
 
 @Component({
   selector: 'app-registro-donacion',
   templateUrl: './registro-donacion.component.html',
   styleUrls: ['./registro-donacion.component.css'],
 })
+
 export class RegistroDonacionComponent implements OnInit {
   editProducto: Donaciones = new Donaciones;
   displayEP: boolean = false;
@@ -60,14 +60,15 @@ export class RegistroDonacionComponent implements OnInit {
     private personaService: PersonasService,
     private donacionService: DonaProductoService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    localStorage.setItem('cedulaEditar', '')
     this.ComprobarLogin();
     this.obtenerDonaciones();
 
     this.tipoDonador = [
-      { don: 'Anónimo' }, 
+      { don: 'Anónimo' },
       { don: 'Cédula' }
     ];
 
@@ -89,6 +90,12 @@ export class RegistroDonacionComponent implements OnInit {
         icon: 'warning',
       });
       this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
     }
   }
 
@@ -142,7 +149,7 @@ export class RegistroDonacionComponent implements OnInit {
       } else {
         this.otraCategoria = true;
       }
-      if(this.displayEP){
+      if (this.displayEP) {
         this.editProducto.categoria = this.categoria.cat;
       }
     }
@@ -175,18 +182,18 @@ export class RegistroDonacionComponent implements OnInit {
 
   buscarDonador(cedula: string) {
     if (cedula.toUpperCase() != 'ANONIMO' && cedula.toUpperCase() != 'ANÓNIMO') {
-      
+
       this.personaService.getUserByCedula(cedula).subscribe((data) => {
 
         let personadon = new Personas;
         personadon.cedula = data.cedula;
         personadon.nombres = data.nombres;
-        personadon.apellidos = data.apellidos;        
+        personadon.apellidos = data.apellidos;
         personadon.faltas = data.faltas;
         this.listaDonadores.push(personadon);
       })
     }
-    
+
     if (cedula.toUpperCase() === 'ANONIMO' || cedula.toUpperCase() === 'ANÓNIMO') {
 
       let personainc = new Personas;
@@ -203,9 +210,9 @@ export class RegistroDonacionComponent implements OnInit {
     this.fechaDonaciones = [];
 
     let fecha = new Date(this.today)
-    if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0){
+    if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0) {
       fecha.setMinutes(fecha.getMinutes() + 480);
-    } 
+    }
 
     this.cedulasDonadores.push(this.cedula);
     this.fechaDonaciones.push(fecha);
@@ -213,9 +220,9 @@ export class RegistroDonacionComponent implements OnInit {
     this.donacion.cedulaPersona = this.cedulasDonadores;
     this.donacion.fechaDonacion = this.fechaDonaciones;
 
-    if (this.donacion.nombreDonacion != null && this.donacion.descripcionDonacion != null && this.donacion.categoria != null && this.donacion.cantidad > 0){
+    if (this.donacion.nombreDonacion != null && this.donacion.descripcionDonacion != null && this.donacion.categoria != null && this.donacion.cantidad > 0) {
       this.donacionService.postDonacionProd(this.donacion).subscribe((data) => {
-        
+
         this.reiniciar();
 
         Swal.fire({
@@ -224,7 +231,7 @@ export class RegistroDonacionComponent implements OnInit {
           icon: 'success'
         });
       });
-    }else{
+    } else {
       this.displayRP = false;
       Swal.fire({
         title: 'Contiene campos vacios o incorrectos!',
@@ -235,7 +242,7 @@ export class RegistroDonacionComponent implements OnInit {
         }
       );
     }
-    
+
   }
 
   agregar(prod: Donaciones) {
@@ -258,13 +265,13 @@ export class RegistroDonacionComponent implements OnInit {
   }
 
   agregarDonacion() {
-    if (this.cedula != undefined && this.cedula != '' && this.addCantidad > 0){
+    if (this.cedula != undefined && this.cedula != '' && this.addCantidad > 0) {
       let fecha = new Date(this.today);
 
-      if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0){
+      if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0) {
         console.log('hola mundo')
         fecha.setMinutes(fecha.getMinutes() + 480);
-      }      
+      }
 
       this.addProducto.cedulaPersona.push(this.cedula);
       this.addProducto.fechaDonacion.push(fecha);
@@ -274,21 +281,21 @@ export class RegistroDonacionComponent implements OnInit {
       this.donacionService.updateDonacionProd(this.addProducto.idDonacion, this.addProducto).subscribe(
         (data) => {
           this.reiniciar();
-          
+
           Swal.fire({
             title: 'Agregado!',
             text: 'Producto ' + data.nombreDonacion + ' agregado correctamente!',
             icon: 'success'
           });
         });
-    }else{
+    } else {
       this.displayAP = false;
       Swal.fire({
         title: 'Donador indefinido o la cantidad es erronea!',
         text: 'Por favor elija el donador para agregar y la cantidad debe ser mayor a 0!',
         icon: 'warning'
-      }).then(result=>{     
-        this.displayAP = true;        
+      }).then(result => {
+        this.displayAP = true;
       });
     }
   }
@@ -308,42 +315,42 @@ export class RegistroDonacionComponent implements OnInit {
   }
 
   editarDonacion() {
-    if (this.editProducto.cantidad >= 0){
+    if (this.editProducto.cantidad >= 0) {
       this.donacionService
-      .updateDonacionProd(this.editProducto.idDonacion, this.editProducto)
-      .subscribe((data) => {
-        this.reiniciar();
+        .updateDonacionProd(this.editProducto.idDonacion, this.editProducto)
+        .subscribe((data) => {
+          this.reiniciar();
 
-        Swal.fire({
-          title: 'Actualizado!',
-          text: 'Producto ' + data.nombreDonacion + ' actualizado correctamente!',
-          icon: 'success'
+          Swal.fire({
+            title: 'Actualizado!',
+            text: 'Producto ' + data.nombreDonacion + ' actualizado correctamente!',
+            icon: 'success'
+          });
+
         });
-
-      });
-    }else{
+    } else {
       this.displayEP = false;
       Swal.fire({
         title: 'La cantidad a agregar no puede ser menor o igual 0!',
         icon: 'warning'
-      }).then((result)=>{
+      }).then((result) => {
         this.displayEP = true;
       })
-    }    
+    }
   }
 
-  
+
   agregarDonador() {
     if (this.cedula == 'Anónimo' || this.cedula.length >= 10) {
-    
+
       let fecha = new Date(this.today);
-      if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0){
+      if (fecha.getMinutes() == 0 && fecha.getSeconds() == 0) {
         fecha.setMinutes(fecha.getMinutes() + 480);
-      } 
+      }
 
       this.editProducto.cedulaPersona.push(this.cedula);
       this.editProducto.fechaDonacion.push(fecha);
-    
+
       this.listaDonadores = [];
       for (
         let index = 0;
@@ -382,13 +389,13 @@ export class RegistroDonacionComponent implements OnInit {
         this.cedulasDonadores = [];
         this.fechaDonaciones = [];
         this.listaDonadores = [];
-        for ( let index = 0; index < this.editProducto.cedulaPersona.length; index++) {
+        for (let index = 0; index < this.editProducto.cedulaPersona.length; index++) {
           if (this.editProducto.cedulaPersona[index] != null) {
             this.cedulasDonadores.push(this.editProducto.cedulaPersona[index]);
             this.fechaDonaciones.push(this.editProducto.fechaDonacion[index]);
             this.buscarDonador(this.editProducto.cedulaPersona[index]);
           }
-        }  
+        }
       }
 
       this.editProducto.cedulaPersona = this.cedulasDonadores;
@@ -421,7 +428,7 @@ export class RegistroDonacionComponent implements OnInit {
             } else {
               location.reload();
             }
-        });
+          });
       }
     })
   }
@@ -434,20 +441,20 @@ export class RegistroDonacionComponent implements OnInit {
     this.router.navigate(['dar-donacion']);
   }
 
-  reiniciar(){
+  reiniciar() {
     this.today = new Date;
 
     this.tipo = '';
-    this.categoria = ''; 
+    this.categoria = '';
     this.addCantidad = 0;
-    
+
     this.addProducto = new Donaciones;
     this.editProducto = new Donaciones;
     this.donacion = new Donaciones;
-    
+
     this.buscar = false;
     this.otraCategoria = false;
-    
+
     this.displayAP = false;
     this.displayEP = false;
     this.displayRP = false;
@@ -460,11 +467,11 @@ export class RegistroDonacionComponent implements OnInit {
     this.cedulasDonadores = [];
     this.fechaDonaciones = [];
     this.listaDonadores = [];
-    
+
     this.obtenerDonaciones();
   }
 
-  showConfirmacionPDF(){
+  showConfirmacionPDF() {
     Swal.fire({
       title: '¿Estas seguro de descargar este reporte?',
       text: "Se abrira una visualizacion de su reporte",
@@ -487,7 +494,7 @@ export class RegistroDonacionComponent implements OnInit {
   }
 
 
-  async generarPdf(){
+  async generarPdf() {
     const pdf = new PdfMakeWrapper();
     pdf.info({
       title: 'Reporte de productos filtrados',
@@ -499,23 +506,23 @@ export class RegistroDonacionComponent implements OnInit {
     );
     pdf.add(new Txt('   ').end);
 
-    if (this.donacionesFiltradas.length > 0){
+    if (this.donacionesFiltradas.length > 0) {
       pdf.add(this.creaTabla2(this.donacionesFiltradas));
-    }else{
+    } else {
       pdf.add(this.creaTabla2(this.donaciones));
     }
 
     pdf.create().open();
-    this.reiniciar(); 
+    this.reiniciar();
   }
 
-  creaTabla2(data: Donaciones[]): ITable{
+  creaTabla2(data: Donaciones[]): ITable {
     [{}];
     return new Table([
       ['Nombre Producto', 'Descripción', 'Cantidad', 'Categoria', 'Fecha Donación', 'Cédula Donador'],
       ...this.extraerDatos2(data),
     ])
-     
+
       .heights((rowIndex) => {
         return rowIndex === 0 ? 20 : 0;
       })
@@ -538,8 +545,8 @@ export class RegistroDonacionComponent implements OnInit {
     ]);
   }
 
-  formatearFechas(fechas: Date[]): string[]{
-    
+  formatearFechas(fechas: Date[]): string[] {
+
     let dates: string[] = [];
 
     fechas.forEach(element => {
@@ -552,25 +559,29 @@ export class RegistroDonacionComponent implements OnInit {
       let mes = date.getMonth() + 1;
       let year = date.getFullYear();
 
-      if (dia < 10 && mes < 10){
-        fecha = year+'-0'+mes+'-0'+dia;
+      if (dia < 10 && mes < 10) {
+        fecha = year + '-0' + mes + '-0' + dia;
       }
 
-      if (dia > 9  && mes < 10){
-        fecha = year+'-0'+mes+'-'+dia;
+      if (dia > 9 && mes < 10) {
+        fecha = year + '-0' + mes + '-' + dia;
       }
 
-      if (dia < 10  && mes > 9){
-        fecha = year+'-'+mes+'-0'+dia;
+      if (dia < 10 && mes > 9) {
+        fecha = year + '-' + mes + '-0' + dia;
       }
 
-      if (dia > 9 && mes > 9){
-        fecha = year+'-'+mes+'-'+dia;
+      if (dia > 9 && mes > 9) {
+        fecha = year + '-' + mes + '-' + dia;
       }
 
       dates.push(fecha);
-    }); 
+    });
 
     return dates;
+  }
+
+  verHistorial() {
+    this.router.navigate(['/lista'])
   }
 }

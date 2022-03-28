@@ -1,10 +1,13 @@
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { Message } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
+import Swal from 'sweetalert2';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -72,10 +75,11 @@ export class PerfilUsuarioComponent implements OnInit {
       { nop: 'Turquía' }, { nop: 'Ucrania' }, { nop: 'Uruguay' }, { nop: 'Venezuela' }, { nop: 'Vietnam' }, { nop: 'Otro' }
     ]
     this.estadocivil = [
+      { eop: 'Soltero' },
       { eop: 'Casado' },
-      { eop: 'Viudo' },
+      { eop: 'Unión de hecho' },
       { eop: 'Divorciado' },
-      { eop: 'Soltero' }
+      { eop: 'Viudo' }
     ]
     this.generos = [
       { gop: 'Masculino' },
@@ -140,10 +144,19 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   calcularedad(event: any) {
-    let fecha = new Date(event.target.value);
-    let fechactual = new Date();
-    var f1 = fechactual.getFullYear() - fecha.getFullYear();
-    this.persona.edad = f1
+    const hoy: Date = new Date();
+    var a = moment(hoy);
+    var b = moment(this.persona.fechaNacimiento);
+
+    var years = a.diff(b, 'year');
+    b.add(years, 'years');
+
+    var months = a.diff(b, 'months');
+    b.add(months, 'months');
+
+    var days = a.diff(b, 'days');
+    
+    this.persona.edad = years
   }
 
   tipoUsuario(usuarioTipo: number): string {
@@ -179,94 +192,61 @@ export class PerfilUsuarioComponent implements OnInit {
     } else {
       this.usuarioT = this.usuarioT;
     }
-    this.Actualizar();
+    if (this.persona.cedula == '' || this.persona.cedula == undefined || this.persona.cedula == null ||
+      this.persona.nombres == '' || this.persona.nombres == undefined || this.persona.nombres == null ||
+      this.persona.apellidos == '' || this.persona.apellidos == undefined || this.persona.apellidos == null ||
+      this.persona.fechaNacimiento == undefined) {
+      this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
+    } else {
+      this.msgs = []
+      this.Actualizar();
+    }
   }
 
   Actualizar() {
-    this.personaService.getUserByCedula(this.persona.cedula).subscribe(dat => {
-      this.personaValidar = dat;
-    })
-    this.personaService.getPorCorreo(this.persona.correo).subscribe(data => {
-      this.personaValidarCorreo = data;
-      if (this.personaValidarCorreo.correo == this.personaValidar.correo) { 
-        const PersonaNueva: Personas = {
-          apellidos: this.persona.apellidos,
-          beneficiario: this.persona.beneficiario,
-          cedula: this.persona.cedula,
-          celular: this.persona.celular,
-          correo: this.persona.correo,
-          direccion: this.persona.direccion,
-          edad: this.persona.edad,
-          estadoActivo: this.persona.estadoActivo,
-          estado_civil: this.estadoFinal,
-          fechaNacimiento: this.persona.fechaNacimiento,
-          genero: this.generoFinal,
-          idPersona: this.persona.idPersona,
-          nacionalidad: this.nacioFinal,
-          nombres: this.persona.nombres,
-          faltas: this.persona.faltas
-        }
-        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
-        });
-        const UsuarioNuevo: Usuarios = {
-          idUsuario: this.usuario.idUsuario,
-          usuarioCedula: this.usuario.usuarioCedula,
-          usuarioContrasenia: this.usuario.usuarioContrasenia,
-          usuarioNombre: this.usuario.usuarioNombre,
-          usuarioTipo: this.usuarioT,
-          usuarioEstado: true,
-          usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
-        }
-        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-          alert('Se ha actualizado exitosamente')
-          this.router.navigateByUrl('listado-usuarios');
-        });
-      } else if (this.personaValidarCorreo.cedula == null){
-        const PersonaNueva: Personas = {
-          apellidos: this.persona.apellidos,
-          beneficiario: this.persona.beneficiario,
-          cedula: this.persona.cedula,
-          celular: this.persona.celular,
-          correo: this.persona.correo,
-          direccion: this.persona.direccion,
-          edad: this.persona.edad,
-          estadoActivo: this.persona.estadoActivo,
-          estado_civil: this.estadoFinal,
-          fechaNacimiento: this.persona.fechaNacimiento,
-          genero: this.generoFinal,
-          idPersona: this.persona.idPersona,
-          nacionalidad: this.nacioFinal,
-          nombres: this.persona.nombres,
-          faltas: this.persona.faltas
-        }
-        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
-        });
-        const UsuarioNuevo: Usuarios = {
-          idUsuario: this.usuario.idUsuario,
-          usuarioCedula: this.usuario.usuarioCedula,
-          usuarioContrasenia: this.usuario.usuarioContrasenia,
-          usuarioNombre: this.usuario.usuarioNombre,
-          usuarioTipo: this.usuarioT,
-          usuarioEstado: true,
-          usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
-        }
-        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-          alert('Se ha actualizado exitosamente')
-          this.router.navigateByUrl('listado-usuarios');
-        });
-      } else {
-        alert('Esta dirección de correo electrónico ya está en uso')
-      }
+    const PersonaNueva: Personas = {
+      apellidos: this.persona.apellidos,
+      beneficiario: this.persona.beneficiario,
+      cedula: this.persona.cedula,
+      celular: this.persona.celular,
+      correo: this.persona.correo,
+      direccion: this.persona.direccion,
+      edad: this.persona.edad,
+      estadoActivo: this.persona.estadoActivo,
+      estado_civil: this.estadoFinal,
+      fechaNacimiento: this.persona.fechaNacimiento,
+      genero: this.generoFinal,
+      idPersona: this.persona.idPersona,
+      nacionalidad: this.nacioFinal,
+      nombres: this.persona.nombres,
+      faltas: this.persona.faltas
+    }
+    const UsuarioNuevo: Usuarios = {
+      idUsuario: this.usuario.idUsuario,
+      usuarioCedula: this.usuario.usuarioCedula,
+      usuarioContrasenia: this.usuario.usuarioContrasenia,
+      usuarioNombre: this.usuario.usuarioNombre,
+      usuarioTipo: this.usuarioT,
+      usuarioEstado: true,
+      usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
+    }
+    this.personaService.updatePersona(PersonaNueva).subscribe(() => {
     });
-    
+    this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+    Swal.fire({
+      title: 'Se ha actualizado la información correctamente',
+      icon: 'success',
+    });
+      this.router.navigateByUrl('listado-usuarios');
+    });
   }
 
   CambiarContra() {
     if (this.usuario.usuarioContrasenia != this.usuarioContraseniaAnterior) {
-      alert('La contraseña anterior no es correcta')
+      this.addMultiple('error', 'Error', 'La contraseña anterior es incorrecta')
     } else {
       if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
-        alert('Las contraseñas no coinciden')
+      this.addMultiple('error', 'Error', 'Las contraseñas no coinciden')
       } else {
         const UsuarioNuevo: Usuarios = {
           idUsuario: this.usuario.idUsuario,
@@ -278,12 +258,21 @@ export class PerfilUsuarioComponent implements OnInit {
           usuarioFechaCreacion: this.usuario.usuarioFechaCreacion
         }
         this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-          alert('Se ha actualizado exitosamente su contraseña')
+          this.addMultiple('success', 'Exito', 'Actualización exitosa')
           this.displayContra = false;
           window.location.reload();
         });
       }
     }
+  }
+
+  addMultiple(severity1: string, sumary1: string, detail1: string) {
+    this.msgs =
+      [{ severity: severity1, summary: sumary1, detail: detail1 }];
+    const contador = timer(6000);
+    contador.subscribe((n) => {
+      this.msgs = []
+    })
   }
 
   Cancelar() {

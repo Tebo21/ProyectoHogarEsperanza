@@ -1,0 +1,39 @@
+<app-navbar-admin></app-navbar-admin>
+<br>
+<h2 class="text-center">Informes</h2>
+<h4 class="text-center">Datos obtenidos de un total de {{total}} personas registradas</h4>
+<div class="grid-container">
+    <div>
+        <h5 class="text-center">Madres solteras</h5>
+        <p-chart type="pie" [data]="data" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+    </div>
+    <div>
+        <h5 class="text-center">Adultos mayores</h5>
+        <p-chart type="pie" [data]="data2" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+    </div> 
+    <div>
+        <h5 class="text-center">Personas con discapacidad</h5>
+        <p-chart type="pie" [data]="data3" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+    </div>
+</div>
+<div class="grid-container">
+    <div>
+        <h5 class="text-center">Hombres y mujeres</h5>
+        <p-chart type="pie" [data]="data6" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+    </div> 
+    <div>
+        <h5 class="text-center">Personas con bono de desarrollo humano</h5>
+        <p-chart type="pie" [data]="data4" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+    </div> 
+    <div>
+        <h5 class="text-center">Tipos de discapacidad</h5>
+        <p-chart type="pie" [data]="data5" [options]="chartOptions" [style]="{'width': '40%'}"></p-chart>
+    </div> 
+</div>
+<div class="padre">
+    <div class="p1">
+        <h5 class="text-center">Número de beneficiarios registrados mensualmente en 2022</h5>
+        <p-chart type="bar" [data]="data7" [options]="chartOptions"></p-chart>
+    </div>
+</div>
+<br>

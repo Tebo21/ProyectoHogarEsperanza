@@ -1,97 +1,43 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-<header class="header">
-    <div class="container1 logo-nav-container">
-        <img src="https://hogaresperanza.org/wp-content/uploads/2018/03/logo.png" />
-    </div>
-</header>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <body>
-    <div class="container1">
-        <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
-            <div class="card card0 border-0">
-                <div class="row d-flex">
-                    <div class="col-lg-6">
-                        <div class="card1 pb-5">
-                            <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
-                                <img src="https://hogaresperanza.org/wp-content/uploads/2020/11/79202613_10220100511359772_5632575654215024640_o.jpg"
-                                    class="image" style="padding-left: 28px; padding-top: 70px;">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="col-lg-6">
-                        <div class="card2 card border-0 px-4 py-5">
-                            <h3 align="center">Inicio de Sesión</h3>
-                            <br>
-                            <div class="row px-3">
-                                <label class="mb-0">
-                                    <h5 class="mb-0 text-sm">Cédula de Identidad</h5>
-                                </label>
-                                <input class="mb-4" type="text" [(ngModel)]="user.usuarioCedula"
-                                    name="user.usuarioCedula" placeholder="Número de cédula de identidad">
-                            </div>
-                            <div class="row px-1">
-                                <label class="mb-0">
-                                    <h5 class="mb-0 text-sm" style="padding-left: 2px;">Contraseña</h5>
-                                </label>
-                                <p-password class="mb-4" [(ngModel)]="user.usuarioContrasenia" [toggleMask]="true"
-                                    name="user.usuarioContrasenia" placeholder="Contraseña" [feedback]="false"></p-password>
-                            </div>
-                            <div class="row px-1">
-                                <h4 class="mb-0 text-sm">Seleccione un tipo de usuario</h4>
-                                <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario"
-                                    optionLabel="string" [style]="{'width': '100%'}" [showClear]="true"
-                                    (onChange)="onChange($event)">
-                                </p-dropdown>
-                            </div>
-                            <br>
-                            <div class="row mb-3 px-3" style="padding-top: 8px;">
-                                <button pButton pRipple type="button" label="Iniciar
-                                Sesión" (click)='Validar()' class="p-button-outlined p-button-info"></button>
-                            </div>
-                        </div>
-                    </div>
+    <div class="padre">
+        <div class="container zoom">
+            <div class="izq">
+                <img src="assets/img/descargar.png" alt="logo" class="image">
+            </div>
+            <div class="der">
+                <div class="form-floating mb-3">
+                    <label for="floatingInput"><b>Número de cédula</b></label>
+                    <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10"
+                        id="user.usuarioCedula" placeholder="Número de cédula" [(ngModel)]="user.usuarioCedula"
+                        name="user.usuarioCedula" required />
                 </div>
-                <div class="bg-blue py-1" style="background-color:  #e3f2fd;">
-                    <div class="row px-3"> <small class="ml-4 ml-sm-0 mb-2" style="color: black;"> &copy; <b>Hogar
-                                Esperanza 2021.</b></small>
-                        <div class="social-contact ml-4 ml-sm-auto" id="as" style="color: black;">
-                            <a href="https://www.facebook.com/HogardeEsperanzaEcuador/" target="_blank"><span
-                                    class="fa fa-facebook mr-4 text-sm"></span></a>
-                            <a
-                                href="https://www.google.com/maps/dir//redes+hogar+esperanza+cuenca/@-2.9062629,-79.0155064,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x91cd181a533cacb7:0x218ac65465243fb4!2m2!1d-79.0046688!2d-2.8908935" target="_blank"><span
-                                    class="fa fa-location-arrow mr-4 mr-sm-5 text-sm"></span></a>
-                        </div>
-                    </div>
+                <div class="form-floating mb-3">
+                    <label for="floatingInput"><b>Contraseña</b></label>
+                    <input class="form-control" type="password" id="user.usuarioContrasenia" placeholder="Contraseña"
+                        [(ngModel)]="user.usuarioContrasenia" name="user.usuarioContrasenia" required />
+                </div>
+                <div class="form-floating mb-3">
+                    <label for="floatingInput"><b>Tipo de usuario</b></label>
+                    <p-dropdown [options]="tipos" [(ngModel)]="tipo" placeholder="Tipo de Usuario" optionLabel="string"
+                        [style]="{ width: '100%' }" (onChange)="onChange($event)">
+                    </p-dropdown>
+                </div>
+                <div class="boton">
+                    <button pButton type="button" label="Iniciar sesión" class="p-button-outlined"
+                        (click)='validar()'></button>
                 </div>
             </div>
         </div>
     </div>
 </body>
+</html>
 
-<p-dialog header="Hogar Esperanza" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
-    [draggable]="false" [resizable]="false">
-    <p class="p-m-0">{{alerta}}</p>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="display=false" label="Ok" styleClass="p-button-text">
-        </p-button>
-    </ng-template>
-</p-dialog>
 
-<p-dialog header="Recuperar tu cuenta" [(visible)]="displayPass" [modal]="true" [style]="{width: '35vw'}"
-    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-    <div class="row px-3">
-        <label class="mb-1">
-            <h6 class="mb-0 text-sm">Ingrese su dirección de correo electrónico</h6>
-        </label>
-        <input class="mb-4" type="email" [(ngModel)]="correo" type="email" maxlength="40" minlength="12" id="correo"
-            name="correo" placeholder="Correo electrónico" required>
-    </div>
-    <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Enviar" (click)='Recuperar(correo)' icon="pi pi-check" class="p-button-outlined p-button-info"></button>
-        <button pButton pRipple type="button" label="Cancelar"  (click)="displayPass=false" icon="pi pi-times" class="p-button-outlined p-button-info"></button>
-    </ng-template>
-</p-dialog>
+

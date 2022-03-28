@@ -1,5 +1,5 @@
 export class RegistroFamiliares {
-    idRegistroFamiliares?: number;  
+    //idRegistroFamiliares?: number;  
     cedulaFamiliar?: string;
     cedulaPersona?: string;
     parentesco?: string;

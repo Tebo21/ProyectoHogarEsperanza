@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DocumentosBeneficiarios } from '../../../models/documentos-beneficiarios';
 import { DocumentosService } from '../../../services/documentos.service';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { DomSanitizer } from '@angular/platform-browser';
-import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
-import { saveAs } from 'file-saver';
+import { timer } from 'rxjs';
+import { PersonasService } from 'src/app/services/personas.service';
+import { Personas } from 'src/app/models/personas';
+import { Message } from 'primeng/api';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-documentos',
@@ -13,139 +14,141 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./editar-documentos.component.css']
 })
 export class EditarDocumentosComponent implements OnInit {
-  public archivos:any=[];
-  public previsualizar:string;
-  arrayLista:any=[];
-  selectedFile: FileList; 
-  tipoDocumento:String;
-  nombreDoc:any;
-  arrayLiStaNombres:any=[];
-  documentomodel:DocumentosBeneficiarios = new  DocumentosBeneficiarios();
-  cedula_persona:string = localStorage.getItem('cedulalocalstorage');
-  valImg:any;
-  filenames: string[] = [];
-  fileStatus = { status: '', requestType: '', percent: 0 };
-  constructor(private sant:DomSanitizer,private documentoserver:DocumentosService,private root:Router) {
-   }
+
+  cedula_persona: string = localStorage.getItem('cedulaEditar');
+  listaDocumentos: DocumentosBeneficiarios[]
+  documentoEliminar: DocumentosBeneficiarios = {}
+  tipos: any[];
+  tipo: any;
+  evento: any;
+  displayEliminar: boolean = false;
+  selectedFile: FileList;
+  nombreDoc: string = '';
+  archivos: [];
+  persona: Personas = {}
+  texto: string = "Seleccione un archivo"
+  msgs: Message[];
+  //Logeo
+  tipoUser:any
+
+  constructor(private documentoserver: DocumentosService, private router: Router, private personaservice: PersonasService) {
+    this.tipos = [
+      { tip: 'Cédula' },
+      { tip: 'Carnet' },
+      { tip: 'RUC' },
+      { tip: 'Documentación extra' },
+      { tip: 'Pasaporte' },
+      { tip: 'Cédula de un familiar' },
+      { tip: 'Carnet de familiar' },
+      { tip: 'RUC de familiar' },
+      { tip: 'Documentación extra de familiar' },
+      { tip: 'Pasaporte de familair' },
+      { tip: 'Otro' }
+    ]
+  }
 
   ngOnInit(): void {
-    this.editarDocmentos(); 
-}
-reperarevent(event:any){
-const files=event.target.files;
-this.onUpload(files)
-}
-onUpload(files: File[]):void{
-  const formData = new FormData();
-  for(const file of files){
-  formData.append('files',file,file.name);
-}
-  this.documentoserver.upload(formData).subscribe(event=>
-    this.resportProgress(event),
-  (error: HttpErrorResponse)=>console.log(error)
-  );
-}
-private resportProgress(httpEvent: HttpEvent<string[] | Blob>): void {
-  switch(httpEvent.type) {
-    case HttpEventType.UploadProgress:
-      this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Uploading... ');
-      break;
-    case HttpEventType.DownloadProgress:
-      this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Downloading... ');
-      break;
-    case HttpEventType.ResponseHeader:
-      break;
-    case HttpEventType.Response:
-      if (httpEvent.body instanceof Array) {
-        this.fileStatus.status = 'done';
-        for (const filename of httpEvent.body) {
-          this.filenames.unshift(filename);
-        }
-      } else {
-        saveAs(new File([httpEvent.body!], httpEvent.headers.get('File-Name')!, 
-                {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}));
-         saveAs(new Blob([httpEvent.body!], 
-           { type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}),
-            httpEvent.headers.get('File-Name'));
-      }
-      this.fileStatus.status = 'done';
-      break;
-      default:
-        break;
-    
+    this.ComprobarLogin()
+    this.archivos = []
+    this.cargarDocumentos()
   }
-}
-private updateStatus(loaded: number, total: number, requestType: string): void {
-  this.fileStatus.status = 'progress';
-  this.fileStatus.requestType = requestType;
-  this.fileStatus.percent = Math.round(100 * loaded / total);
-}
-/////////////////////////////////////////////////////////////
-editarDocmentos(){
-  this.documentoserver.getDocumentoPorCedula(this.cedula_persona).subscribe( data =>{
-    this.documentomodel.docPersonasBeneficiarios=data.docPersonasBeneficiarios
-    for(let i in data.docPersonasBeneficiarios){
-      this.arrayLiStaNombres.push(this.documentomodel.docPersonasBeneficiarios[i])
-      this.valImg=this.arrayLiStaNombres[i][2]
-    } 
-  })
-}
-selectFile(event):any{
-this.archivos=[];
-if(this.tipoDocumento==null){
-  alert("seleccione el tipo de documento")
-}else{
-  this.reperarevent(event);
-for(var i=0;i<=File.length;i++){
- this.nombreDoc=event.target.files[i].name;
-      this.arrayLiStaNombres.push([this.tipoDocumento,this.nombreDoc])
- }}
- this.tipoDocumento=null;
-}
 
-eliminar(i){
-  var elimianar
-  Swal.fire({
-    title: 'Esta seguro de eliminar este documento',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Aceptar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire(
-        'Eliminado!',
-        'Documento eliminado',
-        'success'
-      )
-      elimianar=true;
-      var verificacion=elimianar
-      if (verificacion==true){
-          this.arrayLista.splice(i,1);
-          this.arrayLiStaNombres.splice(i,1);
-      }
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1 || this.tipoUser == 2) {
+    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para agregar o editar documentos',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
     }
-  });
-}
-upload(){
-  let i: number = 0;
-  var numero= this.arrayLista.length
-  while (i <= numero) {
-    if(i==numero){
-      alert("Documentos Guardados")
-      this.addDocumentos();
-      this.root.navigate(['lista-documentos']);
-    }
-    this.selectedFile=this.arrayLista[i]
-    const file = this.selectedFile.item(0);
-    i++;
   }
- }
- addDocumentos(){
-  this.documentomodel.cedulaPersona=this.cedula_persona;
-  this.documentomodel.docPersonasBeneficiarios=this.arrayLiStaNombres;
- this.documentoserver.updateDocumentos(this.documentomodel).subscribe( data => {
- })
-}
+
+  cargarDocumentos() {
+    this.documentoserver.getBycedula(this.cedula_persona).subscribe(data => {
+      this.listaDocumentos = data;
+    })
+    this.personaservice.getUserByCedula(this.cedula_persona).subscribe(data => {
+      this.persona = data;
+    })
+  }
+
+  selectFile(event): any {
+    this.evento = event;
+    this.nombreDoc = this.persona.cedula+event.target.files[0].name;
+    this.texto = "Archivo cargado: "+this.nombreDoc
+  }
+
+  postDocumento() {
+    if(this.tipo == null  || this.nombreDoc == ''){
+      this.addMultiple('error', 'Error', 'Por favor complete la información');
+    } else {
+      let nuevoDocumento: DocumentosBeneficiarios = {
+        cedulaPersona: this.cedula_persona,
+        nombreArchivo: this.nombreDoc,
+        tipoDocumento: this.tipo.tip
+      }
+      this.documentoserver.postRegostroDocumentos(nuevoDocumento).subscribe(data => {
+        this.reperarevent();
+        this.addMultiple('success', 'Exito', 'Se ha guardado con exito la información');
+      })
+    }
+  }
+
+  reperarevent() {
+    const files = this.evento.target.files;
+    const formData = new FormData();
+    for (const file of files) {
+      formData.append('files', file, this.persona.cedula+file.name);
+    }
+    this.documentoserver.upload(formData).subscribe(event => {
+      const contador = timer(2000);
+      contador.subscribe((n) => {
+        window.location.reload();
+      })
+    });
+  }
+
+  onDownloadFile(filename: string): void {
+    this.documentoserver.ver(filename).subscribe(event => {
+
+    });
+  }
+
+  modalEliminar(doc: DocumentosBeneficiarios) {
+    this.displayEliminar = true;
+    this.documentoEliminar = doc;
+  }
+
+  eliminar() {
+    this.documentoserver.delete(this.documentoEliminar.nombreArchivo).subscribe(data => {
+    });
+    this.documentoserver.deleteBase(this.documentoEliminar.idDocumentos).subscribe(data => {
+    });
+    const contador = timer(2000);
+    contador.subscribe((n) => {
+    window.location.reload();
+  })
+  }
+
+  addMultiple(severity1: string, sumary1: string, detail1: string) {
+    this.msgs =
+      [{ severity: severity1, summary: sumary1, detail: detail1 }];
+    const contador = timer(6000);
+    contador.subscribe((n) => {
+      this.msgs = [];
+    })
+  }
+
+  cancelar() {
+    this.router.navigate(['/lista-beneficiarios']);
+  }
+
 }

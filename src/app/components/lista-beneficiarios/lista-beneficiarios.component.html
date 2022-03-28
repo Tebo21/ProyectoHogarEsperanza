@@ -3,10 +3,10 @@
 <h2 class="text-center">Listado de Beneficiarios</h2>  
 <div class="cont">
     <div class="hijo">
-        <p-table #dt [value]="ListadoFinal" [rows]="10" styleClass="p-datatable-striped-responsive-demo"
-            [scrollable]="true" scrollHeight="450px" [paginator]="true" [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10,25,50]" [(selection)]="selected" dataKey="cedula" [rowHover]="true"
-            [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo']">
+        <p-table #dt [value]="ListadoPersonas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Se muestran del {first} al {last} de un total de {totalRecords} beneficiarios registrados" [rowsPerPageOptions]="[10,25,50]"
+        [loading]="loading" [scrollable]="true" scrollHeight="400px" [(selection)]="selected" dataKey="cedula"
+        [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo']">
             <ng-template pTemplate="caption">
                 <div class="prin">
                     <div class="sec" >
@@ -19,8 +19,6 @@
                     <div class="ter" >
                         <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="generarPDF()"
                             class="p-button-outlined p-button-danger" pTooltip="PDF" tooltipPosition="bottom"></button>
-                        <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelected()"
-                            class="p-button-outlined p-button-info" pTooltip="Seleccionados PDF" tooltipPosition="bottom"></button>
                         <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
                             class="p-button-outlined p-button-success" pTooltip="XLS (Excel)" tooltipPosition="bottom"></button>
                         <button type="button" pButton pRipple icon="pi pi-filter" (click)="exportSelectedX()"
@@ -28,7 +26,7 @@
                     </div>
                 </div>
             </ng-template>
-            <ng-template pTemplate="header" class="tab">
+            <ng-template pTemplate="header">
                 <tr>
                     <th>
                         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
@@ -50,12 +48,12 @@
                         <p-columnFilter type="text" field="telefono" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th pSortableColumn="correo">Correo
+                    <th pSortableColumn="correo">Correo electrónico
                         <p-sortIcon field="correo"></p-sortIcon>
                         <p-columnFilter typce="text" field="correo" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th pSortableColumn="genero">Genero
+                    <th pSortableColumn="genero">Género
                         <p-sortIcon field="genero"></p-sortIcon>
                         <p-columnFilter typce="text" field="genero" display="menu" class="p-ml-auto">
                         </p-columnFilter>
@@ -80,12 +78,7 @@
                         <p-columnFilter typce="text" field="estado_civil" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th pSortableColumn="faltas">Faltas
-                        <p-sortIcon field="faltas"></p-sortIcon>
-                        <p-columnFilter typce="text" field="faltas" display="menu" class="p-ml-auto">
-                        </p-columnFilter>
-                    </th>
-                    <th pSortableColumn="pareja">Pareja
+                    <!-- <th pSortableColumn="pareja">Pareja
                         <p-sortIcon field="pareja"></p-sortIcon>
                         <p-columnFilter typce="text" field="pareja" display="menu" class="p-ml-auto">
                         </p-columnFilter>
@@ -93,6 +86,11 @@
                     <th pSortableColumn="familiares">Familiares
                         <p-sortIcon field="familiares"></p-sortIcon>
                         <p-columnFilter typce="text" field="familiares" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="numHijos">Numero de hijos
+                        <p-sortIcon field="numHijos"></p-sortIcon>
+                        <p-columnFilter typce="text" field="numHijos" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
                     <th pSortableColumn="situacionEconomica">Situacion económica
@@ -110,12 +108,12 @@
                         <p-columnFilter typce="text" field="descripcionVivienda" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th pSortableColumn="seguro">Seguro
+                    <th pSortableColumn="seguro">Seguro de vida
                         <p-sortIcon field="seguro"></p-sortIcon>
                         <p-columnFilter typce="text" field="seguro" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th pSortableColumn="salario">Salario
+                    <th pSortableColumn="salario">Salario mensual
                         <p-sortIcon field="salario"></p-sortIcon>
                         <p-columnFilter typce="text" field="salario" display="menu" class="p-ml-auto">
                         </p-columnFilter>
@@ -135,12 +133,12 @@
                         <p-columnFilter typce="text" field="viveConOtros" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th pSortableColumn="recibebono">Recibe bono
+                    <th pSortableColumn="recibebono">Cuenta con bono
                         <p-sortIcon field="recibebono"></p-sortIcon>
                         <p-columnFilter typce="text" field="recibebono" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th pSortableColumn="cantidadbono">Cantidad bono
+                    <th pSortableColumn="cantidadbono">Cantidad de bono
                         <p-sortIcon field="cantidadbono"></p-sortIcon>
                         <p-columnFilter typce="text" field="cantidadbono" display="menu" class="p-ml-auto">
                         </p-columnFilter>
@@ -160,17 +158,37 @@
                         <p-columnFilter typce="text" field="porc_disc_mental" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
+                    <th pSortableColumn="descrip_disc_mental">Descripción de discapacidad intelectual
+                        <p-sortIcon field="descrip_disc_mental"></p-sortIcon>
+                        <p-columnFilter typce="text" field="descrip_disc_mental" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
                     <th pSortableColumn="porc_disc_fisica">Porcentaje de discapacidad física
                         <p-sortIcon field="porc_disc_fisica"></p-sortIcon>
                         <p-columnFilter typce="text" field="porc_disc_fisica" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th pSortableColumn="enfermedades">Enfermedades
+                    <th pSortableColumn="descrip_disc_fisica">Descripción de discapacidad física
+                        <p-sortIcon field="descrip_disc_fisica"></p-sortIcon>
+                        <p-columnFilter typce="text" field="descrip_disc_fisica" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="madreSoltera">Madre soltera
+                        <p-sortIcon field="madreSoltera"></p-sortIcon>
+                        <p-columnFilter typce="text" field="madreSoltera" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="enfermedades">Enfermedades catastróficas
                         <p-sortIcon field="enfermedades"></p-sortIcon>
                         <p-columnFilter typce="text" field="enfermedades" display="menu" class="p-ml-auto">
                         </p-columnFilter>
                     </th>
-                    <th>Editar / Eliminar / Ver Ficha</th>
+                    <th pSortableColumn="asistencias">Asistencias
+                        <p-sortIcon field="asistencias"></p-sortIcon>
+                        <p-columnFilter typce="text" field="asistencias" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </th> -->
+                    <th>Acciones</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-user>
@@ -188,9 +206,9 @@
                     <td>{{user.edad}}</td>
                     <td>{{user.nacionalidad}}</td>
                     <td>{{user.estado_civil}}</td>
-                    <td>{{user.faltas}}</td>
-                    <td>{{user.pareja}}</td>
-                    <td>{{user.familiares.length}}</td>
+                    <!-- <td>{{user.pareja}}</td>
+                    <td>{{user.familiares}}</td>
+                    <td>{{user.numHijos}}</td>
                     <td>{{user.situacionEconomica}}</td>
                     <td>{{user.tipoVivienda}}</td>
                     <td>{{user.descripcionVivienda}}</td>
@@ -204,18 +222,37 @@
                     <td>{{user.discapacidad}}</td>
                     <td>{{user.tipo_discapacidad}}</td>
                     <td>{{user.porc_disc_mental}}%</td>
+                    <td>{{user.descrip_disc_mental}}</td>
                     <td>{{user.porc_disc_fisica}}%</td>
+                    <td>{{user.descrip_disc_fisica}}</td>
+                    <td>{{user.madreSoltera}}</td>
                     <td>{{user.enfermedades}}</td>
+                    <td>{{user.asistencias}}</td> -->
                     <td>
-                        <button pButton pRipple type="button" icon="pi pi-user-edit" 
+                        <button pButton pRipple type="button" icon="pi pi-user-edit" pTooltip="Editar" tooltipPosition="left"
                             class="p-button-rounded p-button-outlined" (click)="editarBeneficiario(user.cedula)">
                         </button>
-                        <button pButton pRipple type="button" icon="pi pi-trash"
+                        <button pButton pRipple type="button" icon="pi pi-file" pTooltip="Ficha socioeconómica" tooltipPosition="left"
+                            class="p-button-rounded p-button-info p-button-outlined" (click)="verFicha(user.cedula)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-eye" pTooltip="Observaciones" tooltipPosition="left"
+                            class="p-button-rounded p-button-info p-button-outlined" (click)="verObservaciones(user.cedula)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-folder-open" pTooltip="Asistencias" tooltipPosition="left"
+                            class="p-button-rounded p-button-info p-button-outlined" (click)="verHistorial(user.cedula)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-id-card" pTooltip="Documentos" tooltipPosition="left"
+                            class="p-button-rounded p-button-info p-button-outlined" (click)="verDocumentos(user.cedula)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-inbox" pTooltip="Donaciones" tooltipPosition="left"
+                            class="p-button-rounded p-button-info p-button-outlined" (click)="verDonaciones(user.cedula)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-book" pTooltip="Información completa" tooltipPosition="left"
+                            class="p-button-rounded p-button-info p-button-outlined" (click)="verHistorialCompleto(user.cedula)">
+                        </button>
+                        <!-- <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="Eliminar" tooltipPosition="left"
                             class="p-button-rounded p-button-danger p-button-outlined" (click)="eliminarPersonaBeneficiario(user.cedula)">
-                        </button>
-                        <button pButton pRipple type="button" icon="pi pi-folder-open"
-                            class="p-button-rounded p-button-warning p-button-outlined" (click)="eliminarPersonaBeneficiario(user.cedula)">
-                        </button>
+                        </button> -->
                     </td>
                 </tr>
             </ng-template>
@@ -227,5 +264,6 @@
         </p-table>
     </div>
 </div>
+<br>
 <p-confirmDialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
 </p-confirmDialog>

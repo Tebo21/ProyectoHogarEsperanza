@@ -1,5 +1,6 @@
 export class DocumentosBeneficiarios {
-_id:number;    
-cedulaPersona:string;
-docPersonasBeneficiarios:[]
+    idDocumentos?: number;    
+    cedulaPersona?: string;
+    tipoDocumento?: string;
+    nombreArchivo?: string;
 }

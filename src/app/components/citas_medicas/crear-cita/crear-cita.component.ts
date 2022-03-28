@@ -14,6 +14,8 @@ import { ActividadesService } from 'src/app/services/actividades.service';
 import pdfMake from 'pdfmake/build/pdfmake';
 import { formatDate } from '@angular/common';
 import Swal from 'sweetalert2';
+import { mailSender } from 'src/app/models/mailSender';
+import { MailsenderService } from 'src/app/services/mailsender.service';
 
 @Component({
   selector: 'app-crear-cita',
@@ -72,6 +74,7 @@ export class CrearCitaComponent implements OnInit {
     private serviceEspecialidad: EspecialidadService,
     private personaService: PersonasService,
     public _actividadservice: ActividadesService,
+    public mailsenderService: MailsenderService,
     private router: Router) { }
 
   // tslint:disable-next-line: typedef
@@ -135,12 +138,15 @@ export class CrearCitaComponent implements OnInit {
         this.citaMedicaService.updateCita(this.cita.idCitasMedicas, this.cita).subscribe(
           data => {
             if (data) {
-              alert('Cita Medica editada');
-              this.reloadData();
-              this.listCentro();
-              this.listEspecialidad();
-              this.cita = new CitasMedicas();
-              this.limpiarCampo();
+              this.enviarMail()
+              Swal.fire({
+                icon: 'success',
+                title: 'Cita Medica editada',
+              });
+              const contador = timer(2000);
+              contador.subscribe((n) => {
+                window.location.reload();
+              })
             }
           }
         );
@@ -160,11 +166,15 @@ export class CrearCitaComponent implements OnInit {
           .subscribe((data) => {
             if (data) {
               alert('Cita Medica Registrada Correcamente');
-              this.cita = new CitasMedicas();
-              this.reloadData();
-              this.listCentro();
-              this.listEspecialidad();
-              this.limpiarCampo();
+              this.enviarMail()
+              Swal.fire({
+                icon: 'success',
+                title: 'Cita Medica Registrada Correcamente',
+              });
+              const contador = timer(2000);
+              contador.subscribe((n) => {
+                window.location.reload();
+              })
             }
           });
       }
@@ -172,6 +182,20 @@ export class CrearCitaComponent implements OnInit {
 
   }
 
+  enviarMail() {
+    let nuevoMail: mailSender = {
+      toEmail: this.cita.mensaje.toString(),
+      body: 'Tiene una cita de: ' + this.cita.descripcionCitaMedica + ' con fecha: ' + this.cita.fechaCitaMedica +
+        ' su acompañante es ' + this.nombreper2 + ' en el Centro Médico ' + this.nombreSeCe + ' en la especialidad: '
+        + this.nombreSeEspecialidad + ' Observaciones a tener en cuenta: ' + this.cita.nota,
+      subjetct: 'Fundación Hogar Esperanza Cuenca le recuerda.'
+    }
+    this.mailsenderService.enviarMail(nuevoMail.toEmail, nuevoMail.body, nuevoMail.subjetct).subscribe(data => {
+      console.log(data)
+      console.error();
+    }
+    )
+  }
 
   deleteCita(cita: CitasMedicas) {
     const response = confirm(`¿Desea eliminar: ${cita.descripcionCitaMedica}?`);
@@ -514,7 +538,7 @@ export class CrearCitaComponent implements OnInit {
         }
 
       } else if (nuevaAsistencia == true) {
-        if(this.personaValidar.faltas<=0){
+        if (this.personaValidar.faltas <= 0) {
           Swal.fire({
             icon: 'success',
             title: 'Se actualizó con exito!',
@@ -523,7 +547,7 @@ export class CrearCitaComponent implements OnInit {
           contador.subscribe((n) => {
             window.location.reload();
           });
-        } else if(this.personaValidar.faltas>0) {
+        } else if (this.personaValidar.faltas > 0) {
           const PersonaNueva: Personas = {
             apellidos: this.personaValidar.apellidos,
             beneficiario: this.personaValidar.beneficiario,
@@ -552,8 +576,8 @@ export class CrearCitaComponent implements OnInit {
             window.location.reload();
           });
         }
-        
-      
+
+
       }
     });
   }

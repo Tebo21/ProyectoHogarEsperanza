@@ -1,10 +1,13 @@
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { Message } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { Personas } from 'src/app/models/personas';
 import { Usuarios } from 'src/app/models/usuarios';
 import { PersonasService } from 'src/app/services/personas.service';
 import { UsuarioService } from 'src/app/services/usuarios.service';
+import { timer } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-usuarios',
@@ -62,15 +65,15 @@ export class EditarUsuariosComponent implements OnInit {
     this.usuarioService.getUserByCedula(this.cedUser).subscribe(data => {
       this.usuarioActual = data;
       this.usuarioContraseniaAnterior = this.usuarioActual.usuarioContrasenia;
-
     });
+
     this.personaService.getUserByCedula(this.cedulaEditar).subscribe(data3 => {
       this.persona = data3;
       this.nacio = this.persona.nacionalidad;
       this.estado = this.persona.estado_civil;
       this.genero = this.persona.genero;
-
     });
+
     this.usuarioService.getUserByCedula(this.cedulaEditar).subscribe(data2 => {
       this.usuarioEdit = data2;
       this.tipo = this.usuarioEdit.usuarioTipo;
@@ -106,10 +109,19 @@ export class EditarUsuariosComponent implements OnInit {
 
   ComprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
-    if (this.tipoUser == 1) {
-    } else if (this.tipoUser == 2 || this.tipoUser == 3 || this.tipoUser == 4) {
-      alert('No tiene permisos para editar usuarios')
+    if (this.tipoUser == 1 || this.tipoUser == 2) {
+    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para editar usuarios',
+        icon: 'warning',
+      });
       this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
     }
   }
 
@@ -152,10 +164,19 @@ export class EditarUsuariosComponent implements OnInit {
   }
 
   calcularedad(event: any) {
-    let fecha = new Date(event.target.value);
-    let fechactual = new Date();
-    var f1 = fechactual.getFullYear() - fecha.getFullYear();
-    this.persona.edad = f1
+    const hoy: Date = new Date();
+    var a = moment(hoy);
+    var b = moment(this.persona.fechaNacimiento);
+
+    var years = a.diff(b, 'year');
+    b.add(years, 'years');
+
+    var months = a.diff(b, 'months');
+    b.add(months, 'months');
+
+    var days = a.diff(b, 'days');
+
+    this.persona.edad = years
   }
 
   tipoUsuario(usuarioTipo: number): string {
@@ -169,7 +190,6 @@ export class EditarUsuariosComponent implements OnInit {
       return 'Voluntario Externo'
     }
   }
-
 
   Validacion() {
     if (this.estado == undefined || this.estado == null || this.validoE == false) {
@@ -192,92 +212,55 @@ export class EditarUsuariosComponent implements OnInit {
     } else {
       this.usuarioT = this.usuarioT;
     }
-    this.Actualizar();
+    if (this.persona.cedula == '' || this.persona.cedula == undefined || this.persona.cedula == null ||
+      this.persona.nombres == '' || this.persona.nombres == undefined || this.persona.nombres == null ||
+      this.persona.apellidos == '' || this.persona.apellidos == undefined || this.persona.apellidos == null ||
+      this.persona.fechaNacimiento == undefined) {
+      this.addMultiple('error', 'Error', 'Por favor rellene los campos que tengan *');
+    } else {
+      this.msgs = []
+      this.Actualizar();
+    }
   }
 
-
   Actualizar() {
-    this.personaService.getUserByCedula(this.persona.cedula).subscribe(dat => {
-      this.personaValidar = dat;
-    })
-    this.personaService.getPorCorreo(this.persona.correo).subscribe(data => {
-      this.personaValidarCorreo = data;
-      if (this.personaValidarCorreo.correo == this.personaValidar.correo) {
-        const PersonaNueva: Personas = {
-          apellidos: this.persona.apellidos,
-          beneficiario: this.persona.beneficiario,
-          cedula: this.persona.cedula,
-          celular: this.persona.celular,
-          correo: this.persona.correo,
-          direccion: this.persona.direccion,
-          edad: this.persona.edad,
-          estadoActivo: this.persona.estadoActivo,
-          estado_civil: this.estadoFinal,
-          fechaNacimiento: this.persona.fechaNacimiento,
-          genero: this.generoFinal,
-          idPersona: this.persona.idPersona,
-          nacionalidad: this.nacioFinal,
-          nombres: this.persona.nombres,
-          faltas: this.persona.faltas
-        }
-        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
-        });
-        const UsuarioNuevo: Usuarios = {
-          idUsuario: this.usuarioEdit.idUsuario,
-          usuarioCedula: this.usuarioEdit.usuarioCedula,
-          usuarioContrasenia: this.usuarioEdit.usuarioContrasenia,
-          usuarioNombre: this.usuarioEdit.usuarioNombre,
-          usuarioTipo: this.usuarioT,
-          usuarioEstado: true,
-          usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
-        }
-        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-          alert('Se ha actualizado exitosamente')
-          this.router.navigateByUrl('listado-usuarios');
-        });
-      } else if (this.personaValidarCorreo.cedula == null) {
-        const PersonaNueva: Personas = {
-          apellidos: this.persona.apellidos,
-          beneficiario: this.persona.beneficiario,
-          cedula: this.persona.cedula,
-          celular: this.persona.celular,
-          correo: this.persona.correo,
-          direccion: this.persona.direccion,
-          edad: this.persona.edad,
-          estadoActivo: this.persona.estadoActivo,
-          estado_civil: this.estadoFinal,
-          fechaNacimiento: this.persona.fechaNacimiento,
-          genero: this.generoFinal,
-          idPersona: this.persona.idPersona,
-          nacionalidad: this.nacioFinal,
-          nombres: this.persona.nombres,
-          faltas: this.persona.faltas
-        }
-        this.personaService.updatePersona(PersonaNueva).subscribe(() => {
-        });
-        const UsuarioNuevo: Usuarios = {
-          idUsuario: this.usuarioEdit.idUsuario,
-          usuarioCedula: this.usuarioEdit.usuarioCedula,
-          usuarioContrasenia: this.usuarioEdit.usuarioContrasenia,
-          usuarioNombre: this.usuarioEdit.usuarioNombre,
-          usuarioTipo: this.usuarioT,
-          usuarioEstado: true,
-          usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
-        }
-        this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-          alert('Se ha actualizado exitosamente')
-          this.router.navigateByUrl('listado-usuarios');
-        });
-      } else {
-        alert('Esta dirección de correo electrónico ya está en uso')
-      }
+    const PersonaNueva: Personas = {
+      apellidos: this.persona.apellidos,
+      beneficiario: this.persona.beneficiario,
+      cedula: this.persona.cedula,
+      celular: this.persona.celular,
+      correo: this.persona.correo,
+      direccion: this.persona.direccion,
+      edad: this.persona.edad,
+      estadoActivo: this.persona.estadoActivo,
+      estado_civil: this.estadoFinal,
+      fechaNacimiento: this.persona.fechaNacimiento,
+      genero: this.generoFinal,
+      idPersona: this.persona.idPersona,
+      nacionalidad: this.nacioFinal,
+      nombres: this.persona.nombres,
+      faltas: this.persona.faltas
+    }
+    const UsuarioNuevo: Usuarios = {
+      idUsuario: this.usuarioEdit.idUsuario,
+      usuarioCedula: this.usuarioEdit.usuarioCedula,
+      usuarioContrasenia: this.usuarioEdit.usuarioContrasenia,
+      usuarioNombre: this.usuarioEdit.usuarioNombre,
+      usuarioTipo: this.usuarioT,
+      usuarioEstado: true,
+      usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
+    }
+    this.personaService.updatePersona(PersonaNueva).subscribe(() => {
     });
-
+    this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
+      alert('Se ha actualizado exitosamente')
+      this.router.navigateByUrl('listado-usuarios');
+    });
   }
 
   CambiarContra() {
     if (this.usuarioContrasenia != this.usuarioConfirContrasenia) {
-      alert('Las contraseñas no coinciden')
+      this.addMultiple('error', 'Error', 'Las contraseñas no coinciden')
     } else {
       const UsuarioNuevo: Usuarios = {
         idUsuario: this.usuarioEdit.idUsuario,
@@ -289,14 +272,24 @@ export class EditarUsuariosComponent implements OnInit {
         usuarioFechaCreacion: this.usuarioEdit.usuarioFechaCreacion
       }
       this.usuarioService.updateUser(UsuarioNuevo).subscribe(() => {
-        alert('Se ha actualizado exitosamente su contraseña')
+        this.addMultiple('success', 'Exito', 'Actualización exitosa')
         this.displayContra = false;
         window.location.reload();
       });
     }
   }
 
+  addMultiple(severity1: string, sumary1: string, detail1: string) {
+    this.msgs =
+      [{ severity: severity1, summary: sumary1, detail: detail1 }];
+    const contador = timer(6000);
+    contador.subscribe((n) => {
+      this.msgs = []
+    })
+  }
+
   Cancelar() {
     this.router.navigateByUrl('listado-usuarios');
   }
+
 }
