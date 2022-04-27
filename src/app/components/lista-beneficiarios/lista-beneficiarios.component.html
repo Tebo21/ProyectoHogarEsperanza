@@ -6,14 +6,14 @@
         <p-table #dt [value]="ListadoPersonas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="Se muestran del {first} al {last} de un total de {totalRecords} beneficiarios registrados" [rowsPerPageOptions]="[10,25,50]"
         [loading]="loading" [scrollable]="true" scrollHeight="400px" [(selection)]="selected" dataKey="cedula"
-        [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo']">
+        [globalFilterFields]="['cedula', 'nombres', 'apellidos', 'direccion', 'telefono', 'correo', 'edad', 'estado_civil', 'nacionalidad']">
             <ng-template pTemplate="caption">
                 <div class="prin">
                     <div class="sec" >
                         <span class="p-input-icon-right">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text"
-                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                            <input pInputText type="text" style="width: 100%;"
+                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Cédula, nombre, etc." />
                         </span>
                     </div>
                     <div class="ter" >
@@ -238,7 +238,7 @@
                         <button pButton pRipple type="button" icon="pi pi-eye" pTooltip="Observaciones" tooltipPosition="left"
                             class="p-button-rounded p-button-info p-button-outlined" (click)="verObservaciones(user.cedula)">
                         </button>
-                        <button pButton pRipple type="button" icon="pi pi-folder-open" pTooltip="Asistencias" tooltipPosition="left"
+                        <button pButton pRipple type="button" icon="pi pi-folder-open" pTooltip="Actividades" tooltipPosition="left"
                             class="p-button-rounded p-button-info p-button-outlined" (click)="verHistorial(user.cedula)">
                         </button>
                         <button pButton pRipple type="button" icon="pi pi-id-card" pTooltip="Documentos" tooltipPosition="left"

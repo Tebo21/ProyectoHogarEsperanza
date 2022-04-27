@@ -16,8 +16,8 @@ import Swal from 'sweetalert2';
 })
 export class EditarUsuariosComponent implements OnInit {
   //Comprobacion de Usuario
-  cedUser: any;
-  cedulaEditar: any;
+  cedUser: string = localStorage.getItem('cedUser')
+  cedulaEditar: string = localStorage.getItem('cedulaEditar')
   usuarioT: any;
   //Mensajes
   msgs: Message[];
@@ -59,9 +59,29 @@ export class EditarUsuariosComponent implements OnInit {
   constructor(private usuarioService: UsuarioService, private personaService: PersonasService, private router: Router) { }
 
   ngOnInit(): void {
-    this.ComprobarLogin();
-    this.cedUser = localStorage.getItem('cedUser')
-    this.cedulaEditar = localStorage.getItem('cedulaEditar')
+    this.ComprobarLogin(); 
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1 || this.tipoUser == 2) {
+      this.cargarDatos()
+    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para editar usuarios',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
+    }
+  }
+
+  cargarDatos(){
     this.usuarioService.getUserByCedula(this.cedUser).subscribe(data => {
       this.usuarioActual = data;
       this.usuarioContraseniaAnterior = this.usuarioActual.usuarioContrasenia;
@@ -105,24 +125,6 @@ export class EditarUsuariosComponent implements OnInit {
       { gop: 'Femenino' },
       { gop: 'Otro' }
     ]
-  }
-
-  ComprobarLogin() {
-    this.tipoUser = localStorage.getItem('rolUser');
-    if (this.tipoUser == 1 || this.tipoUser == 2) {
-    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
-      Swal.fire({
-        title: 'No tiene permisos para editar usuarios',
-        icon: 'warning',
-      });
-      this.router.navigateByUrl('inicio-super-admin');
-    } else {
-      Swal.fire({
-        title: 'Por favor inicie sesión primero',
-        icon: 'error',
-      });
-      this.router.navigateByUrl('login');
-    }
   }
 
   onChange(event: any) {

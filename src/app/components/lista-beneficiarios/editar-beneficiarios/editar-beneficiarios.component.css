@@ -18,6 +18,3 @@
   position: absolute;
   right: 0px;
 }
-input:invalid{
-  background-color: #fcdfdf;
-}

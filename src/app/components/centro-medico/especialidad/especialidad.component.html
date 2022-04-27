@@ -17,11 +17,17 @@
       <div class="form-group">
         <label for="centroMedico"><b>Seleccione el Centro Médico:</b></label>
         <div class="dropdown show">
-          <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
+          <p-dropdown [options]="centro" [(ngModel)]="nombreSeCe"
+                placeholder="Seleccione el nombre de la especialidad" optionLabel="nombreCentroMedico"
+                [style]="{'width': '100%'}">
+            </p-dropdown>
+
+          <!-- <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro" forControlName="nomcentro">
             <option *ngFor="let c of centro" class="dropdown-item">
               {{ c.nombreCentroMedico }}
-            </option>
-          </select>
+            </option>s
+            
+          </select> -->
         </div>
 
         <br />

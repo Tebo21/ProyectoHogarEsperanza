@@ -2,218 +2,209 @@
 <br>
 <h2 class="text-center">Citas médicas</h2>
 <div class="container animated d-flex justify-content-center animated fadeIn">
-    <p-panel class="card" id="panel" header="Agendar cita médicas">
-        <div class="form-group">
-            <label for="descripcionCitaMedica"><b>Descripción de la cita:</b></label>
-            <input type="text" class="form-control" required [(ngModel)]="cita.descripcionCitaMedica"
-                placeholder="Descripcion Cita Medica" />
-        </div>
-
-        <div class="form-group">
-            <label for="fechaCitaMedica"><b>Fecha de la Cita Médica:</b></label>
-            <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="cita.fechaCitaMedica"
-                type="datetime-local" class="form-control" placeholder="Fecha de la cita medica">
-        </div>
+    <p-panel class="card" id="panel" header="Agendamiento" [toggleable]="true">
 
         <div class="form-group ">
-            <label for="cedulpa"> <b>Ingrese el número de cédula del Paciente: </b></label>
+            <label for="cedulpa"> <b>Número de cédula del beneficiario * </b></label>
             <input type="text" class="form-control" [formControl]="cedulapa" id="paciente" required
-                [(ngModel)]="cedulaPaciente" name="paciente" placeholder="Cedula paciente">
-            <p style="margin-left: 5%;"></p>
-            <button type="button" class="btn btn-secondary" id="btnpa" (click)="buscarPersona()"
-                [disabled]="cedulapa.invalid">Verificar informacion</button>
-
-            <p style="margin-left: 25%;"></p>
-            <div *ngIf="valida==true" class="alert alert-info" role="alert" id="alert1">
-                <div>
-                    <label for="nombre" class="form-label"><b>Nombre</b></label>
-                    <input type="text" class="form-control" [(ngModel)]="nombreper" disabled>
+                [(ngModel)]="cedulaPaciente" name="paciente"
+                placeholder="Cédula del beneficiario para quien se registra la cita médica">
+            <p><small>Por favor asegurese de verificar si el número de cédula corresponde con el beneficiario al que desea agendar la cita médica dando clic en el botón "Verificar información"</small></p>
+            <button pButton type="button" label="Verificar información" class="p-button-outlined"
+                [disabled]="cedulapa.invalid" (click)='buscarPersona()'>
+            </button>
+            <p-dialog header="Información encontrada para el beneficiario con el número de cédula ingresado" [(visible)]="personaModal" [modal]="true" [style]="{width: '50vw'}"
+                [draggable]="false" [resizable]="false">
+                <div class="form-floating mb-3">
+                    <label for="floatingInput"><b>Nombre completo</b></label>
+                    <input type="text" class="form-control" [(ngModel)]="nombreper" readonly>
                 </div>
-                <div>
-                    <label for="email" class="form-label"><b>Correo</b></label>
-                    <input type="email" class="form-control" id="email" [(ngModel)]="correoper" disabled>
+                <div class="form-floating mb-3">
+                    <label for="email" class="form-label"><b>Correo electrónico</b></label>
+                    <input type="email" class="form-control" id="email" [(ngModel)]="correoper" readonly>
                 </div>
-                <div>
+                <div class="form-floating mb-3">
                     <label for="examplePhone" class="form-label"><b>Teléfono</b></label>
-                    <input type="text" class="form-control" [(ngModel)]="telefonoper" disabled>
+                    <input type="text" class="form-control" [(ngModel)]="telefonoper" readonly>
                 </div>
-                <p style="border: 5%;"></p>
-                <div>
-                    <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
-                    <p style="border: 5%;"></p>
-                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar
-                        Paciente</button>
+                <div class="form-floating mb-0">
+                    <label><b>¿Es esta información correcta?</b></label>
                 </div>
-            </div>
+                <ng-template pTemplate="footer">
+                    <div class="grid-container1">
+                        <div class="bt">
+                            <button pButton type="button" label="Información correcta" icon="pi pi-check"
+                                class="p-button-outlined" (click)="personaModal=false"></button>
+                        </div>
+                        <div class="bt">
+                            <button pButton type="button" label="No, volver a intentar" icon="pi pi-info"
+                                class="p-button-outlined p-button-help" (click)="personaModal=false"></button>
+                        </div>
+                        <div class="bt">
+                            <button pButton type="button" label="Registrar beneficiario" icon="pi pi-user-plus"
+                                class="p-button-outlined p-button-danger" (click)='registrar()'></button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dialog>
         </div>
-        <div class="form-group ">
-            <label for="acompanante"> <b>Ingrese número de cédula del Acompañante:</b></label>
-            <input type="text" class="form-control" id="acompanante" [formControl]="cedulaac" required
-                [(ngModel)]="cedulaAcom" name="acompanante" placeholder="Cedula Acopañante">
-            <p style="margin-left: 5%;"></p>
-            <button type="button" class="btn btn-secondary" (click)="buscarAcompa()"
-                [disabled]="cedulaac.invalid">Verificar información</button>
-
-            <p style="margin-left: 25%;"></p>
-            <div *ngIf="valida2==true" class="alert alert-info" role="alert" id="alert2">
-                <div>
-                    <label for="nombre" class="form-label"><b>Nombre</b></label>
-                    <input type="text" class="form-control" [(ngModel)]="nombreper2" disabled>
-                </div>
-                <div>
-                    <label for="email" class="form-label"><b>Correo</b></label>
-                    <input type="email" class="form-control" id="email" [(ngModel)]="correoper2" disabled>
-                </div>
-                <div>
-                    <label for="examplePhone" class="form-label"><b>Teléfono</b></label>
-                    <input type="text" class="form-control" [(ngModel)]="telefonoper2" disabled>
-                </div>
-                <p style="border: 5%;"></p>
-                <div>
-                    <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
-                    <p style="border: 5%;"></p>
-                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar
-                        Acompañante</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group ">
-            <label for="mensaje"><b>Ingrese el correo al que se enviará el recordatorio:</b></label>
-            <input type="text" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje"
-                placeholder="correo">
-        </div>
-
 
         <div class="form-group">
-            <label for="name"><b>Ingrese el número de cédula del Trabajador de la fundación:</b></label>
-            <input type="text" class="form-control" id="trabajador" [formControl]="cedulatra" required
-                [(ngModel)]="cedulaTra" name="trabajador" placeholder="Cedula trabajador">
+            <label for="descripcionCitaMedica"><b>Descripción *</b></label>
+            <input type="text" class="form-control" required [(ngModel)]="cita.descripcionCitaMedica"
+                placeholder="Descripción:" />
+        </div>
 
-            <p style="margin-left: 5%;"></p>
-            <button type="button" class="btn btn-secondary" id="btn3" (click)="buscarTraba()"
-                [disabled]="cedulatra.invalid">Verificar información</button>
+        <div class="form-group">
+            <label for="fechaCitaMedica"><b>Fecha *</b></label>
+            <input [(ngModel)]="cita.fechaCitaMedica" name="fechaCitaMedica" id="cita.fechaCitaMedica"
+                type="datetime-local" class="form-control" placeholder="Fecha de la cita medica" required>
+        </div>
 
-            <p style="margin-left: 5%;"></p>
-            <div *ngIf="valida3==true" id="alert3" class="alert alert-info alert-dismissible fade show" role="alert"
-                align-items="center;" justify-content="center;">
-                <p style="margin-left: 25%;"></p>
-                <div>
+        <div class="form-group ">
+            <label for="mensaje"><b>Correo electrónico del beneficiario a quien se le enviará el recordatorio *</b></label>
+            <input type="text" class="form-control" id="mensaje" required [(ngModel)]="cita.mensaje" name="mensaje"
+                placeholder="Se le enviará un correo electrónico con los datos de la cita">
+        </div>
+
+        <div class="form-group ">
+            <label for="acompanante"> <b>Número de cédula del trabajador de la fundación que acompañará al beneficiario a la cita médica *</b></label>
+            <input type="text" class="form-control" id="acompanante" [formControl]="cedulaac" required
+                [(ngModel)]="cedulaAcom" name="acompanante"
+                placeholder="Cédula del trabajador de la fundación que asistirá a la cita médica con el beneficiario">
+            <p><small>Por favor asegurese de verificar si el número de cédula corresponde con el trabajador de la fundación que acompañará al beneficiario a la cita médica dando clic en el botón "Verificar información"</small></p>
+            <button pButton type="button" label="Verificar información" class="p-button-outlined"
+                [disabled]="cedulaac.invalid" (click)='buscarAcompa()'>
+            </button>
+            <p-dialog header="Información encontrada para el número de cédula ingresado" [(visible)]="acompaModal" [modal]="true" [style]="{width: '50vw'}"
+                [draggable]="false" [resizable]="false">
+                <div class="form-floating mb-3">
                     <label for="nombre" class="form-label"><b>Nombre</b></label>
-                    <input type="text" class="form-control" [(ngModel)]="nombreper3" disabled>
+                    <input type="text" class="form-control" [(ngModel)]="nombreper2" readonly>
                 </div>
-                <div>
+                <div class="form-floating mb-3">
                     <label for="email" class="form-label"><b>Correo</b></label>
-                    <input type="email" class="form-control" id="email" [(ngModel)]="correoper3" disabled>
+                    <input type="email" class="form-control" id="email" [(ngModel)]="correoper2" readonly>
                 </div>
-                <div>
+                <div class="form-floating mb-3">
                     <label for="examplePhone" class="form-label"><b>Teléfono</b></label>
-                    <input type="text" class="form-control" [(ngModel)]="telefonoper3" disabled>
+                    <input type="text" class="form-control" [(ngModel)]="telefonoper2" readonly>
                 </div>
-                <p style="border: 5%;"></p>
-                <div>
-                    <button type="button" class="btn btn-info" data-dismiss="alert">Información correcta</button>
-                    <p style="border: 5%;"></p>
-                    <button type="button" class="btn btn-outline-danger" (click)="registrar()">No, registrar
-                        Trabajador</button>
+                <div class="form-floating mb-0">
+                    <label><b>¿Es esta información correcta?</b></label>
                 </div>
-            </div>
+                <ng-template pTemplate="footer">
+                    <div class="grid-container1">
+                        <div class="bt">
+                            <button pButton type="button" label="Información correcta" icon="pi pi-check"
+                                class="p-button-outlined" (click)="acompaModal=false"></button>
+                        </div>
+                        <div class="bt">
+                            <button pButton type="button" label="No, volver a intentar" icon="pi pi-info"
+                                class="p-button-outlined p-button-help" (click)="acompaModal=false"></button>
+                        </div>
+                        <div class="bt">
+                            <button pButton type="button" label="Registrar beneficiario" icon="pi pi-user-plus"
+                                class="p-button-outlined p-button-danger" (click)='registrarU()'></button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dialog>
         </div>
 
         <div class="form-group ">
-            <label for="centroMedico"><b>Seleccione el Centro Médico:</b></label>
+            <label for="emailextra"><b>Correo electrónico del trabajador al que se enviará el recordatorio *</b></label>
+            <input type="text" class="form-control" id="emailextra" required [(ngModel)]="emailextra" name="emailextra"
+                placeholder="Se le enviará un correo electrónico con los datos de la cita">
+        </div>
+
+        <div class="form-group">
+            <label for="name"><b>Número de cédula del usuario que registra la cita *</b></label>
+            <input type="text" class="form-control" id="cedUser" [(ngModel)]="cedUser" name="cedUser" readonly>
+        </div>
+
+        <div class="form-group ">
+            <label><b>Seleccione el centro médico *</b></label>
             <br>
-            <p style="margin-left: 5%;"></p>
-            <div class="dropdown show">
-                <select [(ngModel)]="nombreSeCe" class="btn btn-secondary dropdown-toggle" id="nomcentro"
-                    forControlName="nomcentro">
-                    <option *ngFor="let c of centro" class="dropdown-item">
-                        {{c.nombreCentroMedico}}
-                    </option>
-                </select>
-            </div>
+            <p-dropdown [options]="centros" [(ngModel)]="nombreSeCe" placeholder="Seleccione el centro médico"
+                optionLabel="nombreCentroMedico" [style]="{'width': '100%'}">
+            </p-dropdown>
         </div>
 
         <div class="form-group ">
-            <label for="centroMedico "><b>Seleccione la Especialidad:</b></label>
+            <label><b>Seleccione la especialidad *</b></label>
             <br>
-            <p style="margin-left: 25%; "></p>
-            <div class="dropdown show ">
-                <select [(ngModel)]="nombreSeEspecialidad " class="btn btn-secondary dropdown-toggle "
-                    id="nomespecialidad " forControlName="nomespecialidad ">
-                    <option *ngFor="let e of especialidad " class="dropdown-item ">
-                        {{e.nombreEspecialidad}}
-                    </option>
-                </select>
-            </div>
+            <p-dropdown [options]="especialidad" [(ngModel)]="nombreSeEspecialidad"
+                placeholder="Seleccione la especialidad" optionLabel="nombreEspecialidad" [style]="{'width': '100%'}">
+            </p-dropdown>
         </div>
 
         <div class="form-group ">
-            <label for="name "><b>Observaciones a tener en cuenta para la cita:</b></label>
+            <label for="name "><b>Observaciones a tener en cuenta para la cita *</b></label>
             <input type="text " class="form-control " id="nota " required [(ngModel)]="cita.nota " name="nota "
-                placeholder="Observaciones ">
+                placeholder="Ejemplo: Llegar 10 minutos antes, ir en ayunas, etc.">
         </div>
-        <div class="card-footer">
-            <div class="botones">
-                <div class="row">
-                    <div class="col d-grid gap-2">
-                        <button class="btn btn-outline-success btnfooter" (click)="save()" type="button"
-                            style="margin-left: 10px">
-                            Guardar <i class="pi pi-check"></i>
-                        </button>
-                    </div>
-
-                    <div class="col d-grid gap-2">
-                        <button class="btn btn-outline-primary btnfooter" (click)="genereport()" type="button"
-                            style="margin-left: 10px">
-                            Reporte <i class="pi pi-file-pdf"></i>
-                        </button>
-                    </div>
-                </div>
+        <div class="prin">
+            <div class="sec">
+                <button pButton type="button" label="Guardar" icon="pi pi-check" class="p-button-outlined"
+                    (click)='save()'>
+                </button>
+            </div>
+            <div class="ter">
+                <button pButton type="button" label="Generar PDF" icon="pi pi-file-pdf"
+                    class="p-button-outlined p-button-danger" (click)='genereport()'>
+                </button>
             </div>
         </div>
+        <br>
     </p-panel>
 </div>
 <br />
-<div>
-    <div class="modal-header text-center ">
-        <h3 class="text-center "><b>Lista de las Citas Medicas agendadas</b></h3>
-    </div>
-    <br />
-    <div>
-        <button style="margin-left: 80% " type="button " class="btn btn-secondary btn-lg " (click)="buscar() ">Buscar
-            por:</button>
-    </div>
-    <br />
+<div class="tabla">
     <div class="tables">
-        <table class="table table-bordered ">
-            <thead>
+        <p-table #dt [value]="citaM" dataKey="id" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+            [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [scrollable]="true" scrollHeight="400px"
+            currentPageReportTemplate="Se muestra {first} a {last} de {totalRecords} registros" [filterDelay]="0"
+            [globalFilterFields]="['#','descripcionCitaMedica','paciente', 'acompaniante', 'trabajadorFundacion', 'centroMedico', 
+            'especialidad', 'fechaCitaMedica']">
+            <ng-template pTemplate="caption">
+                <div class="prin">
+                    <div class="sec">
+                        <span class="p-input-icon-right">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text"
+                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                        </span>
+                    </div>
+                    <div class="ter">
+                        <button type="button " class="btn btn-secondary btn-lg " (click)="buscar()">Buscar por
+                            *</button>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
                 <tr>
-                    <th scope="col ">Descripción de la Cita Medica</th>
-                    <th scope="col ">Fecha Cita Médica</th>
-                    <th scope="col ">Hora</th>
-                    <th scope="col ">Paciente</th>
-                    <th scope="col ">Acompañante</th>
-                    <th scope="col ">Correo</th>
-                    <th scope="col ">Trabajador</th>
-                    <th scope="col ">Centro Médico</th>
-                    <th scope="col ">Especialidad</th>
-                    <th scope="col ">Observaciones</th>
-                    <th scope="col ">Asistencia</th>
-                    <th scope="col ">Cambiar Asistencia</th>
-                    <th scope="col ">Opciones</th>
+                    <th>Descripción de la Cita Medica</th>
+                    <th>Fecha y hora</th>
+                    <th>Paciente</th>
+                    <th>Acompañante</th>
+                    <th>Correo</th>
+                    <th>Usuario que registró</th>
+                    <th>Centro Médico</th>
+                    <th>Especialidad</th>
+                    <th>Observaciones</th>
+                    <th>Opciones</th>
+                    <th>Asistencia</th>
+                    <th>Cambiar Asistencia</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let u of citaMedica | async " class="list-group-item-action ">
+            </ng-template>
+            <ng-template pTemplate="body" let-u>
+                <tr class="p-selectable-row">
                     <td>
                         {{ u.descripcionCitaMedica}}
                     </td>
                     <td>
-                        {{ u.fechaCitaMedica.substring(0,10)}}
-                    </td>
-                    <td>
-                        {{ u.fechaCitaMedica.substring(11) }}
+                        {{ u.fechaCitaMedica.substring(0,10)}} {{ u.fechaCitaMedica.substring(11) }}
                     </td>
                     <td>
                         {{ u.paciente }}
@@ -237,25 +228,32 @@
                         {{ u.nota }}
                     </td>
                     <td>
+                        <button pButton pRipple type="button" icon="pi pi-pencil" pTooltip="Editar"
+                            tooltipPosition="left" class="p-button-rounded p-button-outlined" (click)="openForEdit(u)">
+                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="Eliminar"
+                            tooltipPosition="left" class="p-button-rounded p-button-danger p-button-outlined"
+                            (click)="deleteCita(u)">
+                        </button>
+                    </td>
+                    <td>
                         <i class="pi"
                             [ngClass]="{'true-icon pi-check-circle': u.asistencia, 'false-icon pi-times-circle': !u.asistencia}"></i>
                     </td>
                     <td>
-                        <button pButton pRipple type="button" icon="pi pi-user-edit"
-                            class="p-button-rounded p-button-outlined"
-                            (click)="actualizarAsistencia(u.idCitasMedicas, u)">
+                        <button pButton pRipple type="button" icon="pi pi-arrow-left"
+                            class="p-button-rounded p-button-outlined" pTooltip="Cambiar asistencia"
+                            tooltipPosition="left" (click)="actualizarAsistencia(u.idCitasMedicas, u)">
                         </button>
                     </td>
-                    <td>
-                        <div class="cell" data-title="Acciones">
-                            <input class="btn-update" (click)="openForEdit(u)" type="image"
-                                src="../../../assets/img/pencil.svg" alt="Delete" />
-                            <input class="btn-delete" (click)="deleteCita(u)" type="image"
-                                src="../../../assets/img/delete.svg" alt="Delete" />
-                        </div>
-                    </td>
+
                 </tr>
-            </tbody>
-        </table>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No se encontraron citas médicas agendadas</td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>

@@ -1,91 +1,119 @@
 .cell {
-    display: table-cell;
-    vertical-align: middle;
-    border: 1px solid black;
+  display: table-cell;
+  vertical-align: middle;
+  border: 1px solid black;
 }
 
 @media screen and (max-width: 768px) {
-    .cell {
-        display: block;
-    }
+  .cell {
+    display: block;
+  }
 }
 
 .row .cell {
-    font-family: Poppins-Regular;
-    font-size: 12px;
-    color: #666666;
-    line-height: 1.2;
-    font-weight: unset !important;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #f2f2f2;
+  font-family: Poppins-Regular;
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.2;
+  font-weight: unset !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f2f2f2;
 }
 
 .row.header .cell {
-    font-family: Poppins-Regular;
-    font-size: 18px;
-    color: #fff;
-    line-height: 1.2;
-    font-weight: unset !important;
-    padding-top: 19px;
-    padding-bottom: 19px;
+  font-family: Poppins-Regular;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset !important;
+  padding-top: 19px;
+  padding-bottom: 19px;
 }
 
 .row .cell:nth-child(1) {
-    width: 160px;
-    padding-left: 40px;
+  width: 160px;
+  padding-left: 40px;
 }
 
 .row .cell:nth-child(2) {
-    width: 360px;
+  width: 360px;
 }
 
 .row .cell:nth-child(3) {
-    width: 250px;
+  width: 250px;
 }
 
 .row .cell:nth-child(4) {
-    width: 100px;
+  width: 100px;
 }
 
 .row .cell:nth-child(5) {
-    width: 90px;
+  width: 90px;
 }
 
 .btn-delete,
 .btn-update {
-    width: 25px;
-    padding: 7px;
-    border-radius: 50%;
+  width: 25px;
+  padding: 7px;
+  border-radius: 50%;
 }
 
 .btn-delete:hover {
-    width: 32px;
-    padding: 3px;
-    background-color: #000;
+  width: 32px;
+  padding: 3px;
+  background-color: #000;
 }
 
 .btn-update:hover {
-    width: 32px;
-    padding: 3px;
-    background-color: #000;
+  width: 32px;
+  padding: 3px;
+  background-color: #000;
 }
 
 .false-icon {
-    color: #fa0e0e;
-  }
-  
-  .true-icon {
-    color: green;
-  }
-
-  .false-icon, .true-icon {
-    font-size: 28px;
-  }
-.card{
-    border: 1px solid black;
-    width: 1000px;
+  color: #fa0e0e;
 }
-.tables{
-    border: 1px solid black;
+
+.true-icon {
+  color: green;
+}
+
+.false-icon,
+.true-icon {
+  font-size: 28px;
+}
+.card {
+  border: 1px solid black;
+  width: 1000px;
+}
+.tabla {
+  padding: 1em;
+}
+.tables {
+  border: 1px solid black;
+}
+.prin {
+  display: block;
+  position: relative;
+  height: 2em;
+}
+.sec {
+  display: block;
+  position: absolute;
+  left: 0px;
+}
+.ter {
+  display: block;
+  position: absolute;
+  right: 0px;
+}
+th, td {
+  width: 120px;
+  word-wrap: break-word;
+}
+.grid-container1 {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  padding: 2%;
 }

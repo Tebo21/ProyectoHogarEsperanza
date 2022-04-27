@@ -1,91 +1,30 @@
-.cell {
-    display: table-cell;
-    vertical-align: middle;
+th, td {
+    width: 120px;
+    word-wrap: break-word;
 }
-
-@media screen and (max-width: 768px) {
-    .cell {
-        display: block;
-    }
+.tabla {
+    padding: 1em;
 }
-
-.row .cell {
-    font-family: Poppins-Regular;
-    font-size: 12px;
-    color: #666666;
-    line-height: 1.2;
-    font-weight: unset !important;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #f2f2f2;
-}
-
-.row.header .cell {
-    font-family: Poppins-Regular;
-    font-size: 18px;
-    color: #fff;
-    line-height: 1.2;
-    font-weight: unset !important;
-    padding-top: 19px;
-    padding-bottom: 19px;
-}
-
-.row .cell:nth-child(1) {
-    width: 160px;
-    padding-left: 40px;
-}
-
-.row .cell:nth-child(2) {
-    width: 360px;
-}
-
-.row .cell:nth-child(3) {
-    width: 250px;
-}
-
-.row .cell:nth-child(4) {
-    width: 100px;
-}
-
-.row .cell:nth-child(5) {
-    width: 90px;
-}
-
-.buscar {
-    position: absolute;
-    padding: 15px;
-}
-
-.buscar input {
-    width: 240 px;
-    height: 40px;
-    padding: 0 8px;
-    font-size: 18 px;
-    color: #000;
-    border-radius: 30px;
-}
-
-.btnn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: #79aedf;
-    width: 300px;
-    height: 55px;
-    line-height: 55px;
-    text-align: center;
-    color: white;
-    font-size: 20px;
-    border-radius: 50%;
+.tables {
+  border: 1px solid black;
 }
 .false-icon {
-    color: #fa0e0e;
-  }
+  color: #fa0e0e;
+}
   
-  .true-icon {
-    color: green;
-  }
+.true-icon {
+  color: green;
+}
 
-  .false-icon, .true-icon {
-    font-size: 28px;
-  }
+.false-icon, .true-icon {
+  font-size: 28px;
+}
+.pan{
+  display: flex;
+  justify-content: center;
+}
+.grid-container1 {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  padding: 1em;
+}

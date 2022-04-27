@@ -39,8 +39,8 @@ export class ListaBeneficiariosComponent implements OnInit {
     this.ListadoRegistroFam = []
     this.ListadoFinal = []
     this.selected = []
-    this.ComprobarLogin()
     localStorage.setItem('cedulaEditar', '')
+    this.ComprobarLogin()
   }
 
   ComprobarLogin() {

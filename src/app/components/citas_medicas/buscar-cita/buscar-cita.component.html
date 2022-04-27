@@ -1,184 +1,174 @@
 <app-navbar-admin></app-navbar-admin>
 <br>
-
-
-<div class="container animated d-flex justify-content-center animated fadeIn">
-    <p-panel id="TABLA" class="card">
-
-        <div class="card-footer">
-            <div class="botones">
-                <div class="row">
-                    <div class="col d-grid gap-2">
-                        <button class="btn btn-outline-success btnfooter" (click)="registrar()" type="button" style="margin-left: 10px">
-                    Registrar Nueva Cita Medica <i class="pi pi-check"></i>
-                  </button>
-                    </div>
-
-                    <div class="col d-grid gap-2">
-                        <button class="btn btn-outline-info btnfooter" (click)="exportSelected()" type="button" style="margin-left: 10px">
-                        Reporte  por usuario<i class="pi pi-file-pdf"></i>
-                      </button>
-                    </div>
-
-                    <div class="col d-grid gap-2">
-                        <button class="btn btn-outline-primary btnfooter" (click)="generarPdf()" type="button" style="margin-left: 10px">
-                     Reporte por filtro <i class="pi pi-file-pdf"></i>
+<h2 class="text-center ">Lista de las Citas Medicas agendadas</h2>
+<div class="tabla">
+    <div class="tables">
+        <p-table #dt [value]="citas" dataKey="descripcionCitaMedica" [rowHover]="true" [rows]="10" responsiveLayout="scroll"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,30]" [loading]="loading" [paginator]="true"
+        [filterDelay]="0"  [scrollable]="true" scrollHeight="400px"
+        [globalFilterFields]="['#','descripcionCitaMedica','paciente', 'acompaniante', 'trabajadorFundacion', 'centroMedico', 
+        'especialidad', 'fechaCitaMedica']"
+        (onFilter)="onFilter($event, dt)" [(selection)]="selected">
+        <ng-template pTemplate="caption">
+            <div class="grid-container1">
+                <div class="pan">
+                    <button class="btn btn-outline-success btnfooter" (click)="registrar()" type="button">
+                        Registrar nueva cita <i class="pi pi-check"></i>
                     </button>
-                    </div>
+                </div>
+                <div class="pan">
+                    <button class="btn btn-outline-info btnfooter" (click)="exportSelected()" type="button">
+                        Reporte por usuario <i class="pi pi-file-pdf"></i>
+                    </button>
+                </div>
+                <div class="pan">
+                    <button class="btn btn-outline-primary btnfooter" (click)="generarPdf()" type="button">
+                        Reporte por filtro <i class="pi pi-file-pdf"></i>
+                    </button>
+                </div>
+                <div class="pan">
+                    <span class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                            (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                    </span>
                 </div>
             </div>
-        </div>
-
-        <br/>
-        <div class="modal-header text-center">
-            <h3 class="text-center "><b>Lista de las Citas Medicas agendadas</b></h3>
-        </div>
-        <br />
-
-        <p-table #dt [value]="citas" dataKey="descripcionCitaMedica" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,15,30]" [loading]="loading" [paginator]="true" [filterDelay]="0" [globalFilterFields]="['descripcionCitaMedica','paciente','acompaniante','trabajadorFundacion','centroMedico','fechaCitaMedica']"
-            (onFilter)="onFilter($event, dt)" [(selection)]="selected">
-            <ng-template pTemplate="caption">
-                <span class="buscar" style="margin-left: 60%">
-                    <i class="pi pi-search"></i>
-                    <input class="btnn" type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar por: " />
-                </span>
-                <br />
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>
-                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                    </th>
-                    <th pSortableColumn="descripcionCitaMedica">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Descripcion Cita Medica
-                            <p-sortIcon field="descripcionCitaMedica"></p-sortIcon>
-                            <p-columnFilter type="text" field="descripcionCitaMedica" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="fechaRegistro">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Fecha Registro
-                            <p-sortIcon field="fechaRegistro"></p-sortIcon>
-                            <p-columnFilter type="text" field="fechaRegistro" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="fechaCitaMedica">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Fecha Cita Medica
-                            <p-sortIcon field="fechaCitaMedica"></p-sortIcon>
-                            <p-columnFilter type="text" field="fechaCitaMedica" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="fechaCitaMedica">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Hora Cita Medica
-                            <p-sortIcon field="fechaCitaMedica"></p-sortIcon>
-                            <p-columnFilter type="text" field="fechaCitaMedica" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="paciente">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Cedula de Paciente
-                            <p-sortIcon field="paciente"></p-sortIcon>
-                            <p-columnFilter type="text" field="paciente" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="acompaniante">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Cedula de Acompañante
-                            <p-sortIcon field="acompaniante"></p-sortIcon>
-                            <p-columnFilter type="text" field="acompaniante" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="mensaje">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Correo
-                            <p-sortIcon field="mensaje"></p-sortIcon>
-                            <p-columnFilter type="text" field="mensaje" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="trabajadorFundacion">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Trabajador
-                            <p-sortIcon field="trabajadorFundacion"></p-sortIcon>
-                            <p-columnFilter type="text" field="trabajadorFundacion" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="centroMedico">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Centro Medica
-                            <p-sortIcon field="centroMedico"></p-sortIcon>
-                            <p-columnFilter type="text" field="centroMedico" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="especialidad">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Especialidad
-                            <p-sortIcon field="especialidad"></p-sortIcon>
-                            <p-columnFilter type="text" field="especialidad" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="nota">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Obsevaciones
-                            <p-sortIcon field="nota"></p-sortIcon>
-                            <p-columnFilter type="text" field="nota" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="asistencia">
-                        <div class="p-d-flex p-jc-between p-ai-center">
-                            Asistencia
-                            <p-sortIcon field="asistencia"></p-sortIcon>
-                            <p-columnFilter type="text" field="asistencia" display="menu" class="p-ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-u>
-                <tr class="p-selectable-row">
-                    <td>
-                        <p-tableCheckbox [value]="u"></p-tableCheckbox>
-                    </td>
-                    <td>
-                        {{ u.descripcionCitaMedica}}
-                    </td>
-                    <td>
-                        {{ u.fechaRegistro.substring(0,10)}}
-                    </td>
-                    <td>
-                        {{ u.fechaCitaMedica.substring(0,10)}}
-                    </td>
-                    <td>
-                        {{ u.fechaCitaMedica.substring(11) }}
-                    </td>
-                    <td>
-                        {{ u.paciente }}
-                    </td>
-                    <td>
-                        {{ u.acompaniante }}
-                    </td>
-                    <td>
-                        {{ u.mensaje }}
-                    </td>
-                    <td>
-                        {{ u.trabajadorFundacion }}
-                    </td>
-                    <td>
-                        {{ u.centroMedico }}
-                    </td>
-                    <td>
-                        {{ u.especialidad }}
-                    </td>
-                    <td>
-                        {{ u.nota }}
-                    </td>
-                    <td>
-                        <i class="pi"
-                        [ngClass]="{'true-icon pi-check-circle': u.asistencia, 'false-icon pi-times-circle': !u.asistencia}"></i>
-                    </td>
-                </tr>
-            </ng-template>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="descripcionCitaMedica">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Descripcion Cita Medica
+                        <p-sortIcon field="descripcionCitaMedica"></p-sortIcon>
+                        <p-columnFilter type="text" field="descripcionCitaMedica" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="fechaRegistro">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Fecha Registro
+                        <p-sortIcon field="fechaRegistro"></p-sortIcon>
+                        <p-columnFilter type="text" field="fechaRegistro" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="fechaCitaMedica">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Fecha Cita Medica
+                        <p-sortIcon field="fechaCitaMedica"></p-sortIcon>
+                        <p-columnFilter type="text" field="fechaCitaMedica" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="fechaCitaMedica">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Hora Cita Medica
+                        <p-sortIcon field="fechaCitaMedica"></p-sortIcon>
+                        <p-columnFilter type="text" field="fechaCitaMedica" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="paciente">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Cedula de Paciente
+                        <p-sortIcon field="paciente"></p-sortIcon>
+                        <p-columnFilter type="text" field="paciente" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="acompaniante">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Cedula de Acompañante
+                        <p-sortIcon field="acompaniante"></p-sortIcon>
+                        <p-columnFilter type="text" field="acompaniante" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="mensaje">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Correo
+                        <p-sortIcon field="mensaje"></p-sortIcon>
+                        <p-columnFilter type="text" field="mensaje" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="trabajadorFundacion">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Trabajador
+                        <p-sortIcon field="trabajadorFundacion"></p-sortIcon>
+                        <p-columnFilter type="text" field="trabajadorFundacion" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="centroMedico">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Centro Medica
+                        <p-sortIcon field="centroMedico"></p-sortIcon>
+                        <p-columnFilter type="text" field="centroMedico" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="especialidad">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Especialidad
+                        <p-sortIcon field="especialidad"></p-sortIcon>
+                        <p-columnFilter type="text" field="especialidad" display="menu" class="p-ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="nota">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Obsevaciones
+                        <p-sortIcon field="nota"></p-sortIcon>
+                        <p-columnFilter type="text" field="nota" display="menu" class="p-ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-u>
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="u"></p-tableCheckbox>
+                </td>
+                <td>
+                    {{ u.descripcionCitaMedica}}
+                </td>
+                <td>
+                    {{ u.fechaRegistro.substring(0,10)}}
+                </td>
+                <td>
+                    {{ u.fechaCitaMedica.substring(0,10)}}
+                </td>
+                <td>
+                    {{ u.fechaCitaMedica.substring(11) }}
+                </td>
+                <td>
+                    {{ u.paciente }}
+                </td>
+                <td>
+                    {{ u.acompaniante }}
+                </td>
+                <td>
+                    {{ u.mensaje }}
+                </td>
+                <td>
+                    {{ u.trabajadorFundacion }}
+                </td>
+                <td>
+                    {{ u.centroMedico }}
+                </td>
+                <td>
+                    {{ u.especialidad }}
+                </td>
+                <td>
+                    {{ u.nota }}
+                </td>
+            </tr>
+        </ng-template>
         </p-table>
-    </p-panel>
-</div>
+    </div>
+</div>   

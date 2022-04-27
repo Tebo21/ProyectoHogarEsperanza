@@ -3,9 +3,6 @@
     width: 1200px;
     border: 1px solid black;
 }
-input:invalid{
-    background-color: #fcdfdf;
-}
 .prin{
     display: block;
     position: relative;

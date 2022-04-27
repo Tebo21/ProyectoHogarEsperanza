@@ -85,8 +85,8 @@
                             <th>Parentesco</th>
                             <th>Nombres</th>
                             <th>Apellidos</th>
-                            <th>Celular</th>
-                            <th>Correo</th>
+                            <th>Número telefónico o celular</th>
+                            <th>Correo electrónico</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-fam>
@@ -97,6 +97,11 @@
                             <td>{{fam.apellidoF}}</td>
                             <td>{{fam.celularF}}</td>
                             <td>{{fam.correo}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="6">No se encontraron familiares registrados para el beneficiario.</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -132,7 +137,7 @@
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td colspan="8">No se encontraron observaciones para el beneficiario.</td>
+                            <td colspan="2">No se encontraron observaciones para el beneficiario.</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -140,7 +145,7 @@
 
         </div>
         <div class="tabla">
-            <h5 class="text-center">Asistencias</h5>
+            <h5 class="text-center">Actividades</h5>
             <div class="margen">
                 <p-table class="card" #dt [value]="asistencias" [rows]="10"
                     styleClass="p-datatable-striped-responsive-demo" [scrollable]="true" scrollHeight="300px"
@@ -175,7 +180,7 @@
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td colspan="8">No se encontraron actividades.</td>
+                            <td colspan="3">No se encontraron actividades para el beneficiario.</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -202,7 +207,7 @@
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td colspan="8">No se encontraron documentos.</td>
+                            <td colspan="2">No se encontraron documentos para el beneficiario.</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -249,7 +254,73 @@
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td colspan="8">No se encontraron donaciones para el beneficiario.</td>
+                            <td colspan="4">No se encontraron donaciones para el beneficiario.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </div>
+        <div class="tabla">
+            <h5 class="text-center">Citas médicas</h5>
+            <div class="margen">
+                <p-table #dt [rows]="10" [scrollable]="true" class="table table-responsive" scrollHeight="300px"
+                    [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                    [rowHover]="true" [autoLayout]="true" [responsive]="true" [value]="citas">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="descripcionCitaMedica">Descripción
+                                <p-sortIcon field="descripcionCitaMedica"></p-sortIcon>
+                                <p-columnFilter type="text" field="descripcionCitaMedica" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="fechaCitaMedica">Fecha
+                                <p-sortIcon field="fechaCitaMedica"></p-sortIcon>
+                                <p-columnFilter type="text" field="fechaCitaMedica" display="menu"
+                                    class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="acompaniante">Acompañante
+                                <p-sortIcon field="acompaniante"></p-sortIcon>
+                                <p-columnFilter type="text" field="acompaniante" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="centroMedico">Centro médico
+                                <p-sortIcon field="centroMedico"></p-sortIcon>
+                                <p-columnFilter type="text" field="centroMedico" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="especialidad">Especialidad
+                                <p-sortIcon field="especialidad"></p-sortIcon>
+                                <p-columnFilter type="text" field="especialidad" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="nota">Nota
+                                <p-sortIcon field="nota"></p-sortIcon>
+                                <p-columnFilter type="text" field="nota" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                            <th pSortableColumn="asistencia">Asistencia
+                                <p-sortIcon field="asistencia"></p-sortIcon>
+                                <p-columnFilter type="text" field="asistencia" display="menu" class="p-ml-auto">
+                                </p-columnFilter>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-cita>
+                        <tr class="p-selectable-row">
+                            <td>{{cita.descripcionCitaMedica}}</td>
+                            <td>{{cita.fechaCitaMedica}}</td>
+                            <td>{{cita.acompaniante}}</td>
+                            <td>{{cita.centroMedico}}</td>
+                            <td>{{cita.especialidad}}</td>
+                            <td>{{cita.nota}}</td>
+                            <td>{{convertirBooleanos(cita.asistencia)}}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No se encontraron citas médicas para el beneficiario.</td>
                         </tr>
                     </ng-template>
                 </p-table>

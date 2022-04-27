@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsistenciaPersona } from 'src/app/models/asistenciapersona';
+import { CitasMedicas } from 'src/app/models/citas-medicas';
 import { DocumentosBeneficiarios } from 'src/app/models/documentos-beneficiarios';
 import { EntregaDonacion } from 'src/app/models/EntregaDonacion';
 import { FichaSocioeconomica } from 'src/app/models/ficha-socioeconomica';
@@ -8,6 +9,7 @@ import { ObservacionesPersonas } from 'src/app/models/observaciones-personas';
 import { Personas } from 'src/app/models/personas';
 import { RegistroFamiliares } from 'src/app/models/registro-familiares';
 import { AsistenciapersonaService } from 'src/app/services/asistenciapersona.service';
+import { CitaMedicaService } from 'src/app/services/cita-medica.service';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { EntregarDonacionService } from 'src/app/services/entregar-donacion.service';
 import { FichaSocioeconomicaService } from 'src/app/services/ficha-socioeconomica.service';
@@ -30,8 +32,9 @@ export class HistorialCompletoComponent implements OnInit {
   observaciones: ObservacionesPersonas[];
   listaDocumentos: DocumentosBeneficiarios[];
   donaciones: EntregaDonacion[];
+  citas: CitasMedicas[];
   esposo: string = '';
-  cedula: string;
+  cedula: string = localStorage.getItem('cedulaEditar');
   numHijos: number
   //Logeo
   tipoUser: any
@@ -39,7 +42,7 @@ export class HistorialCompletoComponent implements OnInit {
   constructor(private personService: PersonasService, private famiservice: RegistroFamiliaresService, 
     private fichaservice: FichaSocioeconomicaService, private asistenciaService: AsistenciapersonaService,
     private Obserserivce: ObservacionesPersonasService, private documentoserver: DocumentosService,
-    private entregarDonacionService: EntregarDonacionService,
+    private entregarDonacionService: EntregarDonacionService, private citasservice: CitaMedicaService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -47,6 +50,7 @@ export class HistorialCompletoComponent implements OnInit {
     this.familiares = []
     this.asistencias = []
     this.observaciones = []
+    this.citas = []
     this.ComprobarLogin()
   }
 
@@ -59,19 +63,19 @@ export class HistorialCompletoComponent implements OnInit {
         title: 'Por favor inicie sesión primero',
         icon: 'error',
       });
-      this.router.navigateByUrl('login');
+      this.router.navigateByUrl('login')
     }
   }
 
   cargarDatos() {
     this.personService.getUserByCedula(this.cedula).subscribe(data=>{
-      this.persona = data;
+      this.persona = data
     })
     this.fichaservice.getfichacedula(this.cedula).subscribe(data=>{
-      this.ficha = data;
+      this.ficha = data
     })
     this.famiservice.getFamByCedula(this.cedula).subscribe(data=>{
-      this.familiares = data;
+      this.familiares = data
       for (let index = 0; index < this.familiares.length; index++) {
         const element = this.familiares[index];
         if(element.parentesco == 'Esposo' || element.parentesco == 'Esposa'){
@@ -91,6 +95,9 @@ export class HistorialCompletoComponent implements OnInit {
     })
     this.entregarDonacionService.getPorCedula(this.cedula).subscribe(data => {
       this.donaciones = data
+    });
+    this.citasservice.getPorCedulaPa(this.cedula).subscribe(data => {
+      this.citas = data
     });
   }
 

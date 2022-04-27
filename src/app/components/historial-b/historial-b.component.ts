@@ -18,7 +18,7 @@ type TableRow = [string, string, string];
 
 export class HistorialBComponent implements OnInit {
 
-  cedulaBuscar: string;
+  cedulaBuscar: string = localStorage.getItem('cedulaEditar');
   asistencias: AsistenciaPersona[];
   selected: AsistenciaPersona[];
   usuarioFechaCreacion: Date = new Date;
@@ -37,7 +37,6 @@ export class HistorialBComponent implements OnInit {
 
   ngOnInit(): void {
     this.ComprobarLogin()
-    this.cedulaBuscar = localStorage.getItem('cedulaEditar');
     this.asistencias = []
   }
 
@@ -217,7 +216,10 @@ export class HistorialBComponent implements OnInit {
       type: EXCEL_TYPE
     });
     FileSaver.saveAs(data, fileName + 'CI' + this.cedulaBuscar + 'F' + fechaCreacionFicha + EXCEL_EXTENSION);
-    location.reload();
+    Swal.fire({
+      title: 'Se ha generado el reporte exitosamente',
+      icon: 'success',
+    });
   }
 
   addMultiple(severity1: string, sumary1: string, detail1: string) {

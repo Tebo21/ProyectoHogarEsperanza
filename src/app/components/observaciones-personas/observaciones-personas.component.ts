@@ -34,13 +34,13 @@ export class ObservacionesPersonasComponent implements OnInit {
 
   ngOnInit(): void {
     this.observaciones = []
-    this.listaObservaciones()
     this.ComprobarLogin()
   }
   
   ComprobarLogin() {
     this.tipoUser = localStorage.getItem('rolUser');
     if (this.tipoUser == 1 || this.tipoUser == 2) {
+      this.listaObservaciones()
     } else if (this.tipoUser == 3 || this.tipoUser == 4) {
       Swal.fire({
         title: 'No tiene permisos para registrar observaciones',

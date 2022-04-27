@@ -4,10 +4,13 @@
 <div class="padre">
     <div class="p1">
         <p-panel class="card" header="Nombre del beneficiario: {{persona.nombres}} {{persona.apellidos}}" [toggleable]="true"> 
+            <label class="mb-0">
+                <h6 class="mb-0 text-sm">Descripción *</h6>
+            </label>
             <div class="input-group mb-3 tabla">
                 <textarea [(ngModel)]="observacion.descripcionobservacion" name="descripcionobservacion"
                     id="descripcionobservacion" type="text" class="form-control"
-                    placeholder="Describa la observacion realizada"></textarea>
+                    placeholder="Describa la observacion realizada" required></textarea>
             </div>
             <div class="prin">
                 <div class="sec">

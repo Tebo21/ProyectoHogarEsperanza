@@ -27,10 +27,11 @@ export class CrearCitaComponent implements OnInit {
   cita: CitasMedicas = new CitasMedicas();
   citaMedica!: Observable<CitasMedicas[]>;
   citaM: CitasMedicas[] = [];
-  centro: CentroMedico[] = [];
+  centros: CentroMedico[] = [];
+  centr: any
   especialidad: Especialidad[] = [];
-  nombreSeCe: string;
-  nombreSeEspecialidad: string;
+  nombreSeCe: any;
+  nombreSeEspecialidad: any;
   asistencia: boolean;
 
   // persona
@@ -68,6 +69,14 @@ export class CrearCitaComponent implements OnInit {
   //Asistencia
   faltas: any;
   personaValidar: Personas = {};
+  //Login
+  cedUser : string;
+  tipoUser: any;
+  //Verificaciones
+  personaModal: boolean = false
+  acompaModal: boolean = false
+  //Correo extra
+  emailextra: string;
 
   constructor(private citaMedicaService: CitaMedicaService,
     private serviCentro: CentroMedicoService,
@@ -79,14 +88,34 @@ export class CrearCitaComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   ngOnInit(): void {
-    this.reloadData();
-    this.listCentro();
-    this.listEspecialidad();
-    this.listCita();
+    this.citaM = []
     this.asistencia = false;
+    this.cedUser = localStorage.getItem("cedUser");
+    this.ComprobarLogin()
   }
 
-
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1 || this.tipoUser == 2) {
+      this.reloadData();
+      this.listCentro();
+      this.listEspecialidad();
+      this.listCita();
+      this.buscarTraba()
+    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para crear citas médicas',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
+    }
+  }
   // tslint:disable-next-line: typedef
   reloadData(): void {
     this.citaMedica = this.citaMedicaService.listCitas();
@@ -100,7 +129,7 @@ export class CrearCitaComponent implements OnInit {
 
   listCentro() {
     this.serviCentro.listCentro().subscribe(data => {
-      this.centro = data;
+      this.centros = data;
     });
   }
 
@@ -126,11 +155,11 @@ export class CrearCitaComponent implements OnInit {
   // tslint:disable-next-line: typedef
   save() {
     if (this.cita.idCitasMedicas) {
-      this.cita.centroMedico = this.nombreSeCe;
-      this.cita.especialidad = this.nombreSeEspecialidad;
+      this.cita.centroMedico = this.nombreSeCe.nombreCentroMedico;
+      this.cita.especialidad = this.nombreSeEspecialidad.nombreEspecialidad;
       this.cita.paciente = this.cedulaPaciente;
       this.cita.acompaniante = this.cedulaAcom;
-      this.cita.trabajadorFundacion = this.cedulaTra;
+      this.cita.trabajadorFundacion = this.cedUser;
       this.cita.fechaRegistro = this.fechaRegistro;
       this.cita.asistencia = this.asistencia;
       // tslint:disable-next-line: triple-equals
@@ -152,12 +181,11 @@ export class CrearCitaComponent implements OnInit {
         );
       }
     } else {
-      this.cita.centroMedico = this.nombreSeCe;
-      this.cita.especialidad = this.nombreSeEspecialidad;
+      this.cita.centroMedico = this.nombreSeCe.nombreCentroMedico;
+      this.cita.especialidad = this.nombreSeEspecialidad.nombreEspecialidad;
       this.cita.paciente = this.cedulaPaciente;
       this.cita.acompaniante = this.cedulaAcom;
-      this.cita.trabajadorFundacion = this.cedulaTra;
-      this.cita.trabajadorFundacion = this.cedulaTra;
+      this.cita.trabajadorFundacion = this.cedUser;
       this.cita.fechaRegistro = this.fechaRegistro;
       this.cita.asistencia = this.asistencia;
       // tslint:disable-next-line: triple-equals
@@ -165,11 +193,10 @@ export class CrearCitaComponent implements OnInit {
         this.citaMedicaService.createCitas(this.cita)
           .subscribe((data) => {
             if (data) {
-              alert('Cita Medica Registrada Correcamente');
               this.enviarMail()
               Swal.fire({
                 icon: 'success',
-                title: 'Cita Medica Registrada Correcamente',
+                title: 'Cita Medica Registrada Correctamente',
               });
               const contador = timer(2000);
               contador.subscribe((n) => {
@@ -179,22 +206,33 @@ export class CrearCitaComponent implements OnInit {
           });
       }
     }
-
   }
 
   enviarMail() {
     let nuevoMail: mailSender = {
-      toEmail: this.cita.mensaje.toString(),
-      body: 'Tiene una cita de: ' + this.cita.descripcionCitaMedica + ' con fecha: ' + this.cita.fechaCitaMedica +
-        ' su acompañante es ' + this.nombreper2 + ' en el Centro Médico ' + this.nombreSeCe + ' en la especialidad: '
-        + this.nombreSeEspecialidad + ' Observaciones a tener en cuenta: ' + this.cita.nota,
-      subjetct: 'Fundación Hogar Esperanza Cuenca le recuerda.'
+      toEmail: this.cita.mensaje,
+      body: "La persona " + this.nombreper + " tiene una cita médica de: " + this.cita.descripcionCitaMedica + " con fecha y hora: " + this.cita.fechaCitaMedica +
+        " su acompañante es " + this.nombreper2 + " en el Centro Médico " + this.nombreSeCe.nombreCentroMedico + " con la especialidad: "
+        + this.nombreSeEspecialidad.nombreEspecialidad + 
+        ". Observaciones a tener en cuenta: " + this.cita.nota,
+      subjetct: "Fundación Hogar Esperanza Cuenca le recuerda."
     }
     this.mailsenderService.enviarMail(nuevoMail.toEmail, nuevoMail.body, nuevoMail.subjetct).subscribe(data => {
-      console.log(data)
       console.error();
+    })
+
+    let nuevoMailExtra: mailSender = {
+      toEmail: this.emailextra,
+      body: "La persona " + this.nombreper + " tiene una cita médica de: " + this.cita.descripcionCitaMedica + " con fecha y hora: " + this.cita.fechaCitaMedica +
+        " su acompañante es " + this.nombreper2 + " en el Centro Médico " + this.nombreSeCe.nombreCentroMedico + " con la especialidad: "
+        + this.nombreSeEspecialidad.nombreEspecialidad + 
+        ". Observaciones a tener en cuenta: " + this.cita.nota,
+      subjetct: "Fundación Hogar Esperanza Cuenca le recuerda."
     }
-    )
+    this.mailsenderService.enviarMail(nuevoMailExtra.toEmail, nuevoMailExtra.body, nuevoMailExtra.subjetct).subscribe(data => {
+      console.error();
+    })
+    
   }
 
   deleteCita(cita: CitasMedicas) {
@@ -202,14 +240,22 @@ export class CrearCitaComponent implements OnInit {
     // tslint:disable-next-line: triple-equals
     if (response == true) {
       this.citaMedicaService.deletCita(cita.idCitasMedicas).subscribe(data => {
-        alert(`${cita.descripcionCitaMedica} fue eliminado`);
+        Swal.fire({
+          icon: 'success',
+          title: `${cita.descripcionCitaMedica} fue eliminado`,
+        });
         this.reloadData();
+        const contador = timer(2000);
+        contador.subscribe((n) => {
+          window.location.reload();
+        });
       });
     }
   }
 
   // alertsInfor
   buscarPersona() {
+    this.personaModal = true
     this.personaService.getUserByCedula(this.cedulaPaciente).subscribe(
       data => {
         if (data != null) {
@@ -219,13 +265,17 @@ export class CrearCitaComponent implements OnInit {
           this.telefonoper = data.celular;
 
         } else {
-          alert('No hay resultados');
+          Swal.fire({
+            icon: 'warning',
+            title: 'No hay resultados',
+          });
         }
       }
     );
   }
 
   buscarAcompa() {
+    this.acompaModal = true
     this.personaService.getUserByCedula(this.cedulaAcom).subscribe(
       data => {
         if (data != null) {
@@ -234,14 +284,17 @@ export class CrearCitaComponent implements OnInit {
           this.correoper2 = data.correo;
           this.telefonoper2 = data.celular;
         } else {
-          alert('No hay resultados');
+          Swal.fire({
+            icon: 'warning',
+            title: 'No hay resultados',
+          });
         }
       }
     );
   }
 
   buscarTraba() {
-    this.personaService.getUserByCedula(this.cedulaTra).subscribe(
+    this.personaService.getUserByCedula(this.cedUser).subscribe(
       data => {
         if (data != null) {
           this.valida3 = true;
@@ -250,23 +303,21 @@ export class CrearCitaComponent implements OnInit {
           this.telefonoper3 = data.celular;
 
         } else {
-          alert('No hay resultados');
+          Swal.fire({
+            icon: 'warning',
+            title: 'No hay resultados',
+          });
         }
       }
     );
   }
 
-
-  limpiarCampo() {
-    this.cedulaPaciente = '';
-    this.cedulaAcom = '';
-    this.cedulaTra = '';
-    this.nombreSeCe = '';
-    this.nombreSeEspecialidad = '';
-  }
-
   // btn para alerts
   registrar() {
+    this.router.navigate(['/registro-persona']);
+  }
+
+  registrarU() {
     this.router.navigate(['/registro-usuario']);
   }
 
@@ -448,7 +499,6 @@ export class CrearCitaComponent implements OnInit {
     }
   }
 
-
   actualizarAsistencia(idCitasMedicas: number, cita: CitasMedicas) {
     let nuevaAsistencia: boolean;
     if (cita.asistencia == true) {
@@ -468,7 +518,6 @@ export class CrearCitaComponent implements OnInit {
           this.listCentro();
           this.listEspecialidad();
           this.cita = new CitasMedicas();
-          this.limpiarCampo();
         }
       }
     );
@@ -581,4 +630,5 @@ export class CrearCitaComponent implements OnInit {
       }
     });
   }
+
 }

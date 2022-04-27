@@ -19,9 +19,10 @@ import * as moment from 'moment';
 export class RegistroPersonaComponent implements OnInit {
   @ViewChild("Ced") Ced: ElementRef
   //Refactor
-  msgs: Message[];
-  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
+  msgs: Message[];0
+  blockSpecial: RegExp = /^[^<>*!¡#@$&%^_=+?`\|{}()[\]~"'\.\,=0123456789/;:-]+$/
   noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
+  onlynumber: RegExp = /^[^<>*!¡#@$&%^_=?`\\|{\}(\)[\]~"'\.\,=abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ/;:-]+$/
   valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
   //Modelos
   persona: Personas = {};
@@ -386,7 +387,7 @@ export class RegistroPersonaComponent implements OnInit {
           title: 'Beneficiario registrado correctamente',
           icon: 'success',
         });
-        const contador = timer(3000);
+        const contador = timer(6000);
         contador.subscribe((n) => {
           window.location.reload();
         })

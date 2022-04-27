@@ -68,9 +68,6 @@ export class EditarBeneficiariosComponent implements OnInit {
   generoFinal: any;
   nacioFinal: any;
   discapFinal: any;
-  //Modal
-  display: boolean = false;
-  texto: string = '';
 
   constructor(private personaService: PersonasService, private familiaService: RegistroFamiliaresService,
     private fichaServices: FichaSocioeconomicaService, private router: Router) {
@@ -528,9 +525,11 @@ export class EditarBeneficiariosComponent implements OnInit {
       this.actualizarPersona();
       this.actualizarFamiliares();
       this.actualizarFicha();
-      this.display = true;
-      this.texto = 'Se ha actualizado con exito, por favor espere unos instantes';
-      const contador = timer(3000);
+      Swal.fire({
+        title: 'Se ha actualizado con exito, por favor espere unos instantes',
+        icon: 'success',
+      });
+      const contador = timer(2000);
       contador.subscribe((n) => {
         this.router.navigate(['/lista-beneficiarios']);
       })

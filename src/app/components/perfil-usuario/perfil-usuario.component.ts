@@ -16,7 +16,7 @@ import { timer } from 'rxjs';
 })
 export class PerfilUsuarioComponent implements OnInit {
   //Comprobacion de Usuario
-  cedUser: any;
+  cedUser: any = localStorage.getItem('cedUser')
   msgs: Message[];
   usuario: Usuarios = {};
   persona: Personas = {};
@@ -54,11 +54,35 @@ export class PerfilUsuarioComponent implements OnInit {
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=0123456789/;:]+$/
   noSpecial: RegExp = /^[^<>*!@$%^_=+?`\|{}[~\]"']+$/
   valCorreo: RegExp = /^[^<>*!$%^=\s+?`\|{}[~"']+$/
+  //Logeo
+  tipoUser: any
 
   constructor(private usuarioService: UsuarioService, private personaService: PersonasService, private router: Router) { }
 
   ngOnInit(): void {
-    this.cedUser = localStorage.getItem('cedUser')
+    this.ComprobarLogin()
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1 || this.tipoUser == 2) {
+      this.cargarDatos()
+    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para registrar observaciones',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
+    }
+  }
+
+  cargarDatos(){
     this.tipos = [
       { string: 'SuperAdministrador' },
       { string: 'Administrador' },

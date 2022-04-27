@@ -7,7 +7,7 @@
             [toggleable]="true">
             <div class="form-floating mb-3">
                 <label class="mb-0">
-                    <h6 class="mb-0 text-sm">Actividad</h6>
+                    <h6 class="mb-0 text-sm">Actividad *</h6>
                 </label>
                 <input class="form-control" type="text" maxlength="50" minlength="10" id="asistencia.actividad"
                     placeholder="Medicina, nutrición, charlas, talleres, etc..." [(ngModel)]="asistencia.actividad"
@@ -15,7 +15,7 @@
             </div>
             <div class="form-floating mb-3">
                 <label class="mb-0">
-                    <h6 class="mb-0 text-sm">Descripción</h6>
+                    <h6 class="mb-0 text-sm">Descripción *</h6>
                 </label>
                 <input class="form-control" type="text" minlength="10" id="asistencia.descripcion"
                     placeholder="Descripción" [(ngModel)]="asistencia.descripcion" name="asistencia.descripcion"
@@ -23,11 +23,10 @@
             </div>
             <div class="form-floating mb-3">
                 <label class="mb-0">
-                    <h6 class="mb-0 text-sm">Fecha</h6>
+                    <h6 class="mb-0 text-sm">Fecha*</h6>
                 </label>
-                <br>
                 <input [(ngModel)]="asistencia.fecha" name="asistencia.fecha" id="asistencia.fecha"
-                    type="datetime-local" placeholder="Fecha" style="width: 100%; height: 100%;">
+                type="datetime-local" class="form-control" placeholder="Fecha de la cita medica" required>
             </div>
             <div class="prin">
                 <div class="sec">

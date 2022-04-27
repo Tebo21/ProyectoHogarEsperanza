@@ -40,8 +40,8 @@ export class CitaMedicaService {
     return this.httpClient.get<CitasMedicas>(`${this.url}/porNombre/${nombre}`);
   }
 
-  getPorCedulaPa(cedula: any): Observable<CitasMedicas>{
-    return this.httpClient.get<CitasMedicas>(`${this.url}/bycedulapa/${cedula}`);
+  getPorCedulaPa(cedula:any):Observable<any>{
+    return this.httpClient.get<any>(this.url+`/bycedulapa/${cedula}`);
   }
 
   getPorCedulaAco(cedula: any): Observable<CitasMedicas>{

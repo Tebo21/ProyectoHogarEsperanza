@@ -2,38 +2,41 @@
 <br>
 <h2 class="text-center">Registro de Beneficiarios</h2>
 <div class="container animated  d-flex justify-content-center fadeIn">
-    <p-panel class="card" id="panel" header="* Obligatorio">
+    <p-panel class="card" id="panel" header="Los campos con asterisco (*) son obligatorios">
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Número de cédula *</b></label>
+            <label for="floatingInput"><b>Número de cédula o documento de identificación *</b></label>
             <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10" id="Ced" #Ced
-                placeholder="Número de cédula" [(ngModel)]="persona.cedula" name="persona.cedula" required>
+                pTooltip="De 10 a 13 dígitos numéricos" tooltipPosition="left"
+                placeholder="Ingrese el número de cédula, pasaporte, RUC o de un documento de identificación válido." [(ngModel)]="persona.cedula" name="persona.cedula" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Nombres *</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="50" minlength="3"
-                id="persona.nombres" placeholder="Nombres" [(ngModel)]="persona.nombres" name="persona.nombres"
+                id="persona.nombres" placeholder="Ingrese los nombres" [(ngModel)]="persona.nombres" name="persona.nombres"
                 required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Apellidos *</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="50" minlength="3"
-                id="persona.apellidos" placeholder="Apellidos" [(ngModel)]="persona.apellidos" name="persona.apellidos"
+                id="persona.apellidos" placeholder="Ingrese los apellidos" [(ngModel)]="persona.apellidos" name="persona.apellidos"
                 required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Dirección</b></label>
-            <input class="form-control" type="text" [pKeyFilter]="noSpecial" maxlength="70" minlength="3"
-                id="persona.direccion" placeholder="Dirección" [(ngModel)]="persona.direccion" name="persona.direccion">
+            <label for="floatingInput"><b>Dirección de residencia</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="noSpecial" maxlength="80" minlength="3"
+                id="persona.direccion" placeholder="Ingrese la dirección de residencia. Ejemplo: Mariscal Sucre 12-84" [(ngModel)]="persona.direccion" name="persona.direccion">
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Número celular o convencional</b></label>
-            <input class="form-control" type="text" pKeyFilter="int" minlength="7" maxlength="13" id="persona.celular"
-                placeholder="Número celular o convencional" [(ngModel)]="persona.celular" name="persona.celular">
+            <input class="form-control" type="text" [pKeyFilter]="onlynumber" minlength="7" maxlength="13" id="persona.celular" pTooltip="09978826180" tooltipPosition="left"
+                pTooltip="De 7 a 13 dígitos numéricos (se permiten códigos de países)" tooltipPosition="left"
+                placeholder="Ingrese un número de celular o convencional. Ejemplos: 0985218175 o 4116983" [(ngModel)]="persona.celular" name="persona.celular">
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Correo electrónico</b></label>
+            <label for="floatingInput"><b>Dirección de correo electrónico</b></label>
             <input class="form-control" type="email" maxlength="50" [pKeyFilter]="valCorreo" minlength="12"
-                id="persona.correo" placeholder="Correo electrónico" [(ngModel)]="persona.correo" name="persona.correo">
+                pTooltip="Debe contener una @" tooltipPosition="left"
+                id="persona.correo" placeholder="Ingrese la dirección de correo electrónico" [(ngModel)]="persona.correo" name="persona.correo">
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Género *</b></label>
@@ -50,7 +53,8 @@
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Edad</b></label>
             <input class="form-control" type="number" pKeyFilter="int" maxlength="3" minlength="1" id="edad"
-                placeholder="Edad" [(ngModel)]="edadC" name="edad" disabled>
+                pTooltip="Este valor se calculará automáticamente" tooltipPosition="left"
+                placeholder="Edad" [(ngModel)]="edadC" name="edad" readonly>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>País de origen *</b></label>
@@ -71,43 +75,45 @@
     </p-panel>
 </div>
 <br>
-<div class="container animated  d-flex justify-content-center fadeIn" *ngIf="habiRegFam == true">
+<div class="container animated  d-flex justify-content-center fadeIn" *ngIf="habiRegFam == true" id="regfam">
     <p-panel class="card" id="panel" header="Esta información no es obligatoria" [toggleable]="true">
         <h2 class="text-center">Registro de Familiares</h2>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Número de cédula *</b></label>
             <input class="form-control" type="text" pKeyFilter="int" maxlength="13" minlength="10"
-                id="familiares.cedulaFamiliar" placeholder="Número de cédula" [(ngModel)]="familiares.cedulaFamiliar"
+                id="familiares.cedulaFamiliar" placeholder="Ingrese el número de cédula del familiar" [(ngModel)]="familiares.cedulaFamiliar"
                 name="familiares.cedulaFamiliar" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Parentesco familiar *</b></label>
-            <p-dropdown [options]="parentescos" [(ngModel)]="parentesco" placeholder="Seleccione el parentesco familiar"
+            <p-dropdown [options]="parentescos" [(ngModel)]="parentesco" placeholder="Seleccione el parentesco del familiar"
                 optionLabel="par" [style]="{'width': '100%'}" [showClear]="true" dataKey="value">
             </p-dropdown>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Nombres *</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
-                id="familiares.nombreF" placeholder="Nombres" [(ngModel)]="familiares.nombreF" name="familiares.nombreF"
+                id="familiares.nombreF" placeholder="Ingrese los nombres del familiar" [(ngModel)]="familiares.nombreF" name="familiares.nombreF"
                 required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Apellidos *</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="30" minlength="3"
-                id="familiares.apellidoF" placeholder="Apellidos" [(ngModel)]="familiares.apellidoF"
+                id="familiares.apellidoF" placeholder="Ingrese los apellidos del familiar" [(ngModel)]="familiares.apellidoF"
                 name="familiares.apellidoF" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Número celular</b></label>
-            <input class="form-control" type="text" pKeyFilter="int" id="familiares.celularF"
-                placeholder="Número celular" [(ngModel)]="familiares.celularF" name="familiares.celularF" minlength="7"
-                maxlength="13">
+            <label for="floatingInput"><b>Número celular o convencional</b></label>
+            <input class="form-control" type="text" [pKeyFilter]="onlynumber" id="familiares.celularF"
+                placeholder="Ingrese un número de celular o convencional. Ejemplos: 0985218175 o 4116983" [(ngModel)]="familiares.celularF" 
+                pTooltip="De 7 a 13 dígitos numéricos (se permiten códigos de países)" tooltipPosition="left"
+                name="familiares.celularF" minlength="7"maxlength="13">
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Correo electrónico</b></label>
             <input class="form-control" type="email" maxlength="40" [pKeyFilter]="valCorreo" minlength="12"
-                id="familiares.correo" placeholder="Correo electrónico" [(ngModel)]="familiares.correo"
+                id="familiares.correo" placeholder="Ingrese la dirección de correo electrónico" [(ngModel)]="familiares.correo"
+                pTooltip="Debe contener una @" tooltipPosition="left"
                 name="familiares.correo">
         </div>
         <p-messages [(value)]="msgs"></p-messages>
@@ -200,9 +206,8 @@
         </div>
         <div class="form-floating mb-3" *ngIf="habiFisica == true">
             <label for="floatingInput"><b>Porcentaje de discapacidad física *</b></label>
-
             <input class="form-control" type="number" pKeyFilter="int" maxlength="2" minlength="1" min="1"
-                id="ficha.porc_disc_fisica" required placeholder="Porcentaje de discapacidad física"
+                id="ficha.porc_disc_fisica" required placeholder="Ingrese el porcentaje de discapacidad física"
                 [(ngModel)]="ficha.porc_disc_fisica" name="ficha.porc_disc_fisica">
         </div>
         <div class="form-floating mb-3" *ngIf="habiFisica == true">
@@ -214,24 +219,24 @@
         <div class="form-floating mb-3" *ngIf="habiMental == true">
             <label for="floatingInput"><b>Porcentaje de discapacidad intelectual *</b></label>
             <input class="form-control" type="number" pKeyFilter="int" maxlength="2" minlength="1" min="1"
-                id="ficha.porc_disc_mental" required placeholder="Porcentaje de discapacidad intelectual"
+                id="ficha.porc_disc_mental" required placeholder="Ingrese el porcentaje de discapacidad intelectual"
                 [(ngModel)]="ficha.porc_disc_mental" name="ficha.porc_disc_mental">
         </div>
         <div class="form-floating mb-3" *ngIf="habiMental == true">
             <label for="floatingInput"><b>Descripción de la discapacidad intelectual *</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" minlength="3"
-                id="ficha.descrip_disc_mental" placeholder="Descripción de la discapacidad mental"
+                id="ficha.descrip_disc_mental" placeholder="Descripción de la discapacidad intelectual"
                 [(ngModel)]="ficha.descrip_disc_mental" name="ficha.descrip_disc_mental" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Situación económica *</b></label>
             <input class="form-control" type="text" [pKeyFilter]="blockSpecial" maxlength="50" minlength="3"
-                id="situacionEconomica" placeholder="Situación económica" [(ngModel)]="ficha.situacionEconomica"
+                id="situacionEconomica" placeholder="Describa la situación económica" [(ngModel)]="ficha.situacionEconomica"
                 name="ficha.situacionEconomica" required>
         </div>
         <div class="form-floating mb-3">
-            <label for="floatingInput"><b>Tipo de vivienda *</b></label>
-            <p-dropdown [options]="viviendas" [(ngModel)]="vivienda" placeholder="Seleccione el tipo de vivienda"
+            <label for="floatingInput"><b>Tipo de vivienda que reside</b></label>
+            <p-dropdown [options]="viviendas" [(ngModel)]="vivienda" placeholder="Seleccione el tipo de vivienda que reside"
                 optionLabel="viv" [style]="{'width': '100%'}" dataKey="value">
             </p-dropdown>
         </div>
@@ -244,7 +249,8 @@
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Salario mensual</b></label>
             <input class="form-control" type="text" pKeyFilter="int" maxlength="4" minlength="1" id="salario"
-                placeholder="Salario mensual" [(ngModel)]="ficha.salario" name="ficha.salario" required>
+                pTooltip="Ingres un valor promedio o estimado en caso de no tener un salario mensual fijo" tooltipPosition="left"
+                placeholder="Ingrese la cantidad de salario mensual" [(ngModel)]="ficha.salario" name="ficha.salario" required>
         </div>
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>¿Cuenta con seguro de vida? No | Si</b></label>
@@ -285,7 +291,8 @@
         <div class="form-floating mb-3">
             <label for="floatingInput"><b>Enfermedades catastróficas o a tener en cuenta</b></label>
             <br>
-            <p-chips [(ngModel)]="enfermedades" separator=","></p-chips>
+            <p-chips [(ngModel)]="enfermedades" separator=","
+            pTooltip="Presione ´enter´ o ´,´ luego de cada enfermedad ingresada" tooltipPosition="left"></p-chips>
         </div>
         <p-messages [(value)]="msgs"></p-messages>
         <div class="prin">

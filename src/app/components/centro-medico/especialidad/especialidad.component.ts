@@ -5,6 +5,8 @@ import { CentroMedicoService } from '../../../services/centro-medico.service';
 import { CentroMedico } from '../../../models/centro-medico';
 import { PdfMakeWrapper, Img, Txt, Table } from 'pdfmake-wrapper';
 import { ITable } from 'pdfmake-wrapper/lib/interfaces';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 interface DataResponse {
@@ -27,19 +29,41 @@ export class EspecialidadComponent implements OnInit {
   loading: boolean = true;
   centro: CentroMedico[] = [];
   selectedEspecialidad: Especialidad = new Especialidad();
-  nombreSeCe: string;
+  nombreSeCe: any;
 
   response_condicion: boolean = false;
   response_msg: String;
 
+  tipoUser : any;
+
   constructor(
     private service: EspecialidadService,
-    private serviceCentro: CentroMedicoService
+    private serviceCentro: CentroMedicoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.obtenerEspecialidad();
-    this.listCentro();
+    this.ComprobarLogin()
+  }
+
+  ComprobarLogin() {
+    this.tipoUser = localStorage.getItem('rolUser');
+    if (this.tipoUser == 1 || this.tipoUser == 2) {
+      this.obtenerEspecialidad();
+      this.listCentro();
+    } else if (this.tipoUser == 3 || this.tipoUser == 4) {
+      Swal.fire({
+        title: 'No tiene permisos para registrar especialidades',
+        icon: 'warning',
+      });
+      this.router.navigateByUrl('inicio-super-admin');
+    } else {
+      Swal.fire({
+        title: 'Por favor inicie sesión primero',
+        icon: 'error',
+      });
+      this.router.navigateByUrl('login');
+    }
   }
 
   onFilter(event, dt) {
@@ -75,7 +99,7 @@ export class EspecialidadComponent implements OnInit {
   addOrEdit() {
     if (this.selectedEspecialidad.idEspecialidad) {
       if (this.validar_datos(this.selectedEspecialidad) == true) {
-        this.selectedEspecialidad.centroMedico = this.nombreSeCe;
+        this.selectedEspecialidad.centroMedico = this.nombreSeCe.nombreCentroMedico;
         this.service
           .updateEspecialidad(
             this.selectedEspecialidad.idEspecialidad,
@@ -90,7 +114,7 @@ export class EspecialidadComponent implements OnInit {
           });
       }
     } else {
-      this.selectedEspecialidad.centroMedico = this.nombreSeCe;
+      this.selectedEspecialidad.centroMedico = this.nombreSeCe.nombreCentroMedico;
       if (this.validar_datos(this.selectedEspecialidad) == true) {
         this.service
           .createEspecialidad(this.selectedEspecialidad)

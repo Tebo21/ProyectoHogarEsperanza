@@ -280,6 +280,10 @@ export class ListadoUsuariosComponent implements OnInit {
       type: EXCEL_TYPE
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    Swal.fire({
+      title: 'Se ha generado el reporte exitosamente',
+      icon: 'success',
+    });
   }
 
   ActualizarUsuario(cedula: any) {
